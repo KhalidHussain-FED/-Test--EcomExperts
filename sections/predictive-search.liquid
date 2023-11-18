@@ -62,6 +62,19 @@
         </ul>
       </div>
     {%- endif -%}
+
+
+{% assign productIdToRemove = product-2 %}
+
+{% for product in search.results %}
+  {% unless product.id == productIdToRemove %}
+    <div class="product" data-product-id="{{ product.id }}">
+      {{ product.title }}
+    </div>
+  {% endunless %}
+{% endfor %}
+
+        
     {%- if predictive_search.resources.articles.size > 0 or predictive_search.resources.pages.size > 0 -%}
       <div class="predictive-search__pages-wrapper">
         <h2
