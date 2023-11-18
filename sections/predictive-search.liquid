@@ -66,13 +66,18 @@
 
 {% assign productIdToRemove = 'product-2' %}
 
+Product ID to Remove: {{ productIdToRemove }}
+
 {% for product in search.results %}
+  Product ID in Loop: {{ product.id }}
   {% unless product.id == productIdToRemove %}
     <div class="product" data-product-id="{{ product.id }}">
       {{ product.title }}
     </div>
   {% endunless %}
 {% endfor %}
+
+
 
         
     {%- if predictive_search.resources.articles.size > 0 or predictive_search.resources.pages.size > 0 -%}
