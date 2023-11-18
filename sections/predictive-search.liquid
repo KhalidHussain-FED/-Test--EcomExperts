@@ -69,18 +69,18 @@
 {%- endcomment -%}
 
 {%- for result in search.results -%}
-  {%- if result.object_type == 'product' -%}
-    {%- assign product = result.object -%}
+  {%- if result.object_type == 'products' -%}
+    {%- assign products = result.object -%}
 
     {%- comment -%}
       Add a condition to exclude specific products from being displayed.
       For example, exclude products with the tag "Soft".
     {%- endcomment -%}
-    {%- unless product.tags contains 'Soft' -%}
+    {%- unless products.tags contains 'Soft' -%}
       {%- comment -%}
         Render the product information here.
       {%- endcomment -%}
-      <div class="product">
+      <div class="products">
         <h2>{{ product.title }}</h2>
         <!-- Add other product information as needed -->
       </div>
