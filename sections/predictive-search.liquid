@@ -64,12 +64,30 @@
     {%- endif -%}
 
 
-{% for result in search.results %}
-  {% unless result.url == '/products/product-2' %}
-    <!-- Display search result -->
-  {% endunless %}
-{% endfor %}
-        
+{%- comment -%}
+  In predictive-search.liquid, find the section where the search results are displayed.
+{%- endcomment -%}
+
+{%- for result in search.results -%}
+  {%- if result.object_type == 'product' -%}
+    {%- assign product = result.object -%}
+
+    {%- comment -%}
+      Add a condition to exclude specific products from being displayed.
+      For example, exclude products with the tag "Soft".
+    {%- endcomment -%}
+    {%- unless product.tags contains 'Soft' -%}
+      {%- comment -%}
+        Render the product information here.
+      {%- endcomment -%}
+      <div class="product">
+        <h2>{{ product.title }}</h2>
+        <!-- Add other product information as needed -->
+      </div>
+    {%- endunless -%}
+
+  {%- endif -%}
+{%- endfor -%}
     {%- if predictive_search.resources.articles.size > 0 or predictive_search.resources.pages.size > 0 -%}
       <div class="predictive-search__pages-wrapper">
         <h2
