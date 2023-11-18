@@ -13,37 +13,6 @@
     {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 
-  {% if product.options.size %}
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var sizeSelect = document.getElementById('Option-template--14706225610870__main-1');
-
-    // Check if the sizeSelect element exists
-    if (sizeSelect) {
-      // Check if a size is stored in local storage
-      var selectedSize = localStorage.getItem('selectedSize');
-
-      // Set the selected size to "Unselected" if it exists, or clear selection
-      if (selectedSize) {
-        sizeSelect.value = 'Unselected';
-        localStorage.removeItem('selectedSize');
-      }
-
-      // Listen for changes to the size selection
-      sizeSelect.addEventListener('change', function () {
-        var selectedValue = sizeSelect.options[sizeSelect.selectedIndex].value;
-
-        // Store the selected size in local storage
-        localStorage.setItem('selectedSize', selectedValue);
-      });
-    } else {
-      console.error("Element with ID 'Option-template--14706225610870__main-1' not found.");
-    }
-  });
-</script>
-{% endif %}
-
-
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
