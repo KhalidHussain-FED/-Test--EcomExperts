@@ -45,6 +45,21 @@
               </a>
             </li>
           {%- endfor -%}
+
+      {%- for product in predictive_search.resources.products -%}
+  {%- unless product.handle == 'product-2' -%}
+    <li
+      id="predictive-search-option-product-{{ forloop.index }}"
+      class="predictive-search__list-item"
+      role="option"
+      aria-selected="false"
+    >
+      <!-- Product content goes here -->
+    </li>
+  {%- endunless -%}
+{%- endfor -%}
+
+      
           {%- for collection in predictive_search.resources.collections -%}
             <li
               id="predictive-search-option-collection-{{ forloop.index }}"
