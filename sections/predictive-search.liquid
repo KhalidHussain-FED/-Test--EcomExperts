@@ -108,18 +108,14 @@
       </div>
     {%- endif -%}
 
-{% unless search_term == 'Soft Winter Jacket' %}
-  <div class="search-results">
-    {% for item in search.results %}
-      {% unless item.title == 'Blue Silk Tuxedo' %}
-        <div class="search-result">
-          <h2>{{ item.title }}</h2>
-          <!-- Add more details or styling as needed -->
-        </div>
-      {% endunless %}
-    {% endfor %}
-  </div>
-{% endunless %}
+{% for result in search.results %}
+  {% if result.id != 'product-2' %}
+    <!-- Display each search result here -->
+    {{ result.title }}
+    {{ result.price | money }}
+    <!-- Add more product information as needed -->
+  {% endif %}
+{% endfor %}
 
   
     {%- if first_column_results_size > 0 -%}
