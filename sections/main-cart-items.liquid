@@ -19,7 +19,6 @@
   }
 {%- endstyle -%}
 
-
 {% if item.variant.title == 'Black' and item.variant.option1 == 'Medium' and item.product.title == 'Handbag' %}
   {% assign softWinterJacket = false %}
   {% for cart_item in cart.items %}
@@ -28,14 +27,15 @@
     {% endif %}
   {% endfor %}
   {% if softWinterJacket == false %}
-    {% assign variant_id = 'soft-winter-jacket-variant-id' %}  <!-- Replace with the actual variant ID of Soft Winter Jacket -->
+    {% assign variant_id = 'soft-winter-jacket-variant-id' %}
+    <!-- Replace with the actual variant ID of Soft Winter Jacket -->
     {% assign quantity = 1 %}
     {% assign price = 0.01 %}
-    {% assign properties = "" %}
-    {% assign line = properties | split: ", " %}
-    {% assign properties = line | join: " " %}
+    {% assign properties = '' %}
+    {% assign line = properties | split: ', ' %}
+    {% assign properties = line | join: ' ' %}
     {% assign item = cart.items | where: 'handle', 'soft-winter-jacket' | first %}
-    {% if item == nil %}
+    {% if item == null %}
       {% form 'add', 'soft-winter-jacket' %}
         <input type="hidden" name="id" value="{{ variant_id }}">
         <input type="hidden" name="quantity" value="{{ quantity }}">
@@ -45,139 +45,15 @@
     {% endif %}
   {% endif %}
 {% elsif item.product.title == 'Leather Bag' and item.variant.title == 'Black' and item.variant.option1 == 'Medium' %}
-  {% assign variant_id = 'soft-winter-jacket-variant-id' %}  <!-- Replace with the actual variant ID of Soft Winter Jacket -->
+  {% assign variant_id = 'soft-winter-jacket-variant-id' %}
+  <!-- Replace with the actual variant ID of Soft Winter Jacket -->
   {% assign item = cart.items | where: 'handle', 'soft-winter-jacket' | first %}
-  {% if item != nil %}
+  {% if item != null %}
     {% form 'remove', item %}
       <input type="submit" value="Remove">
     {% endform %}
   {% endif %}
 {% endif %}
-
-{% assign allProducts = "no" %}
-{% assign leatherBagProduct = all_products['leather-bag'] %}
-{% assign softWinterJacketProduct = all_products['soft-winter-jacket'] %}
-
-{% unless cart.item_count == 0 or leatherBagProduct.empty? or leatherBagProduct.variants.first.available == false %}
-  {% assign leatherBagVariant = leatherBagProduct.variants.first %}
-  {% assign softWinterJacketVariant = softWinterJacketProduct.variants.first %}
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var isLeatherBagAdded = false;
-
-      {% for item in cart.items %}
-        {% assign itemVariantId = item.variant.id %}
-
-        // Check if the Leather Bag is added
-        {% if item.product.handle == leatherBagProduct.handle and item.variant.id == leatherBagVariant.id %}
-          isLeatherBagAdded = true;
-        {% endif %}
-      {% endfor %}
-
-      // If the Leather Bag is added, add the Soft Winter Jacket
-      if (isLeatherBagAdded) {
-        var addToCartParams = {
-          type: 'POST',
-          url: '/cart/add.js',
-          data: {
-            quantity: 1,
-            id: {{ softWinterJacketVariant.id }}
-          },
-          contentType: 'application/json',
-          dataType: 'json',
-          success: function (stuff) {
-            // Increase the total additional price by $0.01
-            var currentTotal = parseFloat({{ cart.total_price | money_without_currency }}) + 0.01;
-            document.querySelector('.cart-subtotal').innerText = '{{ shop.currency_symbol }}' + currentTotal.toFixed(2);
-          }
-        };
-
-        var xhrAddToCart = new XMLHttpRequest();
-        xhrAddToCart.open(addToCartParams.type, addToCartParams.url, true);
-        xhrAddToCart.setRequestHeader('Content-Type', 'application/json');
-        xhrAddToCart.onreadystatechange = function () {
-          if (xhrAddToCart.readyState == 4 && xhrAddToCart.status == 200) {
-            addToCartParams.success(xhrAddToCart.response);
-          }
-        };
-        xhrAddToCart.send(JSON.stringify(addToCartParams.data));
-      }
-    });
-  </script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var isLeatherBagRemoved = false;
-
-      {% for item in cart.items %}
-        {% assign itemVariantId = item.variant.id %}
-
-        // Check if the Leather Bag is removed
-        {% if item.product.handle == leatherBagProduct.handle and item.variant.id == leatherBagVariant.id %}
-          isLeatherBagRemoved = true;
-        {% endif %}
-      {% endfor %}
-
-      // If the Leather Bag is removed, remove the Soft Winter Jacket
-      if (isLeatherBagRemoved) {
-        var xhrRemoveProduct = new XMLHttpRequest();
-        xhrRemoveProduct.open('POST', '/cart/update.js', true);
-        xhrRemoveProduct.setRequestHeader('Content-Type', 'application/json');
-        xhrRemoveProduct.onreadystatechange = function () {
-          if (xhrRemoveProduct.readyState == 4 && xhrRemoveProduct.status == 200) {
-            window.location.href = '/cart';
-          }
-        };
-        xhrRemoveProduct.send(JSON.stringify({ updates: { {{ softWinterJacketVariant.id }}: 0 } }));
-      }
-    });
-  </script>
-{% endunless %}
- 
-
-
-  {%- capture productToRemove -%}Handbag (black, medium){%- endcapture -%}
-  {%- capture linkedProduct -%}Soft Winter Jacket{%- endcapture -%}
-
-  <script>
-    $(document).ready(function() {
-      $('body').on('change', '.cart__remove', function() {
-        var removedProduct = $(this).data('cart-item-title');
-
-        {%- assign linkedProductIndex = -1 -%}
-        {%- for item in cart.items -%}
-          {%- if item.title == linkedProduct -%}
-            {%- assign linkedProductIndex = forloop.index0 -%}
-          {%- endif -%}
-        {%- endfor -%}
-
-        {%- if removedProduct == productToRemove and linkedProductIndex != -1 -%}
-          {%- capture updateData -%}
-            updates: {
-              {{ linkedProductIndex }}: 0
-            }
-          {%- endcapture -%}
-
-          $.ajax({
-            type: 'POST',
-            url: '/cart/update.js',
-            data: {{ updateData | json }},
-            dataType: 'json',
-            success: function(cart) {
-              window.location.href = '/cart';
-            }
-          });
-        {%- endif -%}
-      });
-    });
-  </script>
-
-
-
-
-
-
 
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
