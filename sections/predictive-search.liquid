@@ -108,13 +108,10 @@
       </div>
     {%- endif -%}
 
-{% if search_term == 'Soft Winter Jacket' %}
-  {% assign found_product = false %}
-{% endif %}
+  {% if search_term == 'Soft Winter Jacket' %}
+    {% assign found_product = false %}
+  {% endif %}
 
-{% unless found_product %}
-  // Your regular search results code here
-{% endunless %}
   
     {%- if first_column_results_size > 0 -%}
       </div>
