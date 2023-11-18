@@ -45,7 +45,28 @@
               </a>
             </li>
           {%- endfor -%}
-          {%- for collection in predictive_search.resources.collections -%}
+          
+      {%- for collection in predictive_search.resources.collections -%}
+  {%- assign excludeProductId = 'product-2' -%}
+  {%- unless collection.handle == excludeProductId -%}
+    <li
+      id="predictive-search-option-collection-{{ forloop.index }}"
+      class="predictive-search__list-item"
+      role="option"
+      aria-selected="false"
+    >
+      <a href="{{ collection.url }}" class="predictive-search__item link link--text" tabindex="-1">
+        <div class="predictive-search__item-content predictive-search__item-content--centered">
+          <p class="predictive-search__item-heading h5">{{ collection.title }}</p>
+        </div>
+      </a>
+    </li>
+  {%- endunless -%}
+{%- endfor -%}
+
+          
+      
+      {%- for collection in predictive_search.resources.collections -%}
             <li
               id="predictive-search-option-collection-{{ forloop.index }}"
               class="predictive-search__list-item"
@@ -59,35 +80,15 @@
               </a>
             </li>
           {%- endfor -%}
+
+
+          
         </ul>
       </div>
     {%- endif -%}
 
 
-{%- comment -%}
-  In predictive-search.liquid, find the section where the search results are displayed.
-{%- endcomment -%}
 
-{%- for result in search.results -%}
-  {%- if result.object_type == 'products' -%}
-    {%- assign products = result.object -%}
-
-    {%- comment -%}
-      Add a condition to exclude specific products from being displayed.
-      For example, exclude products with the tag "Soft".
-    {%- endcomment -%}
-    {%- unless products.tags contains 'Soft' -%}
-      {%- comment -%}
-        Render the product information here.
-      {%- endcomment -%}
-      <div class="products">
-        <h2>{{ product.title }}</h2>
-        <!-- Add other product information as needed -->
-      </div>
-    {%- endunless -%}
-
-  {%- endif -%}
-{%- endfor -%}
     {%- if predictive_search.resources.articles.size > 0 or predictive_search.resources.pages.size > 0 -%}
       <div class="predictive-search__pages-wrapper">
         <h2
