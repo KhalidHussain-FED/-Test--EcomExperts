@@ -63,17 +63,13 @@
   }
 {%- endstyle -%}
 
-{% for product in search.results %}
-  {% if product.handle != 'soft-winter-jacket' %}
-    <div class="product-item">
-      <!-- Render the product information here -->
-      <h2>{{ product.title }}</h2>
-      <p>{{ product.price | money }}</p>
-      <!-- Add other product details as needed -->
-    </div>
-  {% endif %}
-{% endfor %}
+{% if search_term == 'Soft Winter Jacket' %}
+  {% assign found_product = false %}
+{% endif %}
 
+{% unless found_product %}
+  // Your regular search results code here
+{% endunless %}
 
 {% paginate search.results by 24 %}
   <div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
