@@ -14,10 +14,12 @@
   {%- endif -%}
 
   {% if product.options.size %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var sizeSelect = document.getElementById('Option-template--14706225610870__main-1');
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var sizeSelect = document.getElementById('Option-template--14706225610870__main-1');
 
+    // Check if the sizeSelect element exists
+    if (sizeSelect) {
       // Check if a size is stored in local storage
       var selectedSize = localStorage.getItem('selectedSize');
 
@@ -34,8 +36,11 @@
         // Store the selected size in local storage
         localStorage.setItem('selectedSize', selectedValue);
       });
-    });
-  </script>
+    } else {
+      console.error("Element with ID 'Option-template--14706225610870__main-1' not found.");
+    }
+  });
+</script>
 {% endif %}
 
 
