@@ -26,35 +26,7 @@
           role="group"
           aria-labelledby="predictive-search-queries"
         >
-   
-
-      {%- for query in predictive_search.resources.queries -%}
-  {%- assign excludeProductId = 'product-2' -%}
-  {%- unless query.url contains excludeProductId -%}
-    <li
-      id="predictive-search-option-query-{{ forloop.index }}"
-      class="predictive-search__list-item"
-      role="option"
-      aria-selected="false"
-    >
-      <a href="{{ query.url }}" class="predictive-search__item link link--text" tabindex="-1">
-        <div class="predictive-search__item-content predictive-search__item-content--centered">
-          <p
-            class="predictive-search__item-heading predictive-search__item-query-result h5"
-            aria-label="{{ query.text }}"
-          >
-            {{ query.styled_text }}
-          </p>
-        </div>
-      </a>
-    </li>
-  {%- endunless -%}
-{%- endfor -%}
-
-
-      
-      
-      {%- for query in predictive_search.resources.queries -%}
+          {%- for query in predictive_search.resources.queries -%}
             <li
               id="predictive-search-option-query-{{ forloop.index }}"
               class="predictive-search__list-item"
@@ -73,8 +45,7 @@
               </a>
             </li>
           {%- endfor -%}
-                
-      {%- for collection in predictive_search.resources.collections -%}
+          {%- for collection in predictive_search.resources.collections -%}
             <li
               id="predictive-search-option-collection-{{ forloop.index }}"
               class="predictive-search__list-item"
@@ -88,15 +59,9 @@
               </a>
             </li>
           {%- endfor -%}
-
-
-          
         </ul>
       </div>
     {%- endif -%}
-
-
-
     {%- if predictive_search.resources.articles.size > 0 or predictive_search.resources.pages.size > 0 -%}
       <div class="predictive-search__pages-wrapper">
         <h2
@@ -142,8 +107,6 @@
         </ul>
       </div>
     {%- endif -%}
-
-  
     {%- if first_column_results_size > 0 -%}
       </div>
     {%- endif -%}
