@@ -109,11 +109,8 @@
     {%- endif -%}
 
 {% for result in search.results %}
-  {% if result.id != 'product-2' %}
-    <!-- Display each search result here -->
-    {{ result.title }}
-    {{ result.price | money }}
-    <!-- Add more product information as needed -->
+  {% if result.handle != 'product-2' %}
+    <!-- Your code to display the search result -->
   {% endif %}
 {% endfor %}
 
