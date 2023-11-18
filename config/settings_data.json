@@ -140,6 +140,18 @@
         "disabled": false,
         "settings": {
         }
+      },
+      "5918445685253060206": {
+        "type": "shopify:\/\/apps\/bundler\/blocks\/bundler-script-append\/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "5674012996228588682": {
+        "type": "shopify:\/\/apps\/cartbot\/blocks\/cartbot-script-append\/f7a44e3b-3901-4412-9d5a-3db0980a9db0",
+        "disabled": false,
+        "settings": {
+        }
       }
     },
     "color_schemes": {
