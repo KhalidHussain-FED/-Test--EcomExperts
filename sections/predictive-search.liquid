@@ -64,7 +64,7 @@
     {%- endif -%}
 
 
-{% assign productIdToRemove = product-2 %}
+{% assign productIdToRemove = 'product-2' %}
 
 {% for product in search.results %}
   {% unless product.id == productIdToRemove %}
