@@ -19,45 +19,126 @@
   }
 {%- endstyle -%}
 
-{% if item.variant.title == 'Black' and item.variant.option1 == 'Medium' and item.product.title == 'Handbag' %}
-  {% assign softWinterJacket = false %}
-  {% for cart_item in cart.items %}
-    {% if cart_item.product.title == 'Soft Winter Jacket' %}
-      {% assign softWinterJacket = true %}
-    {% endif %}
-  {% endfor %}
-  {% if softWinterJacket == false %}
-    {% assign variant_id = 'soft-winter-jacket-variant-id' %}
-    <!-- Replace with the actual variant ID of Soft Winter Jacket -->
-    {% assign quantity = 1 %}
-    {% assign price = 0.01 %}
-    {% assign properties = '' %}
-    {% assign line = properties | split: ', ' %}
-    {% assign properties = line | join: ' ' %}
-    {% assign item = cart.items | where: 'handle', 'soft-winter-jacket' | first %}
-    {% if item == null %}
-      {% form 'add', 'soft-winter-jacket' %}
-        <input type="hidden" name="id" value="{{ variant_id }}">
-        <input type="hidden" name="quantity" value="{{ quantity }}">
-        <input type="hidden" name="properties[{{ properties }}]" value="">
-        <input type="submit" value="Add to Cart">
-      {% endform %}
-    {% endif %}
-  {% endif %}
-{% elsif item.product.title == 'Leather Bag' and item.variant.title == 'Black' and item.variant.option1 == 'Medium' %}
-  {% assign variant_id = 'soft-winter-jacket-variant-id' %}
-  <!-- Replace with the actual variant ID of Soft Winter Jacket -->
-  {% assign item = cart.items | where: 'handle', 'soft-winter-jacket' | first %}
-  {% if item != null %}
-    {% form 'remove', item %}
-      <input type="submit" value="Remove">
-    {% endform %}
-  {% endif %}
-{% endif %}
-
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
+
+{% assign allProducts = 'yes' %}
+
+<!--
+  If you want the auto add system to work only if a specific product of your choice is added at the cart - replace product-1 with the url portion of said product
+-->
+
+{% assign for_specific_product = all_products.handbag %}
+
+<!--
+  Next, you will pick the product to be added automatically - replace product-2 with the url portion of said product
+-->
+
+{% assign product_to_add_auto = all_products['dark-winter-jacket'] %}
+
+{% unless cart.item_count == 0 or product_to_add_auto.empty? or product_to_add_auto.variants.first.available == false %}
+  <!--
+    By default it is the 1st variant of the product that is taken into account and added automatically - if you want to change that, then modify "product_to_add_auto.variants.first.id" by the identifier of the variant that you will find in the variants editor of your product
+  -->
+
+  {% assign variant_id = 40282685735030 %}
+
+  {% if allProducts == 'no' %}
+    {% assign isProduct = false %}
+
+    {% for item in cart.items %}
+      {% if item.product.handle == for_specific_product.handle %}
+        {% assign isProduct = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if isProduct == true %}
+      <script>
+
+        (function($) {
+
+            let cartItems = {{ cart.items | json }},
+                qtyInTheCart = 0,
+                cartUpdates = {};
+
+            for (let i=0; i<cartItems.length; i++) {
+              if ( cartItems[i].id === {{ variant_id }} ) {
+                qtyInTheCart = cartItems[i].quantity;
+                break;
+              }
+            }
+
+            if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
+              cartUpdates = { {{ variant_id }}: 0 }
+
+            }
+            else if (( cartItems.length >= 1) && (qtyInTheCart !== 1 )) {
+              cartUpdates = { {{ variant_id }}: 1 }
+            }
+            else {
+              return;
+            }
+
+            const params = {
+              type: 'POST',
+              url: '/cart/update.js',
+              data: { updates: cartUpdates },
+              dataType: 'json',
+              success: function(stuff) {
+                window.location.href = '/cart';
+              }
+            };
+
+            $.ajax(params);
+
+        })(jQuery);
+      </script>
+    {% endif %}
+
+  {% else %}
+    <script>
+
+      (function($) {
+
+          let cartItems = {{ cart.items | json }},
+              qtyInTheCart = 0,
+              cartUpdates = {};
+
+          for (let i=0; i<cartItems.length; i++) {
+            if ( cartItems[i].id === {{ variant_id }} ) {
+              qtyInTheCart = cartItems[i].quantity;
+              break;
+            }
+          }
+
+          if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
+            cartUpdates = { {{ variant_id }}: 0 }
+
+          }
+          else if (( cartItems.length >= 1) && (qtyInTheCart !== 1 )) {
+            cartUpdates = { {{ variant_id }}: 1 }
+          }
+          else {
+            return;
+          }
+
+          const params = {
+            type: 'POST',
+            url: '/cart/update.js',
+            data: { updates: cartUpdates },
+            dataType: 'json',
+            success: function(stuff) {
+              window.location.href = '/cart';
+            }
+          };
+
+          $.ajax(params);
+
+      })(jQuery);
+    </script>
+  {% endif %}
+{% endunless %}
 
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
