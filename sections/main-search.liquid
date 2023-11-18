@@ -64,14 +64,14 @@
 {%- endstyle -%}
 
 {% for product in search.results %}
-  {% unless product.handle == 'Soft-Winter-Jacket' %}
+  {% if product.handle != 'soft-winter-jacket' %}
     <div class="product-item">
       <!-- Render the product information here -->
       <h2>{{ product.title }}</h2>
       <p>{{ product.price | money }}</p>
       <!-- Add other product details as needed -->
     </div>
-  {% endunless %}
+  {% endif %}
 {% endfor %}
 
 
