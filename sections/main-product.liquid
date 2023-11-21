@@ -35,6 +35,29 @@
         localStorage.setItem('selectedSize', selectedValue);
       });
     });
+
+
+
+    (function() {
+    var sizeSelect = document.querySelector('.EPVD-select-option');
+    var addToCartButton = document.querySelector('.ProductSubmitButton-template--16312456642714__main');
+
+    // Check if the initially selected size is "Unselected"
+    if (sizeSelect.value === "") {
+      addToCartButton.disabled = true;
+    }
+
+    // Add an event listener for the change event
+    sizeSelect.addEventListener('change', function() {
+      // Check if the selected size is not "Unselected"
+      if (this.value !== "") {
+        addToCartButton.disabled = false;
+      } else {
+        addToCartButton.disabled = true;
+      }
+    });
+  })();
+    
   </script>
 {% endif %}
 
