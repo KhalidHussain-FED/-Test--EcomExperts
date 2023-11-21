@@ -37,7 +37,24 @@
       });
     }
   });
+  
 </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var dropdown = document.querySelector('.EPVD-default-select');
+    var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
+
+    // Disable the button if the first option ("Unselected") is selected, otherwise, enable it
+    addButton.disabled = dropdown.selectedIndex === 0;
+
+    // Add an event listener to the dropdown to update the button on change
+    dropdown.addEventListener('change', function() {
+      addButton.disabled = dropdown.selectedIndex === 0;
+    });
+  });
+</script>
+
 
 
   
