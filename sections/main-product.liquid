@@ -42,19 +42,6 @@
       addButton.disabled = dropdown.selectedIndex === 0;
     });
   });
-
-
-
-  document.querySelector('.EPVD-select-option').addEventListener('change', function() {
-    var addToCartButton = document.querySelector('.ProductSubmitButton-template--16312456642714__main');
-    
-    // Check if the selected size is not "Unselected"
-    if (this.value !== "") {
-      addToCartButton.disabled = false;
-    } else {
-      addToCartButton.disabled = true;
-    }
-  });
   
 </script>
 
