@@ -13,6 +13,32 @@
     {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 
+  <!-- Add this script to your Shopify theme files, such as theme.liquid or a relevant template file -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Find the product variant select element
+      var variantSelect = document.querySelector('.EPVD-image-swatch-wrapper');
+
+      // Find the "Add to Cart" button
+      var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
+
+      // Add a change event listener to the variant select
+      if (variantSelect && addToCartButton) {
+        variantSelect.addEventListener('change', function() {
+          // Check the selected variant value (adjust this based on your product variants)
+          var selectedVariant = variantSelect.value;
+
+          // Disable the "Add to Cart" button if the selected variant matches a specific value
+          if (selectedVariant === 'your_specific_variant_value') {
+            addToCartButton.disabled = true;
+          } else {
+            addToCartButton.disabled = false;
+          }
+        });
+      }
+    });
+  </script>
+
   <script>
     function setupDropdownAndButton() {
       // Function to set the selected value to local storage
