@@ -3511,3 +3511,7 @@ details-disclosure > details {
     --border-offset: 0px; /* Prevent the border from growing on buttons when this effect is on. */
   }
 }
+
+#product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
+  display: none !important;
+}
