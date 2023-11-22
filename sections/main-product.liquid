@@ -39,14 +39,21 @@
         });
 
 
-    const selectedSize = document.querySelector('.EPVD-default-select').value;
-    const addToCartButton = document.getElementById('ProductSubmitButton-template--16312456642714__main');
+    const mutationObserver = new MutationObserver(() => {
+      const selectedSize = document.querySelector('.EPVD-default-select').value;
+      const addToCartButton = document.getElementById('ProductSubmitButton-template--16312456642714__main');
 
-    if (selectedSize === 'Unselected') {
-      addToCartButton.disabled = true;
-    } else {
-      addToCartButton.disabled = false;
-    }
+      if (selectedSize === 'Unselected') {
+        addToCartButton.disabled = true;
+      } else {
+        addToCartButton.disabled = false;
+      }
+    });
+
+    mutationObserver.observe(document, {
+      childList: true,
+      subtree: true,
+    });
   </script>
 
   <script>
