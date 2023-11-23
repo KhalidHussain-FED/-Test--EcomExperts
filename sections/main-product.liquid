@@ -112,7 +112,7 @@
   </script>
 
   <script>
-         const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+           const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
     let qtyProduct1 = 1;
     let qtyProduct2 = 1;
     let cartUpdates = {};
@@ -123,6 +123,7 @@
     let product1InCart = false;
     let product2InCart = false;
 
+    // Check if product-1 and Soft Winter Jacket are already in the cart
     for (let i = 0; i < cartItems.length; i++) {
       const cartItem = cartItems[i];
       if (cartItem.variantId === variant_id1) {
@@ -135,15 +136,31 @@
       }
     }
 
+    // Check if updates are needed
     if (qtyProduct1 > 0 && !product2InCart) {
-      cartUpdates[variant_id2] = 1; // Add Soft Winter Jacket
+      // Add Soft Winter Jacket if it's not already in the cart
+      cartUpdates[variant_id2] = 1;
     } else if (qtyProduct1 === 0 && product2InCart) {
-      cartUpdates[variant_id2] = 0; // Remove Soft Winter Jacket
+      // Remove Soft Winter Jacket if product-1 is removed
+      cartUpdates[variant_id2] = 0;
+    }
+
+    // Perform the updates only if there are changes
+    if (Object.keys(cartUpdates).length > 0) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/cart/update.js');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          location.href = '/cart';
+        } else {
+          console.error('Error updating cart:', xhr.statusText);
+        }
+      };
+      xhr.send(JSON.stringify(cartUpdates));
     } else {
       console.log('No updates needed.');
     }
-
-    // ... rest of your code for XMLHttpRequest
   </script>
 
   {%- style -%}
