@@ -112,55 +112,127 @@
   </script>
 
   <script>
-      const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
-    let qtyProduct1 = 0;
-    let qtyProduct2 = 1;
-    let cartUpdates = {};
+           <!-- set allProducts to "yes" if you want the product to be added regardless of the products in the cart - otherwise set it to "no" -->
 
-    const variant_id1 = '44127900663962'; // Replace with actual variant ID for product-1
-    const variant_id2 = 'product-2'; // Replace with actual variant ID for Soft Winter Jacket
+    {% assign allProducts = "no" %}
 
-    let product1InCart = false;
-    let product2InCart = false;
+    <!-- If you want the auto add system to work only if a specific product of your choice is added at the cart - replace product-1 with the url portion of said product -->
 
-    // Check if product-1 and Soft Winter Jacket are already in the cart
-    for (let i = 0; i < cartItems.length; i++) {
-      const cartItem = cartItems[i];
-      if (cartItem.variantId === variant_id1) {
-        qtyProduct1 = cartItem.quantity;
-        product1InCart = true;
-      }
-      if (cartItem.variantId === variant_id2) {
-        qtyProduct2 = cartItem.quantity;
-        product2InCart = true;
-      }
-    }
+    {% assign for_specific_product = all_products['44127900663962'] %}
 
-    // Check if updates are needed
-    if (qtyProduct1 > 0 && !product2InCart) {
-      // Add Soft Winter Jacket if it's not already in the cart
-      cartUpdates[variant_id2] = 1;
-    } else if (qtyProduct1 === 0 && product2InCart) {
-      // Remove Soft Winter Jacket if product-1 is removed
-      cartUpdates[variant_id2] = 0;
-    }
+    <!-- Next, you will pick the product to be added automatically - replace product-2 with the url portion of said product -->
 
-    // Perform the updates only if there are changes
-    if (Object.keys(cartUpdates).length > 0) {
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/cart/update.js');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          location.href = '/cart';
-        } else {
-          console.error('Error updating cart:', xhr.statusText);
+    {% assign product_to_add_auto = all_products['product-2'] %}
+
+    {% unless cart.item_count == 0 or product_to_add_auto.empty? or product_to_add_auto.variants.first.available == false %}
+
+    <!-- By default it is the 1st variant of the product that is taken into account and added automatically - if you want to change that, then modify "product_to_add_auto.variants.first.id" by the identifier of the variant that you will find in the variants editor of your product -->
+
+    {% assign variant_id = product_to_add_auto.variants.first.id %}
+
+    {% if allProducts == "no" %}
+
+    {% assign isProduct = false %}
+
+    {% for item in cart.items %}
+      {% if item.product.handle == for_specific_product.handle %}
+      	{% assign isProduct = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if isProduct == true %}
+
+    <script>
+
+    (function($) {
+
+        let cartItems = {{ cart.items | json }},
+            qtyInTheCart = 0,
+            cartUpdates = {};
+
+        for (let i=0; i<cartItems.length; i++) {
+          if ( cartItems[i].id === {{ variant_id }} ) {
+            qtyInTheCart = cartItems[i].quantity;
+            break;
+          }
         }
-      };
-      xhr.send(JSON.stringify(cartUpdates));
-    } else {
-      console.log('No updates needed.');
-    }
+
+        if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
+          cartUpdates = { {{ variant_id }}: 0 }
+
+        }
+        else if (( cartItems.length >= 1) && (qtyInTheCart !== 1 )) {
+          cartUpdates = { {{ variant_id }}: 1 }
+        }
+        else {
+          return;
+        }
+
+        const params = {
+          type: 'POST',
+          url: '/cart/update.js',
+          data: { updates: cartUpdates },
+          dataType: 'json',
+          success: function(stuff) {
+            window.location.href = '/cart';
+          }
+        };
+
+        $.ajax(params);
+
+    })(jQuery);
+
+    </script>
+
+    {% endif %}
+
+    {% else %}
+
+    <script>
+
+    (function($) {
+
+        let cartItems = {{ cart.items | json }},
+            qtyInTheCart = 0,
+            cartUpdates = {};
+
+        for (let i=0; i<cartItems.length; i++) {
+          if ( cartItems[i].id === {{ variant_id }} ) {
+            qtyInTheCart = cartItems[i].quantity;
+            break;
+          }
+        }
+
+        if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
+          cartUpdates = { {{ variant_id }}: 0 }
+
+        }
+        else if (( cartItems.length >= 1) && (qtyInTheCart !== 1 )) {
+          cartUpdates = { {{ variant_id }}: 1 }
+        }
+        else {
+          return;
+        }
+
+        const params = {
+          type: 'POST',
+          url: '/cart/update.js',
+          data: { updates: cartUpdates },
+          dataType: 'json',
+          success: function(stuff) {
+            window.location.href = '/cart';
+          }
+        };
+
+        $.ajax(params);
+
+    })(jQuery);
+
+    </script>
+
+    {% endif %}
+
+    {% endunless %}
   </script>
 
   {%- style -%}
