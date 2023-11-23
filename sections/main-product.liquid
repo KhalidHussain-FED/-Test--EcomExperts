@@ -111,6 +111,30 @@
     });
   </script>
 
+  {% if template contains 'product' %}
+    <!-- Add the script only on product pages -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        function addToCartAndAutoAdd() {
+          var productId = 'product-1'; // Replace 'product-1' with the actual ID of your first product
+          var secondProductId = 'product-2'; // Replace 'product-2' with the actual ID of your second product
+
+          // Add the current product to the cart
+          Shopify.addItem(productId, 1);
+
+          // Auto-add another product (second product)
+          Shopify.addItem(secondProductId, 1);
+        }
+
+        // Example: Attach the function to the button click event
+        var addToCartButton = document.getElementById('ProductSubmitButton-template--16312456642714__main');
+        if (addToCartButton) {
+          addToCartButton.addEventListener('click', addToCartAndAutoAdd);
+        }
+      });
+    </script>
+  {% endif %}
+
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
