@@ -171,16 +171,17 @@
       });
     </script>
   {% endif %}
+  <script>
+     Shopify.loadScript("https://cdn.shopify.com/s/assets/2021/shopify_common.js", function() { // Detect when the "Leather
+    Bag (black, medium)" variant is added to the cart Shopify.onItemAdded((item) => { if (item.product_id === "product-1"
+    && item.variant_id === "44127900663962") { // Check if the "Soft Winter Jacket" product is not already in the cart if
+    (!Shopify.getProductById("product-2") in Shopify.cart) { // Add the "Soft Winter Jacket" product to the cart
+    Shopify.addItem("Soft Winter Jacket"); } } });
 
-  Shopify.loadScript("https://cdn.shopify.com/s/assets/2021/shopify_common.js", function() { // Detect when the "Leather
-  Bag (black, medium)" variant is added to the cart Shopify.onItemAdded((item) => { if (item.product_id === "product-1"
-  && item.variant_id === "44127900663962") { // Check if the "Soft Winter Jacket" product is not already in the cart if
-  (!Shopify.getProductById("product-2") in Shopify.cart) { // Add the "Soft Winter Jacket" product to the cart
-  Shopify.addItem("Soft Winter Jacket"); } } });
-
-  // Detect when the "Leather Bag (black, medium)" variant is removed from the cart Shopify.onItemRemoved((item) => { if
-  (item.product_id === "product-1" && item.variant_id === "44127900663962") { // Remove the "Soft Winter Jacket" product
-  from the cart Shopify.removeItem("Soft Winter Jacket"); } }); });
+    // Detect when the "Leather Bag (black, medium)" variant is removed from the cart Shopify.onItemRemoved((item) => { if
+    (item.product_id === "product-1" && item.variant_id === "44127900663962") { // Remove the "Soft Winter Jacket" product
+    from the cart Shopify.removeItem("Soft Winter Jacket"); } }); });
+  </script>
 
   {%- style -%}
     .section-{{ section.id }}-padding {
