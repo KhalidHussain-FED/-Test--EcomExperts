@@ -112,18 +112,36 @@
   </script>
 
   {% if template contains 'product' %}
-    <!-- Add the script only on product pages -->
+    <!-- Add the Shopify Buy SDK script -->
+    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+
+    <!-- Your custom script -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Shopify Buy SDK
+        var client = ShopifyBuy.buildClient({
+          domain: 'your-shop-name.myshopify.com',
+          storefrontAccessToken: 'your-storefront-access-token',
+        });
+
         function addToCartAndAutoAdd() {
-          var productId = 'product-1'; // Replace 'product-1' with the actual ID of your first product
-          var secondProductId = 'product-2'; // Replace 'product-2' with the actual ID of your second product
+          // Replace 'product-1' and 'product-2' with the actual IDs of your first and second products
+          var productId = 'product-1';
+          var secondProductId = 'product-2';
 
           // Add the current product to the cart
-          Shopify.addItem(productId, 1);
+          client.product.fetch(productId).then(function(product) {
+            var variantId = product.variants[0].id; // Assuming you want to add the first variant
+            var quantity = 1;
+            client.checkout.addLineItems({ variantId, quantity });
+          });
 
           // Auto-add another product (second product)
-          Shopify.addItem(secondProductId, 1);
+          client.product.fetch(secondProductId).then(function(secondProduct) {
+            var secondVariantId = secondProduct.variants[0].id;
+            var quantity = 1;
+            client.checkout.addLineItems({ variantId: secondVariantId, quantity });
+          });
         }
 
         // Example: Attach the function to the button click event
