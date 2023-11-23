@@ -133,14 +133,22 @@
           client.product.fetch(productId).then(function(product) {
             var variantId = product.variants[0].id; // Assuming you want to add the first variant
             var quantity = 1;
-            client.checkout.addLineItems({ variantId, quantity });
+            return client.checkout.addLineItems({ variantId, quantity });
+          }).then(function(cart) {
+            console.log('Product added to cart:', cart);
+          }).catch(function(error) {
+            console.error('Error adding product to cart:', error);
           });
 
           // Auto-add another product (second product)
           client.product.fetch(secondProductId).then(function(secondProduct) {
             var secondVariantId = secondProduct.variants[0].id;
             var quantity = 1;
-            client.checkout.addLineItems({ variantId: secondVariantId, quantity });
+            return client.checkout.addLineItems({ variantId: secondVariantId, quantity });
+          }).then(function(cart) {
+            console.log('Second product added to cart:', cart);
+          }).catch(function(error) {
+            console.error('Error adding second product to cart:', error);
           });
         }
 
