@@ -111,66 +111,6 @@
     });
   </script>
 
-  {% if template contains 'product' %}
-    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-      // Initialize Shopify Buy SDK
-      var client = ShopifyBuy.buildClient({
-      domain: 'your-shop-name.myshopify.com',
-      storefrontAccessToken: 'your-storefront-access-token',
-      });
-
-        function addToCartAndAutoAdd() {
-          // Replace 'product-1' and 'product-2' with the actual IDs of your first and second products
-          var productId = 'product-1';
-          var secondProductId = 'product-2';
-
-          // Add the current product to the cart
-          client.product.fetch(productId).then(function(product) {
-            var variantId = findVariantId(product, { option1: 'Black', option2: 'Medium' });
-            var quantity = 1;
-            return client.checkout.addLineItems({ variantId, quantity });
-          }).then(function(cart) {
-            console.log('Product added to cart:', cart);
-
-            // Add the second product (Soft Winter Jacket) to the cart
-            return client.product.fetch(secondProductId).then(function(secondProduct) {
-              var variantId = findVariantId(secondProduct, { option1: 'Black', option2: 'Medium' });
-              if (!variantId) {
-                throw new Error('Variant ID not found for Soft Winter Jacket.');
-              }
-              var quantity = 1;
-              return client.checkout.addLineItems({ variantId, quantity });
-            }).then(function(cart) {
-              console.log('Soft Winter Jacket added to cart:', cart);
-            }).catch(function(error) {
-              console.error('Error adding Soft Winter Jacket to cart:', error);
-              console.log('Detailed error:', error.response);
-            });
-          }).catch(function(error) {
-            console.error('Error adding product to cart:', error);
-          });
-        }
-
-        // Helper function to find variant ID based on options
-        function findVariantId(product, options) {
-          return product.variants.find(function(variant) {
-            return variant.selectedOptions.every(function(option) {
-              return options[option.name] === option.value;
-            });
-          })?.id;
-        }
-
-        // Example: Attach the function to the button click event
-        var addToCartButton = document.getElementById('ProductSubmitButton-template--16312456642714__main');
-        if (addToCartButton) {
-          addToCartButton.addEventListener('click', addToCartAndAutoAdd);
-        }
-      });
-    </script>
-  {% endif %}
   <script>
         Shopify.loadScript("https://cdn.shopify.com/s/assets/2021/shopify_common.js", function() {
       // Detect when the "Leather Bag (black, medium)" variant is added to the cart
