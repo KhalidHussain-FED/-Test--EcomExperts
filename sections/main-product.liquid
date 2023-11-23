@@ -111,14 +111,6 @@
     });
   </script>
 
-  <script>
-    function addProductsToCart() {
-      Shopify.Cart.addItems([product-1, product-2]);
-    }
-
-    document.getElementById('ProductSubmitButton-template--16312456642714__main').addEventListener('click', addProductsToCart);
-  </script>
-
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
