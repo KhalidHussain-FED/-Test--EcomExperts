@@ -111,28 +111,13 @@
     });
   </script>
 
-  {% if item.title == 'product-1'
-    and item.variant_options contains 'Black'
-    and item.variant_options contains 'Medium'
-  %}
-    {% assign product2_added = true %}
-    {{ 'product-2' | cart_add: 1 }}
-  {% elsif item.title == 'product-1'
-    and item.variant_options contains 'Black'
-    and item.variant_options contains 'Medium'
-  %}
-    {% assign product2_added = false %}
-    {{ 'product-2' | cart_remove: 1 }}
-  {% endif %}
+  <script>
+    function addProductsToCart() {
+      Shopify.Cart.addItems([product-1, product-2]);
+    }
 
-  {% if item.title == 'product-1'
-    and item.variant_options contains 'Black'
-    and item.variant_options contains 'Medium'
-    and product2_added == false
-  %}
-    {{ 'soft-winter-jacket' | cart_remove: 1 }}
-    {{ 'leather-bag' | cart_remove: 1 }}
-  {% endif %}
+    document.getElementById('ProductSubmitButton-template--16312456642714__main').addEventListener('click', addProductsToCart);
+  </script>
 
   {%- style -%}
     .section-{{ section.id }}-padding {
