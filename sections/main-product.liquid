@@ -143,12 +143,16 @@
           // Auto-add another product (Soft Winter Jacket) to the cart
           client.product.fetch(secondProductId).then(function(secondProduct) {
             var variantId = findVariantId(secondProduct, { option1: 'Black', option2: 'Medium' });
+            if (!variantId) {
+              throw new Error('Variant ID not found for Soft Winter Jacket.');
+            }
             var quantity = 1;
             return client.checkout.addLineItems({ variantId, quantity });
           }).then(function(cart) {
             console.log('Soft Winter Jacket added to cart:', cart);
           }).catch(function(error) {
             console.error('Error adding Soft Winter Jacket to cart:', error);
+            console.log('Detailed error:', error.response);
           });
         }
 
@@ -158,7 +162,7 @@
             return variant.selectedOptions.every(function(option) {
               return options[option.name] === option.value;
             });
-          }).id;
+          })?.id;
         }
 
         // Example: Attach the function to the button click event
