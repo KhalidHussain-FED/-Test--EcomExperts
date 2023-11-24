@@ -39,120 +39,40 @@
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
 
-{% assign allProducts = 'no' %}
+<script>
+     (function() {
+    const cartItems = JSON.parse('[{"id":44127900663962,"quantity":1}]'); // Assuming the cart items are stored in a JSON format
+    let qtyInTheCart = 0;
+    let cartUpdates = {};
 
-<!--
-  If you want the auto add system to work only if a specific product of your choice is added at the cart - replace product-1 with the url portion of said product
--->
+    for (let i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].id === 44127900663962) { // Update the variant ID if needed
+        qtyInTheCart = cartItems[i].quantity;
+        break;
+      }
+    }
 
-{% assign for_specific_product = all_products['product-1'] %}
+    if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
+      cartUpdates = { 44127900663962: 0 }; // Set quantity to 0 for removing the product
+    } else if ((cartItems.length >= 1) && (qtyInTheCart !== 1)) {
+      cartUpdates = { 44127900663962: 1 }; // Set quantity to 1 for adding the product
+    } else {
+      return; // No changes needed, so do nothing
+    }
 
-<!--
-  Next, you will pick the product to be added automatically - replace product-2 with the url portion of said product
--->
-
-{% assign product_to_add_auto = all_products['product-2'] %}
-
-{% unless cart.item_count == 0 or product_to_add_auto.empty? or product_to_add_auto.variants.first.available == false %}
-  <!--
-    By default it is the 1st variant of the product that is taken into account and added automatically - if you want to change that, then modify "product_to_add_auto.variants.first.id" by the identifier of the variant that you will find in the variants editor of your product
-  -->
-
-  {% assign variant_id = 44127900663962 %}
-
-  {% if allProducts == 'no' %}
-    {% assign isProduct = false %}
-
-    {% for item in cart.items %}
-      {% if item.product.handle == for_specific_product.handle %}
-        {% assign isProduct = true %}
-      {% endif %}
-    {% endfor %}
-
-    {% if isProduct == true %}
-      <script>
-        (function($) {
-
-            let cartItems = {{ cart.items | json }},
-                qtyInTheCart = 0,
-                cartUpdates = {};
-
-            for (let i=0; i<cartItems.length; i++) {
-              if ( cartItems[i].id === {{ variant_id }} ) {
-                qtyInTheCart = cartItems[i].quantity;
-                break;
-              }
-            }
-
-            if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
-              cartUpdates = { {{ variant_id }}: 0 }
-
-            }
-            else if (( cartItems.length >= 1) && (qtyInTheCart !== 1 )) {
-              cartUpdates = { {{ variant_id }}: 1 }
-            }
-            else {
-              return;
-            }
-
-            const params = {
-              type: 'POST',
-              url: '/cart/update.js',
-              data: { updates: cartUpdates },
-              dataType: 'json',
-              success: function(stuff) {
-                window.location.href = '/cart';
-              }
-            };
-
-            $.ajax(params);
-
-        })(jQuery);
-      </script>
-    {% endif %}
-
-  {% else %}
-    <script>
-      (function($) {
-
-          let cartItems = {{ cart.items | json }},
-              qtyInTheCart = 0,
-              cartUpdates = {};
-
-          for (let i=0; i<cartItems.length; i++) {
-            if ( cartItems[i].id === {{ variant_id }} ) {
-              qtyInTheCart = cartItems[i].quantity;
-              break;
-            }
-          }
-
-          if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
-            cartUpdates = { {{ variant_id }}: 0 }
-
-          }
-          else if (( cartItems.length >= 1) && (qtyInTheCart !== 1 )) {
-            cartUpdates = { {{ variant_id }}: 1 }
-          }
-          else {
-            return;
-          }
-
-          const params = {
-            type: 'POST',
-            url: '/cart/update.js',
-            data: { updates: cartUpdates },
-            dataType: 'json',
-            success: function(stuff) {
-              window.location.href = '/cart';
-            }
-          };
-
-          $.ajax(params);
-
-      })(jQuery);
-    </script>
-  {% endif %}
-{% endunless %}
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/cart/update.js', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        window.location.href = '/cart';
+      } else {
+        console.error('Error updating cart:', xhr.statusText);
+      }
+    };
+    xhr.send('updates=' + encodeURIComponent(JSON.stringify(cartUpdates)));
+  })();
+</script>
 
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
