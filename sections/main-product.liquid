@@ -165,8 +165,8 @@
 
     // Function to add products to the cart sequentially
     function addProductsToCart(index) {
-      if (index < productIds.length) {
-        var productId = productIds[index];
+    //  if (index < productIds.length) {
+    //    var productId = productIds[index];
         addToCart(productId, productId === mainProductId)
           .then(function () {
             console.log('Product ' + (index + 1) + ' has been added to the cart!');
@@ -176,7 +176,7 @@
           .catch(function (error) {
             console.error('Error:', error);
           });
-      }
+      // }
     }
 
     // Start adding products from the first one
