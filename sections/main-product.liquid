@@ -133,6 +133,9 @@
   {%- endif -%}
 
   <script>
+    // Get the current product handle from the URL
+    var currentProductHandle = window.location.pathname.split('https://khalid-hussain-test.myshopify.com/products/product-2').pop();
+
     // Assuming you have the first product ID and the second product handle
     var firstProductId = '44127900663962';
     var secondProductHandle = 'product-2';
@@ -155,18 +158,16 @@
       });
     }
 
-    // Make the first product request
-    addToCart(firstProductId)
-      .then(function() {
-        // The first product has been added successfully, now add the second product
-        return addToCart(secondProductHandle);
-      })
-      .then(function() {
-        console.log('Second product has been added to the cart!');
-      })
-      .catch(function(error) {
-        console.error('Error:', error);
-      });
+    // Check if the current product is the second product, then add it to the cart
+    if (currentProductHandle === secondProductHandle) {
+      addToCart(secondProductHandle)
+        .then(function() {
+          console.log('Second product has been added to the cart!');
+        })
+        .catch(function(error) {
+          console.error('Error:', error);
+        });
+    }
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
