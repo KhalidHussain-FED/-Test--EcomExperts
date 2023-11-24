@@ -132,44 +132,33 @@
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
-  {% if line_items.size > 0 %}
-    {% assign first_product_handle = '44127900663962' %}
-    {% assign second_product_handle = 'product-2' %}
+  <script>
+    // Assuming you have the first product ID and the second product handle
+    var firstProductId = '44127900663962';
+    var secondProductHandle = 'product-2';
 
-    {% for item in line_items %}
-      {% if item.handle == first_product_handle %}
-        {% assign second_product_already_in_cart = false %}
-        {% for item_in_cart in cart.items %}
-          {% if item_in_cart.handle == second_product_handle %}
-            {% assign second_product_already_in_cart = true %}
-          {% endif %}
-        {% endfor %}
-
-        {% unless second_product_already_in_cart %}
-          {% assign second_product = all_products[second_product_handle] %}
-          {% if second_product %}
-            {% assign variant_id = second_product.variants.first.id %}
-            {% assign quantity = 1 %}
-            {% assign properties = '' %}
-            {% assign variant = second_product.variants.first %}
-
-            {% for option in variant.options %}
-              {% assign properties = properties | append: option | append: ' ' %}
-            {% endfor %}
-
-            {% assign properties = properties | strip %}
-
-            {{ form | add_to_cart: variant_id, quantity, properties }}
-            <script>
-              {% raw %}
-              console.log('Product 2 has been added to your cart!');
-              {% endraw %}
-            </script>
-          {% endif %}
-        {% endunless %}
-      {% endif %}
-    {% endfor %}
-  {% endif %}
+    // Make the first product request
+    jQuery.post('/cart/add.js', {
+      items: [
+        {
+          quantity: 1, // adjust the quantity as needed
+          id: firstProductId
+        }
+      ]
+    }).done(function() {
+      // The first product has been added successfully, now add the second product
+      jQuery.post('/cart/add.js', {
+        items: [
+          {
+            quantity: 1, // adjust the quantity as needed
+            id: secondProductHandle
+          }
+        ]
+      }).done(function() {
+        console.log('Second product has been added to the cart!');
+      });
+    });
+  </script>
 
   {% if section.settings.image_zoom == 'hover' %}
     <script id="EnableZoomOnHover-main" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
