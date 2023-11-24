@@ -149,20 +149,29 @@
     }
 
     // Helper function to make a POST request
-    function addToCart(productId) {
+    function addToCart(productId, isGift) {
+        var bodyData = {
+            items: [
+                {
+                    quantity: 1, // adjust the quantity as needed
+                    id: productId,
+                },
+            ],
+        };
+
+        // Add gift property if the product is a gift
+        if (isGift) {
+            bodyData.items[0].properties = {
+                Gift: true,
+            };
+        }
+
         return fetch('/cart/add.js', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                items: [
-                    {
-                        quantity: 1, // adjust the quantity as needed
-                        id: productId,
-                    },
-                ],
-            }),
+            body: JSON.stringify(bodyData),
         });
     }
 
@@ -175,15 +184,15 @@
     var secondProductId = getProductIdFromUrl(secondProductUrl);
 
     // Add the first product to the cart
-    addToCart(firstProductId)
+    addToCart(firstProductId, false) // not a gift
         .then(function () {
             console.log('First product has been added to the cart!');
 
-            // Once the first product is added, add the second product
-            return addToCart(secondProductId);
+            // Once the first product is added, add the second product as a gift
+            return addToCart(secondProductId, true); // is a gift
         })
         .then(function () {
-            console.log('Second product has been added to the cart!');
+            console.log('Second product has been added to the cart as a gift!');
         })
         .catch(function (error) {
             console.error('Error:', error);
