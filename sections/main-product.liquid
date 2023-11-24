@@ -136,8 +136,8 @@
     console.log('Script is running!');
 
     // Assuming you have the first product ID and the actual second product ID
-    var firstProductId = 'product-2';
-    // var secondProductId = '44127900663962';
+    var firstProductId = '7987569819802';
+    var secondProductId = '44127900663962';
 
     // Helper function to make a POST request
     function addToCart(productId) {
@@ -161,18 +161,15 @@
     addToCart(firstProductId)
       .then(function() {
         console.log('First product has been added to the cart!');
+
+        // Once the first product is added, add the second product
+        return addToCart(secondProductId);
+      })
+      .then(function() {
+        console.log('Second product has been added to the cart!');
       })
       .catch(function(error) {
-        console.error('Error adding the first product:', error);
-      });
-
-    // Add the second product to the cart
-    // addToCart(secondProductId)
-    //   .then(function() {
-    //     console.log('Second product has been added to the cart!');
-    //   })
-      .catch(function(error) {
-        console.error('Error adding the second product:', error);
+        console.error('Error:', error);
       });
   </script>
 
