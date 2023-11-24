@@ -134,9 +134,9 @@
 
   <script>
     // Add a specific single product to cart
-    const productId = 987569885338;
-    const quantity = 1;
-    const variantId = 44127900663962;
+    const mainProductId = 987569885338;
+    const mainProductQuantity = 1;
+    const mainProductVariantId = 44127900663962;
 
     fetch('/cart/add.js', {
       method: 'POST',
@@ -146,22 +146,21 @@
       body: JSON.stringify({
         items: [
           {
-            id: productId,
-            quantity: quantity,
+            id: mainProductId,
+            quantity: mainProductQuantity,
             properties: {},
-            variant_id: variantId,
+            variant_id: mainProductVariantId,
           },
         ],
       }),
     })
       .then((response) => response.json())
-      .then((data) => {
-        // Check if the product was successfully added to the cart
-        if (data.status === 'success') {
+      .then((mainProductData) => {
+        // Check if the main product was successfully added to the cart
+        if (mainProductData.status === 'success') {
           // Add a second product for free
           const freeProductId = 7987569819802;
-          const freeQuantity = 1;
-          const freeVariantId = null;
+          const freeProductQuantity = 1;
 
           fetch('/cart/add.js', {
             method: 'POST',
@@ -172,17 +171,16 @@
               items: [
                 {
                   id: freeProductId,
-                  quantity: freeQuantity,
+                  quantity: freeProductQuantity,
                   properties: {},
-                  variant_id: freeVariantId,
                 },
               ],
             }),
           })
             .then((response) => response.json())
-            .then((data) => {
+            .then((freeProductData) => {
               // Check if the free product was successfully added to the cart
-              if (data.status === 'success') {
+              if (freeProductData.status === 'success') {
                 console.log('Both products added to cart successfully');
               } else {
                 console.log('Failed to add the free product to cart');
