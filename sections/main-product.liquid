@@ -136,7 +136,7 @@
     console.log('Script is running!');
 
     // Assuming you have an array of product IDs
-    var productIds = [44158968135834];
+    var productIds = [44158968135834, 44127900663962]; // Add the specific product ID
 
     // Helper function to make a POST request for removing a product
     function removeFromCart(productId) {
@@ -154,20 +154,28 @@
     }
 
     // Helper function to make a POST request for adding a product
-    function addToCart(productId) {
+    function addToCart(productId, variantId = null) {
+      var bodyData = {
+        items: [
+          {
+            quantity: 1, // adjust the quantity as needed
+            id: productId,
+          },
+        ],
+      };
+
+      if (variantId) {
+        bodyData.items[0].properties = {
+          variant_id: variantId,
+        };
+      }
+
       return fetch('/cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          items: [
-            {
-              quantity: 1, // adjust the quantity as needed
-              id: productId,
-            },
-          ],
-        }),
+        body: JSON.stringify(bodyData),
       });
     }
 
