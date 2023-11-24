@@ -114,7 +114,10 @@
   {% if item.product.id == 44127900663962 %}
     <script>
       // Use Shopify AJAX API to add Product B to the cart
-      jQuery.post('/cart/add.js', { quantity: 1, id: {{ 'product-2' }} });
+      jQuery.post('/cart/add.js', { quantity: 1, id: {{ 'product-2' }} }, function(data) {
+        alert('Product B added to cart!');
+        // You can remove the alert in the final version
+      });
     </script>
   {% endif %}
 
