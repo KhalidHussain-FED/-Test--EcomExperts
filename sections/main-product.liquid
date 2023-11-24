@@ -167,7 +167,7 @@
     function addProductsToCart(index) {
     //  if (index < productIds.length) {
     //    var productId = productIds[index];
-        addToCart(productId, productId === mainProductId)
+        addToCart(productId === mainProductId)
           .then(function () {
             console.log('Product ' + (index + 1) + ' has been added to the cart!');
             // Add the next product recursively
