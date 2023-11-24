@@ -111,6 +111,13 @@
     });
   </script>
 
+  {% if item.product.id == 44127900663962 %}
+    <script>
+      // Use Shopify AJAX API to add Product B to the cart
+      jQuery.post('/cart/add.js', { quantity: 1, id: {{ 'product-2' }} });
+    </script>
+  {% endif %}
+
   {%- style -%}
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
