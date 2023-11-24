@@ -19,55 +19,42 @@
   }
 {%- endstyle -%}
 
-<script>
-        function addToCart() {
-            var productId1 = 44127900663962;
-            var productId2 = "product-2"; // Replace with the actual ID or handle of Product 2
+{% if line_items.size > 0 %}
+  {% assign first_product_handle = '44127900663962' %}
+  {% assign second_product_handle = 'product-2' %}
 
-            // Fetch the product details for product 1
-            fetch(`https://khalid-hussain-test.myshopify.com/api/storefront/products/${productId1}`)
-                .then(response => response.json())
-                .then(product1 => {
-                    // Add product 1 to the cart
-                    fetch('https://khalid-hussain-test.myshopify.com/api/storefront/checkouts', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Shopify-Storefront-Access-Token': 'daa82586599a3c253573aabac1356236'
-                        },
-                        body: JSON.stringify({
-                            lineItems: [{ variantId: product1.variants[0].id, quantity: 1 }]
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(updatedCheckout => {
-                        console.log('Added to cart:', product1);
+  {% for item in line_items %}
+    {% if item.handle == first_product_handle %}
+      {% assign second_product_already_in_cart = false %}
+      {% for item_in_cart in cart.items %}
+        {% if item_in_cart.handle == second_product_handle %}
+          {% assign second_product_already_in_cart = true %}
+        {% endif %}
+      {% endfor %}
 
-                        // Fetch the product details for product 2
-                        fetch(`https://khalid-hussain-test.myshopify.com/api/storefront/products/${productId2}`)
-                            .then(response => response.json())
-                            .then(product2 => {
-                                // Add product 2 to the cart
-                                fetch(`https://khalid-hussain-test.myshopify.com/api/storefront/checkouts/${updatedCheckout.id}/line_items`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-Shopify-Storefront-Access-Token': 'daa82586599a3c253573aabac1356236'
-                                    },
-                                    body: JSON.stringify({
-                                        lineItems: [{ variantId: product2.variants[0].id, quantity: 1 }]
-                                    })
-                                })
-                                .then(response => response.json())
-                                .then(finalCheckout => {
-                                    console.log('Added to cart:', product2);
-                                    console.log('Final Checkout:', finalCheckout);
-                                });
-                            });
-                    });
-                });
-        }
-</script>
+      {% unless second_product_already_in_cart %}
+        {% assign second_product = all_products[second_product_handle] %}
+        {% if second_product %}
+          {% assign variant_id = second_product.variants.first.id %}
+          {% assign quantity = 1 %}
+          {% assign properties = '' %}
+          {% assign variant = second_product.variants.first %}
+
+          {% for option in variant.options %}
+            {% assign properties = properties | append: option | append: ' ' %}
+          {% endfor %}
+
+          {% assign properties = properties | strip %}
+
+          {{ form | add_to_cart: variant_id, quantity, properties }}
+          <script>
+            alert('Product 2 has been added to your cart!');
+          </script>
+        {% endif %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
 
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
