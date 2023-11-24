@@ -3512,6 +3512,6 @@ details-disclosure > details {
   }
 }
 
-#product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
+/* #product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
   display: none !important;
-}
+} */
