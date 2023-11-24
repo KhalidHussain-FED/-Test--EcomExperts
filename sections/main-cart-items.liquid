@@ -19,7 +19,6 @@
   }
 {%- endstyle -%}
 
-
 <script>
         function addToCart() {
             var productId1 = 44127900663962;
@@ -68,7 +67,7 @@
                     });
                 });
         }
-
+</script>
 
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
