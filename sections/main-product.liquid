@@ -135,9 +135,8 @@
   <script>
     console.log('Script is running!');
 
-    // Define the product IDs
-    var mainProductId = 44127900663962;
-    var additionalProductId = 44158968135834;
+    // Assuming you have an array of product IDs
+    var productIds = [44158968135834, 44127900663962]; // Add the specific product ID
 
     // Helper function to make a POST request for removing a product
     function removeFromCart(productId) {
@@ -154,50 +153,58 @@
       });
     }
 
-    // Helper function to make a POST request for adding a product with variant
-    function addToCartWithVariant(mainProductId, additionalProductId) {
+    // Helper function to make a POST request for adding a product
+    function addToCart(productId, variantId = null) {
+      var bodyData = {
+        items: [
+          {
+            quantity: 1, // adjust the quantity as needed
+            id: productId,
+          },
+        ],
+      };
+
+      if (variantId) {
+        bodyData.items[0].properties = {
+          variant_id: variantId,
+        };
+      }
+
       return fetch('/cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          items: [
-            {
-              quantity: 1, // adjust the quantity as needed
-              id: mainProductId,
-              properties: {
-                additional_product_id: additionalProductId,
-              },
-            },
-          ],
-        }),
+        body: JSON.stringify(bodyData),
       });
     }
 
-    // Function to add products to the cart
-    function addProductsToCart() {
-      // Add the main product with the additional product as a variant
-      addToCartWithVariant(mainProductId, additionalProductId)
-        .then(function() {
-          console.log('Main product has been added to the cart with the additional product!');
-        })
-        .catch(function(error) {
-          console.error('Error:', error);
-        });
+    // Function to add products to the cart sequentially
+    function addProductsToCart(index) {
+      if (index < productIds.length) {
+        addToCart(productIds[index])
+          .then(function() {
+            console.log('Product ' + (index + 1) + ' has been added to the cart!');
+            // Add the next product recursively
+            addProductsToCart(index + 1);
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
+      }
     }
 
-    // Start adding products
-    addProductsToCart();
+    // Start adding products from the first one
+    addProductsToCart(0);
 
-    // Listen for the removal of the main product
+    // Listen for the removal of the first product
     document.addEventListener('cart.updated', function(event) {
       var removedProductIds = event.detail.removed_product_ids;
-      if (removedProductIds && removedProductIds.includes(mainProductId)) {
-        // If the main product is removed, remove the additional product
-        removeFromCart(additionalProductId)
+      if (removedProductIds && removedProductIds.includes(productIds[0])) {
+        // If the first product is removed, remove the second product
+        removeFromCart(productIds[0])
           .then(function() {
-            console.log('Additional product has been removed from the cart!');
+            console.log('Second product has been removed from the cart!');
           })
           .catch(function(error) {
             console.error('Error:', error);
