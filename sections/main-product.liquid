@@ -133,10 +133,10 @@
   {%- endif -%}
 
   <script>
-            console.log('Script is running!');
+                console.log('Script is running!');
 
         var productIds = [44127900663962];
-    var giftProductId = 7987569819802;
+        var giftProductId = 7987569819802;
 
     // Helper function to make a POST request for adding a product
     function addToCart(productId, isGift = false) {
@@ -167,7 +167,7 @@
     function addProductsToCart(index) {
       if (index < productIds.length) {
         var productId = productIds[index];
-        addToCart(productId , productId === mainProductId)
+        addToCart(productId, productId === giftProductId)
           .then(function () {
             console.log('Product ' + (index + 1) + ' has been added to the cart!');
             // Add the next product recursively
@@ -176,7 +176,7 @@
           .catch(function (error) {
             console.error('Error:', error);
           });
-       }
+      }
     }
 
     // Start adding products from the first one
