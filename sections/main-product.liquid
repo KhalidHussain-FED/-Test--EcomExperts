@@ -133,14 +133,15 @@
   {%- endif -%}
 
   <script>
-  // Assuming you have the main product ID and the gift product ID
-  const mainProductId = '44127900663962';
-  const giftProductId = '7987569819802';
+    console.log('Script is running!');
 
-  // Helper function to make a POST request to add a product to the cart
-  async function addToCart(productId) {
-    try {
-      const response = await fetch('/cart/add.js', {
+    // Assuming you have the first product ID and the actual second product ID
+    var firstProductId = '44127900663962';
+    var secondProductId = '7987569819802'; // Replace with the actual second product ID
+
+    // Helper function to make a POST request
+    function addToCart(productId) {
+      return fetch('/cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -154,33 +155,22 @@
           ],
         }),
       });
-
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Error adding product to cart:', error);
     }
-  }
 
-  // Check if the current page is a product page for the main product
-  if (window.location.pathname.includes(`/products/${mainProductId}`)) {
-    // Add the main product to the cart
-    addToCart(mainProductId)
-      .then(() => {
-        console.log('Main product has been added to the cart!');
-        // Once the main product is added, add the gift product
-        return addToCart(giftProductId);
+    // Add the first product to the cart
+    addToCart(firstProductId)
+      .then(function() {
+        console.log('First product has been added to the cart!');
+
+        // Once the first product is added, add the second product
+        return addToCart(secondProductId);
       })
-      .then(() => {
-        console.log('Gift product has been added to the cart!');
+      .then(function() {
+        console.log('Second product has been added to the cart!');
       })
-      .catch(error => {
-        console.error('Error adding gift product to cart:', error);
+      .catch(function(error) {
+        console.error('Error:', error);
       });
-  }
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
