@@ -133,76 +133,71 @@
   {%- endif -%}
 
   <script>
-    console.log('Script is running!');
+    // Add a specific single product to cart
+    const productId = 987569885338;
+    const quantity = 1;
+    const variantId = 44127900663962;
 
-    // Assuming you have an array of product IDs
-    var productIds = [44158968135834];
-
-    // Helper function to make a POST request for removing a product
-    function removeFromCart(productId) {
-      return fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          updates: {
-            [productId]: 0, // Set quantity to 0 to remove the product
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            id: productId,
+            quantity: quantity,
+            properties: {},
+            variant_id: variantId,
           },
-        }),
-      });
-    }
+        ],
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Check if the product was successfully added to the cart
+        if (data.status === 'success') {
+          // Add a second product for free
+          const freeProductId = 7987569819802;
+          const freeQuantity = 1;
+          const freeVariantId = null;
 
-    // Helper function to make a POST request for adding a product
-    function addToCart(productId) {
-      return fetch('/cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          items: [
-            {
-              quantity: 1, // adjust the quantity as needed
-              id: productId,
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             },
-          ],
-        }),
+            body: JSON.stringify({
+              items: [
+                {
+                  id: freeProductId,
+                  quantity: freeQuantity,
+                  properties: {},
+                  variant_id: freeVariantId,
+                },
+              ],
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Check if the free product was successfully added to the cart
+              if (data.status === 'success') {
+                console.log('Both products added to cart successfully');
+              } else {
+                console.log('Failed to add the free product to cart');
+              }
+            })
+            .catch((error) => {
+              console.error('Error adding the free product to cart:', error);
+            });
+        } else {
+          console.log('Failed to add the main product to cart');
+        }
+      })
+      .catch((error) => {
+        console.error('Error adding the main product to cart:', error);
       });
-    }
-
-    // Function to add products to the cart sequentially
-    function addProductsToCart(index) {
-      if (index < productIds.length) {
-        addToCart(productIds[index])
-          .then(function() {
-            console.log('Product ' + (index + 1) + ' has been added to the cart!');
-            // Add the next product recursively
-            addProductsToCart(index + 1);
-          })
-          .catch(function(error) {
-            console.error('Error:', error);
-          });
-      }
-    }
-
-    // Start adding products from the first one
-    addProductsToCart(0);
-
-    // Listen for the removal of the first product
-    document.addEventListener('cart.updated', function(event) {
-      var removedProductIds = event.detail.removed_product_ids;
-      if (removedProductIds && removedProductIds.includes(productIds[0])) {
-        // If the first product is removed, remove the second product
-        removeFromCart(productIds[0])
-          .then(function() {
-            console.log('Second product has been removed from the cart!');
-          })
-          .catch(function(error) {
-            console.error('Error:', error);
-          });
-      }
-    });
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
