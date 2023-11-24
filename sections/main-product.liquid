@@ -137,27 +137,36 @@
     var firstProductId = '44127900663962';
     var secondProductHandle = 'product-2';
 
-    // Make the first product request
-    jQuery.post('/cart/add.js', {
-      items: [
-        {
-          quantity: 1, // adjust the quantity as needed
-          id: firstProductId
-        }
-      ]
-    }).done(function() {
-      // The first product has been added successfully, now add the second product
-      jQuery.post('/cart/add.js', {
-        items: [
-          {
-            quantity: 1, // adjust the quantity as needed
-            id: secondProductHandle
-          }
-        ]
-      }).done(function() {
-        console.log('Second product has been added to the cart!');
+    // Helper function to make a POST request
+    function addToCart(productId) {
+      return fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              quantity: 1, // adjust the quantity as needed
+              id: productId,
+            },
+          ],
+        }),
       });
-    });
+    }
+
+    // Make the first product request
+    addToCart(firstProductId)
+      .then(function() {
+        // The first product has been added successfully, now add the second product
+        return addToCart(secondProductHandle);
+      })
+      .then(function() {
+        console.log('Second product has been added to the cart!');
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
