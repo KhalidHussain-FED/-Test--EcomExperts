@@ -133,12 +133,11 @@
   {%- endif -%}
 
   <script>
-           var productIds = [44127900663962];
+    var productIds = [44127900663962];
     var giftProductId = 7987569819802;
-    var mainProductId = 44127900663962;
 
     // Helper function to make a POST request for adding a product
-    function addToCart(productId, isGift = false) {
+    function addToCart(productId) {
       return fetch('/cart/add.js', {
         method: 'POST',
         headers: {
@@ -150,14 +149,11 @@
               quantity: 1,
               id: productId,
             },
-            // Add the gift product only if it's a gift
-            isGift
-              ? {
-                  quantity: 1,
-                  id: giftProductId,
-                }
-              : null,
-          ].filter(Boolean), // Filter out null (don't add the gift if it's not a gift)
+            {
+              quantity: 1,
+              id: giftProductId,
+            },
+          ],
         }),
       });
     }
@@ -166,7 +162,7 @@
     function addProductsToCart(index) {
       if (index < productIds.length) {
         var productId = productIds[index];
-        addToCart(productId, productId === mainProductId)
+        addToCart(productId)
           .then(function () {
             console.log('Product ' + (index + 1) + ' has been added to the cart!');
             // Add the next product recursively
