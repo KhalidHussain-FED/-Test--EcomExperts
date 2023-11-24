@@ -19,6 +19,57 @@
   }
 {%- endstyle -%}
 
+
+<script>
+        function addToCart() {
+            var productId1 = 44127900663962;
+            var productId2 = "product-2"; // Replace with the actual ID or handle of Product 2
+
+            // Fetch the product details for product 1
+            fetch(`https://khalid-hussain-test.myshopify.com/api/storefront/products/${productId1}`)
+                .then(response => response.json())
+                .then(product1 => {
+                    // Add product 1 to the cart
+                    fetch('https://khalid-hussain-test.myshopify.com/api/storefront/checkouts', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Shopify-Storefront-Access-Token': 'daa82586599a3c253573aabac1356236'
+                        },
+                        body: JSON.stringify({
+                            lineItems: [{ variantId: product1.variants[0].id, quantity: 1 }]
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(updatedCheckout => {
+                        console.log('Added to cart:', product1);
+
+                        // Fetch the product details for product 2
+                        fetch(`https://khalid-hussain-test.myshopify.com/api/storefront/products/${productId2}`)
+                            .then(response => response.json())
+                            .then(product2 => {
+                                // Add product 2 to the cart
+                                fetch(`https://khalid-hussain-test.myshopify.com/api/storefront/checkouts/${updatedCheckout.id}/line_items`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-Shopify-Storefront-Access-Token': 'daa82586599a3c253573aabac1356236'
+                                    },
+                                    body: JSON.stringify({
+                                        lineItems: [{ variantId: product2.variants[0].id, quantity: 1 }]
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(finalCheckout => {
+                                    console.log('Added to cart:', product2);
+                                    console.log('Final Checkout:', finalCheckout);
+                                });
+                            });
+                    });
+                });
+        }
+
+
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
