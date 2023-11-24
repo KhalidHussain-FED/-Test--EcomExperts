@@ -133,53 +133,82 @@
   {%- endif -%}
 
   <script>
-           var productIds = [44127900663962];
-    var giftProductId = product-2;
-    var mainProductId = product-1;
+      var submitButton = document.getElementById('ProductSubmitButton-template--16312456642714__main');
 
-    // Helper function to make a POST request for adding a product
-    function addToCart(productId, isGift = false) {
-      return fetch('/cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          items: [
-            {
-              quantity: 1,
-              id: productId,
-            },
-            // Add the gift product only if it's a gift
-            isGift
-              ? {
-                  quantity: 1,
-                  id: giftProductId,
-                }
-              : null,
-          ].filter(Boolean), // Filter out null (don't add the gift if it's not a gift)
-        }),
+      submitButton.addEventListener('click', function () {
+        // Handle the button click event here
+        console.log('Button clicked!');
+
+
+        addProductsToCart(0);
       });
-    }
 
-    // Function to add products to the cart sequentially
-    function addProductsToCart(index) {
-      if (index < productIds.length) {
-        var productId = productIds[index];
-        addToCart(productId, productId === mainProductId)
-          .then(function () {
-            console.log('Product ' + (index + 1) + ' has been added to the cart!');
-            // Add the next product recursively
-            addProductsToCart(index + 1);
+
+         // Add a specific single product to cart
+    const productId = 987569885338;
+    const quantity = 1;
+    const variantId = 44127900663962;
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            id: productId,
+            quantity: quantity,
+            properties: {},
+            variant_id: variantId,
+          },
+        ],
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Check if the product was successfully added to the cart
+        if (data.status === 'success') {
+          // Add a second product for free
+          const freeProductId = 7987569819802;
+          const freeQuantity = 1;
+          const freeVariantId = null;
+
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              items: [
+                {
+                  id: freeProductId,
+                  quantity: freeQuantity,
+                  properties: {},
+                  variant_id: freeVariantId,
+                },
+              ],
+            }),
           })
-          .catch(function (error) {
-            console.error('Error:', error);
-          });
-      }
-    }
-
-    // Start adding products from the first one
-    addProductsToCart(0);
+            .then((response) => response.json())
+            .then((data) => {
+              // Check if the free product was successfully added to the cart
+              if (data.status === 'success') {
+                console.log('Both products added to cart successfully');
+              } else {
+                console.log('Failed to add the free product to cart');
+              }
+            })
+            .catch((error) => {
+              console.error('Error adding the free product to cart:', error);
+            });
+        } else {
+          console.log('Failed to add the main product to cart');
+        }
+      })
+      .catch((error) => {
+        console.error('Error adding the main product to cart:', error);
+      });
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
