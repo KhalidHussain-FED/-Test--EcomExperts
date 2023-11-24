@@ -133,9 +133,17 @@
   {%- endif -%}
 
   <script>
-        document.getElementById('ProductSubmitButton-template--16312456642714__main').addEventListener('click', function() {
-        console.log("hello testing");
-    });
+     var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
+
+          // Add a change event listener to the variant select
+          if (variantSelect && addToCartButton) {
+            variantSelect.addEventListener('click', function() {
+               console.log("1");
+
+            });
+          }
+        });
+
 
          // Add a specific single product to cart
     const productId = 987569885338;
