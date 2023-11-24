@@ -133,78 +133,54 @@
   {%- endif -%}
 
   <script>
-        console.log('Script is running!');
+            console.log('Script is running!');
 
-        // Assuming you have an array of product IDs
-        var productIds = [44127900663962];
+        var mainProductId = 44127900663962;
+    var giftProductId = 7987569819802;
 
-        // Helper function to make a POST request for removing a product
-        function removeFromCart(productId) {
-          return fetch('/cart/update.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
+    // Helper function to make a POST request for adding a product
+    function addToCart(productId, isGift = false) {
+      return fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              quantity: 1,
+              id: productId,
             },
-            body: JSON.stringify({
-              updates: {
-                [productId]: 0, // Set quantity to 0 to remove the product
-              },
-            }),
+            // Add the gift product only if it's a gift
+            isGift
+              ? {
+                  quantity: 1,
+                  id: giftProductId,
+                }
+              : null,
+          ].filter(Boolean), // Filter out null (don't add the gift if it's not a gift)
+        }),
+      });
+    }
+
+    // Function to add products to the cart sequentially
+    function addProductsToCart(index) {
+      if (index < productIds.length) {
+        var productId = productIds[index];
+        addToCart(productId, productId === mainProductId)
+          .then(function () {
+            console.log('Product ' + (index + 1) + ' has been added to the cart!');
+            // Add the next product recursively
+            addProductsToCart(index + 1);
+          })
+          .catch(function (error) {
+            console.error('Error:', error);
           });
-        }
+      }
+    }
 
-        // Helper function to make a POST request for adding a product
-        function addToCart(productId) {
-          return fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              items: [
-                {
-                  quantity: 1, // adjust the quantity as needed
-                  id: productId,
-                },
-              ],
-            }),
-          });
-        }
-
-        // Function to add products to the cart sequentially
-    //debug
-
-        function addProductsToCart(index) {
-          if (index < productIds.length) {
-            addToCart(productIds[index])
-              .then(function() {
-                console.log('Product ' + (index + 1) + ' has been added to the cart!');
-                // Add the next product recursively
-                // addProductsToCart(index + 1);
-              })
-              .catch(function(error) {
-                console.error('Error:', error);
-              });
-          }
-        }
-
-        // Start adding products from the first one
-         addProductsToCart(1);
-
-        // Listen for the removal of the first product
-        document.addEventListener('cart.updated', function(event) {
-          var removedProductIds = event.detail.removed_product_ids;
-          if (removedProductIds && removedProductIds.includes(productIds[0])) {
-            // If the first product is removed, remove the second product
-            removeFromCart(productIds[0])
-              .then(function() {
-                console.log('Second product has been removed from the cart!');
-              })
-              .catch(function(error) {
-                console.error('Error:', error);
-              });
-          }
-        });
+    // Start adding products from the first one
+    addProductsToCart(0);
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
