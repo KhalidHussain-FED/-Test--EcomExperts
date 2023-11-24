@@ -175,12 +175,12 @@
     //debug
 
         function addProductsToCart(index) {
-          if (index === productIds.length) {
+          if (index < productIds.length) {
             addToCart(productIds[index])
               .then(function() {
                 console.log('Product ' + (index + 1) + ' has been added to the cart!');
                 // Add the next product recursively
-                addProductsToCart(index+1);
+                // addProductsToCart(index + 1);
               })
               .catch(function(error) {
                 console.error('Error:', error);
