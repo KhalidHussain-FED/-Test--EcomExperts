@@ -133,13 +133,13 @@
   {%- endif -%}
 
   <script>
-    console.log('Script is running!');
+        console.log('Script is running!');
 
-    // Assuming you have the first product ID and the actual second product ID
-    var firstProductId = '44127900663962';
-    var secondProductId = '7987569819802'; // Replace with the actual second product ID
+       // Assuming you have the main product ID and the gift product ID
+    var mainProductId = '44127900663962';
+    var giftProductId = '7987569819802';
 
-    // Helper function to make a POST request
+    // Helper function to make a POST request to add a product to the cart
     function addToCart(productId) {
       return fetch('/cart/add.js', {
         method: 'POST',
@@ -157,20 +157,21 @@
       });
     }
 
-    // Add the first product to the cart
-    addToCart(firstProductId)
-      .then(function () {
-        console.log('First product has been added to the cart!');
-
-        // Once the first product is added, wait for the response before adding the second product
-        return addToCart(secondProductId);
-      })
-      .then(function () {
-        console.log('Second product has been added to the cart!');
-      })
-      .catch(function (error) {
-        console.error('Error:', error);
-      });
+    // Check if the current page is a product page for the main product
+    if (window.location.pathname.includes('/products/' + mainProductId)) {
+      // Add the main product to the cart
+      addToCart(mainProductId)
+        .then(function () {
+          // Once the main product is added, add the gift product
+          return addToCart(giftProductId);
+        })
+        .then(function () {
+          console.log('Gift product has been added to the cart!');
+        })
+        .catch(function (error) {
+          console.error('Error:', error);
+        });
+    }
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
