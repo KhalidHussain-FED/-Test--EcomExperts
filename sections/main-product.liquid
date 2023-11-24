@@ -155,21 +155,18 @@
       });
     }
 
-    // Check if the current URL is the specific product page URL
-    if (window.location.href === 'https://khalid-hussain-test.myshopify.com/products/product-2') {
-      // Add the first product to the cart
-      addToCart(firstProductId)
-        .then(function() {
-          // Once the first product is added, add the second product (gift)
-          return addToCart(secondProductHandle);
-        })
-        .then(function() {
-          console.log('Second product (gift) has been added to the cart!');
-        })
-        .catch(function(error) {
-          console.error('Error:', error);
-        });
-    }
+    // Add the first product to the cart
+    addToCart(firstProductId)
+      .then(function() {
+        // Once the first product is added, add the second product (gift)
+        return addToCart(secondProductHandle);
+      })
+      .then(function() {
+        console.log('Second product (gift) has been added to the cart!');
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
