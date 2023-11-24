@@ -19,6 +19,43 @@
   }
 {%- endstyle -%}
 
+{% if line_items.size > 0 %}
+  {% assign first_product_handle = '44127900663962' %}
+  {% assign second_product_handle = 'product-2' %}
+
+  {% for item in line_items %}
+    {% if item.handle == first_product_handle %}
+      {% assign second_product_already_in_cart = false %}
+      {% for item_in_cart in cart.items %}
+        {% if item_in_cart.handle == second_product_handle %}
+          {% assign second_product_already_in_cart = true %}
+        {% endif %}
+      {% endfor %}
+
+      {% unless second_product_already_in_cart %}
+        {% assign second_product = all_products[second_product_handle] %}
+        {% if second_product %}
+          {% assign variant_id = second_product.variants.first.id %}
+          {% assign quantity = 1 %}
+          {% assign properties = '' %}
+          {% assign variant = second_product.variants.first %}
+
+          {% for option in variant.options %}
+            {% assign properties = properties | append: option | append: ' ' %}
+          {% endfor %}
+
+          {% assign properties = properties | strip %}
+
+          {{ form | add_to_cart: variant_id, quantity, properties }}
+          <script>
+            alert('Product 2 has been added to your cart!');
+          </script>
+        {% endif %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
