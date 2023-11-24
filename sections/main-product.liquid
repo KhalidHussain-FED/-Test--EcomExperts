@@ -159,16 +159,16 @@
 
     // Add the first product to the cart
     addToCart(firstProductId)
-      .then(function() {
+      .then(function () {
         console.log('First product has been added to the cart!');
 
-        // Once the first product is added, add the second product
+        // Once the first product is added, wait for the response before adding the second product
         return addToCart(secondProductId);
       })
-      .then(function() {
+      .then(function () {
         console.log('Second product has been added to the cart!');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error('Error:', error);
       });
   </script>
