@@ -133,6 +133,8 @@
   {%- endif -%}
 
   <script>
+    console.log('Script is running!');
+
     // Assuming you have the first product ID and the actual second product ID
     var firstProductId = '44127900663962';
     var secondProductId = '7987569819802'; // Replace with the actual second product ID
@@ -158,6 +160,8 @@
     // Add the first product to the cart
     addToCart(firstProductId)
       .then(function() {
+        console.log('First product has been added to the cart!');
+
         // Once the first product is added, add the second product
         return addToCart(secondProductId);
       })
