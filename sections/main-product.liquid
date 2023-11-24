@@ -135,68 +135,42 @@
   <script>
     console.log('Script is running!');
 
-    // Function to extract product ID from Shopify product URL
-    function getProductIdFromUrl(url) {
-        // Extract the variant ID from the URL
-        var match = url.match(/variant=(\d+)/);
-        if (match) {
-            return match[1];
-        }
-
-        // If variant ID is not found in the URL, extract the product ID from the last part of the URL
-        var parts = url.split('/');
-        return parts[parts.length - 1];
-    }
+    // Assuming you have the first product ID and the actual second product ID
+    var firstProductId = '7987569819802';
+    var secondProductId = '7987569819802'; // Replace with the actual second product ID
 
     // Helper function to make a POST request
-    function addToCart(productId, isGift) {
-        var bodyData = {
-            items: [
-                {
-                    quantity: 1, // adjust the quantity as needed
-                    id: productId,
-                },
-            ],
-        };
-
-        // Add gift property if the product is a gift
-        if (isGift) {
-            bodyData.items[0].properties = {
-                Gift: true,
-            };
-        }
-
-        return fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
+    function addToCart(productId) {
+      return fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              quantity: 1, // adjust the quantity as needed
+              id: productId,
             },
-            body: JSON.stringify(bodyData),
-        });
+          ],
+        }),
+      });
     }
 
-    // URLs of the two products
-    var firstProductUrl = 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962';
-    var secondProductUrl = 'https://khalid-hussain-test.myshopify.com/products/product-2';
-
-    // Extract product IDs from URLs
-    var firstProductId = getProductIdFromUrl(firstProductUrl);
-    var secondProductId = getProductIdFromUrl(secondProductUrl);
-
     // Add the first product to the cart
-    addToCart(firstProductId, false) // not a gift
-        .then(function () {
-            console.log('First product has been added to the cart!');
+    addToCart(firstProductId)
+      .then(function() {
+        console.log('First product has been added to the cart!');
 
-            // Once the first product is added, add the second product as a gift
-            return addToCart(secondProductId, true); // is a gift
-        })
-        .then(function () {
-            console.log('Second product has been added to the cart as a gift!');
-        })
-        .catch(function (error) {
-            console.error('Error:', error);
-        });
+        // Once the first product is added, add the second product
+        return addToCart(secondProductId);
+      })
+      .then(function() {
+        console.log('Second product has been added to the cart!');
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
