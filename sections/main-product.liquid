@@ -138,7 +138,22 @@
     // Assuming you have an array of product IDs
     var productIds = [44158968135834];
 
-    // Helper function to make a POST request
+    // Helper function to make a POST request for removing a product
+    function removeFromCart(productId) {
+      return fetch('/cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          updates: {
+            [productId]: 0, // Set quantity to 0 to remove the product
+          },
+        }),
+      });
+    }
+
+    // Helper function to make a POST request for adding a product
     function addToCart(productId) {
       return fetch('/cart/add.js', {
         method: 'POST',
@@ -173,6 +188,21 @@
 
     // Start adding products from the first one
     addProductsToCart(0);
+
+    // Listen for the removal of the first product
+    document.addEventListener('cart.updated', function(event) {
+      var removedProductIds = event.detail.removed_product_ids;
+      if (removedProductIds && removedProductIds.includes(productIds[0])) {
+        // If the first product is removed, remove the second product
+        removeFromCart(productIds[0])
+          .then(function() {
+            console.log('Second product has been removed from the cart!');
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
+      }
+    });
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
