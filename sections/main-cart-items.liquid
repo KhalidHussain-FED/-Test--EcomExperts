@@ -19,22 +19,6 @@
   }
 {%- endstyle -%}
 
-{% if item.product.id == 44127900663962 %}
-  <script>
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/cart/add.js', true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        alert('Product B added to cart!');
-      } else if (xhr.readyState == 4 && xhr.status != 200) {
-        console.error('Error adding Product B to cart:', xhr.responseText);
-      }
-    };
-    var params = 'quantity=1&id={{ 'product-2' }}';
-    xhr.send(params);
-  </script>
-{% endif %}
-
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
