@@ -161,7 +161,9 @@
 
             {{ form | add_to_cart: variant_id, quantity, properties }}
             <script>
+              {% raw %}
               console.log('Product 2 has been added to your cart!');
+              {% endraw %}
             </script>
           {% endif %}
         {% endunless %}
