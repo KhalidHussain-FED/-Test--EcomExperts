@@ -180,7 +180,7 @@
               .then(function() {
                 console.log('Product ' + (index + 1) + ' has been added to the cart!');
                 // Add the next product recursively
-                addProductsToCart(index);
+                addProductsToCart(index+1);
               })
               .catch(function(error) {
                 console.error('Error:', error);
