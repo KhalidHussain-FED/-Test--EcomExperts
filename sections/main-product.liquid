@@ -133,45 +133,53 @@
   {%- endif -%}
 
   <script>
-    console.log('Script is running!');
+           var productIds = [44127900663962];
+    var giftProductId = 7987569819802;
+    var mainProductId = 44127900663962;
 
-    // Specify the allowed product IDs
-    var firstProductId = 44127900663962;
-    var secondProductId = 44158968135834;
-
-    // Helper function to make a POST request for removing a product
-    function removeFromCart(productId) {
-      return fetch('/cart/update.js', {
+    // Helper function to make a POST request for adding a product
+    function addToCart(productId, isGift = false) {
+      return fetch('/cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          updates: {
-            [productId]: 0, // Set quantity to 0 to remove the product
-          },
+          items: [
+            {
+              quantity: 1,
+              id: productId,
+            },
+            // Add the gift product only if it's a gift
+            isGift
+              ? {
+                  quantity: 1,
+                  id: giftProductId,
+                }
+              : null,
+          ].filter(Boolean), // Filter out null (don't add the gift if it's not a gift)
         }),
       });
     }
 
-    // Function to remove products from the cart sequentially
-    function removeProductsFromCart() {
-      removeFromCart(firstProductId)
-        .then(function() {
-          console.log('First product has been removed from the cart!');
-          // Once the first product is removed, automatically remove the second product
-          return removeFromCart(secondProductId);
-        })
-        .then(function() {
-          console.log('Second product has been removed from the cart!');
-        })
-        .catch(function(error) {
-          console.error('Error:', error);
-        });
+    // Function to add products to the cart sequentially
+    function addProductsToCart(index) {
+      if (index < productIds.length) {
+        var productId = productIds[index];
+        addToCart(productId, productId === mainProductId)
+          .then(function () {
+            console.log('Product ' + (index + 1) + ' has been added to the cart!');
+            // Add the next product recursively
+            addProductsToCart(index + 1);
+          })
+          .catch(function (error) {
+            console.error('Error:', error);
+          });
+      }
     }
 
-    // Remove products from the cart
-    removeProductsFromCart();
+    // Start adding products from the first one
+    addProductsToCart(0);
   </script>
 
   {% if section.settings.image_zoom == 'hover' %}
