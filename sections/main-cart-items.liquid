@@ -23,41 +23,6 @@
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
 
-<script>
-     (function() {
-    const cartItems = JSON.parse('[{"id":44127900663962,"quantity":1}]'); // Assuming the cart items are stored in a JSON format
-    let qtyInTheCart = 0;
-    let cartUpdates = {};
-
-    for (let i = 0; i < cartItems.length; i++) {
-      if (cartItems[i].id === 44127900663962) { // Update the variant ID if needed
-        qtyInTheCart = cartItems[i].quantity;
-        break;
-      }
-    }
-
-    if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
-      cartUpdates = { 44127900663962: 0 }; // Set quantity to 0 for removing the product
-    } else if ((cartItems.length >= 1) && (qtyInTheCart !== 1)) {
-      cartUpdates = { 44127900663962: 1 }; // Set quantity to 1 for adding the product
-    } else {
-      return; // No changes needed, so do nothing
-    }
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/cart/update.js', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        window.location.href = '/cart';
-      } else {
-        console.error('Error updating cart:', xhr.statusText);
-      }
-    };
-    xhr.send('updates=' + encodeURIComponent(JSON.stringify(cartUpdates)));
-  })();
-</script>
-
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
