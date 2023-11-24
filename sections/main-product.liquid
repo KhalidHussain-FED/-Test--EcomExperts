@@ -116,7 +116,9 @@
       // Use Shopify AJAX API to add Product B to the cart
       jQuery.post('/cart/add.js', { quantity: 1, id: {{ 'product-2' }} }, function(data) {
         alert('Product B added to cart!');
-        // You can remove the alert in the final version
+      })
+      .fail(function(error) {
+        console.error('Error adding Product B to cart:', error);
       });
     </script>
   {% endif %}
