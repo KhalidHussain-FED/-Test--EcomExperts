@@ -48,6 +48,52 @@
       {%- endif -%}
     </div>
 
+    <script>
+            var productIds = [44127900663962];
+      var giftProductId = 7987569819802;
+
+      // Helper function to make a POST request for adding a product to the cart
+      function addToCart(productId) {
+        return fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            items: [
+              {
+                quantity: 1,
+                id: productId,
+              },
+              {
+                quantity: 1,
+                id: giftProductId,
+              },
+            ],
+          }),
+        });
+      }
+
+      // Function to add products to the cart sequentially
+      function addProductsToCart(index) {
+        if (index < productIds.length) {
+          var productId = productIds[index];
+          addToCart(productId)
+            .then(function () {
+              console.log('Product ' + (index + 1) + ' has been added to the cart!');
+              // Add the next product recursively
+              addProductsToCart(index + 1);
+            })
+            .catch(function (error) {
+              console.error('Error:', error);
+            });
+        }
+      }
+
+      // Start adding products from the first one
+      addProductsToCart(0);
+    </script>
+
     <form action="{{ routes.cart_url }}" class="cart__contents critical-hidden" method="post" id="cart">
       <div class="cart__items" id="main-cart-items" data-id="{{ section.id }}">
         <div class="js-contents">
