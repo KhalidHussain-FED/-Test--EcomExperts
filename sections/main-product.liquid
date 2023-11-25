@@ -198,6 +198,80 @@
 
   {% endif %}
 {% endunless %}
+{% if settings.free_product != blank %}
+  <script>
+    var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+    console.log('FreeProductId:', FreeProductId); // Add this line for logging
+  </script>
+{% endif %}
+
+{% assign allProducts = "no" %}
+{% assign for_specific_product = all_products['44127900663962'] %}
+{% assign product_to_add_auto = all_products['44158968135834'] %}
+
+{% unless cart.item_count == 0 or product_to_add_auto.empty? or product_to_add_auto.variants.first.available == false %}
+  {% assign variant_id = '44127900663962' %}
+  {% assign free_product_id = '44158968135834' %}
+
+  {% if allProducts == "no" %}
+    {% assign isMainProduct = false %}
+    {% assign isFreeProduct = false %}
+
+    {% for item in cart.items %}
+      {% if item.product.id == for_specific_product.id %}
+        {% assign isMainProduct = true %}
+      {% endif %}
+      {% if item.product.id == free_product_id %}
+        {% assign isFreeProduct = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if isMainProduct == true %}
+      <script>  
+        document.addEventListener('DOMContentLoaded', function () {
+          var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
+          addToCartBtn.addEventListener('click', function () {
+            console.log('Button Clicked!'); // Add this line for logging
+
+            let cartItems = {{ cart.items | json }},
+                qtyInTheCart = 0,
+                cartUpdates = {};
+
+            for (let i = 0; i < cartItems.length; i++) {
+              if (cartItems[i].id === '{{ variant_id }}') {
+                qtyInTheCart = cartItems[i].quantity;
+                break;
+              }
+            }
+
+            if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
+              cartUpdates['{{ variant_id }}'] = 0;
+            } else if ((cartItems.length >= 1) && (qtyInTheCart !== 1)) {
+              cartUpdates['{{ variant_id }}'] = 1;
+            } else {
+              return;
+            }
+
+            const params = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ updates: cartUpdates }),
+            };
+
+            fetch('/cart/update.js', params)
+              .then(response => response.json())
+              .then(stuff => {
+                window.location.href = '/cart';
+              })
+              .catch(error => console.error('Error:', error));
+          });
+        });          
+      </script>
+    {% endif %}
+  {% endif %}
+{% endunless %}
 
 
 
