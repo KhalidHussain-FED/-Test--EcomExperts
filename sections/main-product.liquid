@@ -160,21 +160,30 @@
       });
     }
 
-    // Function to add the specific variant to the cart
+    // Function to check if the main product is in the cart
+    function isMainProductInCart(productId) {
+      var cart = JSON.parse(localStorage.getItem('cart')) || {};
+      return cart[productId] && cart[productId] > 0;
+    }
+
+    // Function to add the specific variant to the cart if the main product is present
     function addSpecificVariantToCart() {
-      addToCartWithSpecificVariant(productId, variantId)
-        .then(function() {
-          console.log('Specific variant has been added to the cart!');
-        })
-        .catch(function(error) {
-          console.error('Error:', error);
-        });
+      if (isMainProductInCart(productId)) {
+        addToCartWithSpecificVariant(productId, variantId)
+          .then(function() {
+            console.log('Specific variant has been added to the cart!');
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
+      }
     }
 
     // Start adding the specific variant to the cart
     addSpecificVariantToCart();
 
 </script>
+
 
 
 
