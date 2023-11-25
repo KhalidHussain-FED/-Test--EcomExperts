@@ -62,6 +62,9 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
 // Assuming HandbagTitle and FreeProductTitle are defined elsewhere in your code
+const HandbagTitle = 'Handbag'; // Replace with the actual title of the handbag
+const FreeProductTitle = 'Soft Winter Jacket'; // Replace with the actual title of the free product
+
 if (HandbagTitle !== undefined) {
   // Add the handbag to the cart
   let handbagFormData = {
@@ -122,6 +125,7 @@ if (HandbagTitle !== undefined) {
   })
   .catch(error => console.error('Error:', error));
 }
+
         
               return;
             }
