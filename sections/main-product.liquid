@@ -197,47 +197,7 @@
     {% endif %}
 
   {% else %}
-
-    <script>  
-      document.addEventListener('DOMContentLoaded', function () {
-        let cartItems = {{ cart.items | json }},
-            qtyInTheCart = 0,        
-            cartUpdates = {};
-
-        for (let i=0; i<cartItems.length; i++) {
-          if (cartItems[i].id === '{{ variant_id }}') {
-            qtyInTheCart = cartItems[i].quantity;
-            break;
-          }      
-        }    
-
-        if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
-          cartUpdates['{{ variant_id }}'] = 0;
-        } else if ((cartItems.length >= 1) && (qtyInTheCart !== 1)) {
-          cartUpdates['{{ variant_id }}'] = 1;
-        } else {
-          return;
-        }      
-
-        const params = {        
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ updates: cartUpdates }),
-        };
-
-        fetch('/cart/update.js', params)
-          .then(response => response.json())
-          .then(stuff => {
-            window.location.href = '/cart';
-          })
-          .catch(error => console.error('Error:', error));
-      });
-    </script>
-
-  {% endif %}
-
+ {% endif %}
 {% endunless %}
 
 
