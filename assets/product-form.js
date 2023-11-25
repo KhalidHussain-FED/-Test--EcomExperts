@@ -106,7 +106,7 @@ if (HandbagTitle !== undefined) {
 
           let freeProductFormData = {
             'items': [{
-              'id': freeProductID,
+              'id': FreeProductTitle,
               'quantity': 1,
             }]
           };
