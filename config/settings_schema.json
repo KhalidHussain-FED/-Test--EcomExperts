@@ -16,13 +16,6 @@
         "label": "Free Product"
       },
       {
-        "type": "text",
-        "id": "free_product_variant",
-        "label": "Free Product Variant ID",
-        "info": "Enter the variant ID for the free product",
-        "default": "ok"
-      },
-      {
         "type": "product",
         "id": "main_product",
         "label": "Main Product"
