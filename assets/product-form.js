@@ -153,10 +153,11 @@ fetch(window.Shopify.routes.root + 'cart/add.js', {
     }
   })
   .then(response => {
+    return response.json();
     if (!response.ok) {
       return response.text().then(text => Promise.reject(text));
     }
-    return response.json();
+   
   })
   .then(() => {
     // After removing the product, redirect to the cart
