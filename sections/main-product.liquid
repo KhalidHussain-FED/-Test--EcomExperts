@@ -132,13 +132,27 @@
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
- <script>
+<script>
     console.log('Script is running!');
 
     // Specify the product ID and variant ID
     var productId = 44158968135834;
     var variantId = 44127900663962;
 
+    // Helper function to make a POST request for removing a product
+    function removeFromCart(productId) {
+      return fetch('/cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          updates: {
+            [productId]: 0, // Set quantity to 0 to remove the product
+          },
+        }),
+      });
+    }
 
     // Helper function to make a POST request for adding the specific product with variant
     function addToCartWithVariant(productId, variantId) {
@@ -161,21 +175,33 @@
       });
     }
 
-    // Function to add the specific product with variant to the cart
-    function addSpecificProductToCart() {
-      addToCartWithVariant(productId, variantId)
-        .then(function() {
-          console.log('Specific product with variant has been added to the cart!');
+    // Function to check if the product is in the cart and add it with the specified variant
+    function checkAndAddProductToCart() {
+      fetch('/cart.js')
+        .then(response => response.json())
+        .then(cartData => {
+          var productInCart = cartData.items.find(item => item.product_id === productId);
+
+          if (productInCart) {
+            addToCartWithVariant(productId, variantId)
+              .then(function() {
+                console.log('Specific product with variant has been added to the cart!');
+              })
+              .catch(function(error) {
+                console.error('Error:', error);
+              });
+          }
         })
-        .catch(function(error) {
-          console.error('Error:', error);
+        .catch(error => {
+          console.error('Error fetching cart data:', error);
         });
     }
 
-    // Start adding the specific product with variant to the cart
-    addSpecificProductToCart();
+    // Start checking and adding the specific product with variant to the cart
+    checkAndAddProductToCart();
 
-  </script>
+</script>
+
 
 
 
