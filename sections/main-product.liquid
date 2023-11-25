@@ -77,65 +77,50 @@
 
   {% if settings.free_product != blank %}
     <script>
-                     function setupDropdownAndButton() {
-                  // Function to set the selected value to local storage
-                  function setSelectedValue(value) {
-                    localStorage.setItem('selectedValue', value);
-                  }
+                   function setupDropdownAndButton() {
+                // Function to set the selected value to local storage
+                function setSelectedValue(value) {
+                  localStorage.setItem('selectedValue', value);
+                }
 
-                  // Get the dropdown element without an ID
-                  var dropdown = document.querySelector('.EPVD-default-select');
+                // Get the dropdown element without an ID
+                var dropdown = document.querySelector('.EPVD-default-select');
 
-                  // Check if the dropdown element exists
-                  if (dropdown) {
-                    // Set the selected value to the first option on window reload
-                    dropdown.value = dropdown.options[0].value;
+                // Check if the dropdown element exists
+                if (dropdown) {
+                  // Set the selected value to the first option on window reload
+                  dropdown.value = dropdown.options[0].value;
+                  setSelectedValue(dropdown.value);
+
+                  // Add event listener for the change event
+                  dropdown.addEventListener('change', function() {
+                    // Set the selected value to local storage when the dropdown changes
                     setSelectedValue(dropdown.value);
+                  });
 
-                    // Add event listener for the change event
-                    dropdown.addEventListener('change', function() {
-                      // Set the selected value to local storage when the dropdown changes
-                      setSelectedValue(dropdown.value);
-                    });
+                  var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
 
-                    var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
+                  // Disable the button if the first option ("Unselected") is selected, otherwise, enable it
+                  addButton.disabled = dropdown.selectedIndex === 0;
 
-                    // Disable the button if the first option ("Unselected") is selected, otherwise, enable it
-                    addButton.disabled = dropdown.selectedIndex === 0;
-
-                    <!-- addButton = dropdown.selectedIndex === 2; -->
+                  <!-- addButton = dropdown.selectedIndex === 2; -->
 
 
-                    // Add an event listener to the dropdown to update the button on change
-                    dropdown.addEventListener('change', function() {
-                 addButton.disabled = dropdown.selectedIndex === 0;
+                  // Add an event listener to the dropdown to update the button on change
+                  dropdown.addEventListener('change', function() {
+               addButton.disabled = dropdown.selectedIndex === 0;
 
-        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+      var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
 
-        if (dropdown.selectedIndex === 2) {
-            var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-             console.log(MainProductId);
-            console.log(FreeProductId);
-        }
-          });
-        }
-                         // Wrap the setup function in a DOMContentLoaded event listener
-      document.addEventListener('DOMContentLoaded', function() {
-        setupDropdownAndButton();
+      if (dropdown.selectedIndex === 2) {
+          var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+           console.log(MainProductId);
+          console.log(FreeProductId);
+      }
+        });
+      }
 
-        // Find the element with the class EPVD-image-swatch-wrapper
-        var imageSwatchWrapper = document.querySelector('.EPVD-image-swatch-wrapper');
-
-        // Check if the element exists before adding the click event listener
-        if (imageSwatchWrapper) {
-          imageSwatchWrapper.addEventListener('click', function() {
-            // Call the setup function when the element is clicked
-            setupDropdownAndButton();
-            // Add any additional functionality you want to happen on click here
-          });
-        }
-      });
-                       }
+                     }
     </script>
   {% endif %}
 
