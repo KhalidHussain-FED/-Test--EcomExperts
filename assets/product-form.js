@@ -86,9 +86,9 @@ if (HandbagTitle !== undefined) {
   })
   .then(response => {
     console.log('Add Handbag to Cart Response:', response);
-    if (!response.ok) {
-      return response.text().then(text => Promise.reject(text));
-    }
+    // if (!response.ok) {
+    //   return response.text().then(text => Promise.reject(text));
+    // }
     return response.json();
   })
   .then(() => {
