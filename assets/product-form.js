@@ -61,15 +61,18 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-                if(FreeProductId != undefined && SpecificProductId != undefined)
+                if(FreeProductId != undefined || SpecificProductId != undefined)
             {
                 let formData = {
                 'items': [{
                 'id': FreeProductId,
                 'quantity': 1,
-                  'id' :SpecificProductId,
+                 
+                }],
+                  [{
+                     'id' :SpecificProductId,
                   'quantity': 1
-                }]
+                  }]
        
                 };
                 fetch(window.Shopify.routes.root + 'cart/add.js', {
