@@ -151,14 +151,13 @@
         });
 
         function addFreeProductToCart() {
-          // Add your existing code here to add the free product to the cart
-          // ...
-
-          // For example:
-          // You can use the FreeProductId to add the free product to the cart
-          console.log("Adding free product to cart:", FreeProductId);
-          // Add your code to add the free product to the cart using your platform's API
+                  if (FreeProductId === 44127900663962) { // Replace 123456789 with the actual ID you're checking for
+                    console.log("Adding free product to cart:", FreeProductId);
+                  } else {
+                    console.log("Not adding free product to cart. Specific product ID not present.");
+                  }
         }
+
       </script>
 
 
