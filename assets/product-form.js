@@ -74,11 +74,11 @@ if (FreeProductId !== undefined && MainProductId !== null) {
         'id': FreeProductId,
         'quantity': 1,
      
-      },
-      {
-      'id': MainProductId,
-      'quantity': 1
       }
+      // {
+      // 'id': MainProductId,
+      // 'quantity': 1
+      // }
    
     ]
   };
