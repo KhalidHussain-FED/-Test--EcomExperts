@@ -11,7 +11,7 @@
     "name": "Free Product Block",
     "settings": [
       {
-        "type": "text",
+        "type": "product",
         "id": "main_product",
         "label": "Main Product"
       },
