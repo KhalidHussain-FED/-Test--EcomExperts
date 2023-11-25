@@ -12,8 +12,9 @@
     "settings": [
       {
         "type": "product",
-        "id": "selectedProductId",
-        "label": "Free Product"
+        "id": "selectedFreeProductId",
+        "label": "Free Product",
+        "info": "Select the free product"
       },
       {
         "type": "checkbox",
