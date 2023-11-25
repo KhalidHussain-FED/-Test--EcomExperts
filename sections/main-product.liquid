@@ -133,15 +133,20 @@
   {%- endif -%}
 
 <script>
-  console.log('Script is running!');
+ console.log('Script is running!');
 
-  // Specify the product ID and variant ID
-  var mainProductId = 7987569885338;
-  var additionalProductId = 7987569819802;
-  var variantId = 44127900663962; // Replace with the actual variant ID
+  // Specify the product IDs and variant options
+  var handbagProductId = 7987569885338; // Replace with the actual product ID of the handbag
+  var handbagVariantOptions = {
+    color: 'Black',
+    size: 'Medium',
+    // Add other variant options as needed
+  };
 
-  // Helper function to make a POST request for adding a product with variant
-  function addToCartWithVariant(productId, variantId) {
+  var jacketProductId = 7987569819802; // Replace with the actual product ID of the Soft Winter Jacket
+
+  // Helper function to make a POST request for adding a product with variant options
+  function addToCartWithVariantOptions(productId, variantOptions) {
     return fetch('/cart/add.js', {
       method: 'POST',
       headers: {
@@ -152,26 +157,32 @@
           {
             quantity: 1, // adjust the quantity as needed
             id: productId,
-            properties: {
-              variant_id: variantId,
-            },
+            properties: variantOptions,
           },
         ],
       }),
     });
   }
 
-  // Function to check if the main product is in the cart and add the additional product with variant
-  function checkAndAddAdditionalProductToCart() {
+  // Function to check if the handbag with specific variant options is added to the cart
+  function checkAndAddJacketToCart() {
     fetch('/cart.js')
       .then(response => response.json())
       .then(cartData => {
-        var mainProductInCart = cartData.items.some(item => item.product_id === mainProductId);
+        var handbagInCart = cartData.items.some(item => {
+          if (item.product_id === handbagProductId) {
+            // Check if the variant options match
+            return Object.entries(handbagVariantOptions).every(
+              ([key, value]) => item.properties && item.properties[key] === value
+            );
+          }
+          return false;
+        });
 
-        if (mainProductInCart) {
-          addToCartWithVariant(additionalProductId, variantId)
+        if (handbagInCart) {
+          addToCartWithVariantOptions(jacketProductId, {})
             .then(function() {
-              console.log('Additional product with variant has been added to the cart!');
+              console.log('Soft Winter Jacket has been added to the cart!');
             })
             .catch(function(error) {
               console.error('Error:', error);
@@ -183,8 +194,8 @@
       });
   }
 
-  // Start checking and adding the additional product with variant to the cart
-  checkAndAddAdditionalProductToCart();
+  // Start checking and adding the Soft Winter Jacket to the cart when the handbag is added
+  checkAndAddJacketToCart();
 </script>
 
 
