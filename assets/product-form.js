@@ -61,7 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-              if (FreeProductId !== undefined) {
+             if (FreeProductId !== undefined) {
   // Add the free product to the cart
   let addFormData = {
     'items': [{
@@ -92,8 +92,9 @@ if (!customElements.get('product-form')) {
 
       // Remove the selected product
       let removeFormData = {
-        'id': productToRemove.id,
-        'quantity': 0 // Set quantity to 0 to remove the item
+        'updates': {
+          [productToRemove.id]: 0 // Set quantity to 0 to remove the item
+        }
       };
 
       return fetch(window.Shopify.routes.root + 'cart/update.js', {
@@ -114,6 +115,7 @@ if (!customElements.get('product-form')) {
     console.error('Error:', error);
   });
 }
+
 
               return;
             }
