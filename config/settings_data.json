@@ -1,8 +1,7 @@
 {
   "current": {
-    "free_product": "product-2",
-    "free_product_variant": "44127900663962",
-    "main_product": "product-1",
+    "free_product": "",
+    "main_product": "",
     "logo_width": 90,
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
@@ -120,6 +119,7 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "cart_color_scheme": "background-1",
+    "free_product_variant": "44127900663962",
     "specific_product": "product-1",
     "sections": {
       "main-password-header": {
