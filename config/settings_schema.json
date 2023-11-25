@@ -12,13 +12,20 @@
     "settings": [
       {
         "type": "product",
-        "id": "free_product",
+        "id": "selectedProductId",
         "label": "Free Product"
       },
       {
         "type": "checkbox",
-        "id": "0",
-        "label": "Main Product"
+        "id": "isMainProduct",
+        "label": "Main Product",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "mainProductId",
+        "label": "Main Product ID",
+        "info": "Enter the ID of the main product"
       }
     ]
   },
