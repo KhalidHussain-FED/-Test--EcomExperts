@@ -64,11 +64,11 @@ if (!customElements.get('product-form')) {
               
   const MainProductId = '44127900663962';
  // const FreeProductId = '44158968135834'; // Replace with the actual ID of your free product
-var test = 0;
+
 // Check if MainProductId is defined
-if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
+if (FreeProductId !== undefined && FreeProductId !== null ) {
   // Create formData with the main product details
-  test = 1;
+  
   let formData = {
     'items': [
       {
@@ -79,11 +79,6 @@ if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
   };
 
   // break;
-
-  if (test === 0)
-  {
-    break;
-  }
 
 
 
