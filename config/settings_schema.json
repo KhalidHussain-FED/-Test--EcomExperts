@@ -12,21 +12,8 @@
     "settings": [
       {
         "type": "product",
-        "id": "selectedFreeProductId",
-        "label": "Free Product",
-        "info": "Select the free product"
-      },
-      {
-        "type": "checkbox",
-        "id": "isMainProduct",
-        "label": "Main Product",
-        "default": false
-      },
-      {
-        "type": "text",
-        "id": "mainProductId",
-        "label": "Main Product ID",
-        "info": "Enter the ID of the main product"
+        "id": "free_product",
+        "label": "Free Product"
       }
     ]
   },
