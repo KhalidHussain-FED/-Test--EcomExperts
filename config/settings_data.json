@@ -1,7 +1,7 @@
 {
   "current": {
-    "free_product": "",
-    "main_product": "",
+    "main_product": "product-1",
+    "free_product": "product-2",
     "logo_width": 90,
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
