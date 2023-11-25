@@ -120,10 +120,10 @@ if (HandbagTitle !== undefined) {
             body: JSON.stringify(freeProductFormData)
           });
         } 
-        // else 
-        // {
-        //   throw new Error('Free Product not found.');
-        // }
+        else 
+        {
+          throw new Error('Free Product not found.');
+        }
       });
   })
   .then(freeProductResponse => {
