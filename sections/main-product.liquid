@@ -129,14 +129,24 @@
   {%- endstyle -%}
 
   {% if settings.free_product != blank %}
+    <select id="sizeSelector">
+      {% for variant in product.variants %}
+        <option value="{{ variant.id }}">{{ variant.title }}</option>
+      {% endfor %}
+    </select>
+
     <script>
+      document.getElementById('sizeSelector').addEventListener('change', function() {
+        var selectedVariantId = this.value;
+        console.log('Selected Variant ID: ' + selectedVariantId);
 
-              var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-      console.log(FreeProductId);
-              var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+        // Now you can use the selectedVariantId as needed, for example:
+        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+        console.log('Free Product ID: ' + FreeProductId);
 
-
-              console.log(MainProductId);
+        var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+        console.log('Main Product ID: ' + MainProductId);
+      });
     </script>
   {% endif %}
 
