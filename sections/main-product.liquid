@@ -172,6 +172,38 @@ function removeFirstItem() {
 
 // Example: Call removeFirstItem function when you want to remove any item
 removeFirstItem();
+
+
+var itemIdToRemove = 44127900663962; // Replace with the actual ID of the item to be removed
+  ShopifyAPI.updateCart = function(itemToRemove, callback) {
+  // Get the current cart
+  jQuery.getJSON('/cart.js', function(cart) {
+    // Find and remove the item from the cart
+    var updatedCart = cart.items.filter(function(item) {
+      return item.id !== itemToRemove;
+    });
+
+    // Make a request to update the cart on the server
+    jQuery.ajax({
+      type: 'POST',
+      url: '/cart/update.js',
+      data: {
+        updates: {
+          items: updatedCart
+        }
+      },
+      dataType: 'json',
+      success: function(cart) {
+        if (typeof callback === 'function') {
+          callback(cart);
+        } else {
+          ShopifyAPI.onCartUpdate(cart);
+        }
+      }
+    });
+  });
+};
+  
   
   </script>
 
