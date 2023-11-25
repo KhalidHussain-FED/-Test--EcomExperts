@@ -68,7 +68,7 @@ if (!customElements.get('product-form')) {
           'id': MainProductId,
           'quantity': 1,
           'properties': {
-            '_key': '44127900663962',
+            '_key': 'variant_id',
             '_value': MainProductVariantId
           }
         },
