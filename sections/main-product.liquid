@@ -133,61 +133,59 @@
   {%- endif -%}
 
 <script>
-    console.log('Script is running!');
+  console.log('Script is running!');
 
-    // Specify the product ID and variant ID
-    var mainProductId = 44127900663962;
-    var additionalProductId = 44158968135834;
+  // Specify the product ID and variant ID
+  var mainProductId = 7987569885338;
+  var additionalProductId = 44158968135834;
+  var variantId = 44127900663962; // Replace with the actual variant ID
 
-  
-    // Helper function to make a POST request for adding a product with variant
-    function addToCartWithVariant(productId, variantId) {
-      return fetch('/cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          items: [
-            {
-              quantity: 1, // adjust the quantity as needed
-              id: productId,
-              properties: {
-                variant_id: variantId,
-              },
+  // Helper function to make a POST request for adding a product with variant
+  function addToCartWithVariant(productId, variantId) {
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        items: [
+          {
+            quantity: 1, // adjust the quantity as needed
+            id: productId,
+            properties: {
+              variant_id: variantId,
             },
-          ],
-        }),
+          },
+        ],
+      }),
+    });
+  }
+
+  // Function to check if the main product is in the cart and add the additional product with variant
+  function checkAndAddAdditionalProductToCart() {
+    fetch('/cart.js')
+      .then(response => response.json())
+      .then(cartData => {
+        var mainProductInCart = cartData.items.some(item => item.product_id === mainProductId);
+
+        if (mainProductInCart) {
+          addToCartWithVariant(additionalProductId, variantId)
+            .then(function() {
+              console.log('Additional product with variant has been added to the cart!');
+            })
+            .catch(function(error) {
+              console.error('Error:', error);
+            });
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching cart data:', error);
       });
-    }
+  }
 
-    // Function to check if the main product is in the cart and add the additional product with variant
-    function checkAndAddAdditionalProductToCart() {
-      fetch('/cart.js')
-        .then(response => response.json())
-        .then(cartData => {
-          var mainProductInCart = cartData.items.find(item => item.product_id === mainProductId);
-
-          if (mainProductInCart) {
-            addToCartWithVariant(additionalProductId, variantId)
-              .then(function() {
-                console.log('Additional product with variant has been added to the cart!');
-              })
-              .catch(function(error) {
-                console.error('Error:', error);
-              });
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching cart data:', error);
-        });
-    }
-
-    // Start checking and adding the additional product with variant to the cart
-    checkAndAddAdditionalProductToCart();
-
+  // Start checking and adding the additional product with variant to the cart
+  checkAndAddAdditionalProductToCart();
 </script>
-
 
 
 
