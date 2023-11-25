@@ -61,7 +61,39 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-                
+                function addToCart(productId) {
+    let formData = {
+      'items': [{
+        'id': productId,
+        'quantity': 1
+      }]
+    };
+
+    fetch(window.Shopify.routes.root + 'cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => {
+      window.location = window.routes.cart_url;
+      return response.json();
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+
+  // Check if FreeProductId is defined, if yes, add the free product to the cart
+  if (FreeProductId != undefined) {
+    addToCart(FreeProductId);
+  }
+
+  // Check if SpecificProductId is defined, if yes, add the specific product to the cart
+  if (SpecificProductId != undefined) {
+    addToCart(SpecificProductId);
+  }
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
@@ -115,36 +147,4 @@ if (!customElements.get('product-form')) {
   );
 }
 
- function addToCart(productId) {
-    let formData = {
-      'items': [{
-        'id': productId,
-        'quantity': 1
-      }]
-    };
-
-    fetch(window.Shopify.routes.root + 'cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(response => {
-      window.location = window.routes.cart_url;
-      return response.json();
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }
-
-  // Check if FreeProductId is defined, if yes, add the free product to the cart
-  if (FreeProductId != undefined) {
-    addToCart(FreeProductId);
-  }
-
-  // Check if SpecificProductId is defined, if yes, add the specific product to the cart
-  if (SpecificProductId != undefined) {
-    addToCart(SpecificProductId);
-  }
+ 
