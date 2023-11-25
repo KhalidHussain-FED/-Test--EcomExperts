@@ -162,8 +162,8 @@ fetch(window.Shopify.routes.root + 'cart/add.js', {
     // After removing the product, redirect to the cart
     window.location = window.routes.cart_url;
   })
-  .catch(error => console.error('Error:', error));
-            })
+  // .catch(error => console.error('Error:', error));
+            }
         
               return;
             }
