@@ -133,62 +133,64 @@
   {% endif %}
   
 <script>
-  let cartBtn = document.getElementById("ProductSubmitButton-template--16312456642714__main");
-  const form = document.getElementById("product-form-template--16312456642714__main");
+  document.addEventListener("DOMContentLoaded", function() {
+    let cartBtn = document.getElementById("ProductSubmitButton-template--16312456642714__main");
+    const form = document.getElementById("product-form-template--16312456642714__main");
 
+    // Set the main product and variant IDs
+    const mainProductID = 7987569885338;
+    const mainProductVariantID = 44127900663962;
+    const freeProductID = 44158968135834;
 
-  // Set the main product and variant IDs
-  const mainProductID = 7987569885338;
-  const mainProductVariantID = 44127900663962;
-  const freeProductID = 44158968135834;
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (cartBtn.getAttribute("data-variant-id")) {
+        removeItem();
+      } else {
+        addItem();
+      }
+    });
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (cartBtn.getAttribute("data-variant-id")) {
-      removeItem();
-    } else {
-      addItem();
+    function removeItem() {
+      let variantId = cartBtn.getAttribute("data-variant-id");
+      $.ajax({
+        type: 'POST',
+        url: '/cart/change.js',
+        dataType: 'json',
+        data: {
+          'id': parseFloat(variantId),
+          'quantity': 0
+        }
+      })
+      .then(data => {
+        cartBtn.textContent = "Add to cart";
+        cartBtn.removeAttribute("data-variant-id");
+      })
+    }
+
+    function addItem() {
+      // Use the main product and variant IDs here
+      $.ajax({
+        type: 'POST',
+        url: '/cart/add.js',
+        dataType: 'json',
+        data: {
+          'id': mainProductID, // Use the main product ID
+          'quantity': 1,
+          'properties': {
+            'variant_id': mainProductVariantID, // Use the main product variant ID
+            'free_product_id': freeProductID // Use the free product ID
+          }
+        }
+      })
+      .then(data => {
+        cartBtn.textContent = "Remove from cart";
+        cartBtn.setAttribute("data-variant-id", data.variant_id);
+      })
     }
   });
-
-  function removeItem() {
-    let variantId = cartBtn.getAttribute("data-variant-id");
-    $.ajax({
-      type: 'POST',
-      url: '/cart/change.js',
-      dataType: 'json',
-      data: {
-        'id': parseFloat(variantId),
-        'quantity': 0
-      }
-    })
-    .then(data => {
-      cartBtn.textContent = "Add to cart";
-      cartBtn.removeAttribute("data-variant-id");
-    })
-  }
-
-  function addItem() {
-    // Use the main product and variant IDs here
-    $.ajax({
-      type: 'POST',
-      url: '/cart/add.js',
-      dataType: 'json',
-      data: {
-        'id': mainProductID, // Use the main product ID
-        'quantity': 1,
-        'properties': {
-          'variant_id': mainProductVariantID, // Use the main product variant ID
-          'free_product_id': freeProductID // Use the free product ID
-        }
-      }
-    })
-    .then(data => {
-      cartBtn.textContent = "Remove from cart";
-      cartBtn.setAttribute("data-variant-id", data.variant_id);
-    })
-  }
 </script>
+
 
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
