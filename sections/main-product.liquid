@@ -115,12 +115,10 @@
              if (dropdown.selectedIndex === 2) {
                  var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
       console.log(MainProductId);
-                 // Assuming you want to display MainProductId for each option in the dropdown
-
                  console.log(FreeProductId);
              }
                });
-                                                   }
+             }
                               // Wrap the setup function in a DOMContentLoaded event listener
            document.addEventListener('DOMContentLoaded', function() {
              setupDropdownAndButton();
