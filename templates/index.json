@@ -72,11 +72,24 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "2703ec0b-44a7-4870-b55e-4c71228f0406": {
+      "type": "free_product_section",
+      "settings": {
+        "selectedFreeProductId": "product-2",
+        "triggerProduct": "product-2",
+        "isMainProduct": true,
+        "promotionTitle": "Don't Miss Out on This Perfect Suggestion!",
+        "promotionDescription": "Buy our amazing trigger product and get the perfect suggestion for free. Limited stock available. Grab yours now!",
+        "backgroundColor": "#ffd700",
+        "textColor": "#ffffff"
+      }
     }
   },
   "order": [
     "image_banner",
     "featured_collection",
-    "1700311042ff2a96d4"
+    "1700311042ff2a96d4",
+    "2703ec0b-44a7-4870-b55e-4c71228f0406"
   ]
 }
