@@ -188,7 +188,7 @@
       })
       .then(response => response.json())
       .then(data => {
-        cartBtn.textContent = "Remove from cart test";
+
         cartBtn.setAttribute("data-variant-id", data.variant_id);
       })
       .catch(error => console.error('Error:', error));
