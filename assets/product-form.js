@@ -61,34 +61,50 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-               if (FreeProductId !== undefined && isMainProductInCart) {
-                  let formData = {
-                    'items': [
-                      {
-                        'id': FreeProductId,
-                        'quantity': 1
-                      }
-                    ]
-                  };
-                
-                  fetch(window.Shopify.routes.root + 'cart/add.js', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                  })
-                    .then(response => {
-                      window.location = window.routes.cart_url;
-                      return response.json();
-                    })
-                    .catch((error) => {
-                      console.error('Error:', error);
-                    });
-                }
+               // ... (previous code)
 
-              return;
-            }
+// Main product variant ID and Free Product ID
+const mainProductVariantId = 44127900663962;
+const freeProductId = 44158968135834;
+
+// Check if FreeProductId is defined and the main product variant is in the cart
+const isMainProductInCart = window.Shopify.checkout && window.Shopify.checkout.lineItems.some(item => item.variant_id === mainProductVariantId);
+
+if (FreeProductId !== undefined && isMainProductInCart) {
+  // Create form data with the free product details
+  let formData = {
+    'items': [
+      {
+        'id': FreeProductId,
+        'quantity': 1
+      }
+    ]
+  };
+
+  // Make a POST request to add the free product to the cart
+  fetch(window.Shopify.routes.root + 'cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(response => {
+    window.location = window.routes.cart_url;
+    return response.json();
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+  return;
+}
+
+// Continue with the rest of your code...
+if (response.status) {
+  // ... (rest of the code)
+}
+
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
