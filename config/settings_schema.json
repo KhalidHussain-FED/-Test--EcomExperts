@@ -18,6 +18,16 @@
     ]
   },
   {
+    "name": "Select Specific Product",
+    "settings": [
+      {
+        "type": "product",
+        "id": "specific_product",
+        "label": "Specific Product"
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.logo.name",
     "settings": [
       {
