@@ -175,35 +175,48 @@ removeFirstItem();
 
 
 var itemIdToRemove = 44127900663962; // Replace with the actual ID of the item to be removed
-  ShopifyAPI.updateCart = function(itemToRemove, callback) {
-  // Get the current cart
-  jQuery.getJSON('/cart.js', function(cart) {
-    // Find and remove the item from the cart
-    var updatedCart = cart.items.filter(function(item) {
-      return item.id !== itemToRemove;
-    });
 
-    // Make a request to update the cart on the server
-    jQuery.ajax({
-      type: 'POST',
-      url: '/cart/update.js',
-      data: {
-        updates: {
-          items: updatedCart
+ShopifyAPI.updateCart = function(itemToRemove, callback) {
+  // Get the current cart
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/cart.js', true);
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      var cart = JSON.parse(xhr.responseText);
+
+      // Find and remove the item from the cart
+      var updatedCart = cart.items.filter(function(item) {
+        return item.id !== itemToRemove;
+      });
+
+      // Make a request to update the cart on the server
+      var updateXhr = new XMLHttpRequest();
+      updateXhr.open('POST', '/cart/update.js', true);
+      updateXhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+      updateXhr.onreadystatechange = function () {
+        if (updateXhr.readyState === 4 && updateXhr.status === 200) {
+          var updatedCart = JSON.parse(updateXhr.responseText);
+
+          if (typeof callback === 'function') {
+            callback(updatedCart);
+          } else {
+            ShopifyAPI.onCartUpdate(updatedCart);
+          }
+
+          // Reload the window after successful update with plain JavaScript
+          window.location.reload();
         }
-      },
-      dataType: 'json',
-      success: function(cart) {
-        if (typeof callback === 'function') {
-          callback(cart);
-        } else {
-          ShopifyAPI.onCartUpdate(cart);
-        }
-      }
-    });
-  });
+      };
+
+      updateXhr.send(JSON.stringify({ updates: { items: updatedCart } }));
+    }
+  };
+
+  xhr.send();
 };
-  
+
   
   </script>
 
