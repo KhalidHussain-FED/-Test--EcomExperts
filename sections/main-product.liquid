@@ -133,70 +133,91 @@
   {%- endif -%}
 
 <script>
- console.log('Script is running!');
+    console.log('Script is running!');
 
-  // Specify the product IDs and variant options
-  var handbagProductId = [7987569885338]; // Replace with the actual product ID of the handbag
-  var handbagVariantOptions = {
-    color: 'Black',
-    size: 'Medium',
-    // Add other variant options as needed
-  };
+    // Assuming you have an array of product IDs
+    var initialProductIds = [44158968135834]; // Add the initial product ID(s)
 
-  var jacketProductId = [44158968135834]; // Replace with the actual product ID of the Soft Winter Jacket
+    // Helper function to make a POST request for removing a product
+    function removeFromCart(productId) {
+      return fetch('/cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          updates: {
+            [productId]: 0, // Set quantity to 0 to remove the product
+          },
+        }),
+      });
+    }
 
-  // Helper function to make a POST request for adding a product with variant options
-  function addToCartWithVariantOptions(productId, variantOptions) {
-    return fetch('/cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    // Helper function to make a POST request for adding a product
+    function addToCart(productId, variantOptions = null) {
+      var bodyData = {
         items: [
           {
             quantity: 1, // adjust the quantity as needed
             id: productId,
-            properties: variantOptions,
           },
         ],
-      }),
-    });
-  }
+      };
 
-  // Function to check if the handbag with specific variant options is added to the cart
-  function checkAndAddJacketToCart() {
-    fetch('/cart.js')
-      .then(response => response.json())
-      .then(cartData => {
-        var handbagInCart = cartData.items.some(item => {
-          if (item.product_id === handbagProductId) {
-            // Check if the variant options match
-            return Object.entries(handbagVariantOptions).every(
-              ([key, value]) => item.properties && item.properties[key] === value
-            );
-          }
-          return false;
-        });
+      if (variantOptions) {
+        bodyData.items[0].properties = variantOptions;
+      }
 
-        if (handbagInCart) {
-          addToCartWithVariantOptions(jacketProductId, {})
-            .then(function() {
-              console.log('Soft Winter Jacket has been added to the cart!');
-            })
-            .catch(function(error) {
-              console.error('Error:', error);
-            });
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching cart data:', error);
+      return fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyData),
       });
-  }
+    }
 
-  // Start checking and adding the Soft Winter Jacket to the cart when the handbag is added
-  checkAndAddJacketToCart();
+    // Function to add initial products to the cart sequentially
+    function addInitialProductsToCart(index) {
+      if (index < initialProductIds.length) {
+        addToCart(initialProductIds[index])
+          .then(function() {
+            console.log('Product ' + (index + 1) + ' has been added to the cart!');
+            // Add the next initial product recursively
+            addInitialProductsToCart(index + 1);
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
+      } else {
+        // After adding initial products, add the handbag with specified variant options
+        addHandbagToCart();
+      }
+    }
+
+    // Function to add the handbag with specified variant options to the cart
+    function addHandbagToCart() {
+      var handbagProductId = 7987569885338; // Replace with the actual product ID of the handbag
+      var handbagVariantOptions = {
+        color: 'Black',
+        size: 'Medium',
+        // Add other variant options as needed
+      };
+
+      addToCart(handbagProductId, handbagVariantOptions)
+        .then(function() {
+          console.log('Handbag with variant options has been added to the cart!');
+        })
+        .catch(function(error) {
+          console.error('Error:', error);
+        });
+    }
+
+    // Start adding initial products from the first one
+    addInitialProductsToCart(0);
+
 </script>
+
 
 
 
