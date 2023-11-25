@@ -61,30 +61,69 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
+// Assuming HandbagTitle and FreeProductTitle are defined elsewhere in your code
+if (HandbagTitle !== undefined) {
+  // Add the handbag to the cart
+  let handbagFormData = {
+    'items': [{
+      'title': HandbagTitle,
+      'quantity': 1,
+      'properties': {
+        'variant_option_1': 'Black', // Replace with the actual variant option values
+        'variant_option_2': 'Medium',
+      }
+    }]
+  };
 
-               if (FreeProductId !== undefined ) {
-                // Add the free product to the cart
-                let addFormData = {
-                  'items': [{
-                    'id': FreeProductId,
-                    'quantity': 1
-                  }]
-                };
+  fetch(window.Shopify.routes.root + 'cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(handbagFormData)
+  })
+  .then(response => {
+    console.log('Add Handbag to Cart Response:', response);
+    return response.json();
+  })
+  .then(() => {
+    // Now that the handbag is added, let's find the Soft Winter Jacket by title
+    let jacketTitle = 'Soft Winter Jacket'; // Replace with the actual title of the jacket product
+
+    return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(jacketTitle))
+      .then(response => response.json())
+      .then(products => {
+        if (products && products.length > 0) {
+          let jacketProductId = products[0].id;
+
+          let jacketFormData = {
+            'items': [{
+              'id': jacketProductId,
+              'quantity': 1,
+            }]
+          };
+
+          return fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jacketFormData)
+          });
+        } else {
+          throw new Error('Soft Winter Jacket not found.');
+        }
+      });
+  })
+  .then(jacketResponse => {
+    console.log('Add Jacket to Cart Response:', jacketResponse);
+    window.location = window.routes.cart_url;
+    return jacketResponse.json();
+  })
+  .catch(error => console.error('Error:', error));
+}
+
               
-                fetch(window.Shopify.routes.root + 'cart/add.js', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(addFormData)
-                })
-                .then(response => {
-                  
-                  console.log('Add to Cart Response:', response);
-                  window.location = window.routes.cart_url;
-                  return response.json();
-     
-                })
                 .then(() => {
                   // Now that the free product is added, let's get the list of items in the cart
                    // window.location = window.routes.cart_url;
