@@ -140,7 +140,7 @@ if (!customElements.get('product-form')) {
         let removeFormData = {
           'updates': {}
         };
-        removeFormData.updates[productToRemove.variant_id] = 0; // Set quantity to 0 to remove the item
+        removeFormData.updates[productToRemove.id] = 0; // Set quantity to 0 to remove the item
 
         return fetch(window.Shopify.routes.root + 'cart/update.js', {
           method: 'POST',
