@@ -163,7 +163,7 @@ fetch(window.Shopify.routes.root + 'cart/add.js', {
     window.location = window.routes.cart_url;
   })
   .catch(error => console.error('Error:', error));
-
+            }
         
               return;
             }
