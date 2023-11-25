@@ -100,6 +100,10 @@ if (FreeProductId !== undefined && FreeProductId !== null && MainProductId = '44
     console.error('Error:', error);
   });
 }
+              else
+{
+  alert("not main");
+}
 
    return;
   }
