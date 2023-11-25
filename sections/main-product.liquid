@@ -137,9 +137,10 @@
           mydropdown.addEventListener('change', function() {
             if (mydropdown.selectedIndex === 2) {
               var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+      console.log(FreeProductId);
               var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
 
-              console.log(FreeProductId);
+
               console.log(MainProductId);
             }
           });
