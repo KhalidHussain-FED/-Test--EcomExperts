@@ -61,7 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-                   // Main product details
+ // Main product details
 const mainProductVariantId = 44127900663962;
 const freeProductId = 44158968135834;
 
