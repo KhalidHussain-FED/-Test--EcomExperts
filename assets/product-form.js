@@ -117,7 +117,7 @@ if (!customElements.get('product-form')) {
                 .then(response => response.json())
                 .then(() => {
                   // After removing the product, redirect to the cart
-                  window.location = window.routes.cart_url;
+                  // window.location = window.routes.cart_url;
                   return;
                 })
                 .catch((error) => {
