@@ -132,73 +132,55 @@
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
-  <script>
-    console.log('Script is running!');
+<script>
+  console.log('Script is running!');
 
-    // Assuming you have an array of product IDs
-    var productIds = [44158968135834]; // Add the specific product ID
+  // Assuming you have an array of product IDs
+  var productIds = [44158968135834]; // Add the specific product ID
 
-    // Helper function to make a POST request for removing a product
-    function removeFromCart(productId) {
-      return fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+  // Helper function to make a POST request for adding a product
+  function addToCart(productId, variantId = null) {
+    var bodyData = {
+      items: [
+        {
+          quantity: 1, // adjust the quantity as needed
+          id: productId,
         },
-        body: JSON.stringify({
-          updates: {
-            [productId]: 0, // Set quantity to 0 to remove the product
-          },
-        }),
-      });
+      ],
+    };
+
+    if (variantId) {
+      bodyData.items[0].variant_id = variantId;
     }
 
-    // Helper function to make a POST request for adding a product
-    function addToCart(productId, variantId = null) {
-      var bodyData = {
-        items: [
-          {
-            quantity: 1, // adjust the quantity as needed
-            id: productId,
-          },
-        ],
-      };
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bodyData),
+    });
+  }
 
-      if (variantId) {
-        bodyData.items[0].properties = {
-          variant_id: variantId,
-        };
-      }
-
-      return fetch('/cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bodyData),
-      });
+  // Function to add products to the cart sequentially
+  function addProductsToCart(index) {
+    if (index < productIds.length) {
+      addToCart(productIds[index], 44127900663962) // Replace with the actual variant ID
+        .then(function() {
+          console.log('Product ' + (index + 1) + ' has been added to the cart!');
+          // Add the next product recursively
+          addProductsToCart(index + 1);
+        })
+        .catch(function(error) {
+          console.error('Error:', error);
+        });
     }
+  }
 
-    // Function to add products to the cart sequentially
-    function addProductsToCart(index) {
-      if (index < productIds.length) {
-        addToCart(productIds[index])
-          .then(function() {
-            console.log('Product ' + (index + 1) + ' has been added to the cart!');
-            // Add the next product recursively
-            addProductsToCart(index + 1);
-          })
-          .catch(function(error) {
-            console.error('Error:', error);
-          });
-      }
-    }
+  // Start adding products from the first one
+  addProductsToCart(0);
+</script>
 
-    // Start adding products from the first one
-    addProductsToCart(0);
-
-  
-  </script>
 
 
 
