@@ -102,11 +102,11 @@ if (HandbagTitle !== undefined) {
       })
       .then(products => {
         if (products && products.length > 0) {
-          let freeProductID = products[0].id;
+          let freeProductID = '44158968135834';
 
           let freeProductFormData = {
             'items': [{
-              'id': FreeProductTitle,
+              'id': freeProductID,
               'quantity': 1,
             }]
           };
