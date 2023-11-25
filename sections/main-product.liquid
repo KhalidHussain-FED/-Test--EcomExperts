@@ -197,20 +197,6 @@
     // Start adding products from the first one
     addProductsToCart(0);
 
-    // Listen for the removal of the first product
-    document.addEventListener('cart.updated', function(event) {
-      var removedProductIds = event.detail.removed_product_ids;
-      if (removedProductIds && removedProductIds.includes(productIds[0])) {
-        // If the first product is removed, remove the second product
-        removeFromCart(productIds[0])
-          .then(function() {
-            console.log('Second product has been removed from the cart!');
-          })
-          .catch(function(error) {
-            console.error('Error:', error);
-          });
-      }
-    });
   </script>
 
 
