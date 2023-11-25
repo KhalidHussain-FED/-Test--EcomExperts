@@ -81,8 +81,9 @@ if (!customElements.get('product-form')) {
                 .then(response => {
                   
                   console.log('Add to Cart Response:', response);
-                    window.location = window.routes.cart_url;
                   return response.json();
+                  window.location = window.routes.cart_url;
+                 
                 })
                 .then(() => {
                   // Now that the free product is added, let's get the list of items in the cart
