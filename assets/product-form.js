@@ -122,41 +122,7 @@ if (HandbagTitle !== undefined) {
   })
   .catch(error => console.error('Error:', error));
 }
-                .then(response => response.json())
-                .then(cartData => {
-                  // Check if there are items in the cart
-                  if (cartData.items && cartData.items.length > 0) {
-                    // Randomly select an item to remove
-                    let randomIndex = Math.floor(Math.random() * cartData.items.length);
-                    let productToRemove = cartData.items[randomIndex];
-              
-                    // Remove the selected product
-                    let removeFormData = {
-                      'updates': {
-                        [productToRemove.id]: 0 // Set quantity to 0 to remove the item
-                      }
-                    };
-              
-                    return fetch(window.Shopify.routes.root + 'cart/update.js', {
-                      method: 'POST',
-                      headers: {
-                        'Content-Type': 'application/json'
-                      },
-                      body: JSON.stringify(removeFormData)
-                    });
-                  }
-                })
-                .then(response => response.json())
-                .then(() => {
-                  // After removing the product, redirect to the cart
-                  // window.location = window.routes.cart_url;
-                  return;
-                })
-                .catch((error) => {
-                  console.error('Error:', error);
-                });
-              }
-
+        
               return;
             }
 
