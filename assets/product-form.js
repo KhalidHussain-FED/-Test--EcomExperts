@@ -77,6 +77,8 @@ if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
     ]
   };
 
+  break;
+
 
 
   // Construct the fetch request to add products to the cart
