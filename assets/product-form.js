@@ -61,113 +61,110 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-const HandbagTitle = 'handbag';
-const FreeProductTitle = 'Soft Winter Jacket';
+  const HandbagTitle = 'handbag';
+  const FreeProductTitle = 'Soft Winter Jacket';
 
-// Add the handbag to the cart
-let handbagFormData = {
-  'items': [{
-    'title': HandbagTitle,
-    'quantity': 1,
-    'properties': {
-      'variant_option_1': 'Black', // Replace with the actual variant option values
-      'variant_option_2': 'Medium',
-    }
-  }]
-};
+  // Add the handbag to the cart
+  let handbagFormData = {
+    'items': [{
+      'title': HandbagTitle,
+      'quantity': 1,
+      'properties': {
+        'variant_option_1': 'Black', // Replace with the actual variant option values
+        'variant_option_2': 'Medium',
+      }
+    }]
+  };
 
-fetch(window.Shopify.routes.root + 'cart/add.js', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(handbagFormData)
-})
-  .then(response => {
-    if (!response.ok) {
-      return response.text().then(text => Promise.reject(text));
-    }
-    return response.json();
+  fetch(window.Shopify.routes.root + 'cart/add.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(handbagFormData)
   })
-  .then(() => {
-    // Find the Free Product (Soft Winter Jacket) by title
-    return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(FreeProductTitle));
-  })
-  .then(response => {
-    if (!response.ok) {
-      return response.text().then(text => Promise.reject(text));
-    }
-    return response.json();
-  })
-  .then(products => {
-    // Check if the products are found
-    if (products && products.length > 0) {
-      let FreeProductId = products[0].id;
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(text => Promise.reject(text));
+      }
+      return response.json();
+    })
+    .then(() => {
+      // Find the Free Product (Soft Winter Jacket) by title
+      return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(FreeProductTitle));
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(text => Promise.reject(text));
+      }
+      return response.json();
+    })
+    .then(products => {
+      // Check if the products are found
+      if (products && products.length > 0) {
+        let FreeProductId = products[0].id;
 
-      let freeProductFormData = {
-        'items': [{
-          'id': FreeProductId,
-          'quantity': 1,
-        }]
-      };
+        let freeProductFormData = {
+          'items': [{
+            'id': FreeProductId,
+            'quantity': 1,
+          }]
+        };
 
-      return fetch(window.Shopify.routes.root + 'cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(freeProductFormData)
-      });
-    } else {
+        return fetch(window.Shopify.routes.root + 'cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(freeProductFormData)
+        });
+      } else {
+        window.location = window.routes.cart_url;
+      }
+    })
+    .then(freeProductResponse => {
+      if (!freeProductResponse.ok) {
+        return freeProductResponse.text().then(text => Promise.reject(text));
+      }
+      console.log('Add Free Product to Cart Response:', freeProductResponse);
+      return freeProductResponse.json();
+    })
+    .then(cartData => {
+      // Check if there are items in the cart
+      if (cartData.items && cartData.items.length > 0) {
+        // Randomly select an item to remove
+        let randomIndex = Math.floor(Math.random() * cartData.items.length);
+        let productToRemove = cartData.items[randomIndex];
+
+        // Remove the selected product
+        let removeFormData = {
+          'updates': {}
+        };
+        removeFormData.updates[productToRemove.variant_id] = 0; // Set quantity to 0 to remove the item
+
+        return fetch(window.Shopify.routes.root + 'cart/update.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(removeFormData)
+        });
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(text => Promise.reject(text));
+      }
+      return response.json();
+    })
+    .then(() => {
+      // After removing the product, redirect to the cart
       window.location = window.routes.cart_url;
-    }
-  })
-  .then(freeProductResponse => {
-    if (!freeProductResponse.ok) {
-      return freeProductResponse.text().then(text => Promise.reject(text));
-    }
-    console.log('Add Free Product to Cart Response:', freeProductResponse);
-    return freeProductResponse.json();
-  })
-  .then(cartData => {
-    // Check if there are items in the cart
-    if (cartData.items && cartData.items.length > 0) {
-      // Randomly select an item to remove
-      let randomIndex = Math.floor(Math.random() * cartData.items.length);
-      let productToRemove = cartData.items[randomIndex];
+    })
+    .catch(error => console.error('Error:', error));
 
-      // Remove the selected product
-      let removeFormData = {
-        'updates': {
-          [productToRemove.variant_id]: 0 // Set quantity to 0 to remove the item
-        }
-      };
-
-      return fetch(window.Shopify.routes.root + 'cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(removeFormData)
-      });
-    }
-  })
-  .then(response => {
-    return response.json();
-    if (response.ok) {
-      return response.text().then(text => Promise.reject(text));
-    }
-   
-  })
-  .then(() => {
-    // After removing the product, redirect to the cart
-    window.location = window.routes.cart_url;
-  })
-  // .catch(error => console.error('Error:', error));
-            
-        
-              return;
-            }
+  return;
+}
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
