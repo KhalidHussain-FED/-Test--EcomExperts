@@ -61,11 +61,15 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-                if(FreeProductId != undefined)
+                if(FreeProductId != undefined && SpecificProductId != undefined)
             {
                 let formData = {
                 'items': [{
                 'id': FreeProductId,
+                'quantity': 1
+                }],
+                     'items': [{
+                'id': SpecificProductId,
                 'quantity': 1
                 }]
                 };
