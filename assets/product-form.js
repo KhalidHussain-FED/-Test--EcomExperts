@@ -66,7 +66,7 @@ if (!customElements.get('product-form')) {
  // const FreeProductId = '44158968135834'; // Replace with the actual ID of your free product
 
 // Check if MainProductId is defined
-if (FreeProductId !== undefined && FreeProductId !== null ) {
+if (FreeProductId !== undefined && FreeProductId !== null && MainProductId = '44127900663962') {
   // Create formData with the main product details
   
   let formData = {
@@ -101,10 +101,8 @@ if (FreeProductId !== undefined && FreeProductId !== null ) {
   });
 }
 
-
-
-              return;
-            }
+   return;
+  }
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
