@@ -127,12 +127,15 @@
 
   {% if settings.free_product != blank %}
     <script>
-        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-      var SpecificProductId = {{ settings.specific_product.selected_or_first_available_variant.id }};
-    
+        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }}; 
     </script>
   {% endif %}
-  
+  {% if settings.specific_product != blank %}
+    <script>
+   var SpecificProductId = {{ settings.specific_product.selected_or_first_available_variant.id }};
+   
+    </script>
+  {% endif %}  
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
