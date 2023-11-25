@@ -126,41 +126,37 @@
   {%- endstyle -%}
 
 
-{% assign FreeProductId = settings.free_product.selected_or_first_available_variant.id %}
-{% assign MainProductId = settings.main_product.selected_or_first_available_variant.id %}
-{% assign MainProductVariantId = 44127900663962 %}
+{% if FreeProductId != nil %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
+      addToCartBtn.addEventListener('click', function () {
+        alert('{{ MainProductVariantId }}' + ", " + '{{ MainProductId }}' + ", " + '{{ FreeProductId }}');
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
-    addToCartBtn.addEventListener('click', function () {
-      alert('{{ MainProductVariantId }}' + ", " + '{{ MainProductId }}' + ", " + '{{ FreeProductId }}');
-
-      if ('{{ MainProductVariantId }}' == '44133157339290') {
-        console.log("Free Product ID:", '{{ FreeProductId }}');
-        console.log("Main Product ID:", '{{ MainProductId }}');
-        console.log("Main Product Variant ID:", '{{ MainProductVariantId }}');
-        alert("before");
-        addFreeProductToCart();
-      } else {
-        alert("Main product variant ID matched. Free product won't be added to the cart.");
-      }
+        if ('{{ MainProductVariantId }}' == '44133157339290') {
+          console.log("Free Product ID:", '{{ FreeProductId }}');
+          console.log("Main Product ID:", '{{ MainProductId }}');
+          console.log("Main Product Variant ID:", '{{ MainProductVariantId }}');
+          alert("before");
+          addFreeProductToCart();
+        } else {
+          alert("Main product variant ID matched. Free product won't be added to the cart.");
+        }
+      });
     });
-  });
 
-  function addFreeProductToCart() {
-    // Add your existing code here to add the free product to the cart
-    // ...
-    alert("ok");
+    function addFreeProductToCart() {
+      // Add your existing code here to add the free product to the cart
+      // ...
+      alert("ok");
 
-    // For example:
-    // You can use the FreeProductId to add the free product to the cart
-    console.log("Adding free product to cart:", '{{ FreeProductId }}');
-    // Add your code to add the free product to the cart using your platform's API
-  }
-</script>
-
-
+      // For example:
+      // You can use the FreeProductId to add the free product to the cart
+      console.log("Adding free product to cart:", '{{ FreeProductId }}');
+      // Add your code to add the free product to the cart using your platform's API
+    }
+  </script>
+  {% endif %}
     
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
