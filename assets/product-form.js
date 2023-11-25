@@ -102,14 +102,16 @@ if (HandbagTitle !== undefined) {
       })
       .then(products => {
         // if (products && products.length > 0) {
-          if( FreeProductId = '44158968135834')
+          if( FreeProductId = '44158968135834' && MainProductId = '44127900663962')
           {
 
           let freeProductFormData = {
-            'items': [{
+            'items': [
+              {
               'id': FreeProductId,
               'quantity': 1,
-            }]
+            }
+            ]
           };
 
           return fetch(window.Shopify.routes.root + 'cart/add.js', {
