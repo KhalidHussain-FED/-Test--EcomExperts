@@ -61,9 +61,10 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-  const HandbagTitle = 'handbag';
-  const FreeProductTitle = 'Soft Winter Jacket';
+const HandbagTitle = 'handbag';
+const FreeProductTitle = 'Soft Winter Jacket';
 
+if (HandbagTitle !== undefined) {
   // Add the handbag to the cart
   let handbagFormData = {
     'items': [{
@@ -83,62 +84,60 @@ if (!customElements.get('product-form')) {
     },
     body: JSON.stringify(handbagFormData)
   })
-    .then(response => {
-      if (!response.ok) {
-        return response.text().then(text => Promise.reject(text));
-      }
-      return response.json();
-    })
-    .then(() => {
-      // Find the Free Product (Soft Winter Jacket) by title
-      return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(FreeProductTitle));
-    })
-    .then(response => {
-      if (!response.ok) {
-        return response.text().then(text => Promise.reject(text));
-      }
-      return response.json();
-    })
-    .then(products => {
-      // Check if the products are found
-      if (products && products.length > 0) {
-        let FreeProductId = products[0].id;
+  .then(response => {
+    console.log('Add Handbag to Cart Response:', response);
+    // if (!response.ok) {
+    //   return response.text().then(text => Promise.reject(text));
+    // }
+    return response.json();
+  })
+  .then(() => {
+    // Now that the handbag is added, let's find the Free Product (Soft Winter Jacket) by title
+    return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(FreeProductTitle))
+      .then(response => {
+        if (!response.ok) {
+          return response.text().then(text => Promise.reject(text));
+        }
+        return response.json();
+      })
+      .then(products => {
+        // if (products && products.length > 0) {
+          if( MainProductId === 44127900663962 && FreeProductId === 44158968135834  )
+          {
 
-        let freeProductFormData = {
-          'items': [{
-            'id': FreeProductId,
-            'quantity': 1,
-          }]
-        };
+          let freeProductFormData = {
+            'items': [
+              {
+              'id': FreeProductId,
+              'quantity': 1,
+            }
+            ]
+          };
 
-        return fetch(window.Shopify.routes.root + 'cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(freeProductFormData)
-        });
-      } else {
-        window.location = window.routes.cart_url;
-      }
-    })
-    .then(freeProductResponse => {
-      if (!freeProductResponse.ok) {
-        return freeProductResponse.text().then(text => Promise.reject(text));
-      }
-      console.log('Add Free Product to Cart Response:', freeProductResponse);
-      return freeProductResponse.json();
-    })
-    .then(() => {
-      // After adding products, you can perform any other necessary actions
-      console.log('Products added successfully!');
-    })
-    .catch(error => console.error('Error:', error));
-
-  return;
+          return fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(freeProductFormData)
+          });
+        } 
+        else 
+        {
+          throw new Error('Free Product not found.');
+        }
+      });
+  })
+  .then(freeProductResponse => {
+    console.log('Add Free Product to Cart Response:', freeProductResponse);
+    window.location = window.routes.cart_url;
+    return freeProductResponse.json();
+  })
+  .catch(error => console.error('Error:', error));
 }
-
-
+        
+              return;
+            }
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
