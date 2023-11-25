@@ -61,7 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-               if (FreeProductId !== undefined && MainProductVariantId) {
+               if (FreeProductId !== undefined ) {
   let formData = {
     'items': [
       {
