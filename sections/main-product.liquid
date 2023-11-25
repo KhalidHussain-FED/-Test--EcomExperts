@@ -125,7 +125,7 @@
     }
   {%- endstyle -%}
 
- {% if settings.free_product != blank and settings.main_product != blank %}
+{% if settings.free_product != blank and settings.main_product != blank %}
   <script>
     var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
     var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
@@ -136,19 +136,25 @@
       addToCartBtn.addEventListener('click', function () {
         if (MainProductVariantId === '44127900663962') {
           console.log("Free Product ID:", FreeProductId);
-          alert("hello")
+          console.log("main product id:", MainProductId);
+          console.log("main product variant id:", MainProductVariantId);
           addFreeProductToCart();
         }
       });
     });
 
     function addFreeProductToCart() {
+      // Add your existing code here to add the free product to the cart
+      // ...
 
+      // For example:
+      // You can use the FreeProductId to add the free product to the cart
       console.log("Adding free product to cart:", FreeProductId);
-
+      // Add your code to add the free product to the cart using your platform's API
     }
   </script>
 {% endif %}
+
   
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
