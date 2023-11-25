@@ -161,7 +161,7 @@ if (!customElements.get('product-form')) {
       // After removing the product, redirect to the cart
       window.location.href = window.routes.cart_url;
     })
-    .catch(error => console.error('Error:', error));
+    // .catch(error => console.error('Error:', error));
 
   return;
 }
