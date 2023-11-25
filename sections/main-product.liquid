@@ -141,6 +141,14 @@
 
       console.log("Free product added to cart:", {{ FreeProductId }});
     }
+
+    // Example function (replace this with your actual function)
+    function addToCart(productId) {
+      // Your code to add the product to the cart
+      // ...
+
+      console.log("Product added to cart:", productId);
+    }
   </script>
 {% else %}
   <script>
@@ -158,9 +166,16 @@
 
       console.log("Cart emptied.");
     }
+
+    // Example function (replace this with your actual function)
+    function clearCart() {
+      // Your code to clear the cart
+      // ...
+
+      console.log("Cart cleared.");
+    }
   </script>
 {% endif %}
-
 
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
