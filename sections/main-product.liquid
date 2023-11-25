@@ -125,53 +125,41 @@
     }
   {%- endstyle -%}
 
-<script>
-  var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-  var MainProductVariantId = '{{ settings.main_product.selected_or_first_available_variant.id }}';
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
-    addToCartBtn.addEventListener('click', function () {
-      if (MainProductVariantId === '44127900663962' && FreeProductId === 44158968135834) {
-        console.log("Adding free product to cart:", FreeProductId);
+{% if product.id == MainProductVariantId and FreeProductId == 44158968135834 %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
+      addToCartBtn.addEventListener('click', function () {
+        console.log("Adding free product to cart:", {{ FreeProductId }});
         addFreeProductToCart();
-      } else {
+      });
+    });
+
+    function addFreeProductToCart() {
+      // Example: Add the free product to the cart using an imaginary addToCart function
+      addToCart({{ FreeProductId }});
+
+      console.log("Free product added to cart:", {{ FreeProductId }});
+    }
+  </script>
+{% else %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
+      addToCartBtn.addEventListener('click', function () {
         console.log("Emptying the cart. Main product variant ID or Free Product ID not matched.");
         emptyCart();
-      }
+      });
     });
-  });
 
-  function addFreeProductToCart() {
-    // Example: Add the free product to the cart using an imaginary addToCart function
-    addToCart(FreeProductId);
+    function emptyCart() {
+      // Example: Empty the cart using an imaginary emptyCart function
+      clearCart();
 
-    console.log("Free product added to cart:", FreeProductId);
-  }
-
-  function emptyCart() {
-    // Example: Empty the cart using an imaginary emptyCart function
-    clearCart();
-
-    console.log("Cart emptied.");
-  }
-
-  // Example functions (replace these with your actual functions)
-  function addToCart(productId) {
-    // Your code to add the product to the cart
-    // ...
-
-    console.log("Product added to cart:", productId);
-  }
-
-  function clearCart() {
-    // Your code to clear the cart
-    // ...
-
-    console.log("Cart cleared.");
-  }
-</script>
-
+      console.log("Cart emptied.");
+    }
+  </script>
+{% endif %}
 
 
 
