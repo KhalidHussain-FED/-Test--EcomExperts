@@ -125,57 +125,56 @@
     }
   {%- endstyle -%}
 
-{% if product.id == MainProductVariantId and FreeProductId == 44158968135834 %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
-      addToCartBtn.addEventListener('click', function () {
-        console.log("Adding free product to cart:", {{ FreeProductId }});
-        addFreeProductToCart();
-      });
-    });
-
-    function addFreeProductToCart() {
-      // Example: Add the free product to the cart using an imaginary addToCart function
-      addToCart({{ FreeProductId }});
-
-      console.log("Free product added to cart:", {{ FreeProductId }});
-    }
-
-    // Example function (replace this with your actual function)
-    function addToCart(productId) {
-      // Your code to add the product to the cart
-      // ...
-
-      console.log("Product added to cart:", productId);
-    }
-  </script>
+{% if product.id == MainProductVariantId %}
+  <button id="ProductSubmitButton-template--16312456642714__main" onclick="addToCart()">Add to Cart</button>
 {% else %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
-      addToCartBtn.addEventListener('click', function () {
+  <button id="ProductSubmitButton-template--16312456642714__main" onclick="emptyCart()">Empty Cart</button>
+{% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main');
+    addToCartBtn.addEventListener('click', function () {
+      if (MainProductVariantId === '44127900663962' && FreeProductId === '44158968135834') {
+        console.log("Adding free product to cart:", FreeProductId);
+        addFreeProductToCart();
+      } else {
         console.log("Emptying the cart. Main product variant ID or Free Product ID not matched.");
         emptyCart();
-      });
+      }
     });
+  });
 
-    function emptyCart() {
-      // Example: Empty the cart using an imaginary emptyCart function
-      clearCart();
+  function addFreeProductToCart() {
+    // Example: Add the free product to the cart using an imaginary addToCart function
+    addToCart(FreeProductId);
 
-      console.log("Cart emptied.");
-    }
+    console.log("Free product added to cart:", FreeProductId);
+  }
 
-    // Example function (replace this with your actual function)
-    function clearCart() {
-      // Your code to clear the cart
-      // ...
+  function emptyCart() {
+    // Example: Empty the cart using an imaginary emptyCart function
+    clearCart();
 
-      console.log("Cart cleared.");
-    }
-  </script>
-{% endif %}
+    console.log("Cart emptied.");
+  }
+
+  // Example functions (replace these with your actual functions)
+  function addToCart(productId) {
+    // Your code to add the product to the cart
+    // ...
+
+    console.log("Product added to cart:", productId);
+  }
+
+  function clearCart() {
+    // Your code to clear the cart
+    // ...
+
+    console.log("Cart cleared.");
+  }
+</script>
+  
 
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
