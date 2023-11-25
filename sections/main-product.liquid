@@ -135,9 +135,6 @@
 <script>
     console.log('Script is running!');
 
-    // Assuming you have an array of product IDs
-    var initialProductIds = [44158968135834]; // Add the initial product ID(s)
-
     // Helper function to make a POST request for removing a product
     function removeFromCart(productId) {
       return fetch('/cart/update.js', {
@@ -153,46 +150,23 @@
       });
     }
 
-    // Helper function to make a POST request for adding a product
-    function addToCart(productId, variantOptions = null) {
-      var bodyData = {
-        items: [
-          {
-            quantity: 1, // adjust the quantity as needed
-            id: productId,
-          },
-        ],
-      };
-
-      if (variantOptions) {
-        bodyData.items[0].properties = variantOptions;
-      }
-
+    // Helper function to make a POST request for adding a product with variant options
+    function addToCartWithVariantOptions(productId, variantOptions) {
       return fetch('/cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bodyData),
+        body: JSON.stringify({
+          items: [
+            {
+              quantity: 1, // adjust the quantity as needed
+              id: productId,
+              properties: variantOptions,
+            },
+          ],
+        }),
       });
-    }
-
-    // Function to add initial products to the cart sequentially
-    function addInitialProductsToCart(index) {
-      if (index < initialProductIds.length) {
-        addToCart(initialProductIds[index])
-          .then(function() {
-            console.log('Product ' + (index + 1) + ' has been added to the cart!');
-            // Add the next initial product recursively
-            addInitialProductsToCart(index + 1);
-          })
-          .catch(function(error) {
-            console.error('Error:', error);
-          });
-      } else {
-        // After adding initial products, add the handbag with specified variant options
-        addHandbagToCart();
-      }
     }
 
     // Function to add the handbag with specified variant options to the cart
@@ -204,7 +178,7 @@
         // Add other variant options as needed
       };
 
-      addToCart(handbagProductId, handbagVariantOptions)
+      addToCartWithVariantOptions(handbagProductId, handbagVariantOptions)
         .then(function() {
           console.log('Handbag with variant options has been added to the cart!');
         })
@@ -213,9 +187,15 @@
         });
     }
 
-    // Start adding initial products from the first one
-    addInitialProductsToCart(0);
-
+    // Remove any existing products from the cart
+    removeFromCart(44158968135834) // Replace with the actual product ID to remove
+      .then(function() {
+        // After removing existing products, add the handbag with specified variant options
+        addHandbagToCart();
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+      });
 </script>
 
 
