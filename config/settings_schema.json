@@ -12,13 +12,13 @@
     "settings": [
       {
         "type": "product",
-        "id": "free_product",
-        "label": "Free Product"
+        "id": "main_product",
+        "label": "Main Product"
       },
       {
         "type": "product",
-        "id": "main_product",
-        "label": "Main Product"
+        "id": "free_product",
+        "label": "Free Product"
       }
     ]
   },
