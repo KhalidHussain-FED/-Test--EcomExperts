@@ -125,17 +125,29 @@
     }
   {%- endstyle -%}
 
-  {% if settings.free_product != blank and settings.main_product != blank %}
+ {% if settings.free_product != blank and settings.main_product != blank %}
   <script>
     var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-console.log("Free Product ID:", FreeProductId);
-// or use the FreeProductId wherever you need it in your code
-
     var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-     var FreeProductVariantId = '44127900663962';
-  
+    var MainProductVariantId = '{{ settings.main_product.selected_or_first_available_variant.id }}';
+
+    // Check if the main product with specific variant is added to the cart
+    document.addEventListener('DOMContentLoaded', function () {
+      var addToCartBtn = document.getElementById('add-to-cart-btn'); // Replace with your add to cart button ID
+      addToCartBtn.addEventListener('click', function () {
+        if (MainProductVariantId === 'YOUR_SPECIFIC_VARIANT_ID') {
+          // Call the function to add the free product to the cart
+          addFreeProductToCart();
+        }
+      });
+    });
+
+    function addFreeProductToCart() {
+      // Add your existing code here to add the free product to the cart
+      // ...
+    }
   </script>
-    {% endif %}
+{% endif %}
   
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
