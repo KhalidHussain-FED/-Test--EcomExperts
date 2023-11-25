@@ -61,8 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-               if (FreeProductId !== undefined ) {
-                
+               if (FreeProductId !== undefined && MainProductVariantId) {
   let formData = {
     'items': [
       {
@@ -95,7 +94,7 @@ if (!customElements.get('product-form')) {
     .catch(error => {
       console.error('Error adding free product to cart:', error);
     });
-                 
+                 console.log(productVariantId)
 }
 
               return;
