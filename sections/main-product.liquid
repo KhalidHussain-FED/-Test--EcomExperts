@@ -128,7 +128,7 @@
   {% if settings.free_product != blank %}
     <script>
           var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-      var MainProductId = {{ settings.first_available_variant.id }};
+      var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
           console.log(FreeProductId);
       console.log(MainProductId);
     </script>
