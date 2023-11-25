@@ -133,92 +133,62 @@
   {% endif %}
   
 <script>
+  let cartBtn = document.getElementById("ProductSubmitButton-template--16312456642714__main");
+  const form = document.getElementById("product-form-template--16312456642714__main");
 
-// Function to update the cart in local storage and send a request to update the cart on the server
-function updateCart(productIds) {
-    // Update the local storage
-    localStorage.setItem('cart', JSON.stringify({ items: productIds.map(id => ({ id })) }));
+  // Set the main product and variant IDs
+  const mainProductID = 7987569885338;
+  const mainProductVariantID = 44127900663962;
+  const freeProductID = 44158968135834;
 
-    // Send a request to update the cart on the server
-    return fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            updates: productIds.reduce((acc, productId) => {
-                acc[productId] = null;
-                return acc;
-            }, {}),
-        }),
-    });
-}
-
-// Remove the first item from the cart
-function removeFirstItem() {
-    const cartData = JSON.parse(localStorage.getItem('cart')) || { items: [] };
-    const cartItems = cartData.items;
-
-    if (cartItems.length > 0) {
-        const updatedItems = cartItems.slice(1); // Remove the first item
-        updateCart(updatedItems.map(item => item.id));
-
-        if (updatedItems.length === 0) {
-            // Reload the window when the cart becomes empty
-            window.location.reload();
-        }
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (cartBtn.getAttribute("data-variant-id")) {
+      removeItem();
+    } else {
+      addItem();
     }
-}
+  });
 
-// Example: Call removeFirstItem function when you want to remove any item
-removeFirstItem();
+  function removeItem() {
+    let variantId = cartBtn.getAttribute("data-variant-id");
+    $.ajax({
+      type: 'POST',
+      url: '/cart/change.js',
+      dataType: 'json',
+      data: {
+        'id': parseFloat(variantId),
+        'quantity': 0
+      }
+    })
+    .then(data => {
+      cartBtn.textContent = "Add to cart";
+      cartBtn.removeAttribute("data-variant-id");
+    })
+  }
 
-
-var itemIdToRemove = 44127900663962; // Replace with the actual ID of the item to be removed
-
-ShopifyAPI.updateCart = function(itemToRemove, callback) {
-  // Get the current cart
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/cart.js', true);
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      var cart = JSON.parse(xhr.responseText);
-
-      // Find and remove the item from the cart
-      var updatedCart = cart.items.filter(function(item) {
-        return item.id !== itemToRemove;
-      });
-
-      // Make a request to update the cart on the server
-      var updateXhr = new XMLHttpRequest();
-      updateXhr.open('POST', '/cart/update.js', true);
-      updateXhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-      updateXhr.onreadystatechange = function () {
-        if (updateXhr.readyState === 4 && updateXhr.status === 200) {
-          var updatedCart = JSON.parse(updateXhr.responseText);
-
-          if (typeof callback === 'function') {
-            callback(updatedCart);
-          } else {
-            ShopifyAPI.onCartUpdate(updatedCart);
-          }
-
-          // Reload the window after successful update with plain JavaScript
-          window.location.reload();
+  function addItem() {
+    // Use the main product and variant IDs here
+    $.ajax({
+      type: 'POST',
+      url: '/cart/add.js',
+      dataType: 'json',
+      data: {
+        'id': mainProductID, // Use the main product ID
+        'quantity': 1,
+        'properties': {
+          'variant_id': mainProductVariantID, // Use the main product variant ID
+          'free_product_id': freeProductID // Use the free product ID
         }
-      };
+      }
+    })
+    .then(data => {
+      cartBtn.textContent = "Remove from cart";
+      cartBtn.setAttribute("data-variant-id", data.variant_id);
+    })
+  }
+</script>
 
-      updateXhr.send(JSON.stringify({ updates: { items: updatedCart } }));
-    }
-  };
-
-  xhr.send();
-};
-
-  
-  </script>
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
