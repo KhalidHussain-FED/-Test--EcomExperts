@@ -158,7 +158,7 @@ fetch(window.Shopify.routes.root + 'cart/add.js', {
     //   return response.text().then(text => Promise.reject(text));
     // }
    
-  })
+  });
   .then(() => {
     // After removing the product, redirect to the cart
     window.location = window.routes.cart_url;
