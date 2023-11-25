@@ -85,8 +85,9 @@ if (!customElements.get('product-form')) {
                 })
                 .then(() => {
                   // Now that the free product is added, let's get the list of items in the cart
-                  window.location = window.routes.cart_url;
+                  // window.location = window.routes.cart_url;
                   return fetch(window.Shopify.routes.root + 'cart.js');
+                   window.location = window.routes.cart_url;
                 })
                 .then(response => response.json())
                 .then(cartData => {
