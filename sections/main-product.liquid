@@ -116,14 +116,8 @@
                  var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
       console.log(MainProductId);
                  // Assuming you want to display MainProductId for each option in the dropdown
-                 var dropdownOptions = dropdown.options;
 
-                 for (var i = 0; i < dropdownOptions.length; i++) {
-                     // You can update the text or any other property based on your requirement
-                     dropdownOptions[i].text += ' - MainProductId: ' + MainProductId;
-                 }
-
-                 console.log(MainProductId);
+                 console.log(FreeProductId);
              }
                });
                                                    }
