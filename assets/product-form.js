@@ -66,7 +66,7 @@ if (!customElements.get('product-form')) {
  // const FreeProductId = '44158968135834'; // Replace with the actual ID of your free product
 
 // Check if MainProductId is defined
-if (FreeProductId !== undefined && FreeProductId !== null && MainProductId = '44127900663962') {
+if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
   // Create formData with the main product details
   
   let formData = {
@@ -77,9 +77,6 @@ if (FreeProductId !== undefined && FreeProductId !== null && MainProductId = '44
       }
     ]
   };
-
-  // break;
-
 
 
   // Construct the fetch request to add products to the cart
