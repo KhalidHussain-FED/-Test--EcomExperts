@@ -130,19 +130,25 @@
 
   {% if settings.free_product != blank %}
     <script>
-          var mydropdown = document.querySelector('.EPVD-default-select');
+           document.addEventListener('DOMContentLoaded', function() {
+        var mydropdown = document.querySelector('.EPVD-default-select');
 
+        if (mydropdown) {
           mydropdown.addEventListener('change', function() {
-      if (mydropdown.seletedIndex === 2)
-        {
+            if (mydropdown.selectedIndex === 2) {
+              var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+              var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
 
-                var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-            var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-
-                console.log(FreeProductId);
-            console.log(MainProductId);
+              console.log(FreeProductId);
+              console.log(MainProductId);
+            }
+          });
         }
-        })
+
+      else {
+          console.error('Element with class "EPVD-default-select" not found.');
+        }
+      });
     </script>
   {% endif %}
 
