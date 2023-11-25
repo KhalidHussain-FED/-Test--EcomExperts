@@ -134,9 +134,11 @@
         document.addEventListener('DOMContentLoaded', function () {
           var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
           addToCartBtn.addEventListener('click', function () {
-            if (MainProductVariantId === '44127900663962') 
+            if (MainProductVariantId === 44127900663962) 
             {
               console.log("Free Product ID:", FreeProductId);
+              console.log("Main Product ID:", MainProductId);
+              console.log("Main Product Variant ID:", MainProductVariantId);
               addFreeProductToCart();
             }
             else 
