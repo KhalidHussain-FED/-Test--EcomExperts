@@ -132,8 +132,11 @@
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
-<script>
+  <script>
     console.log('Script is running!');
+
+    // Assuming you have an array of product IDs
+    var productIds = [44158968135834]; // Add the specific product ID
 
     // Helper function to make a POST request for removing a product
     function removeFromCart(productId) {
@@ -150,35 +153,30 @@
       });
     }
 
-    // Helper function to make a POST request for adding a product with variant options
-    function addToCartWithVariantOptions(productId, variantOptions) {
+    // Helper function to make a POST request for adding a product
+    function addToCart(productId, variantId = null) {
+      var bodyData = {
+        items: [
+          {
+            quantity: 1, // adjust the quantity as needed
+            id: productId,
+          },
+        ],
+      };
+
+      if (variantId) {
+        bodyData.items[0].properties = {
+          variant_id: variantId,
+        };
+      }
+
       return fetch('/cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          items: [
-            {
-              quantity: 1, // adjust the quantity as needed
-              id: productId,
-              properties: variantOptions,
-            },
-          ],
-        }),
+        body: JSON.stringify(bodyData),
       });
-    }
-
-    // Function to add the handbag with specified variant options to the cart
-    function addHandbagToCart() {
-      var handbagProductId = 7987569885338; // Replace with the actual product ID of the handbag
-      var handbagVariantOptions = {
-        color: 'Black',
-        size: 'Medium',
-        // Add other variant options as needed
-      };
-
-      return addToCartWithVariantOptions(handbagProductId, handbagVariantOptions);
     }
 
     // Function to add products to the cart sequentially
@@ -193,25 +191,14 @@
           .catch(function(error) {
             console.error('Error:', error);
           });
-      } else {
-        // After adding all initial products, add the handbag with specified variant options
-        addHandbagToCart()
-          .then(function() {
-            console.log('Handbag with variant options has been added to the cart!');
-          })
-          .catch(function(error) {
-            console.error('Error:', error);
-          });
       }
     }
 
-    // Assuming you have an array of product IDs
-    var productIds = [44158968135834]; // Add the specific product ID
-
     // Start adding products from the first one
     addProductsToCart(0);
-</script>
 
+  
+  </script>
 
 
 
