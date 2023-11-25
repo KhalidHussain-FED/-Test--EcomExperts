@@ -94,6 +94,7 @@ if (!customElements.get('product-form')) {
     .catch(error => {
       console.error('Error adding free product to cart:', error);
     });
+                 console.log(productVariantId);
 }
 
               return;
