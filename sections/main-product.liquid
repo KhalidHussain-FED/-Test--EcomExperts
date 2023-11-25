@@ -178,25 +178,40 @@
         // Add other variant options as needed
       };
 
-      addToCartWithVariantOptions(handbagProductId, handbagVariantOptions)
-        .then(function() {
-          console.log('Handbag with variant options has been added to the cart!');
-        })
-        .catch(function(error) {
-          console.error('Error:', error);
-        });
+      return addToCartWithVariantOptions(handbagProductId, handbagVariantOptions);
     }
 
-    // Remove any existing products from the cart
-    removeFromCart(44158968135834) // Replace with the actual product ID to remove
-      .then(function() {
-        // After removing existing products, add the handbag with specified variant options
-        addHandbagToCart();
-      })
-      .catch(function(error) {
-        console.error('Error:', error);
-      });
+    // Function to add products to the cart sequentially
+    function addProductsToCart(index) {
+      if (index < productIds.length) {
+        addToCart(productIds[index])
+          .then(function() {
+            console.log('Product ' + (index + 1) + ' has been added to the cart!');
+            // Add the next product recursively
+            addProductsToCart(index + 1);
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
+      } else {
+        // After adding all initial products, add the handbag with specified variant options
+        addHandbagToCart()
+          .then(function() {
+            console.log('Handbag with variant options has been added to the cart!');
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
+      }
+    }
+
+    // Assuming you have an array of product IDs
+    var productIds = [44158968135834]; // Add the specific product ID
+
+    // Start adding products from the first one
+    addProductsToCart(0);
 </script>
+
 
 
 
