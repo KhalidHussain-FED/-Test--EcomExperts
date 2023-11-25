@@ -12,8 +12,8 @@
     "settings": [
       {
         "type": "product",
-        "id": "main_product",
-        "label": "main Product"
+        "id": "free_product",
+        "label": "Free Product"
       }
     ]
   },
