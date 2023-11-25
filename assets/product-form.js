@@ -62,7 +62,7 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
 const HandbagTitle = 'handbag';
-const JacketTitle = 'Soft Winter Jacket'; // Added JacketTitle
+const FreeProductTitle = 'Soft Winter Jacket';
 
 if (HandbagTitle !== undefined) {
   // Add the handbag to the cart
@@ -92,8 +92,8 @@ if (HandbagTitle !== undefined) {
     return response.json();
   })
   .then(() => {
-    // Now that the handbag is added, let's find the Soft Winter Jacket by title
-    return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(JacketTitle))
+    // Now that the handbag is added, let's find the Free Product (Soft Winter Jacket) by title
+    return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(FreeProductTitle))
       .then(response => {
         if (!response.ok) {
           return response.text().then(text => Promise.reject(text));
@@ -102,11 +102,11 @@ if (HandbagTitle !== undefined) {
       })
       .then(products => {
         if (products && products.length > 0) {
-          let jacketProductId = products[0].id;
+          let freeProductID = products[0].id;
 
-          let jacketFormData = {
+          let freeProductFormData = {
             'items': [{
-              'id': jacketProductId,
+              'id': freeProductID,
               'quantity': 1,
             }]
           };
@@ -116,20 +116,21 @@ if (HandbagTitle !== undefined) {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(jacketFormData)
+            body: JSON.stringify(freeProductFormData)
           });
         } else {
-          throw new Error('Soft Winter Jacket not found.');
+          throw new Error('Free Product not found.');
         }
       });
   })
-  .then(jacketResponse => {
-    console.log('Add Jacket to Cart Response:', jacketResponse);
+  .then(freeProductResponse => {
+    console.log('Add Free Product to Cart Response:', freeProductResponse);
     window.location = window.routes.cart_url;
-    return jacketResponse.json();
+    return freeProductResponse.json();
   })
   .catch(error => console.error('Error:', error));
 }
+
 
 
         
