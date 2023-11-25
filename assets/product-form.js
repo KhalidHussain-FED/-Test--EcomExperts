@@ -72,12 +72,11 @@ if (FreeProductId !== undefined) {
     'items': [
       {
         'id': FreeProductId,
-        'quantity': 1
-      },
-      {
-        'id': MainProductId,
+        'quantity': 1,
+          'id': MainProductId,
         'quantity': 1
       }
+   
     ]
   };
 
