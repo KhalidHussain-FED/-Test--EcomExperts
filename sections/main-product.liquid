@@ -125,11 +125,15 @@
     }
   {%- endstyle -%}
 
-  {% if settings.free_product != blank %}
-    <script>
-        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-    </script>
-  {% endif %}
+  {% if settings.free_product != blank and settings.main_product != blank %}
+  <script>
+    var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+    var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+   var FreeProductVariantId = '44127900663962';
+  
+  </script>
+    {% endif %}
+    
 
   
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
