@@ -86,10 +86,10 @@ if (HandbagTitle !== undefined) {
   })
   .then(response => {
     console.log('Add Handbag to Cart Response:', response);
+      return response.json();
     if (!response.ok) {
       return response.text().then(text => Promise.reject(text));
     }
-    return response.json();
   })
   .then(() => {
     // Now that the handbag is added, let's find the Free Product (Soft Winter Jacket) by title
