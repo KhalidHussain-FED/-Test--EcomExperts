@@ -134,17 +134,12 @@
   
 <script>
 
-  const cartItems = JSON.parse(localStorage.getItem('cart')).items;
-const productIds = cartItems.map(item => item.id);
+// Function to update the cart in local storage and send a request to update the cart on the server
+function updateCart(productIds) {
+    // Update the local storage
+    localStorage.setItem('cart', JSON.stringify({ items: productIds.map(id => ({ id })) }));
 
-// Check if there's only one item left in the cart
-if (productIds.length === 1) {
-    // Clear the entire cart
-    localStorage.removeItem('cart');
-    // Optionally, you can redirect to a specific page after clearing the cart
-    window.location = '/empty-cart'; // Change this URL accordingly
-} else {
-    // Remove the selected item
+    // Send a request to update the cart on the server
     return fetch('/cart/update.js', {
         method: 'POST',
         headers: {
@@ -159,7 +154,24 @@ if (productIds.length === 1) {
     });
 }
 
+// Remove the first item from the cart
+function removeFirstItem() {
+    const cartData = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+    const cartItems = cartData.items;
 
+    if (cartItems.length > 0) {
+        const updatedItems = cartItems.slice(1); // Remove the first item
+        updateCart(updatedItems.map(item => item.id));
+
+        if (updatedItems.length === 0) {
+            // Reload the window when the cart becomes empty
+            window.location.reload();
+        }
+    }
+}
+
+// Example: Call removeFirstItem function when you want to remove any item
+removeFirstItem();
   
   </script>
 
