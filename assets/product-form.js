@@ -61,8 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-                     if (FreeProductId !== undefined) {
-           // Main product details
+                   // Main product details
 const mainProductVariantId = 44127900663962;
 const freeProductId = 44158968135834;
 
@@ -103,7 +102,6 @@ if (window.Shopify && window.Shopify.checkout && window.Shopify.checkout.lineIte
 } else {
   console.error('Error: Shopify checkout information not available');
 }
-
 
               return;
             }
