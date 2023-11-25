@@ -125,60 +125,121 @@
     }
   {%- endstyle -%}
 
-{% if product.id == MainProductVariantId %}
-  <button id="ProductSubmitButton-template--16312456642714__main" onclick="addToCart()">Add to Cart</button>
-{% else %}
-  <button id="ProductSubmitButton-template--16312456642714__main" onclick="emptyCart()">Empty Cart</button>
-{% endif %}
+<!-- set allProducts to "yes" if you want the product to be added regardless of the products in the cart - otherwise set it to "no" -->
+{% assign allProducts = "no" %}
 
-{% if product.id == MainProductVariantId %}
-  <script>
-    var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-    var MainProductVariantId = '{{ settings.main_product.selected_or_first_available_variant.id }}';
+<!-- If you want the auto add system to work only if a specific product of your choice is added at the cart - replace product-1 with the url portion of said product -->
+{% assign for_specific_product = all_products['product-1'] %}
 
-    document.addEventListener('DOMContentLoaded', function () {
-      var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main');
-      addToCartBtn.addEventListener('click', function () {
-        if (MainProductVariantId === '44127900663962' && FreeProductId === '44158968135834') {
-          console.log("Adding free product to cart:", FreeProductId);
-          addFreeProductToCart();
+<!-- Next, you will pick the product to be added automatically - replace product-2 with the url portion of said product -->
+{% assign product_to_add_auto = all_products['product-2'] %}
+
+{% unless cart.item_count == 0 or product_to_add_auto.empty? or product_to_add_auto.variants.first.available == false %}
+
+  <!-- By default, it is the 1st variant of the product that is taken into account and added automatically - if you want to change that, then modify "product_to_add_auto.variants.first.id" by the identifier of the variant that you will find in the variants editor of your product -->
+  {% assign variant_id = '44127900663962' %}
+  {% assign free_product_id = '44158968135834' %}
+
+  {% if allProducts == "no" %}
+
+    {% assign isMainProduct = false %}
+    {% assign isFreeProduct = false %}
+
+    {% for item in cart.items %}
+      {% if item.product.id == for_specific_product.id %}
+        {% assign isMainProduct = true %}
+      {% endif %}
+      {% if item.product.id == free_product_id %}
+        {% assign isFreeProduct = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if isMainProduct == true %}
+
+      <script>  
+        document.addEventListener('DOMContentLoaded', function () {
+          let cartItems = {{ cart.items | json }},
+              qtyInTheCart = 0,        
+              cartUpdates = {};
+
+          for (let i=0; i<cartItems.length; i++) {
+            if (cartItems[i].id === '{{ variant_id }}') {
+              qtyInTheCart = cartItems[i].quantity;
+              break;
+            }      
+          }    
+
+          if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
+            cartUpdates['{{ variant_id }}'] = 0;
+          } else if ((cartItems.length >= 1) && (qtyInTheCart !== 1)) {
+            cartUpdates['{{ variant_id }}'] = 1;
+          } else {
+            return;
+          }   
+
+          const params = {        
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ updates: cartUpdates }),
+          };
+
+          fetch('/cart/update.js', params)
+            .then(response => response.json())
+            .then(stuff => {
+              window.location.href = '/cart';
+            })
+            .catch(error => console.error('Error:', error));
+        });
+      </script>
+
+    {% endif %}
+
+  {% else %}
+
+    <script>  
+      document.addEventListener('DOMContentLoaded', function () {
+        let cartItems = {{ cart.items | json }},
+            qtyInTheCart = 0,        
+            cartUpdates = {};
+
+        for (let i=0; i<cartItems.length; i++) {
+          if (cartItems[i].id === '{{ variant_id }}') {
+            qtyInTheCart = cartItems[i].quantity;
+            break;
+          }      
+        }    
+
+        if ((cartItems.length === 1) && (qtyInTheCart > 0)) {
+          cartUpdates['{{ variant_id }}'] = 0;
+        } else if ((cartItems.length >= 1) && (qtyInTheCart !== 1)) {
+          cartUpdates['{{ variant_id }}'] = 1;
         } else {
-          console.log("Emptying the cart. Main product variant ID or Free Product ID not matched.");
-          emptyCart();
-        }
+          return;
+        }      
+
+        const params = {        
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ updates: cartUpdates }),
+        };
+
+        fetch('/cart/update.js', params)
+          .then(response => response.json())
+          .then(stuff => {
+            window.location.href = '/cart';
+          })
+          .catch(error => console.error('Error:', error));
       });
-    });
+    </script>
 
-    function addFreeProductToCart() {
-      // Example: Add the free product to the cart using an imaginary addToCart function
-      addToCart(FreeProductId);
+  {% endif %}
 
-      console.log("Free product added to cart:", FreeProductId);
-    }
+{% endunless %}
 
-    function emptyCart() {
-      // Example: Empty the cart using an imaginary emptyCart function
-      clearCart();
-
-      console.log("Cart emptied.");
-    }
-
-    // Example functions (replace these with your actual functions)
-    function addToCart(productId) {
-      // Your code to add the product to the cart
-      // ...
-
-      console.log("Product added to cart:", productId);
-    }
-
-    function clearCart() {
-      // Your code to clear the cart
-      // ...
-
-      console.log("Cart cleared.");
-    }
-  </script>
-{% endif %}
 
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
