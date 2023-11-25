@@ -61,35 +61,39 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-             if(typeof FreeProductId != undefined && typeof MainProductId !== 'undefined')
-            {
-                let formData = {
-                'items': [
-                  {
-                'id': FreeProductId,
-                'quantity': 1
-                },
-                   {
+          if (typeof FreeProductId !== 'undefined' && typeof MainProductId !== 'undefined' && typeof MainProductVariantId !== 'undefined') {
+    let formData = {
+      'items': [
+        {
           'id': MainProductId,
+          'quantity': 1,
+          'properties': {
+            '_key': 'variant_id',
+            '_value': MainProductVariantId
+          }
+        },
+        {
+          'id': FreeProductId,
           'quantity': 1
-                    }
-                         ]
-                };
-                fetch(window.Shopify.routes.root + 'cart/add.js', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-                })
-                .then(response => {
-                window.location = window.routes.cart_url;
-                return response.json();
-                })
-                .catch((error) => {
-                console.error('Error:', error);
-                });
-            }
+        }
+      ]
+    };
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        window.location = '{{ routes.cart_url }}';
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
               return;
             }
 
