@@ -61,7 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-             if (FreeProductId !== undefined) {
+          if (FreeProductId !== undefined) {
     let formData = {
         'items': [{
             'id': FreeProductId,
@@ -93,8 +93,7 @@ if (!customElements.get('product-form')) {
         console.error('Error:', error);
     });
     return;
-}
-
+  }
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
