@@ -14,12 +14,7 @@
         "type": "product",
         "id": "free_product",
         "label": "Free Product"
-      }
-    ]
-  },
-  {
-    "name": "Select Specific Product",
-    "settings": [
+      },
       {
         "type": "product",
         "id": "specific_product",
