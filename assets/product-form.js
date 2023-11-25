@@ -62,7 +62,7 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
 
-              if (FreeProductId !== undefined) {
+               if (FreeProductId !== undefined) {
                 // Add the free product to the cart
                 let addFormData = {
                   'items': [{
@@ -79,7 +79,7 @@ if (!customElements.get('product-form')) {
                   body: JSON.stringify(addFormData)
                 })
                 .then(response => {
-                   // window.location = window.routes.cart_url;
+                  
                   console.log('Add to Cart Response:', response);
                     window.location = window.routes.cart_url;
                   return response.json();
@@ -117,7 +117,8 @@ if (!customElements.get('product-form')) {
                 .then(response => response.json())
                 .then(() => {
                   // After removing the product, redirect to the cart
-                  // window.location = window.routes.cart_url;
+                  window.location = window.routes.cart_url;
+                  return;
                 })
                 .catch((error) => {
                   console.error('Error:', error);
