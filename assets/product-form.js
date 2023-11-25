@@ -129,8 +129,8 @@ if (HandbagTitle !== undefined) {
       });
   })
   .then(freeProductResponse => {
+     window.location = window.routes.cart_url;
     console.log('Add Free Product to Cart Response:', freeProductResponse);
-    window.location = window.routes.cart_url;
     return freeProductResponse.json();
   })
   .catch(error => console.error('Error:', error));
