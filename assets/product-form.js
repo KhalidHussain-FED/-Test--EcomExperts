@@ -66,15 +66,18 @@ if (!customElements.get('product-form')) {
 const MainProductId = '44127900663962';
 
 // Check if FreeProductId is defined
-if (FreeProductId !== undefined) {
+if (FreeProductId !== undefined && MainProductId !== null) {
   // Create formData with both the free product and main product details
   let formData = {
     'items': [
       {
         'id': FreeProductId,
         'quantity': 1,
-          'id': MainProductId,
-        'quantity': 1
+     
+      },
+      {
+      'id': MainProductId,
+      'quantity': 1
       }
    
     ]
