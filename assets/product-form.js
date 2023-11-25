@@ -78,7 +78,7 @@ if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
     ]
   };
 
-  break;
+  // break;
 
 
 
