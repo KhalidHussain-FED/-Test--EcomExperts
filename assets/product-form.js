@@ -115,6 +115,10 @@ function removeFromCart(productId) {
     return;
 }
 
+addToCart('44158968135834');
+
+              
+
 // Example usage:
 // Replace 'your_free_product_id' with the actual product ID you want to add or remove.
 // addToCart('your_free_product_id');
