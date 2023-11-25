@@ -125,6 +125,11 @@
     }
   {%- endstyle -%}
 
+   {% if settings.free_product != blank %}
+    <script>
+        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+    </script>
+  {% endif %}
 
 {% assign allProducts = "no" %}
 {% assign for_specific_product = all_products['44127900663962'] %}
