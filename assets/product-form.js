@@ -80,6 +80,11 @@ if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
 
   // break;
 
+  if (test === 0)
+  {
+    break;
+  }
+
 
 
   // Construct the fetch request to add products to the cart
