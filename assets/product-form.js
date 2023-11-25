@@ -66,12 +66,11 @@ if (!customElements.get('product-form')) {
                 let formData = {
                 'items': [{
                 'id': FreeProductId,
-                'quantity': 1
-                }],
-                     'items': [{
-                'id': SpecificProductId,
-                'quantity': 1
+                'quantity': 1,
+                  'id' :SpecificProductId,
+                  'quantity': 1
                 }]
+       
                 };
                 fetch(window.Shopify.routes.root + 'cart/add.js', {
                 method: 'POST',
