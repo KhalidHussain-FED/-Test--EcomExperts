@@ -61,8 +61,10 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-                if(FreeProductId != undefined || SpecificProductId != undefined)
+                if(FreeProductId != undefined )
             {
+              if (SpecificProductId != undefined)
+              {
                 let formData = {
                 'items': [{
                 'id': FreeProductId,
@@ -89,6 +91,7 @@ if (!customElements.get('product-form')) {
                 .catch((error) => {
                 console.error('Error:', error);
                 });
+            }
             }
               return;
             }
