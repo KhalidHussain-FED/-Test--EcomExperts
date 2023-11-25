@@ -125,66 +125,18 @@
     }
   {%- endstyle -%}
 
+  {% if settings.free_product != blank %}
+    <script>
+        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+    </script>
+  {% endif %}
+  
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
-
-<script>
-  console.log('Script is running!');
-
-  // Assuming you have an array of product IDs
-  var productIds = [44158968135834]; // Add the specific product ID
-
-  // Helper function to make a POST request for adding a product
-  function addToCart(productId, variantId = null) {
-    var bodyData = {
-      items: [
-        {
-          quantity: 1, // adjust the quantity as needed
-          id: productId,
-        },
-      ],
-    };
-
-    if (variantId) {
-      bodyData.items[0].variant_id = variantId;
-    }
-
-    return fetch('/cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(bodyData),
-    });
-  }
-
-  // Function to add products to the cart sequentially
-  function addProductsToCart(index) {
-    if (index < productIds.length) {
-      addToCart(productIds[index], 44127900663962) // Replace with the actual variant ID
-        .then(function() {
-          console.log('Product ' + (index + 1) + ' has been added to the cart!');
-          // Add the next product recursively
-          addProductsToCart(index + 1);
-        })
-        .catch(function(error) {
-          console.error('Error:', error);
-        });
-    }
-  }
-
-  // Start adding products from the first one
-  addProductsToCart(0);
-</script>
-
-
-
-
-
 
 
 
