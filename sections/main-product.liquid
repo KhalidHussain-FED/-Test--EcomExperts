@@ -132,12 +132,12 @@
   
    var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
         var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-        var MainProductVariantId = '{{ settings.main_product.selected.id}}';
+        var MainProductVariantId = '{{ settings.main_product.selected_or_first_available_variant.id}}';
             
         document.addEventListener('DOMContentLoaded', function () {
           var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
           addToCartBtn.addEventListener('click', function () {
-  alert(MainProductVariantId, "main pro" + MainProductId);
+  alert(MainProductVariantId);
     alert(MainProduct);
   alert(FreeProductId);
             if (MainProductVariantId != null) 
