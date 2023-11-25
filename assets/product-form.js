@@ -61,20 +61,13 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-                if(FreeProductId != undefined && SpecificProductId != undefined)
+             if(FreeProductId != undefined)
             {
-           
                 let formData = {
                 'items': [{
                 'id': FreeProductId,
-                'quantity': 1,
-                 
-                }],
-                  [{
-                     'id' :SpecificProductId,
-                  'quantity': 1
-                  }]
-       
+                'quantity': 1
+                }]
                 };
                 fetch(window.Shopify.routes.root + 'cart/add.js', {
                 method: 'POST',
@@ -90,7 +83,6 @@ if (!customElements.get('product-form')) {
                 .catch((error) => {
                 console.error('Error:', error);
                 });
-           // }
             }
               return;
             }
