@@ -124,7 +124,8 @@ if (HandbagTitle !== undefined) {
         } 
         else 
         {
-          throw new Error('Free Product not found.');
+          window.location = window.routes.cart_url;
+          // throw new Error('Free Product not found.');
         }
       });
   })
