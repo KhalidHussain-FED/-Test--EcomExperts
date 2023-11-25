@@ -62,7 +62,7 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
                if (FreeProductId !== undefined ) {
-                 console.log(productVariantId);
+                
   let formData = {
     'items': [
       {
