@@ -102,7 +102,7 @@ if (HandbagTitle !== undefined) {
       })
       .then(products => {
         // if (products && products.length > 0) {
-          if( FreeProductId = '44158968135834' && MainProductId = '44127900663962')
+          if( MainProductId = '44127900663962' && FreeProductId = '44158968135834'  )
           {
 
           let freeProductFormData = {
