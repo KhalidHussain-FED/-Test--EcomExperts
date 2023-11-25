@@ -1,12 +1,48 @@
-{% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
-{% endschema %}
+<!-- sections/discounted-product.liquid -->
+{{ 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' | stylesheet_tag }}
+{{ 'https://code.jquery.com/jquery-3.2.1.slim.min.js' | script_tag }}
+{{ 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' | script_tag }}
+{{ 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' | script_tag }}
 
-{% stylesheet %}
-{% endstylesheet %}
+<div>
+  {%- assign selectedFreeProduct = all_products[settings.selectedFreeProductId] -%}
+  {%- assign triggerProduct = all_products[settings.triggerProduct] -%}
 
-{% javascript %}
-{% endjavascript %}
+  {%- if selectedFreeProduct -%}
+    <h3>Selected Free Product: {{ selectedFreeProduct.title }}</h3>
+    <p>Description: {{ selectedFreeProduct.description }}</p>
+    <!-- Add more details as needed -->
+  {%- endif -%}
+
+  {%- if triggerProduct -%}
+    <h3>Trigger Product: {{ triggerProduct.title }}</h3>
+    <p>Description: {{ triggerProduct.description }}</p>
+    <!-- Add more details as needed -->
+  {%- endif -%}
+</div>
+
+{%- schema -%}
+{
+  "name": "Free Product Block",
+  "settings": [
+    {
+      "type": "product",
+      "id": "selectedFreeProductId",
+      "label": "Free Product",
+      "info": "Select the free product"
+    },
+    {
+      "type": "product",
+      "id": "triggerProduct",
+      "label": "Trigger Product",
+      "info": "Select the product that triggers the addition of the free product"
+    },
+    {
+      "type": "checkbox",
+      "id": "isMainProduct",
+      "label": "Main Product",
+      "default": false
+    }
+  ]
+}
+{%- endschema -%}
