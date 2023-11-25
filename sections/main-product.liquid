@@ -132,12 +132,11 @@
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
-<script>
+  <script>
     console.log('Script is running!');
 
-    // Specify the product ID and variant ID
-    var productId = 44158968135834;
-    var variantId = 44127900663962;
+    // Assuming you have an array of product IDs
+    var productIds = [44158968135834]; // Add the specific product ID
 
     // Helper function to make a POST request for removing a product
     function removeFromCart(productId) {
@@ -154,39 +153,40 @@
       });
     }
 
-    // Helper function to make a POST request for adding the specific variant to the cart
-    function addToCartWithSpecificVariant(productId, variantId) {
+    // Helper function to make a POST request for adding a product
+    function addToCart(productId, variantId = null) {
+      var bodyData = {
+        items: [
+          {
+            quantity: 1, // adjust the quantity as needed
+            id: productId,
+          },
+        ],
+      };
+
+      if (variantId) {
+        bodyData.items[0].properties = {
+          variant_id: variantId,
+        };
+      }
+
       return fetch('/cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          items: [
-            {
-              id: productId,
-              quantity: 1,
-              properties: {
-                variant_id: variantId,
-              },
-            },
-          ],
-        }),
+        body: JSON.stringify(bodyData),
       });
     }
 
-    // Function to check if the specific product is in the cart
-    function isProductInCart(productId) {
-      var cart = JSON.parse(localStorage.getItem('cart')) || {};
-      return cart[productId] && cart[productId] > 0;
-    }
-
-    // Function to add the specific variant to the cart if the specific product is present
-    function addSpecificVariantToCart() {
-      if (isProductInCart(productId)) {
-        addToCartWithSpecificVariant(productId, variantId)
+    // Function to add products to the cart sequentially
+    function addProductsToCart(index) {
+      if (index < productIds.length) {
+        addToCart(productIds[index])
           .then(function() {
-            console.log('Specific variant has been added to the cart!');
+            console.log('Product ' + (index + 1) + ' has been added to the cart!');
+            // Add the next product recursively
+            addProductsToCart(index + 1);
           })
           .catch(function(error) {
             console.error('Error:', error);
@@ -194,19 +194,24 @@
       }
     }
 
-    // Start adding the specific variant to the cart
-    addSpecificVariantToCart();
+    // Start adding products from the first one
+    addProductsToCart(0);
 
-    // Listen for the removal of the product
+    // Listen for the removal of the first product
     document.addEventListener('cart.updated', function(event) {
       var removedProductIds = event.detail.removed_product_ids;
-      if (removedProductIds && removedProductIds.includes(productId)) {
-        // If the specific product is removed, you can add logic here if needed
-        console.log('Product has been removed from the cart!');
+      if (removedProductIds && removedProductIds.includes(productIds[0])) {
+        // If the first product is removed, remove the second product
+        removeFromCart(productIds[0])
+          .then(function() {
+            console.log('Second product has been removed from the cart!');
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
+          });
       }
     });
-</script>
-
+  </script>
 
 
 
