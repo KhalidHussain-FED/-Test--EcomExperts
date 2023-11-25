@@ -61,7 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-          if (typeof FreeProductId !== 'undefined' && typeof MainProductId !== 'undefined' && typeof MainProductVariantId !== 'undefined') {
+            if (typeof FreeProductId !== 'undefined' && typeof MainProductId !== 'undefined' && typeof MainProductVariantId !== 'undefined') {
     let formData = {
       'items': [
         {
@@ -86,12 +86,20 @@ if (!customElements.get('product-form')) {
       },
       body: JSON.stringify(formData),
     })
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Product not found in cart');
+        }
+      })
       .then(data => {
         window.location = '{{ routes.cart_url }}';
       })
       .catch((error) => {
         console.error('Error:', error);
+        // Handle the error, e.g., display a message on the screen
+        alert('Product not found in cart. Please try again.');
       });
   }
               return;
