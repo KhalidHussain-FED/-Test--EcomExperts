@@ -125,63 +125,12 @@
     }
   {%- endstyle -%}
 
+  {% if settings.free_product != blank %}
+    <script>
+        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+    </script>
+  {% endif %}
 
-{% if FreeProductId != nil %}
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var addToCartBtn = document.getElementById('ProductSubmitButton-template--16312456642714__main'); // Replace with your add to cart button ID
-      addToCartBtn.addEventListener('click', function () {
-        alert('{{ MainProductVariantId }}' + ", " + '{{ MainProductId }}' + ", " + '{{ FreeProductId }}');
-
-        if ('{{ MainProductVariantId }}' == '44133157339290') {
-          console.log("Free Product ID:", '{{ FreeProductId }}');
-          console.log("Main Product ID:", '{{ MainProductId }}');
-          console.log("Main Product Variant ID:", '{{ MainProductVariantId }}');
-          alert("before");
-          addFreeProductToCart();
-        } else {
-          alert("Main product variant ID matched. Free product won't be added to the cart.");
-        }
-      });
-    });
-
-    function addFreeProductToCart() {
-      // Add your existing code here to add the free product to the cart
-      // ...
-      alert("ok");
-
-      // For example:
-      // You can use the FreeProductId to add the free product to the cart
-      console.log("Adding free product to cart:", '{{ FreeProductId }}');
-      // Add your code to add the free product to the cart using your platform's API
-    }
-  </script>
-
-  <script>
-    if (typeof FreeProductId !== 'undefined') {
-      let formData = {
-        'items': [{
-          'id': FreeProductId,
-          'quantity': 1
-        }]
-      };
-      fetch(window.Shopify.routes.root + 'cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-        .then(response => {
-          window.location = window.routes.cart_url;
-          return response.json();
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-    }
-  </script>
-{% endif %}
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
