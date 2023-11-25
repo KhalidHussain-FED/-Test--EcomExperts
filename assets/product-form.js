@@ -61,8 +61,8 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-var mainprodid = '7987569885338';
-               if (FreeProductId !== undefined && mainprodid ) {
+
+               if (FreeProductId !== undefined ) {
                 // Add the free product to the cart
                 let addFormData = {
                   'items': [{
