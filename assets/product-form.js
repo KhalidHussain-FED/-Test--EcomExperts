@@ -62,28 +62,22 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
               
-const MainProductId = '44127900663962';
- const FreeProductId = '44158968135834'; // Replace with the actual ID of your free product
+  const MainProductId = '44127900663962';
+ // const FreeProductId = '44158968135834'; // Replace with the actual ID of your free product
 
 // Check if MainProductId is defined
-if (MainProductId !== undefined && MainProductId !== null) {
+if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
   // Create formData with the main product details
   let formData = {
     'items': [
       {
-        'id': MainProductId,
+        'id': FreeProductId,
         'quantity': 1,
       }
     ]
   };
 
-  // Check if FreeProductId is defined before adding it to the formData
-  if (FreeProductId !== undefined && FreeProductId !== null) {
-    formData.items.push({
-      'id': FreeProductId,
-      'quantity': 1,
-    });
-  }
+
 
   // Construct the fetch request to add products to the cart
   fetch(window.Shopify.routes.root + 'cart/add.js', {
