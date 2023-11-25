@@ -81,8 +81,9 @@ if (!customElements.get('product-form')) {
                 .then(response => {
                   
                   console.log('Add to Cart Response:', response);
-                  return response.json();
                   window.location = window.routes.cart_url;
+                  return response.json();
+                  
                  
                 })
                 .then(() => {
