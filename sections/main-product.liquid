@@ -139,6 +139,21 @@
     var productId = 44158968135834;
     var variantId = 44127900663962;
 
+    // Helper function to make a POST request for removing a product
+    function removeFromCart(productId) {
+      return fetch('/cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          updates: {
+            [productId]: 0, // Set quantity to 0 to remove the product
+          },
+        }),
+      });
+    }
+
     // Helper function to make a POST request for adding the specific variant to the cart
     function addToCartWithSpecificVariant(productId, variantId) {
       return fetch('/cart/add.js', {
@@ -160,15 +175,15 @@
       });
     }
 
-    // Function to check if the main product is in the cart
-    function isMainProductInCart(productId) {
+    // Function to check if the specific product is in the cart
+    function isProductInCart(productId) {
       var cart = JSON.parse(localStorage.getItem('cart')) || {};
       return cart[productId] && cart[productId] > 0;
     }
 
-    // Function to add the specific variant to the cart if the main product is present
+    // Function to add the specific variant to the cart if the specific product is present
     function addSpecificVariantToCart() {
-      if (isMainProductInCart(productId)) {
+      if (isProductInCart(productId)) {
         addToCartWithSpecificVariant(productId, variantId)
           .then(function() {
             console.log('Specific variant has been added to the cart!');
@@ -182,7 +197,16 @@
     // Start adding the specific variant to the cart
     addSpecificVariantToCart();
 
+    // Listen for the removal of the product
+    document.addEventListener('cart.updated', function(event) {
+      var removedProductIds = event.detail.removed_product_ids;
+      if (removedProductIds && removedProductIds.includes(productId)) {
+        // If the specific product is removed, you can add logic here if needed
+        console.log('Product has been removed from the cart!');
+      }
+    });
 </script>
+
 
 
 
