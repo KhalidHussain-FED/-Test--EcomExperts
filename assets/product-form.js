@@ -61,7 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-               if (FreeProductId !== undefined) {
+               if (FreeProductId !== undefined && MainProductVariantId) {
   let formData = {
     'items': [
       {
@@ -70,6 +70,9 @@ if (!customElements.get('product-form')) {
       }
     ]
   };
+
+ if (MainProductVariantId = 44127900663962 )
+ {
 
   fetch('/cart/add.js', {
     method: 'POST',
@@ -83,6 +86,7 @@ if (!customElements.get('product-form')) {
       if (response.ok) {
         return response.json();
       }
+    }
       throw new Error('Network response was not ok');
     })
     .then(data => {
