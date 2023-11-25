@@ -61,37 +61,32 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-                    if (FreeProductId !== undefined) {
-              let formData = {
-                  'items': [{
+               if (FreeProductId !== undefined) {
+                let formData = {
+                  'items': [
+                    {
                       'id': FreeProductId,
                       'quantity': 1
-                  }]
-              };
-              fetch(window.Shopify.routes.root + 'cart/add.js', {
+                    }
+                  ]
+                };
+              
+                fetch(window.Shopify.routes.root + 'cart/add.js', {
                   method: 'POST',
                   headers: {
-                      'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                   },
                   body: JSON.stringify(formData)
-              })
-              .then(response => {
-                  // Check if the cart is empty after removing the product
-                  return fetch(window.Shopify.routes.root + 'cart.js');
-              })
-              .then(response => response.json())
-              .then(cartData => {
-                  if (cartData.item_count === 0) {
-                      // Cart is empty, redirect to some page or do something else
-                      window.location = '/empty-cart'; // Change this URL accordingly
-                  } else {
-                      // Cart is not empty, redirect to the cart page
-                      window.location = window.routes.cart_url;
-                  }
-              })
-              .catch((error) => {
-                  console.error('Error:', error);
-              });
+                })
+                  .then(response => {
+                    window.location = window.routes.cart_url;
+                    return response.json();
+                  })
+                  .catch((error) => {
+                    console.error('Error:', error);
+                  });
+              }
+
               return;
             }
 
