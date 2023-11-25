@@ -142,7 +142,7 @@
     const mainProductVariantID = 44127900663962;
     const freeProductID = 44158968135834;
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
       if (cartBtn.getAttribute("data-variant-id")) {
         removeItem();
@@ -153,43 +153,49 @@
 
     function removeItem() {
       let variantId = cartBtn.getAttribute("data-variant-id");
-      $.ajax({
-        type: 'POST',
-        url: '/cart/change.js',
-        dataType: 'json',
-        data: {
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           'id': parseFloat(variantId),
           'quantity': 0
-        }
+        }),
       })
+      .then(response => response.json())
       .then(data => {
         cartBtn.textContent = "Add to cart";
         cartBtn.removeAttribute("data-variant-id");
       })
+      .catch(error => console.error('Error:', error));
     }
 
     function addItem() {
-      // Use the main product and variant IDs here
-      $.ajax({
-        type: 'POST',
-        url: '/cart/add.js',
-        dataType: 'json',
-        data: {
-          'id': mainProductID, // Use the main product ID
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          'id': mainProductID,
           'quantity': 1,
           'properties': {
-            'variant_id': mainProductVariantID, // Use the main product variant ID
-            'free_product_id': freeProductID // Use the free product ID
+            'variant_id': mainProductVariantID,
+            'free_product_id': freeProductID
           }
-        }
+        }),
       })
+      .then(response => response.json())
       .then(data => {
         cartBtn.textContent = "Remove from cart";
         cartBtn.setAttribute("data-variant-id", data.variant_id);
       })
+      .catch(error => console.error('Error:', error));
     }
   });
 </script>
+
 
 
 
