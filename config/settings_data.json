@@ -1,6 +1,6 @@
 {
   "current": {
-    "selectedProductId": "product-2",
+    "selectedFreeProductId": "product-2",
     "isMainProduct": true,
     "mainProductId": "44127900663962",
     "logo_width": 90,
@@ -120,6 +120,7 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "cart_color_scheme": "background-1",
+    "selectedProductId": "product-2",
     "main_product": "product-1",
     "free_product": "product-2",
     "free_product_variant": "44127900663962",
