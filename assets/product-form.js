@@ -61,9 +61,8 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-// Assuming HandbagTitle and FreeProductTitle are defined elsewhere in your code
-const HandbagTitle = 'Handbag'; // Replace with the actual title of the handbag
-const FreeProductTitle = 'Soft Winter Jacket'; // Replace with the actual title of the free product
+const HandbagTitle = 'handbag';
+const JacketTitle = 'Soft Winter Jacket'; // Added JacketTitle
 
 if (HandbagTitle !== undefined) {
   // Add the handbag to the cart
@@ -87,14 +86,20 @@ if (HandbagTitle !== undefined) {
   })
   .then(response => {
     console.log('Add Handbag to Cart Response:', response);
+    if (!response.ok) {
+      return response.text().then(text => Promise.reject(text));
+    }
     return response.json();
   })
   .then(() => {
     // Now that the handbag is added, let's find the Soft Winter Jacket by title
-    let jacketTitle = 'Soft Winter Jacket'; // Replace with the actual title of the jacket product
-
-    return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(jacketTitle))
-      .then(response => response.json())
+    return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(JacketTitle))
+      .then(response => {
+        if (!response.ok) {
+          return response.text().then(text => Promise.reject(text));
+        }
+        return response.json();
+      })
       .then(products => {
         if (products && products.length > 0) {
           let jacketProductId = products[0].id;
@@ -125,6 +130,7 @@ if (HandbagTitle !== undefined) {
   })
   .catch(error => console.error('Error:', error));
 }
+
 
         
               return;
