@@ -62,7 +62,7 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
               
-  const MainProductId = '44127900663962';
+  const MainProductId = '7987569885338';
  // const FreeProductId = '44158968135834'; // Replace with the actual ID of your free product
 
 // Check if MainProductId is defined
