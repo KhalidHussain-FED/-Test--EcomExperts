@@ -61,31 +61,31 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-               if (FreeProductId !== undefined && isMainProductInCart) {
-                  let formData = {
-                    'items': [
-                      {
-                        'id': FreeProductId,
-                        'quantity': 1
-                      }
-                    ]
-                  };
-                
-                  fetch(window.Shopify.routes.root + 'cart/add.js', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
+               if (FreeProductId !== undefined) {
+                let formData = {
+                  'items': [
+                    {
+                      'id': FreeProductId,
+                      'quantity': 1
+                    }
+                  ]
+                };
+              
+                fetch(window.Shopify.routes.root + 'cart/add.js', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(formData)
+                })
+                  .then(response => {
+                    window.location = window.routes.cart_url;
+                    return response.json();
                   })
-                    .then(response => {
-                      window.location = window.routes.cart_url;
-                      return response.json();
-                    })
-                    .catch((error) => {
-                      console.error('Error:', error);
-                    });
-                }
+                  .catch((error) => {
+                    console.error('Error:', error);
+                  });
+              }
 
               return;
             }
