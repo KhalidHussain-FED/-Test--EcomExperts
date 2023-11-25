@@ -23,7 +23,7 @@
 
 {%- schema -%}
 {
-  "name": "Free Product Block",
+  "name": "Discounted Product Block",
   "settings": [
     {
       "type": "product",
@@ -41,7 +41,51 @@
       "type": "checkbox",
       "id": "isMainProduct",
       "label": "Main Product",
-      "default": false
+      "default": false,
+      "info": "Check if this is the main product in the promotion"
+    },
+    {
+      "type": "text",
+      "id": "promotionTitle",
+      "label": "Promotion Title",
+      "info": "Enter a catchy title for the promotion",
+      "default": "Limited Time Offer!"
+    },
+    {
+      "type": "textarea",
+      "id": "promotionDescription",
+      "label": "Promotion Description",
+      "info": "Provide a brief description of the promotion",
+      "default": "Buy the trigger product and get the selected free product for free! Hurry, limited stock available."
+    },
+    {
+      "type": "color",
+      "id": "backgroundColor",
+      "label": "Background Color",
+      "info": "Choose a background color for the promotion block",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "textColor",
+      "label": "Text Color",
+      "info": "Choose a text color for the promotion block",
+      "default": "#333333"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Perfect Suggestion",
+      "category": "Custom",
+      "settings": {
+        "selectedFreeProductId": "perfectSuggestionFreeProductID",
+        "triggerProduct": "perfectSuggestionTriggerProductID",
+        "isMainProduct": true,
+        "promotionTitle": "Don't Miss Out on This Perfect Suggestion!",
+        "promotionDescription": "Buy our amazing trigger product and get the perfect suggestion for free. Limited stock available. Grab yours now!",
+        "backgroundColor": "#ffd700",
+        "textColor": "#ffffff"
+      }
     }
   ]
 }
