@@ -61,32 +61,31 @@ if (!customElements.get('product-form')) {
                             this.error = true;
                             return;
                         } else if (!this.cart) {
-                              if(FreeProductId != undefined)
-                                {
-                                    let formData = {
-                                    'items': [{
-                                    'id': FreeProductId,
-                                    'quantity': 1
-                                    }]
-                                    };
-                                    fetch(window.Shopify.routes.root + 'cart/add.js', {
-                                    method: 'POST',
-                                    headers: {
-                                    'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(formData)
-                                    })
-                                    .then(response => {
-                                    window.location = window.routes.cart_url;
-                                    return response.json();
-                                    })
-                                    .catch((error) => {
-                                    console.error('Error:', error);
-                                    });
-                                }
-                                  return;
-                                }
-
+                                if(FreeProductId != undefined)
+            {
+                let formData = {
+                'items': [{
+                'id': FreeProductId,
+                'quantity': 1
+                }]
+                };
+                fetch(window.Shopify.routes.root + 'cart/add.js', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+                })
+                .then(response => {
+                window.location = window.routes.cart_url;
+                return response.json();
+                })
+                .catch((error) => {
+                console.error('Error:', error);
+                });
+            }
+              return;
+            }
                             if (!this.error)
                                 publish(PUB_SUB_EVENTS.cartUpdate, {
                                     source: 'product-form',
