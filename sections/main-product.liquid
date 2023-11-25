@@ -128,50 +128,14 @@
   {% if settings.free_product != blank and settings.main_product != blank %}
   <script>
     var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+console.log("Free Product ID:", FreeProductId);
+// or use the FreeProductId wherever you need it in your code
+
     var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-   var FreeProductVariantId = '44127900663962';
+     var FreeProductVariantId = '44127900663962';
   
   </script>
     {% endif %}
-
-  
-<script>
-window.onload = function () {
-  let cartContainsQualifyingProduct = false;
-
-  const qualifyingProductVariantId = 44127900663962;
-  const freeProductVariantId = 44158968135834;
-
-  // Assuming cartItems is an array representing cart items
-  const cartItems = []; // Replace this with your actual cart items array
-
-  cartItems.forEach(item => {
-    if (item.id === qualifyingProductVariantId) {
-      cartContainsQualifyingProduct = true;
-    }
-  });
-
-  // If cart contains qualifying product, add qty 1 of free product
-  if (cartContainsQualifyingProduct) {
-    fetch('/cart/add.json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ quantity: 1, id: freeProductVariantId }),
-    })
-      .then(response => response.json())
-      .then(() => {
-        alert('Free product added to the cart!');
-        window.location.reload();
-      })
-      .catch(error => console.error('Error:', error));
-  }
-};
-
-
-</script>
-
   
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
