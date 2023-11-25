@@ -139,7 +139,7 @@ fetch(window.Shopify.routes.root + 'cart/add.js', {
       // Remove the selected product
       let removeFormData = {
         'updates': {
-          [productToRemove.id]: 0 // Set quantity to 0 to remove the item
+          [productToRemove.variant_id]: 0 // Set quantity to 0 to remove the item
         }
       };
 
