@@ -14,11 +14,6 @@
         "type": "product",
         "id": "free_product",
         "label": "Free Product"
-      },
-      {
-        "type": "product",
-        "id": "specific_product",
-        "label": "Specific Product"
       }
     ]
   },
