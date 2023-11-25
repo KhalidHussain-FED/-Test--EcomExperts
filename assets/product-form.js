@@ -66,7 +66,9 @@ if (!customElements.get('product-form')) {
  // const FreeProductId = '44158968135834'; // Replace with the actual ID of your free product
 
 // Check if MainProductId is defined
-if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
+if (FreeProductId !== undefined && FreeProductId !== null ) {
+  if (MainProductId)
+  {
   // Create formData with the main product details
   
   let formData = {
@@ -96,6 +98,7 @@ if (FreeProductId !== undefined && FreeProductId !== null && MainProductId) {
     // Handle errors, if any
     console.error('Error:', error);
   });
+}
 }
               else
 {
