@@ -136,31 +136,42 @@
 
   
 <script>
-  window.onload = function(){
-    let cartContainsFreeProduct = false;
-    let cartContainsQualifyingProduct = false;
- 
-    const qualifyingProductVariantId = 44127900663962; 
-    const freeProductVariantId = 44158968135834;
-    
-    // Assuming you're working within a Liquid context
-    {% for item in cart.items %}
-      if({{ item.id }} === {{ freeProductVariantId }}){
-        cartContainsFreeProduct = true; 
-      }
-      if({{ item.id }} === {{ qualifyingProductVariantId }}){
-         cartContainsQualifyingProduct = true;
-      }
-    {% endfor %}
-    
-    // If cart contains qualifying product and doesn't already contain free product, add qty 1 of free product
-    if(cartContainsQualifyingProduct && !cartContainsFreeProduct) {
-      jQuery.post('/cart/add.json', { quantity: 1, id: {{ freeProductVariantId }} })
-        .done(function() {
-          window.location.reload();
-        });
-    } 
+ window.onload = function () {
+  let cartContainsFreeProduct = false;
+  let cartContainsQualifyingProduct = false;
+
+  const qualifyingProductVariantId = 44127900663962;
+  const freeProductVariantId = 44158968135834;
+
+  // Assuming cartItems is an array representing cart items
+  const cartItems = []; // Replace this with your actual cart items array
+
+  cartItems.forEach(item => {
+    if (item.id === freeProductVariantId) {
+      cartContainsFreeProduct = true;
+    }
+    if (item.id === qualifyingProductVariantId) {
+      cartContainsQualifyingProduct = true;
+    }
+  });
+
+  // If cart contains qualifying product and doesn't already contain free product, add qty 1 of free product
+  if (cartContainsQualifyingProduct && !cartContainsFreeProduct) {
+    fetch('/cart/add.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ quantity: 1, id: freeProductVariantId }),
+    })
+      .then(response => response.json())
+      .then(() => {
+        window.location.reload();
+      })
+      .catch(error => console.error('Error:', error));
   }
+};
+
 </script>
 
   
