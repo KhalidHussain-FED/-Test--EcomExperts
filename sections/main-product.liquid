@@ -142,8 +142,8 @@
     const mainProductVariantID = 44127900663962;
     const freeProductID = 44158968135834;
 
-    form.addEventListener("click", function(e) {
-    e.preventDefault();
+    cartBtn.addEventListener("click", function(e) {
+      e.preventDefault();
       if (cartBtn.getAttribute("data-variant-id")) {
         removeItem();
       } else {
@@ -195,6 +195,7 @@
     }
   });
 </script>
+
 
 
 
