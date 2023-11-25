@@ -86,6 +86,9 @@
         // Disable the button if the first option ("Unselected") is selected, otherwise, enable it
         addButton.disabled = dropdown.selectedIndex === 0;
 
+        addButton = dropdown.selectedIndex === 2;
+
+
         // Add an event listener to the dropdown to update the button on change
         dropdown.addEventListener('change', function() {
           addButton.disabled = dropdown.selectedIndex === 0;
