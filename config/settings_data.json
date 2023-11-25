@@ -1,5 +1,6 @@
 {
   "current": {
+    "free_product": "product-2",
     "logo_width": 90,
     "type_header_font": "assistant_n4",
     "heading_scale": 100,
@@ -112,7 +113,7 @@
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": false,
     "currency_code_enabled": true,
-    "cart_type": "notification",
+    "cart_type": "page",
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "",
@@ -137,18 +138,6 @@
     "blocks": {
       "15496525920608532027": {
         "type": "shopify:\/\/apps\/cl-variant-image-color-swatch\/blocks\/app-embed-block\/f742d83f-1209-4b48-8f72-5f5721d0b599",
-        "disabled": false,
-        "settings": {
-        }
-      },
-      "5918445685253060206": {
-        "type": "shopify:\/\/apps\/bundler\/blocks\/bundler-script-append\/7a6ae1b8-3b16-449b-8429-8bb89a62c664",
-        "disabled": false,
-        "settings": {
-        }
-      },
-      "5674012996228588682": {
-        "type": "shopify:\/\/apps\/cartbot\/blocks\/cartbot-script-append\/f7a44e3b-3901-4412-9d5a-3db0980a9db0",
         "disabled": false,
         "settings": {
         }
