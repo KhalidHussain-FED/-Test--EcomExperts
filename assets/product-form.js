@@ -62,51 +62,66 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
               
-  const MainProductId = '7987569885338';
- // const FreeProductId = '44158968135834'; // Replace with the actual ID of your free product
+    function addToCart(FreeProductId) {
+    if (FreeProductId != undefined) {
+        let formData = {
+            'items': [{
+                'id': FreeProductId,
+                'quantity': 1
+            }]
+        };
 
-// Check if MainProductId is defined
-// if (FreeProductId !== undefined && FreeProductId !== null ) {
-  if (MainProductId)
-  {
-  // Create formData with the main product details
-  
-  let formData = {
-    'items': [
-      {
-        'id': FreeProductId,
-        'quantity': 1,
-      }
-    ]
-  };
-
-
-  // Construct the fetch request to add products to the cart
-  fetch(window.Shopify.routes.root + 'cart/add.js', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
-  .then(response => {
-    // Redirect to the cart page after adding the products
-    window.location = window.routes.cart_url;
-    return response.json();
-  })
-  .catch((error) => {
-    // Handle errors, if any
-    console.error('Error:', error);
-  });
-//}
-}
-              else
-{
-  alert("not main");
+        fetch(window.Shopify.routes.root + 'cart/add.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            window.location = window.routes.cart_url;
+            return response.json();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    return;
 }
 
-   return;
-  }
+// Function to remove a product from the Shopify cart
+function removeFromCart(productId) {
+    if (productId != undefined) {
+        let formData = {
+            'id': productId,
+            'quantity': 0
+        };
+
+        fetch(window.Shopify.routes.root + 'cart/change.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            window.location.reload(); // Refresh the page after removing the item
+            return response.json();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    return;
+}
+
+// Example usage:
+// Replace 'your_free_product_id' with the actual product ID you want to add or remove.
+// addToCart('your_free_product_id');
+// removeFromCart('your_product_id_to_remove');
+
+
+            
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
