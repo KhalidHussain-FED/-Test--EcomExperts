@@ -156,8 +156,33 @@
       // Add your code to add the free product to the cart using your platform's API
     }
   </script>
-  {% endif %}
-    
+
+  <script>
+    if (typeof FreeProductId !== 'undefined') {
+      let formData = {
+        'items': [{
+          'id': FreeProductId,
+          'quantity': 1
+        }]
+      };
+      fetch(window.Shopify.routes.root + 'cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+        .then(response => {
+          window.location = window.routes.cart_url;
+          return response.json();
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+{% endif %}
+
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
