@@ -127,12 +127,11 @@
 
 
       <script>
-     
-
   
-   var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-        var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-        // var MainProductVariantId = 44127900663962;
+        // Main product variant ID and Free Product ID
+          const mainProductVariantId = 44127900663962;
+          const freeProductId = 44158968135834;
+          const isMainProductInCart = window.Shopify.checkout && window.Shopify.checkout.lineItems.some(item => item.variant_id === mainProductVariantId);
            
       </script>
 
