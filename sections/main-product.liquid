@@ -127,7 +127,21 @@
 
 {% if settings.free_product != blank %}
     <script>
-        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+   
+     var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+
+    const mainProductOptions = [
+    {% for product in products %}
+      { "label": "{{ product.title }}", "value": "{{ product.id }}" }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+
+  const freeProductOptions = [
+    {% for product in products %}
+      { "label": "{{ product.title }}", "value": "{{ product.id }}" }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ];
+   
     </script>
   {% endif %}
 
