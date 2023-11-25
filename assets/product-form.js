@@ -62,6 +62,7 @@ if (!customElements.get('product-form')) {
               return;
             } else if (!this.cart) {
                if (FreeProductId !== undefined ) {
+                 console.log(productVariantId);
   let formData = {
     'items': [
       {
@@ -94,7 +95,7 @@ if (!customElements.get('product-form')) {
     .catch(error => {
       console.error('Error adding free product to cart:', error);
     });
-                 console.log(productVariantId);
+                 
 }
 
               return;
