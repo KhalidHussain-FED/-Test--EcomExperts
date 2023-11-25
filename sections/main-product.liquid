@@ -136,8 +136,7 @@
 
   
 <script>
- window.onload = function () {
-  let cartContainsFreeProduct = false;
+window.onload = function () {
   let cartContainsQualifyingProduct = false;
 
   const qualifyingProductVariantId = 44127900663962;
@@ -147,16 +146,13 @@
   const cartItems = []; // Replace this with your actual cart items array
 
   cartItems.forEach(item => {
-    if (item.id === freeProductVariantId) {
-      cartContainsFreeProduct = true;
-    }
     if (item.id === qualifyingProductVariantId) {
       cartContainsQualifyingProduct = true;
     }
   });
 
-  // If cart contains qualifying product and doesn't already contain free product, add qty 1 of free product
-  if (cartContainsQualifyingProduct && !cartContainsFreeProduct) {
+  // If cart contains qualifying product, add qty 1 of free product
+  if (cartContainsQualifyingProduct) {
     fetch('/cart/add.json', {
       method: 'POST',
       headers: {
@@ -166,11 +162,13 @@
     })
       .then(response => response.json())
       .then(() => {
+        alert('Free product added to the cart!');
         window.location.reload();
       })
       .catch(error => console.error('Error:', error));
   }
 };
+
 
 </script>
 
