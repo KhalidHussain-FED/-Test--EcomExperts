@@ -14,6 +14,11 @@
         "type": "product",
         "id": "free_product",
         "label": "Free Product"
+      },
+      {
+        "type": "product",
+        "id": "main_product",
+        "label": "Main Product"
       }
     ]
   },
