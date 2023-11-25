@@ -61,7 +61,47 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-              window.location = window.routes.cart_url;
+              if (FreeProductId !== undefined) {
+                // Add the free product to the cart
+                let addFormData = {
+                  'items': [{
+                    'id': FreeProductId,
+                    'quantity': 1
+                  }]
+                };
+              
+                fetch(window.Shopify.routes.root + 'cart/add.js', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(addFormData)
+                })
+                .then(response => response.json())
+                .then(() => {
+                  // Now that the free product is added, let's remove another product
+                  let removeFormData = {
+                    'id': ProductToRemoveId, // Replace ProductToRemoveId with the actual ID of the product to remove
+                    'quantity': 0 // Set quantity to 0 to remove the item
+                  };
+              
+                  return fetch(window.Shopify.routes.root + 'cart/update.js', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(removeFormData)
+                  });
+                })
+                .then(response => response.json())
+                .then(() => {
+                  // After removing the product, redirect to the cart
+                  window.location = window.routes.cart_url;
+                })
+                .catch((error) => {
+                  console.error('Error:', error);
+                });
+              }
               return;
             }
 
