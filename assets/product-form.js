@@ -79,6 +79,7 @@ if (!customElements.get('product-form')) {
                   body: JSON.stringify(addFormData)
                 })
                 .then(response => {
+                   window.location = window.routes.cart_url;
                   console.log('Add to Cart Response:', response);
                   return response.json();
                 })
@@ -113,7 +114,7 @@ if (!customElements.get('product-form')) {
                 .then(response => response.json())
                 .then(() => {
                   // After removing the product, redirect to the cart
-                  window.location = window.routes.cart_url;
+                  // window.location = window.routes.cart_url;
                 })
                 .catch((error) => {
                   console.error('Error:', error);
