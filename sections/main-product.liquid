@@ -139,11 +139,12 @@
               console.log("Free Product ID:", FreeProductId);
               console.log("Main Product ID:", MainProductId);
               console.log("Main Product Variant ID:", MainProductVariantId);
-              addFreeProductToCart();
+              
   return true;
             }
             else 
             {
+  addFreeProductToCart();
               alert("Main product variant ID matched. Free product won't be added to the cart.");
             }
           });
