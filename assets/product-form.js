@@ -62,13 +62,11 @@ if (!customElements.get('product-form')) {
               return;
             } else 
 if (!this.cart) {
-console.log(MainProductId);
   const currentURL = window.location.href;
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const FreeProductTitle = 'Soft Winter Jacket';
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
-
-  
+    
         let freeProductFormData = {
           'items': [
             {
@@ -97,7 +95,35 @@ console.log(MainProductId);
   {
             window.location = window.routes.cart_url;
   }
+    
+  fetch(window.Shopify.routes.root + 'cart.js')
+  .then(response => response.json())
+  .then(cartData => {
+    if (cartData.items && cartData.items.length > 0) {
+      let randomIndex = Math.floor(Math.random() * cartData.items.length);
+      let productToRemove = cartData.items[randomIndex];
+
+      let removeFormData = {
+        'updates': {
+          [productToRemove.id]: productToRemove.quantity - 1
+        }
+      };
+
+      return fetch(window.Shopify.routes.root + 'cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(removeFormData)
+      });
     }
+  })
+  .then(response => response.json())
+  .then(() => {
+    window.location = window.routes.cart_url;
+  })
+  .catch(error => console.error('Error:', error));
+}
  
 
   return;
