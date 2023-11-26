@@ -60,22 +60,22 @@ if (!customElements.get('product-form')) {
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
-            } else var MainProductId = 44127900663962;
-console.log(MainProductId);
-
+            } else 
 if (!this.cart) {
-  // Get the current URL
+ var MainProductId = 44127900663962;
+console.log(MainProductId);
   const currentURL = window.location.href;
 
   // Check if the current URL matches the specific product variant URL
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const HandbagTitle = 'handbag';
     const FreeProductTitle = 'Soft Winter Jacket';
+    const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
     // Add the handbag to the cart
     let handbagFormData = {
       'items': [{
-        'id': MainProductId, // Use MainProductId here
+        'id': MainProductId,
         'quantity': 1,
         'properties': {
           'variant_option_1': 'Black', // Replace with the actual variant option values
@@ -96,38 +96,23 @@ if (!this.cart) {
         return response.json();
       })
       .then(() => {
-        // Now that the handbag is added, let's find the Free Product (Soft Winter Jacket) by title
-        return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(FreeProductTitle))
-          .then(response => {
-            if (!response.ok) {
-              return response.text().then(text => Promise.reject(text));
+        // Now that the handbag is added, let's add the Free Product
+        let freeProductFormData = {
+          'items': [
+            {
+              'id': FreeProductId,
+              'quantity': 1,
             }
-            return response.json();
-          })
-          .then(products => {
-            if (products && products.length > 0) {
-              const FreeProductId = products[0].id;
+          ]
+        };
 
-              let freeProductFormData = {
-                'items': [
-                  {
-                    'id': FreeProductId,
-                    'quantity': 1,
-                  }
-                ]
-              };
-
-              return fetch(window.Shopify.routes.root + 'cart/add.js', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(freeProductFormData)
-              });
-            } else {
-              throw new Error('Free Product not found.');
-            }
-          });
+        return fetch(window.Shopify.routes.root + 'cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(freeProductFormData)
+        });
       })
       .then(freeProductResponse => {
         window.location = window.routes.cart_url;
