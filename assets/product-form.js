@@ -60,9 +60,7 @@ if (!customElements.get('product-form')) {
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
-            } else 
-// Check if the cart is empty
-if (!this.cart) {
+            } else  if (!this.cart) {
   const currentURL = window.location.href;
 
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
@@ -94,10 +92,12 @@ if (!this.cart) {
       })
       .catch(error => console.error('Error adding free product:', error));
 
-    // Listen for cart updates
-    document.addEventListener('cart.updated', () => {
+    // Use the Shopify AJAX API to handle cart updates
+    document.addEventListener('cart:updated', () => {
+      const cart = JSON.parse(localStorage.getItem('cart'));
+
       // Check if "handbag (black, medium)" is removed from the cart
-      const handbagRemoved = !window.Shopify.checkout.lineItems.some(item => item.variant_id === HandbagId);
+      const handbagRemoved = !cart.items.some(item => item.variant_id === HandbagId);
 
       if (handbagRemoved) {
         const softWinterJacketId = 44158968135834; // Set the correct ID for the soft winter jacket product
@@ -129,6 +129,7 @@ if (!this.cart) {
     window.location = window.routes.cart_url;
   }
 }
+
 
 
 return;
