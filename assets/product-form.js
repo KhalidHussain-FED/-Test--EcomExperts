@@ -62,14 +62,6 @@ if (!customElements.get('product-form')) {
               return;
             } else 
 if (!this.cart) {
-
-   let cartBtn = document.querySelector("#Remove-1")
-const form =  document.getElementById("product-form-template--16312456642714__main")
-    if (cartBtn != 0)
-    {
-      console.log(cartBtn);
-      removeItem();
-    }
   
   const currentURL = window.location.href;
 
@@ -114,34 +106,22 @@ window.location = window.routes.cart_url;
   }
  })
             
-function removeItem() {
-  let variantId = cartBtn.getAttribute("data-variant-id");
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/cart/change.js', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        // Successful response
-        cartBtn.textContent = "Add to cart";
-        cartBtn.removeAttribute("data-variant-id");
-      } else {
-        // Handle error
-        console.error('Error:', xhr.statusText);
-      }
-    }
-  };
-
-  var data = JSON.stringify({
-    'id': parseFloat(variantId),
-    'quantity': 0
-  });
-
-  xhr.send(data);
+ function removeItem() {
+   let variantId =  cartBtn.getAttribute("data-variant-id")
+   $.ajax({
+      type: 'POST',
+      url: '/cart/change.js',
+      dataType: 'json',
+     data: {
+  'id': parseFloat(variantId),
+  'quantity': 0
 }
-
+   })
+   .then(data => {
+    cartBtn.textContent = "Add to cart"
+    cartBtn.removeAttribute("data-variant-id");
+})
+  }
   }
             
 
