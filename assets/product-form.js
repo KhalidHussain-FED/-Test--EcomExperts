@@ -113,22 +113,34 @@ window.location = window.routes.cart_url;
   }
  })
             
- function removeItem() {
-   let variantId =  cartBtn.getAttribute("data-variant-id")
-   $.ajax({
-      type: 'POST',
-      url: '/cart/change.js',
-      dataType: 'json',
-     data: {
-  'id': parseFloat(variantId),
-  'quantity': 0
+function removeItem() {
+  let variantId = cartBtn.getAttribute("data-variant-id");
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/cart/change.js', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        // Successful response
+        cartBtn.textContent = "Add to cart";
+        cartBtn.removeAttribute("data-variant-id");
+      } else {
+        // Handle error
+        console.error('Error:', xhr.statusText);
+      }
+    }
+  };
+
+  var data = JSON.stringify({
+    'id': parseFloat(variantId),
+    'quantity': 0
+  });
+
+  xhr.send(data);
 }
-   })
-   .then(data => {
-    cartBtn.textContent = "Add to cart"
-    cartBtn.removeAttribute("data-variant-id");
-})
-  }
+
   }
             
 
