@@ -111,8 +111,7 @@ console.log(MainProductId);
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(freeProductFormData)
-        });
-      // })
+        })
       .then(freeProductResponse => {
         window.location = window.routes.cart_url;
         console.log('Add Free Product to Cart Response:', freeProductResponse);
