@@ -60,7 +60,10 @@ if (!customElements.get('product-form')) {
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
-            } else if (!this.cart) {
+            } else var MainProductId = 44127900663962;
+console.log(MainProductId);
+
+if (!this.cart) {
   // Get the current URL
   const currentURL = window.location.href;
 
@@ -72,7 +75,7 @@ if (!customElements.get('product-form')) {
     // Add the handbag to the cart
     let handbagFormData = {
       'items': [{
-        'title': HandbagTitle,
+        'id': MainProductId, // Use MainProductId here
         'quantity': 1,
         'properties': {
           'variant_option_1': 'Black', // Replace with the actual variant option values
@@ -136,6 +139,7 @@ if (!customElements.get('product-form')) {
 
   return;
 }
+
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
