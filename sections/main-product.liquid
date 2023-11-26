@@ -127,35 +127,25 @@
       }
     }
   {%- endstyle -%}
+
   {% if settings.free_product != blank %}
-    <select class="EPVD-default-select" id="sizeSelector">
+    <select id="sizeSelector">
       {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant.title == 'Medium' %}
-            selected
-          {% endif %}
-        >
-          {{ variant.title }}
-        </option>
+        <option value="{{ variant.id }}">{{ variant.title }}</option>
       {% endfor %}
     </select>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var sizeSelector = document.getElementById('sizeSelector');
+      document.getElementById('sizeSelector').addEventListener('change', function() {
+        var selectedVariantId = this.value;
+        console.log('Selected Variant ID: ' + selectedVariantId);
 
-        sizeSelector.addEventListener('change', function() {
-          var selectedVariantId = sizeSelector.value;
-          console.log('Selected Variant ID: ' + selectedVariantId);
+        // Now you can use the selectedVariantId as needed, for example:
+        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+        console.log('Free Product ID: ' + FreeProductId);
 
-          // Ensure that Free Product and Main Product variables are defined in Liquid
-          var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-          var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-
-          console.log('Free Product ID: ' + FreeProductId);
-          console.log('Main Product ID: ' + MainProductId);
-        });
+        var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+        console.log('Main Product ID: ' + MainProductId);
       });
     </script>
   {% endif %}
