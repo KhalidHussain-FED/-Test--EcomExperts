@@ -63,70 +63,69 @@ if (!customElements.get('product-form')) {
             } else 
 if (!this.cart) {
   const currentURL = window.location.href;
+
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const FreeProductTitle = 'Soft Winter Jacket';
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
     
-        let freeProductFormData = {
-          'items': [
-            {
-              'id': FreeProductId,
-              'quantity': 1,
-            }
-          ]
-        };
-
-        fetch(window.Shopify.routes.root + 'cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(freeProductFormData)
-        })
-      .then(freeProductResponse => {
-        window.location = window.routes.cart_url;
-        console.log('Add Free Product to Cart Response:', freeProductResponse);
-        return freeProductResponse.json();
-      })
-      .catch(error => console.error('Error:', error));
-  
-}
-   else
-  {
-            window.location = window.routes.cart_url;
-  }
-    
-  fetch(window.Shopify.routes.root + 'cart.js')
-  .then(response => response.json())
-  .then(cartData => {
-    if (cartData.items && cartData.items.length > 0) {
-      let randomIndex = Math.floor(Math.random() * cartData.items.length);
-      let productToRemove = cartData.items[randomIndex];
-
-      let removeFormData = {
-        'updates': {
-          [productToRemove.id]: productToRemove.quantity - 1
+    let freeProductFormData = {
+      'items': [
+        {
+          'id': FreeProductId,
+          'quantity': 1,
         }
-      };
+      ]
+    };
 
-      return fetch(window.Shopify.routes.root + 'cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(removeFormData)
-      });
-    }
-  })
-  .then(response => response.json())
-  .then(() => {
-    window.location = window.routes.cart_url;
-  })
-  .catch(error => console.error('Error:', error));
+    fetch(window.Shopify.routes.root + 'cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(freeProductFormData)
+    })
+    .then(freeProductResponse => {
+      console.log('Add Free Product to Cart Response:', freeProductResponse);
+      window.location = window.routes.cart_url;
+      return freeProductResponse.json();
+    })
+    .catch(error => console.error('Error:', error));
+  } else {
+    fetch(window.Shopify.routes.root + 'cart.js')
+    .then(response => response.json())
+    .then(cartData => {
+      if (cartData.items && cartData.items.length > 0) {
+        let nonFreeProducts = cartData.items.filter(item => item.id !== FreeProductId);
+        if (nonFreeProducts.length > 0) {
+          let randomIndex = Math.floor(Math.random() * nonFreeProducts.length);
+          let productToRemove = nonFreeProducts[randomIndex];
+
+          let removeFormData = {
+            'updates': {
+              [productToRemove.id]: productToRemove.quantity - 1
+            }
+          };
+
+          return fetch(window.Shopify.routes.root + 'cart/update.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(removeFormData)
+          });
+        }
+      }
+    })
+    .then(response => response.json())
+    .then(() => {
+      window.location = window.routes.cart_url;
+    })
+    .catch(error => console.error('Error:', error));
+  }
 }
- 
 
-  return;
+return;
+
 
 
             if (!this.error)
@@ -155,12 +154,12 @@ if (!this.cart) {
           .catch((e) => {
             console.error(e);
           })
-          // .finally(() => {
-          //   this.submitButton.classList.remove('loading');
-          //   if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
-          //   if (!this.error) this.submitButton.removeAttribute('aria-disabled');
-          //   this.querySelector('.loading__spinner').classList.add('hidden');
-          // });
+          .finally(() => {
+            this.submitButton.classList.remove('loading');
+            if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
+            if (!this.error) this.submitButton.removeAttribute('aria-disabled');
+            this.querySelector('.loading__spinner').classList.add('hidden');
+          });
       }
 
       handleErrorMessage(errorMessage = false) {
