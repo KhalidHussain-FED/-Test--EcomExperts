@@ -61,36 +61,39 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else // Check if the cart is empty
+// Check if the cart is empty
 if (!this.cart) {
   const currentURL = window.location.href;
 
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
-    const FreeProductTitle = 'Soft Winter Jacket';
     const MainProductId = 44127900663962; // Set the correct ID for the main product
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
-    let freeProductFormData = {
-      'items': [
-        {
-          'id': FreeProductId,
-          'quantity': 1,
-        }
-      ]
-    };
+    // Function to add the main product to the cart
+    const addMainProductToCart = () => {
+      let mainProductFormData = {
+        'items': [
+          {
+            'id': MainProductId,
+            'quantity': 1,
+          }
+        ]
+      };
 
-    fetch(window.Shopify.routes.root + 'cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(freeProductFormData)
-    })
-      .then(freeProductResponse => {
-        console.log('Add Free Product to Cart Response:', freeProductResponse);
-        window.location = window.routes.cart_url;
-        return freeProductResponse.json();
+      fetch(window.Shopify.routes.root + 'cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(mainProductFormData)
       })
-      .catch(error => console.error('Error adding free product:', error));
+        .then(mainProductResponse => {
+          console.log('Add Main Product to Cart Response:', mainProductResponse);
+          window.location = window.routes.cart_url;
+          return mainProductResponse.json();
+        })
+        .catch(error => console.error('Error adding main product:', error));
+    };
 
     // Use the Shopify AJAX API to handle cart updates
     document.addEventListener('cart:updated', () => {
@@ -102,7 +105,7 @@ if (!this.cart) {
       const mainProductRemoved = !cart.items.some(item => item.variant_id === MainProductId);
 
       if (mainProductRemoved) {
-        const freeProductRemoved = !cart.items.some(item => item.title === FreeProductTitle);
+        const freeProductRemoved = !cart.items.some(item => item.variant_id === FreeProductId);
 
         if (freeProductRemoved) {
           // Construct data to remove the free product from the cart
@@ -129,10 +132,14 @@ if (!this.cart) {
         }
       }
     });
+
+    // Add the main product to the cart
+    addMainProductToCart();
   } else {
     window.location = window.routes.cart_url;
   }
 }
+
 
 return;
 
