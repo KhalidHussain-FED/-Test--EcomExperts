@@ -858,9 +858,9 @@
     </script>
   </div>
 </section>
-<!-- Existing code for product details -->
 
-<!-- Add this code for the new form -->
+<!-- Add this code to your product template in Shopify -->
+
 <form action="/cart/add" method="post" id="product-form">
   <!-- Product ID -->
   <input type="hidden" name="id" value="{{ product.id }}">
@@ -868,18 +868,21 @@
   <!-- Color Variant -->
   <label for="color">Color:</label>
   <select id="color" name="properties[Color]" onchange="updateProductImages()">
-    <option value="Black">Black</option>
-    <option value="Red">Red</option>
-    <option value="Tan">Tan</option>
+    {% for variant in product.variants %}
+      {% if variant.option1 == 'Color' %}
+        <option value="{{ variant.option2 }}">{{ variant.option2 }}</option>
+      {% endif %}
+    {% endfor %}
   </select>
 
   <!-- Size Variant -->
   <label for="size">Size:</label>
   <select id="size" name="properties[Size]">
-    <option value="Unselected">Unselected</option>
-    <option value="Large">Large</option>
-    <option value="Medium">Medium</option>
-    <option value="Small">Small</option>
+    {% for variant in product.variants %}
+      {% if variant.option1 == 'Size' %}
+        <option value="{{ variant.option2 }}">{{ variant.option2 }}</option>
+      {% endif %}
+    {% endfor %}
   </select>
 
   <!-- Add to Cart Button -->
