@@ -130,7 +130,6 @@ console.log(MainProductId);
 }
 
   return;
-}
 
 
             if (!this.error)
