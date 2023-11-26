@@ -86,24 +86,36 @@ if (!this.cart) {
     })
       .then(freeProductResponse => {
         console.log('Add Free Product to Cart Response:', freeProductResponse);
-         window.location = window.routes.cart_url;
-        // Empty Cart when user clicks on "empty cart" button
-    let cartBtn = document.querySelector("44127900663962");
-// let emptyCartBtn = document.querySelector("#YourEmptyCartButtonId");
-emptyCartBtn.onclick = function(e) {
-  e.preventDefault();
-  if (cartBtn.getAttribute("data-variant-id")) {
-    console.log("ok");
-    removeItem();
-  }
-};
-
+        // Empty Cart
+        return fetch(window.Shopify.routes.root + 'cart/clear.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
       })
-      .catch(error => console.error('Error adding free product:', error));
+      .then(emptyCartResponse => {
+        console.log('Empty Cart Response:', emptyCartResponse);
+        window.location = window.routes.cart_url;
+        return emptyCartResponse.json();
+      })
+      .catch(error => console.error('Error adding free product and emptying cart:', error));
   } else {
     // Redirect to Cart
     window.location = window.routes.cart_url;
   }
+
+  // Assuming form and cartBtn are declared elsewhere in your code...
+
+   let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
+const form =  document.getElementById("product-form-template--16312456642714__main")
+  form.addEventListener("click", (e) => {
+    e.preventDefault()
+    if (cartBtn.getAttribute("data-variant-id")) {
+      console.log("ok");
+      removeItem();
+    }
+  });
 
   function removeItem() {
     let variantId = cartBtn.getAttribute("data-variant-id");
@@ -127,7 +139,10 @@ emptyCartBtn.onclick = function(e) {
   }
 }
 
+            
+
 return;
+
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
