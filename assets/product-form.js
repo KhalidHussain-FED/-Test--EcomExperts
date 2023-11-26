@@ -86,29 +86,16 @@ if (!this.cart) {
     })
       .then(freeProductResponse => {
         console.log('Add Free Product to Cart Response:', freeProductResponse);
-        // Empty Cart
-        return fetch(window.Shopify.routes.root + 'cart/clear.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
+        // Empty Cart when user clicks on "empty cart" button
       })
-      .then(emptyCartResponse => {
-        console.log('Empty Cart Response:', emptyCartResponse);
-        window.location = window.routes.cart_url;
-        return emptyCartResponse.json();
-      })
-      .catch(error => console.error('Error adding free product and emptying cart:', error));
+      .catch(error => console.error('Error adding free product:', error));
   } else {
     // Redirect to Cart
     window.location = window.routes.cart_url;
   }
 
-  // Assuming form and cartBtn are declared elsewhere in your code...
-
-   let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
-const form =  document.getElementById("product-form-template--16312456642714__main")
+  let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
+  const form = document.getElementById("product-form-template--16312456642714__main")
   form.addEventListener("click", (e) => {
     e.preventDefault()
     if (cartBtn.getAttribute("data-variant-id")) {
@@ -138,8 +125,6 @@ const form =  document.getElementById("product-form-template--16312456642714__ma
     .catch(error => console.error('Error removing item from cart:', error));
   }
 }
-
-            
 
 return;
 
