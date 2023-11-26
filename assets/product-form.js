@@ -66,6 +66,7 @@ if (!this.cart) {
 
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const FreeProductTitle = 'Soft Winter Jacket';
+    const MainProductId = 123456789; // Set the correct ID for the main product
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
     let freeProductFormData = {
@@ -98,7 +99,7 @@ if (!this.cart) {
 
         if (cartData.items && cartData.items.length > 0) {
           // Filter out both the main product and the free product
-          let productsToRemove = cartData.items.filter(item => item.id !== FreeProductId);
+          let productsToRemove = cartData.items.filter(item => item.id === MainProductId || item.id === FreeProductId);
 
           console.log('Products to Remove:', productsToRemove);
 
@@ -137,6 +138,7 @@ if (!this.cart) {
 }
 
 return;
+
 
 
 
