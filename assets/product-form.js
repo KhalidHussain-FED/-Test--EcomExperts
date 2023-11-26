@@ -97,62 +97,36 @@ if (!this.cart) {
 window.location = window.routes.cart_url;
   }
   }
+            
 
 return;
 
-               document.addEventListener("DOMContentLoaded", function () {
-              // Find all cart-remove-button elements
-              var removeButtons = document.getElementById('44158968135834');
-
-        var k = 111;
-
-              console.log(k);
-              // Add click event listener to each remove button
-              removeButtons.forEach(function (button) {
-
-                button.addEventListener('click', function (event) {
-                  event.preventDefault();
-    console.log(k);
-                  // Log the clicked button's attributes for debugging
-                  console.log('Clicked button attributes:', button.attributes);
-
-                  // Get the index from the data-index attribute
-                  var dataIndex = button.getAttribute('data-index');
-
-                  // Perform the removal of the selected item
-                  removeItem(dataIndex);
-                });
-              });
-
-              function removeItem(index) {
-                // Fetch API or Ajax call to remove the selected item
-                fetch("/cart/change", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    id: index,  // Use the appropriate identifier for your cart item
-                    quantity: 0,
-                  }),
-                })
-                  .then(response => response.json())
-                  .then(data => {
-                    console.log('Remove Product from Cart Response:', data);
-
-                    // Check if there are two or more items in the cart
-                    if (data.item_count >= 2) {
-                      // Use Fetch API to remove a random product
-                      const randomProductIndex = Math.floor(Math.random() * data.items.length);
-                      const randomProductId = data.items[randomProductIndex].id;
-
-                      // Recursively call the removeItem function to remove another item
-                      removeItem(randomProductId);
-                    }
-                  })
-                  .catch(error => console.error('Error removing product:', error));
-              }
-            });
+            
+ let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
+const form =  document.getElementById("product-form-template--16312456642714__main")
+ form.addEventListener("submit", (e)=>{
+  e.preventDefault()
+  if(cartBtn.getAttribute("data-variant-id")) {
+  removeItem()
+  }
+ })
+            
+ function removeItem() {
+   let variantId =  cartBtn.getAttribute("data-variant-id")
+   $.ajax({
+      type: 'POST',
+      url: '/cart/change.js',
+      dataType: 'json',
+     data: {
+  'id': parseFloat(variantId),
+  'quantity': 0
+}
+   })
+   .then(data => {
+    cartBtn.textContent = "Add to cart"
+    cartBtn.removeAttribute("data-variant-id");
+})
+  }
 
 
             if (!this.error)
