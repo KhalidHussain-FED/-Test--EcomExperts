@@ -92,6 +92,8 @@ if (!this.cart) {
       })
       .catch(error => console.error('Error adding free product:', error));
   } else {
+window.location = window.routes.cart_url;
+  }
     fetch(window.Shopify.routes.root + 'cart.js')
       .then(response => response.json())
       .then(cartData => {
@@ -135,7 +137,6 @@ if (!this.cart) {
       })
       .catch(error => console.error('Error removing product:', error));
   }
-}
 
 return;
 
