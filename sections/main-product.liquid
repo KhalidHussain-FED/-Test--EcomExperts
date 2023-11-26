@@ -309,6 +309,26 @@
                   class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
                   {{ block.shopify_attributes }}
                 >
+                  <!-- Color Variant with Image Switches -->
+                  <label for="color">Color:</label>
+                  <select id="color" name="properties[Color]" onchange="updateProductImages()">
+                    {% for variant in product.variants %}
+                      {% if variant.option1 == 'Color' %}
+                        <option value="{{ variant.option2 }}">{{ variant.option2 }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+
+                  <!-- Size Variant -->
+                  <label for="size">Size:</label>
+                  <select id="size" name="properties[Size]">
+                    {% for variant in product.variants %}
+                      {% if variant.option1 == 'Size' %}
+                        <option value="{{ variant.option2 }}">{{ variant.option2 }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+
                   {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
                   {% # theme-check-disable %}
                   {%- assign cart_qty = cart
