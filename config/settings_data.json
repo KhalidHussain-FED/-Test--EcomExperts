@@ -142,14 +142,6 @@
     "content_for_index": [
 
     ],
-    "blocks": {
-      "15496525920608532027": {
-        "type": "shopify:\/\/apps\/cl-variant-image-color-swatch\/blocks\/app-embed-block\/f742d83f-1209-4b48-8f72-5f5721d0b599",
-        "disabled": false,
-        "settings": {
-        }
-      }
-    },
     "color_schemes": {
       "background-1": {
         "settings": {
