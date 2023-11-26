@@ -155,12 +155,12 @@ if (!this.cart) {
           .catch((e) => {
             console.error(e);
           })
-          .finally(() => {
-            this.submitButton.classList.remove('loading');
-            if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
-            if (!this.error) this.submitButton.removeAttribute('aria-disabled');
-            // this.querySelector('.loading__spinner').classList.add('hidden');
-          });
+          // .finally(() => {
+          //   this.submitButton.classList.remove('loading');
+          //   if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
+          //   if (!this.error) this.submitButton.removeAttribute('aria-disabled');
+          //   this.querySelector('.loading__spinner').classList.add('hidden');
+          // });
       }
 
       handleErrorMessage(errorMessage = false) {
