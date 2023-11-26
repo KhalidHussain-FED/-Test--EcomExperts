@@ -67,6 +67,7 @@ if (!this.cart) {
 const form =  document.getElementById("product-form-template--16312456642714__main")
     if (cartBtn != 0)
     {
+      console.log("ok");
       removeItem();
     }
   
