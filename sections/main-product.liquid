@@ -89,6 +89,14 @@
                                       var currurl = window.location.href;
                                           console.log(currurl);
                             }
+                                      var parts = currurl.split("=");
+                                                         if (parts.length > 1){
+
+                                                           var textaftereq = parts[1];
+                                                           alert("Now = " +textaftereq);
+                                                         }
+
+
                                                        });
 
                                                        var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
