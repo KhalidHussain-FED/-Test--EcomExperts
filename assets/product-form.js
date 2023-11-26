@@ -74,6 +74,7 @@ const form =  document.getElementById("product-form-template--16312456642714__ma
     {
       removeItem();
     }
+    
     let freeProductFormData = {
       'items': [
         {
