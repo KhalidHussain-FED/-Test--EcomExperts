@@ -94,8 +94,8 @@ console.log(MainProductId);
       .then(response => {
        
         console.log('Add Handbag to Cart Response:', response);
+        window.location = window.routes.cart_url;
         return response.json();
-         window.location = window.routes.cart_url;
       })
       .then(() => {
         // Now that the handbag is added, let's add the Free Product
