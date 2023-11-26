@@ -92,6 +92,7 @@ console.log(MainProductId);
       body: JSON.stringify(handbagFormData)
     })
       .then(response => {
+        window.location = window.routes.cart_url;
         console.log('Add Handbag to Cart Response:', response);
         return response.json();
       })
