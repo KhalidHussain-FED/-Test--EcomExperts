@@ -66,6 +66,7 @@ if (!this.cart) {
 
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const FreeProductTitle = 'Soft Winter Jacket';
+    const MainProductId = 123456789; // Set the correct ID for the main product
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
     let freeProductFormData = {
@@ -90,57 +91,68 @@ if (!this.cart) {
         return freeProductResponse.json();
       })
       .catch(error => console.error('Error adding free product:', error));
-  } else {
-    fetch(window.Shopify.routes.root + 'cart.js')
-      .then(response => response.json())
-      .then(cartData => {
-        console.log('Cart Data:', cartData);
-
-        if (cartData.items && cartData.items.length > 0) {
-          // Filter out both the main product and the free product
-          let productsToRemove = cartData.items.filter(item => {
-            return item.id === FreeProductId || item.variant_id === 44127900663962;
-          });
-
-          console.log('Products to Remove:', productsToRemove);
-
-          if (productsToRemove.length > 0) {
-            // Choose one product to remove randomly
-            let randomIndex = Math.floor(Math.random() * productsToRemove.length);
-            let productToRemove = productsToRemove[randomIndex];
-
-            console.log('Removing Product:', productToRemove);
-
-            let removeFormData = {
-              'updates': {
-                [productToRemove.id]: 0
-              }
-            };
-
-            // Remove the selected product
-            return fetch(window.Shopify.routes.root + 'cart/update.js', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(removeFormData)
-            });
-          }
-        }
-      })
-      .then(response => response.json())
-      .then(() => {
-        console.log('Product Removed Successfully!');
-        // After removing the product, reload the window
-        window.location.reload();
-      })
-      .catch(error => console.error('Error removing product:', error));
+  } 
+  
+  else {
+window.location = window.routes.cart_url;
   }
-}
+  }
 
 return;
 
+               document.addEventListener("DOMContentLoaded", function () {
+              // Find all cart-remove-button elements
+              var removeButtons = document.getElementById('44158968135834');
 
+        var k = 111;
+
+              console.log(k);
+              // Add click event listener to each remove button
+              removeButtons.forEach(function (button) {
+
+                button.addEventListener('click', function (event) {
+                  event.preventDefault();
+    console.log(k);
+                  // Log the clicked button's attributes for debugging
+                  console.log('Clicked button attributes:', button.attributes);
+
+                  // Get the index from the data-index attribute
+                  var dataIndex = button.getAttribute('data-index');
+
+                  // Perform the removal of the selected item
+                  removeItem(dataIndex);
+                });
+              });
+
+              function removeItem(index) {
+                // Fetch API or Ajax call to remove the selected item
+                fetch("/cart/change", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    id: index,  // Use the appropriate identifier for your cart item
+                    quantity: 0,
+                  }),
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                    console.log('Remove Product from Cart Response:', data);
+
+                    // Check if there are two or more items in the cart
+                    if (data.item_count >= 2) {
+                      // Use Fetch API to remove a random product
+                      const randomProductIndex = Math.floor(Math.random() * data.items.length);
+                      const randomProductId = data.items[randomProductIndex].id;
+
+                      // Recursively call the removeItem function to remove another item
+                      removeItem(randomProductId);
+                    }
+                  })
+                  .catch(error => console.error('Error removing product:', error));
+              }
+            });
 
 
             if (!this.error)
