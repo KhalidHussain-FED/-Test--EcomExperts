@@ -15,20 +15,12 @@
 
   <!-- Add this script to your Shopify theme files, such as theme.liquid or a relevant template file -->
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
       const selectedSizeElement = document.querySelector('#Option-template--16312456642714__main-1');
       const addToCartButton = document.getElementById('ProductSubmitButton-template--16312456642714__main');
 
       if (selectedSizeElement && addToCartButton) {
-        const selectedSize = selectedSizeElement.value;
-
-        if (selectedSize === 'Unselected') {
-          addToCartButton.disabled = true;
-        } else {
-          addToCartButton.disabled = false;
-        }
-
-        const observer = new MutationObserver(function () {
+        const updateButtonState = function () {
           const selectedSize = selectedSizeElement.value;
 
           if (selectedSize === 'Unselected') {
@@ -36,32 +28,16 @@
           } else {
             addToCartButton.disabled = false;
           }
-        });
+        };
 
+        // Initial state
+        updateButtonState();
+
+        // Observer for changes on the selected size element
+        const observer = new MutationObserver(updateButtonState);
         observer.observe(selectedSizeElement, { attributes: true, childList: true, subtree: true });
       }
     });
-
-
-
-           const mutationObserver = new MutationObserver(() => {
-          const selectedSizeElement = document.querySelector('#Option-template--16312456642714__main-1');
-          if (selectedSizeElement) {
-            const selectedSize = selectedSizeElement.value;
-            const addToCartButton = document.getElementById('ProductSubmitButton-template--16312456642714__main');
-
-            if (selectedSize === 'Unselected') {
-              addToCartButton.disabled = true;
-            } else {
-              addToCartButton.disabled = false;
-            }
-          }
-        });
-
-        mutationObserver.observe(document, {
-          childList: true,
-          subtree: true,
-        });
   </script>
 
   <script>
