@@ -309,43 +309,6 @@
                   class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
                   {{ block.shopify_attributes }}
                 >
-                  <!-- Color Variant -->
-                  <label for="color">Color:</label>
-                  <select id="color" name="properties[Color]" onchange="updateProductImages()">
-                    <option value="Black">Black</option>
-                    <option value="Red">Red</option>
-                    <option value="Tan">Tan</option>
-                  </select>
-
-                  <!-- Size Variant -->
-                  <label for="size">Size:</label>
-                  <select id="size" name="properties[Size]">
-                    <option value="Unselected">Unselected</option>
-                    <option value="Large">Large</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Small">Small</option>
-                  </select>
-
-                  <script>
-                    function updateProductImage() {
-                      var colorSelect = document.getElementById("color");
-                      var image = document.getElementById("product-image");
-
-                      // Define the image URLs for each color
-                      var imageUrls = {
-                        Black: "https://khalid-hussain-test.myshopify.com/cdn/shop/products/black-image.jpg",
-                        Red: "https://khalid-hussain-test.myshopify.com/cdn/shop/products/red-image.jpg",
-                        Tan: "https://khalid-hussain-test.myshopify.com/cdn/shop/products/tan-image.jpg",
-                      };
-
-                      // Get the selected color
-                      var selectedColor = colorSelect.value;
-
-                      // Update the product image based on the selected color
-                      image.src = imageUrls[selectedColor];
-                    }
-                  </script>
-
                   {% comment %} TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter {% endcomment %}
                   {% # theme-check-disable %}
                   {%- assign cart_qty = cart
