@@ -61,83 +61,81 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else if (!this.cart) {
-const HandbagTitle = 'handbag';
-const FreeProductTitle = 'Soft Winter Jacket';
+  // Get the current URL
+  const currentURL = window.location.href;
 
-if (HandbagTitle !== undefined) {
-  // Add the handbag to the cart
-  let handbagFormData = {
-    'items': [{
-      'title': HandbagTitle,
-      'quantity': 1,
-      'properties': {
-        'variant_option_1': 'Black', // Replace with the actual variant option values
-        'variant_option_2': 'Medium',
-      }
-    }]
-  };
+  // Check if the current URL matches the specific product variant URL
+  if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
+    const HandbagTitle = 'handbag';
+    const FreeProductTitle = 'Soft Winter Jacket';
 
-  fetch(window.Shopify.routes.root + 'cart/add.js', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(handbagFormData)
-  })
-  .then(response => {
-    console.log('Add Handbag to Cart Response:', response);
-    // if (!response.ok) {
-    //   return response.text().then(text => Promise.reject(text));
-    // }
-    return response.json();
-  })
-  .then(() => {
-    // Now that the handbag is added, let's find the Free Product (Soft Winter Jacket) by title
-    return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(FreeProductTitle))
-      .then(response => {
-        if (!response.ok) {
-          return response.text().then(text => Promise.reject(text));
+    // Add the handbag to the cart
+    let handbagFormData = {
+      'items': [{
+        'title': HandbagTitle,
+        'quantity': 1,
+        'properties': {
+          'variant_option_1': 'Black', // Replace with the actual variant option values
+          'variant_option_2': 'Medium',
         }
+      }]
+    };
+
+    fetch(window.Shopify.routes.root + 'cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(handbagFormData)
+    })
+      .then(response => {
+        console.log('Add Handbag to Cart Response:', response);
         return response.json();
       })
-      .then(products => {
-        // if (products && products.length > 0) {
-          if( MainProductId === 44127900663962 && FreeProductId === 44158968135834  )
-          {
-
-          let freeProductFormData = {
-            'items': [
-              {
-              'id': FreeProductId,
-              'quantity': 1,
+      .then(() => {
+        // Now that the handbag is added, let's find the Free Product (Soft Winter Jacket) by title
+        return fetch(window.Shopify.routes.root + 'products.json?title=' + encodeURIComponent(FreeProductTitle))
+          .then(response => {
+            if (!response.ok) {
+              return response.text().then(text => Promise.reject(text));
             }
-            ]
-          };
+            return response.json();
+          })
+          .then(products => {
+            if (products && products.length > 0) {
+              const FreeProductId = products[0].id;
 
-          return fetch(window.Shopify.routes.root + 'cart/add.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(freeProductFormData)
+              let freeProductFormData = {
+                'items': [
+                  {
+                    'id': FreeProductId,
+                    'quantity': 1,
+                  }
+                ]
+              };
+
+              return fetch(window.Shopify.routes.root + 'cart/add.js', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(freeProductFormData)
+              });
+            } else {
+              throw new Error('Free Product not found.');
+            }
           });
-        } 
-        else 
-        {
-          throw new Error('Free Product not found.');
-        }
-      });
-  })
-  .then(freeProductResponse => {
-     window.location = window.routes.cart_url;
-    console.log('Add Free Product to Cart Response:', freeProductResponse);
-    return freeProductResponse.json();
-  })
-  .catch(error => console.error('Error:', error));
+      })
+      .then(freeProductResponse => {
+        window.location = window.routes.cart_url;
+        console.log('Add Free Product to Cart Response:', freeProductResponse);
+        return freeProductResponse.json();
+      })
+      .catch(error => console.error('Error:', error));
+  }
+
+  return;
 }
-        
-              return;
-            }
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
