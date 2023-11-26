@@ -326,21 +326,23 @@
                     <option value="Small">Small</option>
                   </select>
 
-                  <!-- JavaScript for image switches -->
                   <script>
-                    function updateProductImages() {
-                      var selectedColor = document.getElementById('color').value;
-                      var imageContainer = document.getElementById('product-images-container');
+                    function updateProductImage() {
+                      var colorSelect = document.getElementById("color");
+                      var image = document.getElementById("product-image");
 
-                      // Define image sources based on selected color
-                      var imageSources = {
-                        'Black': 'black-image.jpg',
-                        'Red': 'red-image.jpg',
-                        'Tan': 'tan-image.jpg'
+                      // Define the image URLs for each color
+                      var imageUrls = {
+                        Black: "https://khalid-hussain-test.myshopify.com/cdn/shop/products/black-image.jpg",
+                        Red: "https://khalid-hussain-test.myshopify.com/cdn/shop/products/red-image.jpg",
+                        Tan: "https://khalid-hussain-test.myshopify.com/cdn/shop/products/tan-image.jpg",
                       };
 
-                      // Update product images
-                      imageContainer.innerHTML = '<img src="' + imageSources[selectedColor] + '" alt="' + selectedColor + '">';
+                      // Get the selected color
+                      var selectedColor = colorSelect.value;
+
+                      // Update the product image based on the selected color
+                      image.src = imageUrls[selectedColor];
                     }
                   </script>
 
