@@ -128,6 +128,7 @@ return;
 
 
 
+
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
                 source: 'product-form',
