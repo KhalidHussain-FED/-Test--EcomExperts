@@ -57,6 +57,32 @@
         });
       }
     });
+
+
+    let emptyCartBtn = document.getElementById("#Remove-1"); // Add your button ID here
+
+    emptyCartBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      emptyCart();
+    });
+
+    function emptyCart() {
+      // Implement code to empty the cart
+      // You can use the '/cart/clear.js' endpoint or similar
+      // Example:
+      fetch('/cart/clear.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Update UI or perform any other actions after emptying the cart
+        console.log('Cart emptied:', data);
+      })
+      .catch(error => console.error('Error:', error));
+    }
   </script>
 
   {%- style -%}
