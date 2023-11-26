@@ -96,13 +96,7 @@ if (!this.cart) {
   else {
 window.location = window.routes.cart_url;
   }
-  }
-            
-
-return;
-
-            
- let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
+   let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
 const form =  document.getElementById("product-form-template--16312456642714__main")
  form.addEventListener("click", (e)=>{
   e.preventDefault()
@@ -128,7 +122,10 @@ const form =  document.getElementById("product-form-template--16312456642714__ma
     cartBtn.removeAttribute("data-variant-id");
 })
   }
+  }
+            
 
+return;
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
