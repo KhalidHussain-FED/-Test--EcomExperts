@@ -61,13 +61,13 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else 
-const currentURL = window.location.href;
-const FreeProductId = 44158968135834; // Set the correct Free Product ID
-
 if (!this.cart) {
+  const currentURL = window.location.href;
+
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const FreeProductTitle = 'Soft Winter Jacket';
-    
+    const FreeProductId = 44158968135834; // Set the correct Free Product ID
+
     let freeProductFormData = {
       'items': [
         {
@@ -84,17 +84,13 @@ if (!this.cart) {
       },
       body: JSON.stringify(freeProductFormData)
     })
-    .then(freeProductResponse => {
-      console.log('Add Free Product to Cart Response:', freeProductResponse);
-      return freeProductResponse.json();
-    })
-    .then(() => {
-      // Redirect to the cart page after adding the free product
-      window.location = window.routes.cart_url;
-    })
-    .catch(error => console.error('Error adding free product:', error));
+      .then(freeProductResponse => {
+        console.log('Add Free Product to Cart Response:', freeProductResponse);
+        window.location = window.routes.cart_url;
+        return freeProductResponse.json();
+      })
+      .catch(error => console.error('Error adding free product:', error));
   } else {
-    // Fetch the cart data
     fetch(window.Shopify.routes.root + 'cart.js')
       .then(response => response.json())
       .then(cartData => {
