@@ -74,8 +74,8 @@ console.log(MainProductId);
     // Add the handbag to the cart
     let handbagFormData = {
       'items': [{
-        'id': MainProductId,
-        'quantity': 1,
+        'id': MainProductId
+        // 'quantity': 0,
         // 'properties': {
         //   'variant_option_1': 'Black', // Replace with the actual variant option values
         //   'variant_option_2': 'Medium',
@@ -92,7 +92,7 @@ console.log(MainProductId);
       .then(response => {
        
         console.log('Add Handbag to Cart Response:', response);
-        return response.json();
+        // return response.json();
       })
       .then(() => {
         // Now that the handbag is added, let's add the Free Product
