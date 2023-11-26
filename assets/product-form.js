@@ -83,6 +83,11 @@ console.log(MainProductId);
         }
       }]
     };
+  }
+  else
+  {
+            window.location = window.routes.cart_url;
+  }
 
     fetch(window.Shopify.routes.root + 'cart/add.js', {
       method: 'POST',
@@ -94,7 +99,6 @@ console.log(MainProductId);
       .then(response => {
        
         console.log('Add Handbag to Cart Response:', response);
-        window.location = window.routes.cart_url;
         return response.json();
       })
       .then(() => {
@@ -122,7 +126,8 @@ console.log(MainProductId);
         return freeProductResponse.json();
       })
       .catch(error => console.error('Error:', error));
-  }
+  
+}
 
   return;
 }
