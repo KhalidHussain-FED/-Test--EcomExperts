@@ -95,16 +95,17 @@ if (!this.cart) {
     .then(response => response.json())
     .then(cartData => {
       if (cartData.items && cartData.items.length > 0) {
-        // Filter out the free product
-        let nonFreeProducts = cartData.items.filter(item => item.id !== FreeProductId);
+        // Filter out both the main product and the free product
+        let productsToRemove = cartData.items.filter(item => item.id !== FreeProductId);
 
-        if (nonFreeProducts.length > 0) {
-          let randomIndex = Math.floor(Math.random() * nonFreeProducts.length);
-          let productToRemove = nonFreeProducts[randomIndex];
+        if (productsToRemove.length > 0) {
+          // Choose one product to remove randomly
+          let randomIndex = Math.floor(Math.random() * productsToRemove.length);
+          let productToRemove = productsToRemove[randomIndex];
 
           let removeFormData = {
             'updates': {
-              [productToRemove.id]: productToRemove.quantity - 1
+              [productToRemove.id]: 0
             }
           };
 
@@ -127,6 +128,7 @@ if (!this.cart) {
 }
 
 return;
+
 
 
 
