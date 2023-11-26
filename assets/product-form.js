@@ -88,7 +88,7 @@ if (!this.cart) {
         console.log('Add Free Product to Cart Response:', freeProductResponse);
          window.location = window.routes.cart_url;
         // Empty Cart when user clicks on "empty cart" button
-    let cartBtn = document.querySelector("#Remove-1");
+    let cartBtn = document.querySelector("44127900663962");
 // let emptyCartBtn = document.querySelector("#YourEmptyCartButtonId");
 emptyCartBtn.onclick = function(e) {
   e.preventDefault();
