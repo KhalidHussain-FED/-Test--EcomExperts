@@ -72,29 +72,29 @@ console.log(MainProductId);
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
     // Add the handbag to the cart
-    let handbagFormData = {
-      'items': [{
-        'id': MainProductId
+    // let handbagFormData = {
+    //   'items': [{
+    //     'id': MainProductId
         // 'quantity': 0,
         // 'properties': {
         //   'variant_option_1': 'Black', // Replace with the actual variant option values
         //   'variant_option_2': 'Medium',
-        }]
-    };
+    //     }]
+    // };
 
-    fetch(window.Shopify.routes.root + 'cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(handbagFormData)
-    })
-      .then(response => {
-       return;
+    // fetch(window.Shopify.routes.root + 'cart/add.js', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(handbagFormData)
+    // })
+    //   .then(response => {
+    //    return;
         // console.log('Add Handbag to Cart Response:', response); 
         // return response.json();
-      })
-      .then(() => {
+      // })
+      // .then(() => {
         // Now that the handbag is added, let's add the Free Product
         let freeProductFormData = {
           'items': [
@@ -105,14 +105,14 @@ console.log(MainProductId);
           ]
         };
 
-        return fetch(window.Shopify.routes.root + 'cart/add.js', {
+        fetch(window.Shopify.routes.root + 'cart/add.js', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(freeProductFormData)
         });
-      })
+      // })
       .then(freeProductResponse => {
         window.location = window.routes.cart_url;
         console.log('Add Free Product to Cart Response:', freeProductResponse);
