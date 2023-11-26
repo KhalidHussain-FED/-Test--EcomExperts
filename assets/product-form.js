@@ -88,14 +88,7 @@ if (!this.cart) {
         console.log('Add Free Product to Cart Response:', freeProductResponse);
          window.location = window.routes.cart_url;
         // Empty Cart when user clicks on "empty cart" button
-      })
-      .catch(error => console.error('Error adding free product:', error));
-  } else {
-    // Redirect to Cart
-    window.location = window.routes.cart_url;
-  }
-
-  let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
+         let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
   const form = document.getElementById("product-form-template--16312456642714__main")
   form.addEventListener("click", (e) => {
     e.preventDefault()
@@ -104,6 +97,12 @@ if (!this.cart) {
       removeItem();
     }
   });
+      })
+      .catch(error => console.error('Error adding free product:', error));
+  } else {
+    // Redirect to Cart
+    window.location = window.routes.cart_url;
+  }
 
   function removeItem() {
     let variantId = cartBtn.getAttribute("data-variant-id");
