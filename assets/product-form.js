@@ -86,6 +86,7 @@ if (!this.cart) {
     })
       .then(freeProductResponse => {
         console.log('Add Free Product to Cart Response:', freeProductResponse);
+         window.location = window.routes.cart_url;
         // Empty Cart when user clicks on "empty cart" button
       })
       .catch(error => console.error('Error adding free product:', error));
