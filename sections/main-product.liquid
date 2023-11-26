@@ -130,6 +130,7 @@
 
   {% if settings.free_product != blank %}
     <select id="sizeSelector">
+      <option value="" selected disabled>Select Size</option>
       {% assign sizeVariants = product.variants | where: 'option1', 'Size' %}
       {% for variant in sizeVariants %}
         <option value="{{ variant.id }}">{{ variant.title }}</option>
