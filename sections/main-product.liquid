@@ -59,7 +59,7 @@
 
 
 
-    let emptyCartBtn = document.getElementById("#Remove-1"); // Add your button ID here
+    let emptyCartBtn = document.querySelectorAll(".button--tertiary");
 
     emptyCartBtn.addEventListener("click", function(e) {
       e.preventDefault();
@@ -69,9 +69,9 @@
     });
     function emptyCart() {
       // Implement code to empty the cart
-      // You can use the '/cart/clear.js' endpoint or similar
+      // You can use the 'cart/update.js' endpoint or similar
       // Example:
-      fetch('/cart/clear.js', {
+      fetch('cart/update.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
