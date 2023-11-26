@@ -61,14 +61,16 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else  // Check if the cart is empty
+// Check if the cart is empty
 if (!this.cart) {
   const currentURL = window.location.href;
 
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const FreeProductTitle = 'Soft Winter Jacket';
-    const MainProductId = 123456789; // Set the correct ID for the main product
+    const MainProductId = 44127900663962; // Set the correct ID for the main product
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
     const HandbagId = 44127900663962; // Set the correct handbag ID
+    const LeatherBagId = 44158968135834; // Set the correct Leather Bag ID
 
     let freeProductFormData = {
       'items': [
@@ -104,35 +106,36 @@ if (!this.cart) {
 
       if (handbagRemoved) {
         const softWinterJacketId = 44158968135834; // Set the correct ID for the soft winter jacket product
+        const leatherBagId = 44158968135834; // Set the correct ID for the leather bag product
 
-        // Construct data to remove "soft winter jacket" from the cart
-        let removeFreeProductFormData = {
+        // Construct data to remove "soft winter jacket" and "leather bag" from the cart
+        let removeProductsFormData = {
           'updates': {
-            [softWinterJacketId]: 0, // Set quantity to 0 to remove the product
+            [softWinterJacketId]: 0, // Set quantity to 0 to remove the soft winter jacket
+            [leatherBagId]: 0, // Set quantity to 0 to remove the leather bag
           }
         };
 
-        // Send request to update the cart and remove "soft winter jacket"
+        // Send request to update the cart and remove products
         fetch(window.Shopify.routes.cart_change_url, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(removeFreeProductFormData)
+          body: JSON.stringify(removeProductsFormData)
         })
-          .then(removeFreeProductResponse => {
-            console.log('Remove Free Product from Cart Response:', removeFreeProductResponse);
-            window.location = window.routes.cart_url; // Redirect to the cart page
-            return removeFreeProductResponse.json();
+          .then(removeProductsResponse => {
+            console.log('Remove Products from Cart Response:', removeProductsResponse);
+            window.location.reload(); // Reload the page to show an empty cart
+            return removeProductsResponse.json();
           })
-          .catch(error => console.error('Error removing free product:', error));
+          .catch(error => console.error('Error removing products:', error));
       }
     });
   } else {
     window.location = window.routes.cart_url;
   }
 }
-
 return;
 
 
