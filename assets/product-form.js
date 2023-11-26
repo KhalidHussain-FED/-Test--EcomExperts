@@ -67,7 +67,7 @@ if (!this.cart) {
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const FreeProductTitle = 'Soft Winter Jacket';
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
-    
+
     let freeProductFormData = {
       'items': [
         {
@@ -84,50 +84,60 @@ if (!this.cart) {
       },
       body: JSON.stringify(freeProductFormData)
     })
-    .then(freeProductResponse => {
-      console.log('Add Free Product to Cart Response:', freeProductResponse);
-      window.location = window.routes.cart_url;
-      return freeProductResponse.json();
-    })
-    .catch(error => console.error('Error:', error));
+      .then(freeProductResponse => {
+        console.log('Add Free Product to Cart Response:', freeProductResponse);
+        window.location = window.routes.cart_url;
+        return freeProductResponse.json();
+      })
+      .catch(error => console.error('Error adding free product:', error));
   } else {
     fetch(window.Shopify.routes.root + 'cart.js')
-    .then(response => response.json())
-    .then(cartData => {
-      if (cartData.items && cartData.items.length > 0) {
-        // Filter out both the main product and the free product
-        let productsToRemove = cartData.items.filter(item => item.id !== FreeProductId);
+      .then(response => response.json())
+      .then(cartData => {
+        console.log('Cart Data:', cartData);
 
-        if (productsToRemove.length > 0) {
-          // Choose one product to remove randomly
-          let randomIndex = Math.floor(Math.random() * productsToRemove.length);
-          let productToRemove = productsToRemove[randomIndex];
+        if (cartData.items && cartData.items.length > 0) {
+          // Filter out both the main product and the free product
+          let productsToRemove = cartData.items.filter(item => item.id !== FreeProductId);
 
-          let removeFormData = {
-            'updates': {
-              [productToRemove.id]: 0
-            }
-          };
+          console.log('Products to Remove:', productsToRemove);
 
-          return fetch(window.Shopify.routes.root + 'cart/update.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(removeFormData)
-          });
+          if (productsToRemove.length > 0) {
+            // Choose one product to remove randomly
+            let randomIndex = Math.floor(Math.random() * productsToRemove.length);
+            let productToRemove = productsToRemove[randomIndex];
+
+            console.log('Removing Product:', productToRemove);
+
+            let removeFormData = {
+              'updates': {
+                [productToRemove.id]: 0
+              }
+            };
+
+            // Remove the selected product
+            return fetch(window.Shopify.routes.root + 'cart/update.js', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(removeFormData)
+            });
+          }
         }
-      }
-    })
-    .then(response => response.json())
-    .then(() => {
-      window.location.reload(); // Reload the window to reflect cart changes
-    })
-    .catch(error => console.error('Error:', error));
+      })
+      .then(response => response.json())
+      .then(() => {
+        console.log('Product Removed Successfully!');
+        // After removing the product, reload the window
+        window.location.reload();
+      })
+      .catch(error => console.error('Error removing product:', error));
   }
 }
 
 return;
+
 
 
 
