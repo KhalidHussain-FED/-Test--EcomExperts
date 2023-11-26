@@ -62,7 +62,7 @@ if (!customElements.get('product-form')) {
               return;
             } else 
 if (!this.cart) {
- var MainProductId = 44127900663962;
+ // var MainProductId = 44127900663962;
 console.log(MainProductId);
   const currentURL = window.location.href;
 
