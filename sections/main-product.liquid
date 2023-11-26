@@ -75,34 +75,33 @@
 
   {% if settings.free_product != blank %}
     <script>
-                                                                                            function setupDropdownAndButton() {
+                                            function setupDropdownAndButton() {
 
 
 
-                                                                                         var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
+                                       var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
                                                                                      //    if (dropdown) {
 
-                                                                                           dropdown.addEventListener('change', function() {
-
+                                         dropdown.addEventListener('change', function() {
 
                                 var selectedIndex = dropdown.selectedIndex;
 
 
                                          var selectedValue = dropdown.options[selectedIndex].value;
                           console.log(selectedValue);
-                    if (dropdown.selectedIndex === 1)
+                    if (dropdown.selectedIndex === 2)
                       {
 
               var currurl = window.location.href;
                       console.log('Current URL:', currurl);
 
                       // Update the URL based on the selected value
-                      var newUrl = generateNewUrl(currurl, selectedValue);
+                      var newUrl = generateNewUrl(currurl, selectedIndex);
       console.log(newUrl);
 
                       }
-            function generateNewUrl(currentUrl, selectedValue) {
-            return currentUrl + '?selected=' + selectedValue;
+            function generateNewUrl(currentUrl, selectedIndex) {
+            return currentUrl + '?selected=' + selectedIndex;
         }
                 })
 
