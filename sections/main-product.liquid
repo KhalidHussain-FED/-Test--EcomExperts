@@ -96,10 +96,6 @@
     <script>
                                                            function setupDropdownAndButton() {
                                                         // Function to set the selected value to local storage
-                                                       function setSelectedValue(value) {
-                                                        var b =  localStorage.setItem('selectedValue', value);
-                       console.log(b);
-
 
                                                         // Get the dropdown element without an ID
                                                         var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
@@ -114,8 +110,6 @@
                                                           // Add event listener for the change event
                                                           dropdown.addEventListener('change', function() {
                                                             // Set the selected value to local storage when the dropdown changes
-                                                          var a =  setSelectedValue(dropdown.value);
-                           console.log(a);
                                                           });
 
                                                           var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
@@ -127,7 +121,7 @@
                                                           // Add an event listener to the dropdown to update the button on change
                                                           dropdown.addEventListener('change', function() {
                                                             addButton.disabled = dropdown.selectedIndex === 0;
-                                   if(  addButton = dropdown.selectedIndex === 2)
+                                   if(dropdown.selectedIndex === 2)
                                  {
                                          var currurl = window.location.href;
                                              console.log(currurl);
