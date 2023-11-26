@@ -65,9 +65,10 @@ if (!this.cart) {
   const currentURL = window.location.href;
 
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
-    // Add Free Product to Cart
+    const FreeProductTitle = 'Soft Winter Jacket';
+    const MainProductId = 123456789; // Set the correct ID for the main product
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
-    
+
     let freeProductFormData = {
       'items': [
         {
@@ -86,60 +87,16 @@ if (!this.cart) {
     })
       .then(freeProductResponse => {
         console.log('Add Free Product to Cart Response:', freeProductResponse);
-        // Empty Cart
-        return fetch(window.Shopify.routes.root + 'cart/clear.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-      })
-      .then(emptyCartResponse => {
-        console.log('Empty Cart Response:', emptyCartResponse);
         window.location = window.routes.cart_url;
-        return emptyCartResponse.json();
+        return freeProductResponse.json();
       })
-      .catch(error => console.error('Error adding free product and emptying cart:', error));
-  } else {
-    // Redirect to Cart
-    window.location = window.routes.cart_url;
+      .catch(error => console.error('Error adding free product:', error));
+  } 
+  
+  else {
+window.location = window.routes.cart_url;
   }
-
-  // Assuming form and cartBtn are declared elsewhere in your code...
-
-   let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
-const form =  document.getElementById("product-form-template--16312456642714__main")
-  form.addEventListener("click", (e) => {
-    e.preventDefault()
-    if (cartBtn.getAttribute("data-variant-id")) {
-      console.log("ok");
-      removeItem();
-    }
-  });
-
-  function removeItem() {
-    let variantId = cartBtn.getAttribute("data-variant-id");
-
-    fetch('/cart/change.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'id': parseFloat(variantId),
-        'quantity': 0
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      cartBtn.textContent = "Add to cart"
-      cartBtn.removeAttribute("data-variant-id");
-    })
-    .catch(error => console.error('Error removing item from cart:', error));
   }
-}
-
-            
 
 return;
 
