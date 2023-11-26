@@ -106,6 +106,9 @@ if (!this.cart) {
   }
 
   // Assuming form and cartBtn are declared elsewhere in your code...
+
+   let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
+const form =  document.getElementById("product-form-template--16312456642714__main")
   form.addEventListener("click", (e) => {
     e.preventDefault()
     if (cartBtn.getAttribute("data-variant-id")) {
