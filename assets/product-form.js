@@ -61,6 +61,7 @@ if (!customElements.get('product-form')) {
               this.error = true;
               return;
             } else 
+// Check if the cart is empty
 if (!this.cart) {
   const currentURL = window.location.href;
 
@@ -68,6 +69,7 @@ if (!this.cart) {
     const FreeProductTitle = 'Soft Winter Jacket';
     const MainProductId = 123456789; // Set the correct ID for the main product
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
+    const HandbagId = 44127900663962; // Set the correct handbag ID
 
     let freeProductFormData = {
       'items': [
@@ -91,12 +93,43 @@ if (!this.cart) {
         return freeProductResponse.json();
       })
       .catch(error => console.error('Error adding free product:', error));
-  } 
-  
-  else {
-window.location = window.routes.cart_url;
+
+    // Listen for cart updates
+    document.addEventListener('cart.updated', () => {
+      // Check if "handbag (black, medium)" is removed from the cart
+      const handbagRemoved = !window.Shopify.checkout.lineItems.some(item => item.variant_id === HandbagId);
+
+      if (handbagRemoved) {
+        const softWinterJacketId = 44158968135834; // Set the correct ID for the soft winter jacket product
+
+        // Construct data to remove "soft winter jacket" from the cart
+        let removeFreeProductFormData = {
+          'updates': {
+            [softWinterJacketId]: 0, // Set quantity to 0 to remove the product
+          }
+        };
+
+        // Send request to update the cart and remove "soft winter jacket"
+        fetch(window.Shopify.routes.cart_change_url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(removeFreeProductFormData)
+        })
+          .then(removeFreeProductResponse => {
+            console.log('Remove Free Product from Cart Response:', removeFreeProductResponse);
+            window.location = window.routes.cart_url; // Redirect to the cart page
+            return removeFreeProductResponse.json();
+          })
+          .catch(error => console.error('Error removing free product:', error));
+      }
+    });
+  } else {
+    window.location = window.routes.cart_url;
   }
-  }
+}
+
 
 return;
 
