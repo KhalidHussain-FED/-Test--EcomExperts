@@ -68,7 +68,6 @@ console.log(MainProductId);
 
   // Check if the current URL matches the specific product variant URL
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
-    const HandbagTitle = 'handbag';
     const FreeProductTitle = 'Soft Winter Jacket';
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
@@ -76,7 +75,7 @@ console.log(MainProductId);
     let handbagFormData = {
       'items': [{
         'id': MainProductId,
-        // 'quantity': 1,
+        'quantity': 1,
         // 'properties': {
         //   'variant_option_1': 'Black', // Replace with the actual variant option values
         //   'variant_option_2': 'Medium',
