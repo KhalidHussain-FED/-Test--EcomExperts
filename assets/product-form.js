@@ -62,40 +62,13 @@ if (!customElements.get('product-form')) {
               return;
             } else 
 if (!this.cart) {
- // var MainProductId = 44127900663962;
 console.log(MainProductId);
   const currentURL = window.location.href;
-
-  // Check if the current URL matches the specific product variant URL
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
     const FreeProductTitle = 'Soft Winter Jacket';
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
-    // Add the handbag to the cart
-    // let handbagFormData = {
-    //   'items': [{
-    //     'id': MainProductId
-        // 'quantity': 0,
-        // 'properties': {
-        //   'variant_option_1': 'Black', // Replace with the actual variant option values
-        //   'variant_option_2': 'Medium',
-    //     }]
-    // };
-
-    // fetch(window.Shopify.routes.root + 'cart/add.js', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(handbagFormData)
-    // })
-    //   .then(response => {
-    //    return;
-        // console.log('Add Handbag to Cart Response:', response); 
-        // return response.json();
-      // })
-      // .then(() => {
-        // Now that the handbag is added, let's add the Free Product
+  
         let freeProductFormData = {
           'items': [
             {
