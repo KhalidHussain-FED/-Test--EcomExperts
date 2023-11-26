@@ -65,7 +65,6 @@ if (!customElements.get("product-form")) {
               this.error = true;
               return;
             } // Check if the cart is empty
-            // Check if the cart is empty
             else if (!this.cart) {
               const currentURL = window.location.href;
 
@@ -77,36 +76,33 @@ if (!customElements.get("product-form")) {
                 const MainProductId = 44127900663962; // Set the correct ID for the main product
                 const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
-                // Function to add the free product to the cart
-                const addFreeProductToCart = () => {
-                  let freeProductFormData = {
-                    items: [
-                      {
-                        id: FreeProductId,
-                        quantity: 1,
-                      },
-                    ],
-                  };
-
-                  fetch(window.Shopify.routes.root + "cart/add.js", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
+                let freeProductFormData = {
+                  items: [
+                    {
+                      id: FreeProductId,
+                      quantity: 1,
                     },
-                    body: JSON.stringify(freeProductFormData),
-                  })
-                    .then((freeProductResponse) => {
-                      console.log(
-                        "Add Free Product to Cart Response:",
-                        freeProductResponse
-                      );
-                      window.location = window.routes.cart_url;
-                      return freeProductResponse.json();
-                    })
-                    .catch((error) =>
-                      console.error("Error adding free product:", error)
-                    );
+                  ],
                 };
+
+                fetch(window.Shopify.routes.root + "cart/add.js", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(freeProductFormData),
+                })
+                  .then((freeProductResponse) => {
+                    console.log(
+                      "Add Free Product to Cart Response:",
+                      freeProductResponse
+                    );
+                    window.location = window.routes.cart_url;
+                    return freeProductResponse.json();
+                  })
+                  .catch((error) =>
+                    console.error("Error adding free product:", error)
+                  );
 
                 // Use the Shopify AJAX API to handle cart updates
                 document.addEventListener("cart:updated", () => {
@@ -145,13 +141,7 @@ if (!customElements.get("product-form")) {
                             "Remove Free Product from Cart Response:",
                             removeFreeProductResponse
                           );
-                          // Reload the page only if the cart is empty
-                          if (
-                            cart.items.length === 1 &&
-                            cart.items[0].variant_id === MainProductId
-                          ) {
-                            window.location.reload(); // Reload the page to show an empty cart
-                          }
+                          window.location.reload(); // Reload the page to show an empty cart
                           return removeFreeProductResponse.json();
                         })
                         .catch((error) =>
@@ -160,9 +150,6 @@ if (!customElements.get("product-form")) {
                     }
                   }
                 });
-
-                // Add the free product to the cart
-                addFreeProductToCart();
               } else {
                 window.location = window.routes.cart_url;
               }
