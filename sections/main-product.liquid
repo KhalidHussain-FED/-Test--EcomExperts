@@ -94,61 +94,62 @@
 
   {% if settings.free_product != blank %}
     <script>
-                            function setupDropdownAndButton() {
-                         // Function to set the selected value to local storage
-                         function setSelectedValue(value) {
-                           localStorage.setItem('selectedValue', value);
-                         }
+                                  function setupDropdownAndButton() {
+                               // Function to set the selected value to local storage
+                               function setSelectedValue(value) {
+                                 localStorage.setItem('selectedValue', value);
+                               }
 
-                         // Get the dropdown element without an ID
-                         var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
+                               // Get the dropdown element without an ID
+                               var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
 
-                         // Check if the dropdown element exists
-                         if (dropdown) {
-                           // Set the selected value to the first option on window reload
-                           dropdown.value = dropdown.options[0].value;
-                           setSelectedValue(dropdown.value);
+                               // Check if the dropdown element exists
+                               if (dropdown) {
+                                 // Set the selected value to the first option on window reload
+                                 dropdown.value = dropdown.options[0].value;
+                                 setSelectedValue(dropdown.value);
 
-                           // Add event listener for the change event
-                           dropdown.addEventListener('change', function() {
-                             // Set the selected value to local storage when the dropdown changes
-                             setSelectedValue(dropdown.value);
-                           });
+                                 // Add event listener for the change event
+                                 dropdown.addEventListener('change', function() {
+                                   // Set the selected value to local storage when the dropdown changes
+                                   setSelectedValue(dropdown.value);
+                                 });
 
-                           var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
+                                 var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
 
-                           // Disable the button if the first option ("Unselected") is selected, otherwise, enable it
-                           <!-- addButton = dropdown.selectedIndex === 2; -->
+                                 // Disable the button if the first option ("Unselected") is selected, otherwise, enable it
+                                 <!-- addButton = dropdown.selectedIndex === 2; -->
 
 
-                           // Add an event listener to the dropdown to update the button on change
-                           dropdown.addEventListener('change', function() {
-                             addButton.disabled = dropdown.selectedIndex === 0;
-      addButton = dropdown.selectedIndex === 1;
-          var currurl = window.location.href;
-              console.log(currurl);
+                                 // Add an event listener to the dropdown to update the button on change
+                                 dropdown.addEventListener('change', function() {
+                                   addButton.disabled = dropdown.selectedIndex === 0;
+          if(  addButton = dropdown.selectedIndex === 1)
+        {
+                var currurl = window.location.href;
+                    console.log(currurl);
+      }
+                                //  var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+                                // if (dropdown.selectedIndex === 2)
+                              // {
+                    // var currurl = window.location.href;
+                   // console.log(currurl);
+                                  // var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+                                 //      console.log(FreeProductId);
+                                  // console.log(MainProductId);
+                               // }
+                                 });
+                               }
+                       }
 
-                          //  var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-                          // if (dropdown.selectedIndex === 2)
-                        // {
-              // var currurl = window.location.href;
-             // console.log(currurl);
-                            // var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-                           //      console.log(FreeProductId);
-                            // console.log(MainProductId);
-                         // }
-                           });
-                         }
-                 }
-
-               var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-                          // if (dropdown.selectedIndex === 2)
-                        // {
-              // var currurl = window.location.href;
-             // console.log(currurl);
-                             var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-                                 console.log(FreeProductId);
-                             console.log(MainProductId);
+                     var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+                                // if (dropdown.selectedIndex === 2)
+                              // {
+                    // var currurl = window.location.href;
+                   // console.log(currurl);
+                                   var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+                                       console.log(FreeProductId);
+                                   console.log(MainProductId);
     </script>
   {% endif %}
 
