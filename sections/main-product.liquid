@@ -75,51 +75,55 @@
 
   {% if settings.free_product != blank %}
     <script>
-                                                                                  function setupDropdownAndButton() {
-                                                                               // Function to set the selected value to local storage
-
-                                                                               // Get the dropdown element without an ID
-                                                                               var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
-                                                                           //    if (dropdown) {
-
-                                                                                 dropdown.addEventListener('change', function() {
-                                                                                   // Set the selected value to local storage when the dropdown changes
-
-                      var selectedIndex = dropdown.selectedIndex;
-
-                               // Get the selected value
-                               var selectedValue = dropdown.options[selectedIndex].value;
-                console.log(selectedValue);
-          if (dropdown.selectedIndex === 1)
-            {
-            var currurl = window.location.href;
-            console.log(currurl);
-
-            }
-      })
+                                                                                    function setupDropdownAndButton() {
 
 
-                                                                                 var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
-                                                                                 dropdown.addEventListener('change', function() {
-                                                                                   addButton.disabled = dropdown.selectedIndex === 0;
 
-                                                                                //  var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-                                                                                // if (dropdown.selectedIndex === 2)
-                                                                              // {
-                                                                    // var currurl = window.location.href;
-                                                                   // console.log(currurl);
-                                                                                  // var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-                                                                                 //      console.log(FreeProductId);
-                                                                                  // console.log(MainProductId);
-                                                                               // }
-                                                                                 });
-                                                                               }
-                                                                   //    }
+                                                                                 var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
+                                                                             //    if (dropdown) {
 
-                                                                     var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-                                                                                   var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-                                                                                       console.log(FreeProductId);
-                                                                                   console.log(MainProductId);
+                                                                                   dropdown.addEventListener('change', function() {
+
+
+                        var selectedIndex = dropdown.selectedIndex;
+
+
+                                 var selectedValue = dropdown.options[selectedIndex].value;
+                  console.log(selectedValue);
+            if (dropdown.selectedIndex === 1)
+              {
+
+      var currurl = window.location.href;
+              console.log('Current URL:', currurl);
+
+              // Update the URL based on the selected value
+              var newUrl = generateNewUrl(currurl, selectedValue);
+
+              }
+        })
+
+
+                                                                                   var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
+                                                                                   dropdown.addEventListener('change', function() {
+                                                                                     addButton.disabled = dropdown.selectedIndex === 0;
+
+                                                                                  //  var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+                                                                                  // if (dropdown.selectedIndex === 2)
+                                                                                // {
+                                                                      // var currurl = window.location.href;
+                                                                     // console.log(currurl);
+                                                                                    // var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+                                                                                   //      console.log(FreeProductId);
+                                                                                    // console.log(MainProductId);
+                                                                                 // }
+                                                                                   });
+                                                                                 }
+                                                                     //    }
+
+                                                                       var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+                                                                                     var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+                                                                                         console.log(FreeProductId);
+                                                                                     console.log(MainProductId);
     </script>
   {% endif %}
 
