@@ -80,8 +80,7 @@ console.log(MainProductId);
         // 'properties': {
         //   'variant_option_1': 'Black', // Replace with the actual variant option values
         //   'variant_option_2': 'Medium',
-        }
-      }]
+        }]
     };
 
     fetch(window.Shopify.routes.root + 'cart/add.js', {
