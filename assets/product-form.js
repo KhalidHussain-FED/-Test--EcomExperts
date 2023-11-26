@@ -99,7 +99,7 @@ if (!this.cart) {
 
         if (cartData.items && cartData.items.length > 0) {
           // Filter out both the main product and the free product
-          let productsToRemove = cartData.items.filter(item => item.id === MainProductId || item.id === FreeProductId);
+          let productsToRemove = cartData.items.filter(item => item.id === FreeProductId || item.id === MainProductId);
 
           console.log('Products to Remove:', productsToRemove);
 
