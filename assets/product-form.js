@@ -68,7 +68,12 @@ if (!this.cart) {
     const FreeProductTitle = 'Soft Winter Jacket';
     const MainProductId = 123456789; // Set the correct ID for the main product
     const FreeProductId = 44158968135834; // Set the correct Free Product ID
-
+ let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
+const form =  document.getElementById("product-form-template--16312456642714__main")
+    if (cartBtn != 0)
+    {
+      removeItem();
+    }
     let freeProductFormData = {
       'items': [
         {
@@ -96,8 +101,7 @@ if (!this.cart) {
   else {
 window.location = window.routes.cart_url;
   }
-   let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
-const form =  document.getElementById("product-form-template--16312456642714__main")
+
  form.addEventListener("click", (e)=>{
   e.preventDefault()
   if(cartBtn.getAttribute("data-variant-id")) {
