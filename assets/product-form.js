@@ -63,7 +63,7 @@ if (!customElements.get('product-form')) {
             } else 
 if (!this.cart) {
 
-   let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main")
+   let cartBtn = document.querySelector("#Remove-1")
 const form =  document.getElementById("product-form-template--16312456642714__main")
     if (cartBtn != 0)
     {
