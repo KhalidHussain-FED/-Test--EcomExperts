@@ -88,9 +88,8 @@ if (!this.cart) {
         console.log('Add Free Product to Cart Response:', freeProductResponse);
          window.location = window.routes.cart_url;
         // Empty Cart when user clicks on "empty cart" button
-    let cartBtn = document.querySelector("#ProductSubmitButton-template--16312456642714__main");
+    let cartBtn = document.querySelector("#Remove-1");
 // let emptyCartBtn = document.querySelector("#YourEmptyCartButtonId");
-
 emptyCartBtn.onclick = function(e) {
   e.preventDefault();
   if (cartBtn.getAttribute("data-variant-id")) {
