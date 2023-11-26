@@ -60,7 +60,8 @@ if (!customElements.get('product-form')) {
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
-            } else  if (!this.cart) {
+            } else  // Check if the cart is empty
+if (!this.cart) {
   const currentURL = window.location.href;
 
   if (currentURL === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962') {
@@ -96,6 +97,8 @@ if (!customElements.get('product-form')) {
     document.addEventListener('cart:updated', () => {
       const cart = JSON.parse(localStorage.getItem('cart'));
 
+      console.log('Updated Cart:', cart);
+
       // Check if "handbag (black, medium)" is removed from the cart
       const handbagRemoved = !cart.items.some(item => item.variant_id === HandbagId);
 
@@ -129,8 +132,6 @@ if (!customElements.get('product-form')) {
     window.location = window.routes.cart_url;
   }
 }
-
-
 
 return;
 
