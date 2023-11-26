@@ -13,6 +13,56 @@
     {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
   {%- endif -%}
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+             // Function to remove an item from the cart
+             function removeFromCart(productId) {
+                 console.log('Removing product with ID:', productId);
+                 // Your logic to remove the product from the cart
+                 // For simplicity, let's just remove the entire row in this example
+                 var cartItem = document.getElementById('CartItem-' + productId);
+                 if (cartItem) {
+                     cartItem.remove();
+                     console.log('Product removed successfully.');
+                 } else {
+                     console.log('Product not found in the cart.');
+                 }
+             }
+
+             // Function to submit the cart form
+             function submitCartForm() {
+                 console.log('Submitting cart form...');
+                 document.getElementById('cart').submit();
+                 console.log('Cart form submitted.');
+             }
+
+             // Function to reload the page with a delay
+             function reloadPageWithDelay() {
+                 console.log('Reloading page with a delay...');
+                 setTimeout(function () {
+                     location.reload();
+                 }, 500); // Adjust the delay as needed
+             }
+
+             // Assuming you have event listeners for the remove buttons
+             document.getElementById('Remove-2').addEventListener('click', function (event) {
+                 event.preventDefault();
+
+                 // Remove the Handbag product
+                 removeFromCart('44127900663962');
+
+                 // Remove the Soft Winter Jacket product
+                 removeFromCart('44158968135834');
+
+                 // Submit the cart form to update the UI
+                 submitCartForm();
+
+                 // Reload the page with a delay to ensure the cart is updated
+                 reloadPageWithDelay();
+             });
+         });
+  </script>
+
   <!-- Add this script to your Shopify theme files, such as theme.liquid or a relevant template file -->
   <script>
         document.addEventListener('DOMContentLoaded', function () {
