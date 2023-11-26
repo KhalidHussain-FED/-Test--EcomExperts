@@ -159,7 +159,7 @@ if (!this.cart) {
             this.submitButton.classList.remove('loading');
             if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
             if (!this.error) this.submitButton.removeAttribute('aria-disabled');
-            this.querySelector('.loading__spinner').classList.add('hidden');
+            // this.querySelector('.loading__spinner').classList.add('hidden');
           });
       }
 
