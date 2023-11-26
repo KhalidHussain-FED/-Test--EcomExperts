@@ -75,69 +75,67 @@
 
   {% if settings.free_product != blank %}
     <script>
-                                                    function setupDropdownAndButton() {
+      function setupDropdownAndButton() {
+
+      var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
+      //    if (dropdown) {
+
+      dropdown.addEventListener('change', function() {
+
+      var selectedIndex = dropdown.selectedIndex;
 
 
+      var selectedValue = dropdown.options[selectedIndex].value;
+      console.log(selectedValue);
+      if (dropdown.selectedIndex === 2)
+      {
 
-                                               var dropdown = document.querySelector('#Option-template--16312456642714__main-1');
-                                                                                             //    if (dropdown) {
+      var currurl = window.location.href;
+      console.log('Current URL:', currurl);
 
-                                                 dropdown.addEventListener('change', function() {
+      // Update the URL based on the selected value
+      var newUrl = generateNewUrl(currurl, selectedIndex);
+      console.log(newUrl);
 
-                                        var selectedIndex = dropdown.selectedIndex;
-
-
-                                                 var selectedValue = dropdown.options[selectedIndex].value;
-                                  console.log(selectedValue);
-                            if (dropdown.selectedIndex === 2)
-                              {
-
-                      var currurl = window.location.href;
-                              console.log('Current URL:', currurl);
-
-                              // Update the URL based on the selected value
-                              var newUrl = generateNewUrl(currurl, selectedIndex);
-              console.log(newUrl);
-
-                              }
-                    function generateNewUrl(currentUrl, selectedIndex) {
-                        if (selectedIndex && selectedIndex !== 2) {
-                // Implement your logic to generate the new URL based on the selected value
-                // For example, you can append the selected value as a variant parameter
-                return currentUrl.split('?')[0] + '?variant=' + selectedValue;
-            }
-            return currentUrl;
-                }
-
-        function isDesiredURL(url) {
-          // Implement your logic to check if the URL matches the desired pattern
-          return url === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962';
-          // Replace the above with your actual desired URL
       }
-                        })
+      function generateNewUrl(currentUrl, selectedIndex) {
+      if (selectedIndex && selectedIndex !== 2) {
+      // Implement your logic to generate the new URL based on the selected value
+      // For example, you can append the selected value as a variant parameter
+      return currentUrl.split('?')[0] + '?variant=' + selectedValue;
+      }
+      return currentUrl;
+      }
+
+      function isDesiredURL(url) {
+      // Implement your logic to check if the URL matches the desired pattern
+      return url === 'https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962';
+      // Replace the above with your actual desired URL
+      }
+      })
 
 
-                                                                                                   var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
-                                                                                                   dropdown.addEventListener('change', function() {
-                                                                                                     addButton.disabled = dropdown.selectedIndex === 0;
+      var addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
+      dropdown.addEventListener('change', function() {
+      addButton.disabled = dropdown.selectedIndex === 0;
 
-                                                                                                  //  var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-                                                                                                  // if (dropdown.selectedIndex === 2)
-                                                                                                // {
-                                                                                      // var currurl = window.location.href;
-                                                                                     // console.log(currurl);
-                                                                                                    // var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-                                                                                                   //      console.log(FreeProductId);
-                                                                                                    // console.log(MainProductId);
-                                                                                                 // }
-                                                                                                   });
-                                                                                                 }
-                                                                                     //    }
+      //  var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+      // if (dropdown.selectedIndex === 2)
+      // {
+      // var currurl = window.location.href;
+      // console.log(currurl);
+      // var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+      //      console.log(FreeProductId);
+      // console.log(MainProductId);
+      // }
+      });
+      }
+      //    }
 
-                                                                                       var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-                                                                                                     var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-                                                                                                         console.log(FreeProductId);
-                                                                                                     console.log(MainProductId);
+      var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+      console.log(FreeProductId);
+      var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+      console.log(MainProductId);
     </script>
   {% endif %}
 
