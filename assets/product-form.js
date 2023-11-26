@@ -74,12 +74,12 @@ console.log(MainProductId);
 
     // Add the handbag to the cart
     let handbagFormData = {
-      // 'items': [{
-      //   'id': MainProductId,
-      //   'quantity': 1,
-      //   'properties': {
-      //     'variant_option_1': 'Black', // Replace with the actual variant option values
-      //     'variant_option_2': 'Medium',
+      'items': [{
+        // 'id': MainProductId,
+        // 'quantity': 1,
+        // 'properties': {
+        //   'variant_option_1': 'Black', // Replace with the actual variant option values
+        //   'variant_option_2': 'Medium',
         }
       }]
     };
