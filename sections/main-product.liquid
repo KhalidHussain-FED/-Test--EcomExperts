@@ -39,7 +39,7 @@
         });
 
 
-      caonst mutationObserver = new MutationObserver(() => {
+       const mutationObserver = new MutationObserver(() => {
       const selectedSizeElement = document.querySelector('.EPVD-default-select');
       if (selectedSizeElement) {
         const selectedSize = selectedSizeElement.value;
@@ -127,26 +127,35 @@
       }
     }
   {%- endstyle -%}
-
   {% if settings.free_product != blank %}
-    <select id="sizeSelector">
-      <option value="" selected disabled>Unselected</option>
-      <option value="small">Small</option>
-      <option value="medium">Medium</option>
-      <option value="large">Large</option>
+    <select class="EPVD-default-select" id="sizeSelector">
+      {% for variant in product.variants %}
+        <option
+          value="{{ variant.id }}"
+          {% if variant.title == 'Medium' %}
+            selected
+          {% endif %}
+        >
+          {{ variant.title }}
+        </option>
+      {% endfor %}
     </select>
 
     <script>
-      document.getElementById('sizeSelector').addEventListener('change', function() {
-        var selectedVariantId = this.value;
-        console.log('Selected Variant ID: ' + selectedVariantId);
+      document.addEventListener('DOMContentLoaded', function() {
+        var sizeSelector = document.getElementById('sizeSelector');
 
-        // Now you can use the selectedVariantId as needed, for example:
-        var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
-        console.log('Free Product ID: ' + FreeProductId);
+        sizeSelector.addEventListener('change', function() {
+          var selectedVariantId = sizeSelector.value;
+          console.log('Selected Variant ID: ' + selectedVariantId);
 
-        var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
-        console.log('Main Product ID: ' + MainProductId);
+          // Ensure that Free Product and Main Product variables are defined in Liquid
+          var FreeProductId = {{ settings.free_product.selected_or_first_available_variant.id }};
+          var MainProductId = {{ settings.main_product.selected_or_first_available_variant.id }};
+
+          console.log('Free Product ID: ' + FreeProductId);
+          console.log('Main Product ID: ' + MainProductId);
+        });
       });
     </script>
   {% endif %}
@@ -241,15 +250,13 @@
                     {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
                   {%- endif -%}
                 </div>
-                <!--
-                  <div {{ block.shopify_attributes }}>
-                    {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
-                    {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
-                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-                      {{ form | payment_terms }}
-                    {%- endform -%}
-                  </div>
-                -->
+                <div {{ block.shopify_attributes }}>
+                  {%- assign product_form_installment_id = 'product-form-installment-' | append: section.id -%}
+                  {%- form 'product', product, id: product_form_installment_id, class: 'installment caption-large' -%}
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                    {{ form | payment_terms }}
+                  {%- endform -%}
+                </div>
               {%- when 'inventory' -%}
                 <p
                   class="product__inventory no-js-hidden{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.inventory_management != 'shopify' %} visibility-hidden{% endif %}"
@@ -814,6 +821,33 @@
       </script>
       <script src="{{ 'product-model.js' | asset_url }}" defer></script>
     {%- endif -%}
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        function isIE() {
+          const ua = window.navigator.userAgent;
+          const msie = ua.indexOf('MSIE ');
+          const trident = ua.indexOf('Trident/');
+
+          return msie > 0 || trident > 0;
+        }
+
+        if (!isIE()) return;
+        const hiddenInput = document.querySelector('#{{ product_form_id }} input[name="id"]');
+        const noScriptInputWrapper = document.createElement('div');
+        const variantSwitcher =
+          document.querySelector('variant-radios[data-section="{{ section.id }}"]') ||
+          document.querySelector('variant-selects[data-section="{{ section.id }}"]');
+        noScriptInputWrapper.innerHTML = document.querySelector(
+          '.product-form__noscript-wrapper-{{ section.id }}'
+        ).textContent;
+        variantSwitcher.outerHTML = noScriptInputWrapper.outerHTML;
+
+        document.querySelector('#Variants-{{ section.id }}').addEventListener('change', function (event) {
+          hiddenInput.value = event.currentTarget.value;
+        });
+      });
+    </script>
 
     {%- liquid
       if product.selected_or_first_available_variant.featured_media
