@@ -83,11 +83,6 @@ console.log(MainProductId);
         }
       }]
     };
-  }
-  else
-  {
-            window.location = window.routes.cart_url;
-  }
 
     fetch(window.Shopify.routes.root + 'cart/add.js', {
       method: 'POST',
@@ -128,6 +123,12 @@ console.log(MainProductId);
       .catch(error => console.error('Error:', error));
   
 }
+   else
+  {
+            window.location = window.routes.cart_url;
+  }
+    }
+ 
 
   return;
 
