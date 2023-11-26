@@ -859,62 +859,6 @@
   </div>
 </section>
 
-<!-- Add this code to your product template in Shopify -->
-
-<form action="/cart/add" method="post" id="product-form">
-  <!-- Product ID -->
-  <input type="hidden" name="id" value="{{ product.id }}">
-
-  <!-- Color Variant -->
-  <label for="color">Color:</label>
-  <select id="color" name="properties[Color]" onchange="updateProductImages()">
-    {% for variant in product.variants %}
-      {% if variant.option1 == 'Color' %}
-        <option value="{{ variant.option2 }}">{{ variant.option2 }}</option>
-      {% endif %}
-    {% endfor %}
-  </select>
-
-  <!-- Size Variant -->
-  <label for="size">Size:</label>
-  <select id="size" name="properties[Size]">
-    {% for variant in product.variants %}
-      {% if variant.option1 == 'Size' %}
-        <option value="{{ variant.option2 }}">{{ variant.option2 }}</option>
-      {% endif %}
-    {% endfor %}
-  </select>
-
-  <!-- Add to Cart Button -->
-  <input type="submit" value="Add to Cart">
-</form>
-
-<!-- JavaScript for image switches -->
-<script>
-  function updateProductImages() {
-    var selectedColor = document.getElementById('color').value;
-    var imageContainer = document.getElementById('product-images-container');
-
-    // Define image sources based on selected color
-    var imageSources = {
-      'Black': 'black-image.jpg',
-      'Red': 'red-image.jpg',
-      'Tan': 'tan-image.jpg'
-    };
-
-    // Update product images
-    imageContainer.innerHTML = '<img src="' + imageSources[selectedColor] + '" alt="' + selectedColor + '">';
-  }
-</script>
-
-<!-- Product Images Container -->
-<div id="product-images-container">
-  <!-- Initial product image -->
-  <img src="default-image.jpg" alt="Product">
-</div>
-
-<!-- Continue with existing code for product details -->
-
 {% schema %}
 {
   "name": "t:sections.main-product.name",
