@@ -91,10 +91,12 @@ if (!this.cart) {
         return freeProductResponse.json();
       })
       .catch(error => console.error('Error adding free product:', error));
-  } else {
+  } 
+  
+  else {
 window.location = window.routes.cart_url;
   }
-    fetch(window.Shopify.routes.root + 'cart.js')
+    fetch(window.Shopify.routes.root + 'cart/cart.js')
       .then(response => response.json())
       .then(cartData => {
         console.log('Cart Data:', cartData);
@@ -139,13 +141,6 @@ window.location = window.routes.cart_url;
   }
 
 return;
-
-
-
-
-
-
-
 
 
             if (!this.error)
