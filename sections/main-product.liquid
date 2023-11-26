@@ -41,50 +41,21 @@
   </script>
 
   <script>
-        // Wrap the setup function in a DOMContentLoaded event listener
-        document.addEventListener('DOMContentLoaded', function() {
+    // Wrap the setup function in a DOMContentLoaded event listener
+    document.addEventListener('DOMContentLoaded', function() {
+      setupDropdownAndButton();
+
+      // Find the element with the class EPVD-image-swatch-wrapper
+      var imageSwatchWrapper = document.querySelector('#Option-template--16312456642714__main-0');
+
+      // Check if the element exists before adding the click event listener
+      if (imageSwatchWrapper) {
+        imageSwatchWrapper.addEventListener('click', function() {
+          // Call the setup function when the element is clicked
           setupDropdownAndButton();
-
-          // Find the element with the class EPVD-image-swatch-wrapper
-          var imageSwatchWrapper = document.querySelector('#Option-template--16312456642714__main-0');
-
-          // Check if the element exists before adding the click event listener
-          if (imageSwatchWrapper) {
-            imageSwatchWrapper.addEventListener('click', function() {
-              // Call the setup function when the element is clicked
-              setupDropdownAndButton();
-              // Add any additional functionality you want to happen on click here
-            });
-          }
-
-
-
-    let emptyCartBtn = document.querySelectorAll(".button--tertiary");
-
-    emptyCartBtn.forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.preventDefault();
-        emptyCart();
-      });
-    });
-
-    function emptyCart() {
-      // Implement code to empty the cart
-      // You can use the 'cart/update.js' endpoint or similar
-      // Example:
-      fetch('cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Update UI or perform any other actions after emptying the cart
-          console.log('Cart emptied:', data);
-        })
-        .catch(error => console.error('Error:', error));
-    }
+          // Add any additional functionality you want to happen on click here
+        });
+      }
   </script>
 
   {%- style -%}
@@ -170,6 +141,7 @@
   <script>
           function removeItem() {
       let variantId = cartBtn.getAttribute("data-variant-id");
+      alert("khalid");
 
       // Remove the selected item
       fetch("/cart/change.js", {
