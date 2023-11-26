@@ -90,8 +90,8 @@ console.log(MainProductId);
       body: JSON.stringify(handbagFormData)
     })
       .then(response => {
-       
-        console.log('Add Handbag to Cart Response:', response);
+       return;
+        // console.log('Add Handbag to Cart Response:', response); 
         // return response.json();
       })
       .then(() => {
