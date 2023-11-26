@@ -95,7 +95,9 @@ if (!this.cart) {
     .then(response => response.json())
     .then(cartData => {
       if (cartData.items && cartData.items.length > 0) {
+        // Filter out the free product
         let nonFreeProducts = cartData.items.filter(item => item.id !== FreeProductId);
+
         if (nonFreeProducts.length > 0) {
           let randomIndex = Math.floor(Math.random() * nonFreeProducts.length);
           let productToRemove = nonFreeProducts[randomIndex];
@@ -118,13 +120,14 @@ if (!this.cart) {
     })
     .then(response => response.json())
     .then(() => {
-      window.location = window.routes.cart_url;
+      window.location.reload(); // Reload the window to reflect cart changes
     })
     .catch(error => console.error('Error:', error));
   }
 }
 
 return;
+
 
 
 
