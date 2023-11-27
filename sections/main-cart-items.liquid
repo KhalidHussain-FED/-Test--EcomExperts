@@ -33,7 +33,8 @@
       var dataid = anchorElement.getAttribute('data-id');
       var dataurl = anchorElement.getAttribute('data-url');
       var urlToRemove = anchorElement.getAttribute('href');
-      // Check if data-id is '44127900663962'
+
+      window.location.href = urlToRemove;
       if (dataid === '44127900663962') {
         // Perform some action for this specific data-id
         console.log('Removing product with data-id 44127900663962');
@@ -86,9 +87,6 @@
           console.error('Error during fetch:', error);
         });
       }
-
-      // Regardless of the condition, navigate to the URL
-      window.location.href = urlToRemove;
     });
   });
 </script>
