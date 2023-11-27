@@ -35,9 +35,9 @@
         anchorElement.addEventListener('click', function(event) {
           event.preventDefault();
 
-          var dataIndex = this.getAttribute('data-index');
-          var dataId = this.getAttribute('data-id');
-          var urlToRemove = this.getAttribute('href');
+          var dataIndex = elementsWithClass.getAttribute('data-index');
+          var dataId = elementsWithClass.getAttribute('data-id');
+          var urlToRemove = elementsWithClass.getAttribute('href');
           console.log(urlToRemove);
            });
   }
