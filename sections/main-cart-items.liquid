@@ -24,7 +24,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Get the anchor element by its ID
-     var anchorElement = document.getElementById('Remove-{{ item.index | plus: 0 }}');
+    var anchorElement = document.getElementById('Remove-{{ item.index | plus: 0 }}');
 
     // Add a click event listener
     anchorElement.addEventListener('click', function(event) {
@@ -33,8 +33,35 @@
       var dataid = anchorElement.getAttribute('data-id');
       var dataurl = anchorElement.getAttribute('data-url');
       var urlToRemove = anchorElement.getAttribute('href');
-
+      if (dataid === '44127900663962') {
+        window.location.href = urlToRemove;
         console.log(urlToRemove);
+        var ajaxUrl = 'https://khalid-hussain-test.myshopify.com/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
+        fetch(urlToRemove, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+            // Add any additional headers if needed
+          },
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Request to additional URL successful', data);
+
+        })
+        .catch(error => {
+          console.error('Error during fetch:', error);
+        });
+
+      } else {
+        // Trigger only urlToRemove
+        window.location.href = urlToRemove;
+      }
     });
   });
 </script>
