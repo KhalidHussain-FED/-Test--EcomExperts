@@ -23,14 +23,6 @@
   assign product_form_id = 'product-form-' | append: section.id
 -%}
 
-{%- if product -%}
-  <script>
-    var productData = {
-      variants: {{ product.variants | json }},
-    };
-  </script>
-{%- endif -%}
-
 {%- for value in option.values -%}
   {%- assign variant = product.variants | where: option.name, value | first -%}
   {%- liquid
@@ -138,7 +130,7 @@
     });
 
     function findVariantById(variantId) {
-      return productData.variants.find(function(variant) {
+      return product.variants.find(function(variant) {
         return variant.id === variantId;
       });
     }
