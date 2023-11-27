@@ -38,8 +38,10 @@
       var route = 'https://khalid-hussain-test.myshopify.com';
 
       var mainUrl = route+urlToRemove;
-
-      console.log(mainUrl);
+      if(dataId == "44127900663962"){
+        var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
+      }
+      window.location.href = mainUrl;
 
 
     });
