@@ -19,6 +19,33 @@
   }
 {%- endstyle -%}
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const productAId = '44127900663962';
+    const productBId = '44158968135834';
+
+    // Check if Product A is in the cart
+    const productAInCart = {{ product_a_title | json | escape }};
+    const productBInCart = {{ product_b_title | json | escape }};
+
+    if (productAInCart) {
+      // Find the line item for Product B in the cart
+      const productBLineItem = {{ product_b_line_item | json | escape }};
+
+      if (productBLineItem) {
+        // Remove Product B from the cart using Shopify's AJAX API
+        jQuery.post('/cart/change.js', {
+          id: {{ product_b_line_item.id }},
+          quantity: 0,
+        }, function(data) {
+          // Handle success or error
+          console.log('Product B removed from the cart:', data);
+        });
+      }
+    }
+  });
+</script>
+
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
 {%- endunless -%}
