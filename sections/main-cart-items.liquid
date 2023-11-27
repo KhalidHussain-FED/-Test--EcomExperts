@@ -34,7 +34,10 @@
       var dataurl = anchorElement.getAttribute('data-url');
       console.log(dataurl);
      if (dataid === '44127900663962') {
-        console.log('Removing product with data-id 44127900663962');
+
+          var urlToRemove = anchorElement.getAttribute('href');
+          window.location.href = urlToRemove;
+
         var newUrl = 'https://khalid-hussain-test.myshopify.com/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
 
         // Make an HTTP request to the new URL
@@ -52,8 +55,6 @@
         })
         .then(data => {
           console.log('Request successful', data);
-          var urlToRemove = anchorElement.getAttribute('href');
-          window.location.href = urlToRemove;
         })
         .catch(error => {
           console.error('Error during fetch:', error);
