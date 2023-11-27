@@ -23,6 +23,14 @@
   assign product_form_id = 'product-form-' | append: section.id
 -%}
 
+{%- if product -%}
+  <script>
+    var productData = {
+      variants: {{ product.variants | json }},
+    };
+  </script>
+{%- endif -%}
+
 {%- for value in option.values -%}
   {%- assign variant = product.variants | where: option.name, value | first -%}
   {%- liquid
@@ -113,7 +121,7 @@
 {%- endif -%}
 
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     var swatches = document.querySelectorAll('.variant-swatch');
     var productImage = document.getElementById('product-image');
 
@@ -130,7 +138,7 @@
     });
 
     function findVariantById(variantId) {
-      return product.variants.find(function(variant) {
+      return productData.variants.find(function(variant) {
         return variant.id === variantId;
       });
     }
@@ -141,7 +149,7 @@
   });
 </script>
 <style>
-    /* Image Swatches */
+  /* Image Swatches */
   .variant-swatch {
     display: inline-block;
     margin-right: 10px;
