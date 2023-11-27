@@ -64,7 +64,7 @@ class CartItems extends HTMLElement {
 
   onCartUpdate() {
     if (this.tagName === "CART-DRAWER-ITEMS") {
-      fetch(${routes.cart_url}?section_id=cart-drawer)
+      fetch(`${routes.cart_url}?section_id=cart-drawer`)
         .then((response) => response.text())
         .then((responseText) => {
           const html = new DOMParser().parseFromString(
@@ -84,7 +84,7 @@ class CartItems extends HTMLElement {
           console.error(e);
         });
     } else {
-      fetch(${routes.cart_url}?section_id=main-cart-items)
+      fetch(`${routes.cart_url}?section_id=main-cart-items`)
         .then((response) => response.text())
         .then((responseText) => {
           const html = new DOMParser().parseFromString(
@@ -135,15 +135,15 @@ class CartItems extends HTMLElement {
       sections_url: window.location.pathname,
     });
 
-    fetch(${routes.cart_change_url}, { ...fetchConfig(), ...{ body } })
+    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
       .then((response) => {
         return response.text();
       })
       .then((state) => {
         const parsedState = JSON.parse(state);
         const quantityElement =
-          document.getElementById(Quantity-${line}) ||
-          document.getElementById(Drawer-quantity-${line});
+          document.getElementById(`Quantity-${line}`) ||
+          document.getElementById(`Drawer-quantity-${line}`);
         const items = document.querySelectorAll(".cart-item");
 
         if (parsedState.errors) {
@@ -195,15 +195,15 @@ class CartItems extends HTMLElement {
         this.updateLiveRegions(line, message);
 
         const lineItem =
-          document.getElementById(CartItem-${line}) ||
-          document.getElementById(CartDrawer-Item-${line});
-        if (lineItem && lineItem.querySelector([name="${name}"])) {
+          document.getElementById(`CartItem-${line}`) ||
+          document.getElementById(`CartDrawer-Item-${line}`);
+        if (lineItem && lineItem.querySelector(`[name="${name}"]`)) {
           cartDrawerWrapper
             ? trapFocus(
                 cartDrawerWrapper,
-                lineItem.querySelector([name="${name}"])
+                lineItem.querySelector(`[name="${name}"]`)
               )
-            : lineItem.querySelector([name="${name}"]).focus();
+            : lineItem.querySelector(`[name="${name}"]`).focus();
         } else if (parsedState.item_count === 0 && cartDrawerWrapper) {
           trapFocus(
             cartDrawerWrapper.querySelector(".drawer__inner-empty"),
@@ -238,8 +238,8 @@ class CartItems extends HTMLElement {
 
   updateLiveRegions(line, message) {
     const lineItemError =
-      document.getElementById(Line-item-error-${line}) ||
-      document.getElementById(CartDrawer-LineItemError-${line});
+      document.getElementById(`Line-item-error-${line}`) ||
+      document.getElementById(`CartDrawer-LineItemError-${line}`);
     if (lineItemError)
       lineItemError.querySelector(".cart-item__error-text").innerHTML = message;
 
@@ -268,10 +268,10 @@ class CartItems extends HTMLElement {
     mainCartItems.classList.add("cart__items--disabled");
 
     const cartItemElements = this.querySelectorAll(
-      #CartItem-${line} .loading__spinner
+      `#CartItem-${line} .loading__spinner`
     );
     const cartDrawerItemElements = this.querySelectorAll(
-      #CartDrawer-Item-${line} .loading__spinner
+      `#CartDrawer-Item-${line} .loading__spinner`
     );
 
     [...cartItemElements, ...cartDrawerItemElements].forEach((overlay) =>
@@ -289,10 +289,10 @@ class CartItems extends HTMLElement {
     mainCartItems.classList.remove("cart__items--disabled");
 
     const cartItemElements = this.querySelectorAll(
-      #CartItem-${line} .loading__spinner
+      `#CartItem-${line} .loading__spinner`
     );
     const cartDrawerItemElements = this.querySelectorAll(
-      #CartDrawer-Item-${line} .loading__spinner
+      `#CartDrawer-Item-${line} .loading__spinner`
     );
 
     cartItemElements.forEach((overlay) => overlay.classList.add("hidden"));
@@ -315,13 +315,13 @@ if (!customElements.get("cart-note")) {
           "change",
           debounce((event) => {
             const body = JSON.stringify({ note: event.target.value });
-            fetch(${routes.cart_update_url}, {
+            fetch(`${routes.cart_update_url}`, {
               ...fetchConfig(),
               ...{ body },
             });
           }, ON_CHANGE_DEBOUNCE_TIMER)
         );
-      }
-    }
-  );
+      }
+    }
+  );
 }
