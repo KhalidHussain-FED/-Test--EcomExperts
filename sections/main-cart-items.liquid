@@ -6,29 +6,32 @@
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Attach a click event to the remove buttons
-    var removeButtons = document.querySelectorAll('[id^="Remove"]');
-    removeButtons.forEach(function(button) {
-      button.addEventListener('click', function(e) {
-        e.preventDefault();
+     document.addEventListener('DOMContentLoaded', function() {
+      // Attach a click event to the remove buttons
+      var removeButtons = document.querySelectorAll('[id^="Remove"]');
+      removeButtons.forEach(function(button) {
+          button.addEventListener('click', function(e) {
+              e.preventDefault();
 
-        // Get the index of the clicked remove button
-        var index = button.getAttribute('data-index');
+              // Get the index of the clicked remove button
+              var index = button.getAttribute('data-index');
 
-        // Remove the corresponding cart item
-        var cartItem = document.getElementById('CartItem-' + index);
-        if (cartItem) {
-          cartItem.parentNode.removeChild(cartItem);
-        }
+              // Remove the corresponding cart item
+              var cartItem = document.getElementById('CartItem-' + index);
+              if (cartItem) {
+                  cartItem.parentNode.removeChild(cartItem);
+              }
 
-        // If there are no more cart items, reload the page
-        var cartItems = document.querySelectorAll('.cart-item');
-        if (cartItems.length === 0) {
-          location.reload();
-        }
+              // If there is only one item left, remove the whole cart form
+              var cartItems = document.querySelectorAll('.cart-item');
+              if (cartItems.length === 1) {
+                  var cartForm = document.getElementById('cart');
+                  if (cartForm) {
+                      cartForm.parentNode.removeChild(cartForm);
+                  }
+              }
+          });
       });
-    });
   });
 </script>
 
