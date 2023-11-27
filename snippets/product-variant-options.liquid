@@ -112,6 +112,11 @@
   <!-- Existing dropdown code remains unchanged -->
 {%- endif -%}
 
+{% assign product_json = product | json %}
+<script>
+  var product = {{ product_json | json }};
+</script>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var swatches = document.querySelectorAll('.variant-swatch');
@@ -140,6 +145,7 @@
     }
   });
 </script>
+
 <style>
   /* Image Swatches */
   .variant-swatch {
