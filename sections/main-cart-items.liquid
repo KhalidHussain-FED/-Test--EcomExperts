@@ -50,19 +50,29 @@
       // Update the display with the new cart information
       // You may want to update the cart total, item count, etc.
       // Example:
-      document.getElementById('cart-total').innerText = formatMoney(cart.total_price, cart.currency);
-      document.getElementById('cart-item-count').innerText = cart.item_count;
-
-      // You can also update the cart items display
-      // Example:
+      var cartTotalElement = document.getElementById('cart-total');
+      var itemCountElement = document.getElementById('cart-item-count');
       var cartItemsContainer = document.getElementById('cart-items');
-      cartItemsContainer.innerHTML = ''; // Clear existing items
 
-      cart.items.forEach(function(item) {
-        var cartItem = document.createElement('div');
-        cartItem.innerText = item.title + ' - ' + formatMoney(item.price, cart.currency);
-        cartItemsContainer.appendChild(cartItem);
-      });
+      if (cartTotalElement) {
+        cartTotalElement.innerText = formatMoney(cart.total_price, cart.currency);
+      }
+
+      if (itemCountElement) {
+        itemCountElement.innerText = cart.item_count;
+      }
+
+      if (cartItemsContainer) {
+        // You can also update the cart items display
+        // Example:
+        cartItemsContainer.innerHTML = ''; // Clear existing items
+
+        cart.items.forEach(function(item) {
+          var cartItem = document.createElement('div');
+          cartItem.innerText = item.title + ' - ' + formatMoney(item.price, cart.currency);
+          cartItemsContainer.appendChild(cartItem);
+        });
+      }
     }
   });
 </script>
