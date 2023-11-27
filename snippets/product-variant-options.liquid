@@ -65,56 +65,55 @@
       <img src="{{ image_url | product_img_url: '50x50' }}" alt="{{ value }}">
     </div>
   {%- elsif option.name == 'Size' -%}
-    <option
-      value="{{ value | escape }}"
-      {% if option.selected_value == value %}
-        selected="selected"
-      {% endif %}
+    <select
+      id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+      name="{{ option.name }}"
+      form="{{ product_form_id }}"
       {% if option_disabled %}
         disabled="disabled"
       {% endif %}
     >
-      {%- case value -%}
-        {%- when 'Unselected' -%}
-          {{ 'Select Size' }}
-        {%- when 'Small' -%}
-          {{ 'Small' }}
-        {%- when 'Medium' -%}
-          {{ 'Medium' }}
-        {%- when 'Large' -%}
-          {{ 'Large' }}
-        {%- else -%}
-          {{ value }}
-      {%- endcase -%}
-    </option>
+      <option
+        value="Unselected"
+        {% if option.selected_value == 'Unselected' %}
+          selected
+        {% endif %}
+      >
+        Unselected
+      </option>
+      <option
+        value="Small"
+        {% if option.selected_value == 'Small' %}
+          selected
+        {% endif %}
+      >
+        Small
+      </option>
+      <option
+        value="Medium"
+        {% if option.selected_value == 'Medium' %}
+          selected
+        {% endif %}
+      >
+        Medium
+      </option>
+      <option
+        value="Large"
+        {% if option.selected_value == 'Large' %}
+          selected
+        {% endif %}
+      >
+        Large
+      </option>
+    </select>
   {%- endif -%}
 {%- endfor -%}
 
 {%- if block.settings.picker_type == 'button' -%}
-  <input
-    type="radio"
-    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-    name="{{ option.name }}"
-    value="{{ value | escape }}"
-    form="{{ product_form_id }}"
-    {% if option.selected_value == value %}
-      checked
-    {% endif %}
-    {% if option_disabled %}
-      class="disabled"
-    {% endif %}
-  >
-  <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-    {{ value }}
-    <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-  </label>
+  <!-- Your button code goes here -->
 {%- elsif block.settings.picker_type == 'dropdown' -%}
   <!-- Existing dropdown code remains unchanged -->
 {%- endif -%}
-{% assign product_json = product | json %}
-<script>
-  var product = {{ product_json | json }};
-</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
