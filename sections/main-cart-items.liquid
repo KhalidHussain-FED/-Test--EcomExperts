@@ -37,7 +37,7 @@
       if (dataid === '44127900663962') {
         var ajaxUrl = 'https://khalid-hussain-test.myshopify.com/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
         fetch(urlToRemove, {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json'
             // Add any additional headers if needed
@@ -51,29 +51,6 @@
         })
         .then(data => {
           console.log('Request to additional URL successful', data);
-
-
-                fetch(ajaxUrl, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                  // Add any additional headers if needed
-                },
-              })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                return response.json();
-              })
-              .then(data => {
-                console.log('Request to additional URL successful', data);
-                // You can handle the response data here if needed
-              })
-              .catch(error => {
-                console.error('Error during fetch:', error);
-              });
-
 
         })
         .catch(error => {
