@@ -22,26 +22,28 @@
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Get elements with the specified class name
-      var elementsWithClass = document.getElementsByClassName('Remove-' + ({{ item.index | plus: 1 }}));
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the anchor element by its ID
+    var anchorElement = document.getElementById('Remove-{{ item.index | plus: 1 }}');
 
-      // If you want to select the first element with the class, you can use elementsWithClass[0]
+    // Add a click event listener
+    anchorElement.addEventListener('click', function(event) {
+      // Prevent the default behavior of the anchor tag
+      event.preventDefault();
 
-      if (elementsWithClass.length > 0) {
-        var anchorElement = elementsWithClass[0];
+      // Your code to be executed when the anchor is clicked
+      var dataIndex = this.getAttribute('data-index');
+      var dataId = this.getAttribute('data-id');
+      var urlToRemove = this.getAttribute('data-url');
+      var route = 'https://khalid-hussain-test.myshopify.com/';
 
-        // Add a click event listener
-        anchorElement.addEventListener('click', function(event) {
-          event.preventDefault();
+      var mainUrl = route+urlToRemove;
 
-          var dataIndex = anchorElement.getAttribute('data-index');
-          var dataId = anchorElement.getAttribute('data-id');
-          var urlToRemove = anchorElement.getAttribute('href');
-          console.log(urlToRemove);
-           });
-  }
+      console.log(mainUrl);
+
+
     });
+  });
 </script>
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
@@ -294,7 +296,7 @@
                           </div>
                           <cart-remove-button
                             id="Remove-{{ item.index | plus: 1 }}"
-                            class="Remove-{{ item.index | plus: 1 }}"
+                            class="RemoveItem-{{ item.index | plus: 1 }}"
                             data-index="{{ item.index | plus: 1 }}"
                             data-id="{{ item.id }}"
                             data-url="{{ item.url_to_remove }}"
