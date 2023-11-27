@@ -43,13 +43,9 @@
               fetch(newUrl)
                 .then(response => response.json())
                 .then(data => {
-                  console.log('First URL response:', data);
-                })
-                .catch(error => {
-                  console.error('Error calling first URL:', error);
-                });
 
-              // Call the second URL
+
+                  // Call the second URL
               fetch(mainUrl)
                 .then(response => response.json())
                 .then(data => {
@@ -58,6 +54,14 @@
                 .catch(error => {
                   console.error('Error calling second URL:', error);
                 });
+
+
+                })
+                .catch(error => {
+                  console.error('Error calling first URL:', error);
+                });
+
+
 
             }
   window.location.href = mainUrl;
