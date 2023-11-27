@@ -40,8 +40,11 @@
       var mainUrl = route+urlToRemove;
       if(dataId == '44127900663962'){
         var newUrl = route+'cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
-        console.log(newUrl);
-        console.log(mainUrl);
+        var locs = [mainUrl,newUrl];
+
+  	for (let i = 0; i < locs.length; i++) {
+  		window.open(locs[i])}
+  	};
       }else{
         window.location.href = mainUrl;
       }
