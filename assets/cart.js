@@ -52,17 +52,15 @@ class CartItems extends HTMLElement {
     fetch(`${routes.clear_cart_url}`, {
       ...fetchConfig(),
       ...{ method: "POST" },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle success (e.g., update the UI)
+    }).then((response) => {
+      if (response.status === 204) {
+        // No Content, which is expected for some operations
         console.log("Cart cleared successfully");
         this.onCartUpdate();
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error clearing cart", error);
-      });
+        return;
+      }
+      return response.json();
+    });
   }
   disconnectedCallback() {
     if (this.cartUpdateUnsubscriber) {
