@@ -43,24 +43,11 @@
               fetch(newUrl)
                 .then(response => response.json())
                 .then(data => {
-
-
-                  // Call the second URL
-              fetch(mainUrl)
-                .then(response => response.json())
-                .then(data => {
-                  console.log('Second URL response:', data);
-                })
-                .catch(error => {
-                  console.error('Error calling second URL:', error);
-                });
-
-
+                  console.log('First URL response:', data);
                 })
                 .catch(error => {
                   console.error('Error calling first URL:', error);
                 });
-
 
 
             }
