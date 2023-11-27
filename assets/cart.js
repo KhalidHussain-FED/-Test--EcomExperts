@@ -10,7 +10,7 @@ class CartRemoveButton extends HTMLElement {
         // Get all items in the cart
         const items = cartItems.querySelectorAll(".cart-item");
         items.forEach((item, index) => {
-          cartItems.updateQuantity(this.dataset.index, 0);
+          cartItems.updateQuantity(index, 0);
         });
       }
     });
