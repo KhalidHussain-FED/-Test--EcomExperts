@@ -6,7 +6,7 @@
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     // Attach a click event to the remove buttons
     var removeButtons = document.querySelectorAll('[id^="Remove"]');
     removeButtons.forEach(function(button) {
@@ -17,9 +17,9 @@
         var index = button.getAttribute('data-index');
 
         // Remove the corresponding cart item
-        var main-cart-items = document.getElementById('main-cart-items-' + index);
-        if (main-cart-items) {
-          main-cart-items.remove();
+        var cartItem = document.getElementById('CartItem-' + index);
+        if (cartItem) {
+          cartItem.remove();
         }
 
         // If there is only one item left, remove the whole cart form
