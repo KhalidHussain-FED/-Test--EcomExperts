@@ -33,10 +33,16 @@
 
       // Your code to be executed when the anchor is clicked
       var dataIndex = this.getAttribute('data-index');
+      var dataId = this.getAttribute('data-id');
       var urlToRemove = this.getAttribute('data-url');
       var route = 'https://khalid-hussain-test.myshopify.com/';
 
       var mainUrl = route+urlToRemove;
+      if(dataId == '44127900663962'){
+        var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
+        window.location.href = newUrl;
+        window.location.href = mainUrl;
+      }
       window.location.href = mainUrl;
 
       // Example: Log data-index and URL to remove
