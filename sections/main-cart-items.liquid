@@ -22,37 +22,31 @@
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Get the anchor element by its ID
-    var anchorElement = document.getElementById('Remove-{{ item.index | plus: 1 }}');
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get the anchor element by its ID
+      var anchorElement = document.getElementById('Remove-{{ item.index | plus: 1 }}');
 
-    // Add a click event listener
-    anchorElement.addEventListener('click', function(event) {
-      // Prevent the default behavior of the anchor tag
-      event.preventDefault();
+      // Add a click event listener
+      anchorElement.addEventListener('click', function(event) {
+        // Prevent the default behavior of the anchor tag
+        event.preventDefault();
 
-      // Your code to be executed when the anchor is clicked
-      var dataIndex = this.getAttribute('data-index');
-      var dataId = this.getAttribute('data-id');
-      var urlToRemove = this.getAttribute('data-url');
-      var route = 'https://khalid-hussain-test.myshopify.com';
+        // Your code to be executed when the anchor is clicked
+        var dataIndex = this.getAttribute('data-index');
+        var dataId = this.getAttribute('data-id');
+        var urlToRemove = this.getAttribute('data-url');
+        var route = 'https://khalid-hussain-test.myshopify.com';
 
-      var mainUrl = route+urlToRemove;
-      if(dataId == "44127900663962"){
-        var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
-        var mainWindow = window.open(mainUrl, '_blank');
+        var mainUrl = route+urlToRemove;
+        if(dataId == "44127900663962"){
+          var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
+          window.open(newUrl);
 
-        // Check if the mainUrl window was successfully opened before opening newUrl
-        if (mainWindow) {
-          // Open newUrl in a new tab
-          window.open(newUrl, '_blank');
-        } else {
-          console.error('Failed to open mainUrl window');
+  setTimeout(function(){ window.location.href = mainUrl; }, 3000);
         }
-      }
 
+      });
     });
-  });
 </script>
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
