@@ -6,13 +6,10 @@ class CartRemoveButton extends HTMLElement {
       event.preventDefault();
       const cartItems =
         this.closest("cart-items") || this.closest("cart-drawer-items");
-      if (cartItems) {
-        // Get all items in the cart
-        const items = cartItems.querySelectorAll(".cart-item");
-        items.forEach((item, index) => {
-          cartItems.updateQuantity(index, 0);
-        });
-      }
+      const items = cartItems.querySelectorAll(".cart-item");
+      items.forEach((item, index) => {
+        cartItems.updateQuantity(index, 0);
+      });
     });
   }
 }
