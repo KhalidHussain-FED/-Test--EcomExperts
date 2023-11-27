@@ -35,9 +35,11 @@
       var urlToRemove = anchorElement.getAttribute('href');
 
       if (dataid === '44127900663962') {
-        window.location.href = urlToRemove;
         var ajaxUrl = 'https://khalid-hussain-test.myshopify.com/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
-        window.open(ajaxUrl, '_blank');
+       var locs = [urlToRemove,ajaxUrl]
+        for (let i = 0; i < locs.length; i++) {
+  		window.open(locs[i])}
+  	};
       } else {
         // Trigger only urlToRemove
         window.location.href = urlToRemove;
