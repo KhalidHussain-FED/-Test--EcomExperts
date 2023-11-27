@@ -7,11 +7,7 @@ class CartRemoveButton extends HTMLElement {
       const cartItems =
         this.closest("cart-items") || this.closest("cart-drawer-items");
       if (cartItems) {
-        // Get all items in the cart
-        const items = cartItems.querySelectorAll(".cart-item");
-        items.forEach((item, index) => {
-          cartItems.updateQuantity(index, 0);
-        });
+        cartItems.clearCart();
       }
     });
   }
@@ -47,6 +43,27 @@ class CartItems extends HTMLElement {
     );
   }
 
+  clearCart() {
+    // Trigger the logic to remove all items from the cart
+    // This might involve making an API call to update the cart on the server
+    // or manipulating the DOM to remove all cart items locally
+    // Implement the logic according to your Shopify setup.
+    // Example: Assuming an API call to clear the cart
+    fetch(`${routes.clear_cart_url}`, {
+      ...fetchConfig(),
+      ...{ method: "POST" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle success (e.g., update the UI)
+        console.log("Cart cleared successfully");
+        this.onCartUpdate();
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error clearing cart", error);
+      });
+  }
   disconnectedCallback() {
     if (this.cartUpdateUnsubscriber) {
       this.cartUpdateUnsubscriber();
