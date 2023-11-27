@@ -5,6 +5,35 @@
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // Get the form and attach a click event listener to it
+    var cartForm = document.getElementById('cart');
+    cartForm.addEventListener('click', function (event) {
+      // Check if the clicked element is a remove button
+      if (event.target.classList.contains('button--tertiary')) {
+        // Get the index from the data-index attribute of the remove button
+        var index = event.target.getAttribute('data-index');
+
+        // Get the cart item and spinner-loading element based on the index
+        var cartItem = document.getElementById('CartItem-' + index);
+        var spinnerLoading = document.querySelector('.cart-item[data-index="' + index + '"] .loading__spinner');
+
+        // Remove both the cart item and spinner-loading element
+        if (cartItem) {
+          cartItem.parentNode.removeChild(cartItem);
+        }
+        if (spinnerLoading) {
+          spinnerLoading.parentNode.removeChild(spinnerLoading);
+        }
+
+        // Prevent the default action of the remove button
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
