@@ -22,34 +22,47 @@
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            // Get the anchor element by its ID
-            var anchorElement = document.getElementById('Remove-{{ item.index | plus: 1 }}');
+        document.addEventListener('DOMContentLoaded', function() {
+          // Get the anchor element by its ID
+          var anchorElement = document.getElementById('Remove-{{ item.index | plus: 1 }}');
 
-            // Add a click event listener
-            anchorElement.addEventListener('click', function(event) {
-              // Prevent the default behavior of the anchor tag
-              event.preventDefault();
+          // Add a click event listener
+          anchorElement.addEventListener('click', function(event) {
+            // Prevent the default behavior of the anchor tag
+            event.preventDefault();
 
-              // Your code to be executed when the anchor is clicked
-              var dataIndex = this.getAttribute('data-index');
-              var dataId = this.getAttribute('data-id');
-              var urlToRemove = this.getAttribute('data-url');
-              var route = 'https://khalid-hussain-test.myshopify.com';
+            // Your code to be executed when the anchor is clicked
+            var dataIndex = this.getAttribute('data-index');
+            var dataId = this.getAttribute('data-id');
+            var urlToRemove = this.getAttribute('data-url');
+            var route = 'https://khalid-hussain-test.myshopify.com';
 
-              var mainUrl = route+urlToRemove;
-              if(dataId == "44127900663962"){
-                var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
-                var urls = [newUrl, mainUrl];
-                urls.forEach(function(url) {
-                  window.location.href= url;
-  });
+            var mainUrl = route+urlToRemove;
+            if(dataId == "44127900663962"){
+              var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
+              fetch(newUrl)
+                .then(response => response.json())
+                .then(data => {
+                  console.log('First URL response:', data);
+                })
+                .catch(error => {
+                  console.error('Error calling first URL:', error);
+                });
 
+              // Call the second URL
+              fetch(mainUrl)
+                .then(response => response.json())
+                .then(data => {
+                  console.log('Second URL response:', data);
+                })
+                .catch(error => {
+                  console.error('Error calling second URL:', error);
+                });
 
-              }
-    window.location.href = mainUrl;
-            });
+            }
+  window.location.href = mainUrl;
           });
+        });
 </script>
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
