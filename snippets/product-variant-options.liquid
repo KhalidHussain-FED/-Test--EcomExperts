@@ -135,15 +135,19 @@
   }
 </style>
 <script>
-  $(document).ready(function() {
-    $('.variant-swatch').on('click', function() {
-      var variantId = $(this).data('variant-id');
-      var variant = findVariantById(variantId);
+   document.addEventListener('DOMContentLoaded', function() {
+    var swatches = document.querySelectorAll('.variant-swatch');
 
-      if (variant && variant.featured_image) {
-        var imageUrl = variant.featured_image.src;
-        updateProductImage(imageUrl);
-      }
+    swatches.forEach(function(swatch) {
+      swatch.addEventListener('click', function() {
+        var variantId = this.getAttribute('data-variant-id');
+        var variant = findVariantById(variantId);
+
+        if (variant && variant.featured_image) {
+          var imageUrl = variant.featured_image.src;
+          updateProductImage(imageUrl);
+        }
+      });
     });
 
     function findVariantById(variantId) {
@@ -153,7 +157,7 @@
     }
 
     function updateProductImage(imageUrl) {
-      $('#product-image').attr('src', imageUrl);
+      document.getElementById('product-image').src = imageUrl;
     }
   });
 </script>
