@@ -22,13 +22,10 @@
                   cartItem.parentNode.removeChild(cartItem);
               }
 
-              // If there is only one item left, remove the whole cart form
+              // If there are no items left, reload the window to empty the cart
               var cartItems = document.querySelectorAll('.cart-item');
-              if (cartItems.length === 1) {
-                  var cartForm = document.getElementById('cart');
-                  if (cartForm) {
-                      cartForm.parentNode.removeChild(cartForm);
-                  }
+              if (cartItems.length === 0) {
+                  window.location.reload();
               }
           });
       });
