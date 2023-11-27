@@ -63,18 +63,7 @@
         disabled="disabled"
       {% endif %}
     >
-      {%- case value -%}
-        {%- when 'Unselected' -%}
-          {{ 'Select Size' }}
-        {%- when 'Small' -%}
-          {{ 'Small' }}
-        {%- when 'Medium' -%}
-          {{ 'Medium' }}
-        {%- when 'Large' -%}
-          {{ 'Large' }}
-        {%- else -%}
-          {{ value }}
-      {%- endcase -%}
+      {{ value }}
     </option>
   {%- endif -%}
 {%- endfor -%}
@@ -98,44 +87,23 @@
     <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
   </label>
 {%- elsif block.settings.picker_type == 'dropdown' -%}
-  <!-- Existing dropdown code remains unchanged -->
+  {%- if option.name == 'Size' -%}
+    <option
+      value="Unselected"
+      {% unless product.selected_or_first_available_variant.option2 %}
+        selected="selected"
+      {% endunless %}
+    >
+      {{ 'Unselected' }}
+    </option>
+    <option value="Small">Small</option>
+    <option value="Medium">Medium</option>
+    <option value="Large">Large</option>
+  {%- endif -%}
 {%- endif -%}
-<style>
-    /* Image Swatches */
-  .variant-swatch {
-    display: inline-block;
-    margin-right: 10px;
-    cursor: pointer;
-  }
 
-  .variant-swatch img {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #ccc;
-  }
-
-  .variant-swatch.selected {
-    border-color: #000;
-  }
-
-  /* Size Dropdown */
-  #product-size-dropdown {
-    margin-top: 10px;
-  }
-
-  #product-size-dropdown select {
-    padding: 8px;
-    font-size: 14px;
-  }
-
-  #product-size-dropdown label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-</style>
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     var swatches = document.querySelectorAll('.variant-swatch');
 
     swatches.forEach(function(swatch) {
