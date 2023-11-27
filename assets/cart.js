@@ -7,7 +7,11 @@ class CartRemoveButton extends HTMLElement {
       const cartItems =
         this.closest("cart-items") || this.closest("cart-drawer-items");
       if (cartItems) {
-        cartItems.updateQuantity();
+        // Get all items in the cart
+        const items = cartItems.querySelectorAll(".cart-item");
+        items.forEach((item, index) => {
+          cartItems.updateQuantity(index, 0);
+        });
       }
     });
   }
@@ -41,46 +45,6 @@ class CartItems extends HTMLElement {
         this.onCartUpdate();
       }
     );
-  }
-
-  clearCart() {
-    this.enableLoading(1); // Assuming the first line item index is 1
-
-    const body = JSON.stringify({
-      line: 1, // Assuming the first line item index is 1
-      quantity: 0,
-      sections: this.getSectionsToRender().map((section) => section.section),
-      sections_url: window.location.pathname,
-    });
-
-    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.text();
-      })
-      .then((state) => {
-        const parsedState = JSON.parse(state);
-
-        // Assuming you have a container for cart items with ID "main-cart-items"
-        const cartItemsContainer = document.getElementById("main-cart-items");
-
-        if (cartItemsContainer) {
-          cartItemsContainer.innerHTML = ""; // Clear the cart items
-        }
-
-        // Continue with the rest of the logic
-        // ...
-
-        console.log("Cart cleared successfully");
-      })
-      .catch((error) => {
-        console.error("Error clearing cart", error);
-      })
-      .finally(() => {
-        this.disableLoading(1); // Assuming the first line item index is 1
-      });
   }
 
   disconnectedCallback() {
@@ -161,12 +125,12 @@ class CartItems extends HTMLElement {
     ];
   }
 
-  updateQuantity() {
+  updateQuantity(line, quantity, name, variantId) {
     this.enableLoading(line);
 
     const body = JSON.stringify({
-      line: 1, // Assuming the first line item index is 1
-      quantity: 0,
+      line,
+      quantity,
       sections: this.getSectionsToRender().map((section) => section.section),
       sections_url: window.location.pathname,
     });
