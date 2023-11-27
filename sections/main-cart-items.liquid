@@ -30,6 +30,11 @@
     anchorElement.addEventListener('click', function(event) {
       event.preventDefault();
       var dataIndex = anchorElement.getAttribute('data-index');
+      var data-id = anchorElement.getAttribute('data-id');
+      if(data-id == '44127900663962'){
+        var newUrl = "/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&amp;quantity=0";
+        window.location.href = newUrl;
+      }
       var urlToRemove = anchorElement.getAttribute('href');
       window.location.href = urlToRemove;
 
@@ -288,6 +293,7 @@
                           <cart-remove-button
                             id="Remove-{{ item.index | plus: 1 }}"
                             data-index="{{ item.index | plus: 1 }}"
+                            data-id="{{ item.id }}"
                           >
                             <a
                               href="{{ item.url_to_remove }}"
