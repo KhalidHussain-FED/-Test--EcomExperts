@@ -43,7 +43,7 @@
               fetch(newUrl)
                 .then(response => response.json())
                 .then(data => {
-                  console.log('First URL response:', data);
+                  window.location.href = mainUrl;
                 })
                 .catch(error => {
                   console.error('Error calling first URL:', error);
