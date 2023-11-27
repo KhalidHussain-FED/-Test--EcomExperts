@@ -19,67 +19,19 @@
   }
 {%- endstyle -%}
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const productAId = '44127900663962';
-    const productBId = '44158968135834';
+{% assign updated_items = '' | split: '' %}
 
-    // Check if Product A is in the cart
-    const productAInCart = {{ product_a_title | json | escape }};
-    const productBInCart = {{ product_b_title | json | escape }};
+{% for item in cart.items %}
+  {% unless item.variant.product.title == 'Handbag' or item.variant.product.title == 'Soft Winter Jacket' %}
+    {% assign updated_items = updated_items | push: item %}
+  {% endunless %}
+{% endfor %}
 
-    if (productAInCart) {
-      // Find the line item for Product B in the cart
-      const productBLineItem = {{ product_b_line_item | json | escape }};
+{% assign cart.items = updated_items %}
 
-      if (productBLineItem) {
-        // Remove Product B from the cart using Shopify's AJAX API
-        fetch('/cart/change.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: {{ 44158968135834 }},
-            quantity: 0,
-          }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          // Handle success or error
-          console.log('Product B removed from the cart:', data);
-          console.log('Alert: Product B has been removed from the cart.');
-        })
-        .catch(error => {
-          console.error('Error removing Product B:', error);
-          console.error('Alert: Error removing Product B from the cart.');
-        });
-      }
-
-      // Remove Product A from the cart using Shopify's AJAX API
-      fetch('/cart/change.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: {{ 44127900663962 }},
-          quantity: 0,
-        }),
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Handle success or error
-        console.log('Product A removed from the cart:', data);
-        console.log('Alert: Product A has been removed from the cart.');
-      })
-      .catch(error => {
-        console.error('Error removing Product A:', error);
-        console.error('Alert: Error removing Product A from the cart.');
-      });
-    }
-  });
-</script>
+{% comment %}
+  Now, the cart only contains items excluding Product A and Product B.
+{% endcomment %}
 
 {%- unless settings.cart_type == 'drawer' -%}
   <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
