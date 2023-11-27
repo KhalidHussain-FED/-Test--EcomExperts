@@ -6,7 +6,7 @@
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 
 <script>
-   // cart/update.js
+    // cart/update.js
 
   document.addEventListener('DOMContentLoaded', function() {
     // Attach a click event to the remove buttons
@@ -19,10 +19,25 @@
         var index = button.getAttribute('data-index');
 
         // Make an Ajax request to update the cart on the server
-        Shopify.post('/cart/update.js', { updates: { [index]: 0 } }, function(cart) {
-          // Update the cart display or perform other actions as needed
-          updateCartDisplay(cart);
-        });
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          body: JSON.stringify({
+            id: index,
+            quantity: 0,
+          }),
+        })
+          .then(response => response.json())
+          .then(cart => {
+            // Update the cart display or perform other actions as needed
+            updateCartDisplay(cart);
+          })
+          .catch(error => {
+            console.error('Error updating cart:', error);
+          });
       });
     });
 
