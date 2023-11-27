@@ -19,6 +19,46 @@
   }
 {%- endstyle -%}
 
+<script>
+
+  const removeProductBFromCart = async () => {
+  const productAId = '44127900663962';
+  const productBId = '44158968135834';
+
+  try {
+    // Fetch the current cart using the Storefront API
+    const response = await fetch('/cart.js');
+    const cart = await response.json();
+
+    // Check if Product A is in the cart
+    const productAInCart = cart.items.some(item => item.product_id === productAId);
+
+    if (productAInCart) {
+      // Find the line item for Product B in the cart
+      const productBLineItem = cart.items.find(item => item.product_id === productBId);
+
+      if (productBLineItem) {
+        // Remove Product B from the cart using the Storefront API
+        const removeResponse = await fetch(`/cart/change.js?id=${productBLineItem.id}&quantity=0`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const updatedCart = await removeResponse.json();
+        console.log('Product B removed from the cart:', updatedCart);
+      }
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+// Call the function
+removeProductBFromCart();
+</script>
+
 {% if line_items.size > 0 %}
   {% assign first_product_handle = '44127900663962' %}
   {% assign second_product_handle = 'product-2' %}
