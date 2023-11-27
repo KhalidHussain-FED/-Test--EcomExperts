@@ -71,24 +71,6 @@
   }
 {%- endstyle -%}
 
-{% assign updated_items = '' | split: '' %}
-
-{% for item in cart.items %}
-  {% unless item.variant.product.title == 'Handbag' or item.variant.product.title == 'Soft Winter Jacket' %}
-    {% assign updated_items = updated_items | push: item %}
-  {% endunless %}
-{% endfor %}
-
-{% assign cart.items = updated_items %}
-
-{% comment %}
-  Now, the cart only contains items excluding Product A and Product B.
-{% endcomment %}
-
-{%- unless settings.cart_type == 'drawer' -%}
-  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
-{%- endunless -%}
-
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
@@ -348,7 +330,7 @@
                               class="button button--tertiary"
                               aria-label="{{ 'sections.cart.remove_title' | t: title: item.title }}"
                             >
-                              {% render 'icon-remove' %}
+                              {% render 'icon-remove' %}nh
                             </a>
                           </cart-remove-button>
                         </div>
