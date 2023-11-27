@@ -23,90 +23,91 @@
   assign product_form_id = 'product-form-' | append: section.id
 -%}
 
-{%- assign option = product.options.first -%}
+{%- for value in option.values -%}
+  {%- assign variant = product.variants | where: option.name, value | first -%}
+  {%- liquid
+    assign option_disabled = true
 
-{%- liquid
-  assign option_disabled = true
+    for option1_name in variants_option1_arr
+      case option.position
+        when 1
+          if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+        when 2
+          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+        when 3
+          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+      endcase
+    endfor
+  -%}
 
-  for option1_name in variants_option1_arr
-    case option.position
-      when 1
-        if variants_option1_arr[forloop.index0] == option.values.first and variants_available_arr[forloop.index0]
-          assign option_disabled = false
-        endif
-      when 2
-        if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == option.values.first and variants_available_arr[forloop.index0]
-          assign option_disabled = false
-        endif
-      when 3
-        if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == option.values.first and variants_available_arr[forloop.index0]
-          assign option_disabled = false
-        endif
-    endcase
-  endfor
--%}
-
-{%- if option.name == 'Color' -%}
-  <div
-    class="variant-swatch {% if option.selected_value == option.values.first %}selected{% endif %}"
-    data-variant-id="{{ variant.id }}"
-  >
-    {% assign image_url = '' %}
-    {%- case option.values.first -%}
-      {%- when 'Black' -%}
-        {% assign image_url = 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/download.jpg' %}
-      {%- when 'Red' -%}
-        {% assign image_url = 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/red-bag.png' %}
-      {%- when 'Tan' -%}
-        {% assign image_url = 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/tan-bag.webp' %}
-      {%- else -%}
-        {% assign image_url = 'default_image_url.jpg' %}
-    {%- endcase -%}
-    <img src="{{ image_url | product_img_url: '50x50' }}" alt="{{ option.values.first }}">
-  </div>
-{%- elsif option.name == 'Size' -%}
-  <select
-    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-    name="{{ option.name }}"
-    form="{{ product_form_id }}"
-    {% if option_disabled %}
-      disabled="disabled"
-    {% endif %}
-  >
-    <option
-      value="Unselected"
-      {% if option.selected_value == 'Unselected' %}
-        selected
+  {%- if option.name == 'Color' -%}
+    <div
+      class="variant-swatch {% if option.selected_value == value %}selected{% endif %}"
+      data-variant-id="{{ variant.id }}"
+    >
+      {% assign image_url = '' %}
+      {%- case value -%}
+        {%- when 'Black' -%}
+          {% assign image_url = 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/download.jpg' %}
+        {%- when 'Red' -%}
+          {% assign image_url = 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/red-bag.png' %}
+        {%- when 'Tan' -%}
+          {% assign image_url = 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/tan-bag.webp' %}
+        {%- else -%}
+          {% assign image_url = 'default_image_url.jpg' %}
+      {%- endcase -%}
+      <img src="{{ image_url | product_img_url: '50x50' }}" alt="{{ value }}">
+    </div>
+  {%- elsif option.name == 'Size' -%}
+    <select
+      id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+      name="{{ option.name }}"
+      form="{{ product_form_id }}"
+      {% if option_disabled %}
+        disabled="disabled"
       {% endif %}
     >
-      Unselected
-    </option>
-    <option
-      value="Small"
-      {% if option.selected_value == 'Small' %}
-        selected
-      {% endif %}
-    >
-      Small
-    </option>
-    <option
-      value="Medium"
-      {% if option.selected_value == 'Medium' %}
-        selected
-      {% endif %}
-    >
-      Medium
-    </option>
-    <option
-      value="Large"
-      {% if option.selected_value == 'Large' %}
-        selected
-      {% endif %}
-    >
-      Large
-    </option>
-  </select>
-{%- endif -%}
+      <option
+        value="Unselected"
+        {% if option.selected_value == 'Unselected' %}
+          selected
+        {% endif %}
+      >
+        Unselected
+      </option>
+      <option
+        value="Small"
+        {% if option.selected_value == 'Small' %}
+          selected
+        {% endif %}
+      >
+        Small
+      </option>
+      <option
+        value="Medium"
+        {% if option.selected_value == 'Medium' %}
+          selected
+        {% endif %}
+      >
+        Medium
+      </option>
+      <option
+        value="Large"
+        {% if option.selected_value == 'Large' %}
+          selected
+        {% endif %}
+      >
+        Large
+      </option>
+    </select>
+  {%- endif -%}
+{%- endfor -%}
 
 {%- if block.settings.picker_type == 'button' -%}
   <!-- Your button code goes here -->
