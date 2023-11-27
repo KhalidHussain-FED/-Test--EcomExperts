@@ -6,7 +6,7 @@
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 
 <script>
-    // cart/update.js
+  // cart/update.js
 
   document.addEventListener('DOMContentLoaded', function() {
     // Attach a click event to the remove buttons
@@ -41,11 +41,16 @@
       });
     });
 
+    function formatMoney(amount, currency) {
+      // Customize this function based on your formatting preferences
+      return '$' + (amount / 100).toFixed(2);
+    }
+
     function updateCartDisplay(cart) {
       // Update the display with the new cart information
       // You may want to update the cart total, item count, etc.
       // Example:
-      document.getElementById('cart-total').innerText = Shopify.formatMoney(cart.total_price);
+      document.getElementById('cart-total').innerText = formatMoney(cart.total_price, cart.currency);
       document.getElementById('cart-item-count').innerText = cart.item_count;
 
       // You can also update the cart items display
@@ -55,7 +60,7 @@
 
       cart.items.forEach(function(item) {
         var cartItem = document.createElement('div');
-        cartItem.innerText = item.title + ' - ' + Shopify.formatMoney(item.price);
+        cartItem.innerText = item.title + ' - ' + formatMoney(item.price, cart.currency);
         cartItemsContainer.appendChild(cartItem);
       });
     }
