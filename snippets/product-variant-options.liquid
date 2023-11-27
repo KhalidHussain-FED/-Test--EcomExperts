@@ -1,5 +1,5 @@
 {% comment %}
-  Renders product variant options with image swatches
+  Renders product variant options with image swatches for colors and dropdown for sizes
 
   Accepts:
   - product: {Object} product object.
@@ -46,18 +46,21 @@
     endfor
   -%}
 
-  {%- if block.settings.picker_type == 'button' -%}
+  {%- if option.name == 'Color' -%}
     <div
       class="variant-swatch {% if option.selected_value == value %}selected{% endif %}"
       data-variant-id="{{ variant.id }}"
     >
       <img src="{{ variant.featured_image.src | product_img_url: '50x50' }}" alt="{{ value }}">
     </div>
-  {%- elsif block.settings.picker_type == 'dropdown' -%}
+  {%- elsif option.name == 'Size' -%}
     <option
       value="{{ value | escape }}"
       {% if option.selected_value == value %}
         selected="selected"
+      {% endif %}
+      {% if option_disabled %}
+        disabled="disabled"
       {% endif %}
     >
       {{ value }}
