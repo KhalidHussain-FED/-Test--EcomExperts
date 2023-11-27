@@ -20,6 +20,9 @@
         var cartItem = document.getElementById('CartItem-' + index);
         if (cartItem) {
           cartItem.remove();
+
+          // Update cart information with Ajax
+          updateCartInfo();
         }
 
         // If there is only one item left, remove the whole cart form
@@ -28,10 +31,37 @@
           var cartForm = document.getElementById('cart');
           if (cartForm) {
             cartForm.parentNode.removeChild(cartForm);
+
+            // Update cart information with Ajax
+            updateCartInfo();
           }
         }
       });
     });
+
+    function updateCartInfo() {
+      // Use the fetch API to make an asynchronous request to the server
+      fetch('/update-cart', {
+        method: 'POST', // or 'GET' depending on your server implementation
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          // Add any necessary data to update the cart (e.g., user ID, session ID)
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Update the cart price and quantity on the page
+        document.getElementById('cart-price').textContent = data.price;
+        document.getElementById('cart-quantity').textContent = data.quantity;
+
+        // Update the total value and cart icon bubble quantity
+        document.getElementById('totals__total-value').textContent = '0'; // Assuming 'totals__total-value' is the ID of the element
+        document.getElementById('cart-icon-bubble').textContent = ''; // Assuming 'cart-icon-bubble' is the ID of the element
+      })
+      .catch(error => console.error('Error updating cart:', error));
+    }
   });
 </script>
 
