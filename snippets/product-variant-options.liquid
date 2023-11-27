@@ -110,9 +110,39 @@
 {%- endfor -%}
 
 {%- if block.settings.picker_type == 'button' -%}
-  <!-- Your button code goes here -->
-{%- elsif block.settings.picker_type == 'dropdown' -%}
-  <!-- Existing dropdown code remains unchanged -->
+  <button
+    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+    name="{{ option.name }}"
+    value="{{ option.values.first }}"
+    form="{{ product_form_id }}"
+    {% if option_disabled %}
+      disabled="disabled"
+    {% endif %}
+  >
+    {{ option.values.first }}
+  </button>
+{%- endif -%}
+
+{%- if block.settings.picker_type == 'dropdown' -%}
+  <select
+    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+    name="{{ option.name }}"
+    form="{{ product_form_id }}"
+    {% if option_disabled %}
+      disabled="disabled"
+    {% endif %}
+  >
+    {%- for value in option.values -%}
+      <option
+        value="{{ value | escape }}"
+        {% if option.selected_value == value %}
+          selected
+        {% endif %}
+      >
+        {{ value }}
+      </option>
+    {%- endfor -%}
+  </select>
 {%- endif -%}
 
 <script>
