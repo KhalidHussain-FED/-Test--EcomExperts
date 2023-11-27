@@ -24,7 +24,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Get the anchor element by its ID
-    var anchorElement = document.getElementByClass('Remove-{{ item.index | plus: 1 }}');
+    var anchorElement = document.getElementsByClassName('Remove-' + ({{ item.index | plus: 1 }}));
 
     // Add a click event listener
     anchorElement.addEventListener('click', function(event) {
