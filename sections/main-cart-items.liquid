@@ -22,14 +22,9 @@
           cartItem.remove();
         }
 
-        // Check if there are no more items left in the cart
+        // If there is only one item left, remove the whole cart form
         var cartItems = document.querySelectorAll('.cart-item');
-        var mainCartItems = document.getElementById('main-cart-items');
-        if (cartItems.length === 0) {
-          // If the cart is empty, update the main-cart-items content
-          mainCartItems.innerHTML = '<p>Your cart is empty.</p>';
-
-          // Optionally, you can remove the whole cart form
+        if (cartItems.length === 1) {
           var cartForm = document.getElementById('cart');
           if (cartForm) {
             cartForm.parentNode.removeChild(cartForm);
