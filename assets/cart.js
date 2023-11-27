@@ -1,27 +1,52 @@
+// CartRemoveButton class
 class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
 
     this.addEventListener("click", (event) => {
       event.preventDefault();
-      const cartItems =
-        this.closest("cart-items") || this.closest("cart-drawer-items");
-      if (cartItems) {
-        cartItems.updateQuantityAll(0);
-      }
 
-      updateQuantityAll(quantity) {
-    // Loop through each item and trigger the updateQuantity function to set quantity to 0
-    const items = this.querySelectorAll(".cart-item");
-    items.forEach((item, index) => {
-      this.updateQuantity(index + 1, quantity);
-    });
-  }
+      // Dispatch a custom event to signal the removal of all items
+      this.dispatchEvent(new CustomEvent("remove-all-items"));
     });
   }
 }
 
 customElements.define("cart-remove-button", CartRemoveButton);
+
+// CartItems class
+class CartItems extends HTMLElement {
+  constructor() {
+    super();
+
+    // Bind the event listener to the instance of CartItems
+    this.handleRemoveAllItems = this.handleRemoveAllItems.bind(this);
+  }
+
+  connectedCallback() {
+    // Listen for the custom event
+    this.addEventListener("remove-all-items", this.handleRemoveAllItems);
+  }
+
+  disconnectedCallback() {
+    // Clean up the event listener when the element is removed
+    this.removeEventListener("remove-all-items", this.handleRemoveAllItems);
+  }
+
+  // ... (existing code)
+
+  handleRemoveAllItems() {
+    // Set the quantity of all items to 0
+    const items = this.querySelectorAll(".cart-item");
+    items.forEach((item, index) => {
+      this.updateQuantity(index + 1, 0);
+    });
+  }
+
+  // ... (existing code)
+}
+
+customElements.define("cart-items", CartItems);
 
 class CartItems extends HTMLElement {
   constructor() {
