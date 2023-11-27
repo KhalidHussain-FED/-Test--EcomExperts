@@ -41,16 +41,10 @@
             if(dataId == "44127900663962"){
               var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
               // Open a new window/tab
-    var newWindow = window.open(newUrl, "_blank");
+    window.location.href = newUrl;
 
     // Set a timeout to redirect the main page after 1000 milliseconds (1 second)
     setTimeout(function() {
-      // Close the new window/tab if it exists
-      if (newWindow) {
-        newWindow.close();
-      }
-
-      // Redirect the main page
       window.location.href = mainUrl;
     }, 1500);
 
