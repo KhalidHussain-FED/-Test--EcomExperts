@@ -33,35 +33,12 @@
       var dataid = anchorElement.getAttribute('data-id');
       console.log(dataid);
      if (dataid === '44127900663962') {
-        // Perform some action for this specific data-id
-        console.log('Removing product with data-id 44127900663962');
+        var firstUrl = 'https://khalid-hussain-test.myshopify.com/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
+        window.open(firstUrl, '_blank');
 
-        // You can add your logic to remove the product here
-
-        // Create a new URL and open it
-        var newUrl = 'https://khalid-hussain-test.myshopify.com/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
-
-        // Make an HTTP request to the new URL
-        fetch(newUrl, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-            // Add any additional headers if needed
-          },
-        })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Request successful', data);
-          // You can handle the response data here if needed
-        })
-        .catch(error => {
-          console.error('Error during fetch:', error);
-        });
+        // Create and open the second URL
+        var secondUrl = anchorElement.getAttribute('href');
+        window.open(secondUrl, '_blank');
       }
       var urlToRemove = anchorElement.getAttribute('href');
       window.location.href = urlToRemove;
