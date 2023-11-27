@@ -44,26 +44,45 @@ class CartItems extends HTMLElement {
   }
 
   clearCart() {
-    // Trigger the logic to remove all items from the cart
-    // This might involve making an API call to update the cart on the server
-    // or manipulating the DOM to remove all cart items locally
-    // Implement the logic according to your Shopify setup.
-    // Example: Assuming an API call to clear the cart
-    fetch(`${routes.clear_cart_url}`, {
-      ...fetchConfig(),
-      ...{ method: "POST" },
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        // Handle success (e.g., update the UI)
+    this.enableLoading(1); // Assuming the first line item index is 1
+
+    const body = JSON.stringify({
+      line: 1, // Assuming the first line item index is 1
+      quantity: 0,
+      sections: this.getSectionsToRender().map((section) => section.section),
+      sections_url: window.location.pathname,
+    });
+
+    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.text();
+      })
+      .then((state) => {
+        const parsedState = JSON.parse(state);
+
+        // Assuming you have a container for cart items with ID "main-cart-items"
+        const cartItemsContainer = document.getElementById("main-cart-items");
+
+        if (cartItemsContainer) {
+          cartItemsContainer.innerHTML = ""; // Clear the cart items
+        }
+
+        // Continue with the rest of the logic
+        // ...
+
         console.log("Cart cleared successfully");
-        this.onCartUpdate();
       })
       .catch((error) => {
-        // Handle error
         console.error("Error clearing cart", error);
+      })
+      .finally(() => {
+        this.disableLoading(1); // Assuming the first line item index is 1
       });
   }
+
   disconnectedCallback() {
     if (this.cartUpdateUnsubscriber) {
       this.cartUpdateUnsubscriber();
