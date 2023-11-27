@@ -30,8 +30,9 @@
     anchorElement.addEventListener('click', function(event) {
       event.preventDefault();
       var dataIndex = anchorElement.getAttribute('data-index');
-      var data-id = anchorElement.getAttribute('data-id');
-      if(data-id == '44127900663962'){
+      var dataid = anchorElement.getAttribute('data-id');
+      console.log(dataid);
+      if(dataid == '44127900663962'){
         var newUrl = "https://khalid-hussain-test.myshopify.com/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0";
         window.location.href = newUrl;
       }
