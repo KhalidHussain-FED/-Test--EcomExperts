@@ -7,7 +7,7 @@ class CartRemoveButton extends HTMLElement {
       const cartItems =
         this.closest("cart-items") || this.closest("cart-drawer-items");
       if (cartItems) {
-        cartItems.clearCart();
+        cartItems.updateQuantity();
       }
     });
   }
@@ -161,7 +161,7 @@ class CartItems extends HTMLElement {
     ];
   }
 
-  updateQuantity(line, quantity, name, variantId) {
+  updateQuantity() {
     this.enableLoading(line);
 
     const body = JSON.stringify({
