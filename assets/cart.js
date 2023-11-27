@@ -13,7 +13,7 @@ class CartRemoveButton extends HTMLElement {
         // Loop through each item and trigger the updateQuantity function to set quantity to 0
         items.forEach((item, index) => {
           console.log(index);
-          cartItems.updateQuantity(this.dataset.index, 0);
+          cartItems.updateQuantity(index, 0);
         });
       }
     });
