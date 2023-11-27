@@ -20,43 +20,30 @@
 {%- endstyle -%}
 
 <script>
-
-  const removeProductBFromCart = async () => {
-  const productAId = '44127900663962';
-  const productBId = '44158968135834';
-
-  try {
-    // Fetch the current cart using the Storefront API
-    const response = await fetch('/cart.js');
-    const cart = await response.json();
+  document.addEventListener('DOMContentLoaded', function() {
+    const productAId = '44127900663962';
+    const productBId = '44158968135834';
 
     // Check if Product A is in the cart
-    const productAInCart = cart.items.some(item => item.product_id === productAId);
+    const productAInCart = {{ 'product_a_title' | json | escape }};
+    const productBInCart = {{ 'product_b_title' | json | escape }};
 
     if (productAInCart) {
       // Find the line item for Product B in the cart
-      const productBLineItem = cart.items.find(item => item.product_id === productBId);
+      const productBLineItem = {{ 'product_b_line_item' | json | escape }};
 
       if (productBLineItem) {
-        // Remove Product B from the cart using the Storefront API
-        const removeResponse = await fetch(`/cart/change.js?id=${productBLineItem.id}&quantity=0`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        // Remove Product B from the cart using Shopify's AJAX API
+        jQuery.post('/cart/change.js', {
+          id: productBLineItem.id,
+          quantity: 0,
+        }, function(data) {
+          // Handle success or error
+          console.log('Product B removed from the cart:', data);
         });
-
-        const updatedCart = await removeResponse.json();
-        console.log('Product B removed from the cart:', updatedCart);
       }
     }
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
-
-// Call the function
-removeProductBFromCart();
+  });
 </script>
 
 {% if line_items.size > 0 %}
