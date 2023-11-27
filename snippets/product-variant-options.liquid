@@ -100,3 +100,27 @@
 {%- elsif block.settings.picker_type == 'dropdown' -%}
   <!-- Existing dropdown code remains unchanged -->
 {%- endif -%}
+
+<script>
+  $(document).ready(function() {
+    $('.variant-swatch').on('click', function() {
+      var variantId = $(this).data('variant-id');
+      var variant = findVariantById(variantId);
+
+      if (variant && variant.featured_image) {
+        var imageUrl = variant.featured_image.src;
+        updateProductImage(imageUrl);
+      }
+    });
+
+    function findVariantById(variantId) {
+      return product.variants.find(function(variant) {
+        return variant.id === variantId;
+      });
+    }
+
+    function updateProductImage(imageUrl) {
+      $('#product-image').attr('src', imageUrl);
+    }
+  });
+</script>
