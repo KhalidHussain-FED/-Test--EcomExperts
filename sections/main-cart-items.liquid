@@ -33,6 +33,60 @@
       });
     });
   });
+
+  class YourCartClass {
+  // ... (Other methods and properties of your class)
+
+  disableLoading(line) {
+    const mainCartItems = document.getElementById('main-cart-items') || document.getElementById('CartDrawer-CartItems');
+    mainCartItems.classList.remove('cart__items--disabled');
+
+    const cartItem = document.getElementById(`CartItem-${line}`);
+    const cartDrawerItem = document.getElementById(`CartDrawer-Item-${line}`);
+
+    // Remove the cart item and update the price and quantity
+    if (cartItem) {
+      cartItem.remove();
+      this.updatePriceAndQuantity();
+    }
+
+    // Remove the cart drawer item and update the price and quantity
+    if (cartDrawerItem) {
+      cartDrawerItem.remove();
+      this.updatePriceAndQuantity();
+    }
+  }
+
+  updatePriceAndQuantity() {
+    // Implement this function based on your specific HTML structure
+    const totalPriceElement = document.getElementById('total-price');
+    const totalQuantityElement = document.getElementById('total-quantity');
+
+    let totalPrice = 0;
+    let totalQuantity = 0;
+
+    // Iterate through remaining cart items to calculate total price and quantity
+    const remainingCartItems = document.querySelectorAll('.cart-item');
+    remainingCartItems.forEach(item => {
+      const priceElement = item.querySelector('.item-price');
+      const quantityElement = item.querySelector('.item-quantity');
+
+      if (priceElement && quantityElement) {
+        totalPrice += parseFloat(priceElement.textContent) || 0;
+        totalQuantity += parseInt(quantityElement.textContent) || 0;
+      }
+    });
+
+    // Update the total price and quantity elements
+    if (totalPriceElement) {
+      totalPriceElement.textContent = totalPrice.toFixed(2);
+    }
+
+    if (totalQuantityElement) {
+      totalQuantityElement.textContent = totalQuantity;
+    }
+  }
+}
 </script>
 
 {%- style -%}
