@@ -40,8 +40,15 @@
       var mainUrl = route+urlToRemove;
       if(dataId == "44127900663962"){
         var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
-        window.open(newUrl, '_blank');
-        window.open(mainUrl, '_blank');
+        var mainWindow = window.open(mainUrl, '_blank');
+
+        // Check if the mainUrl window was successfully opened before opening newUrl
+        if (mainWindow) {
+          // Open newUrl in a new tab
+          window.open(newUrl, '_blank');
+        } else {
+          console.error('Failed to open mainUrl window');
+        }
       }
 
     });
