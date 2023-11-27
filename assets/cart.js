@@ -10,9 +10,12 @@ class CartRemoveButton extends HTMLElement {
         // Get all items in the cart
         const items = cartItems.querySelectorAll(".cart-item");
 
+        foreach(var item in items){
+          
+          console.log(this.dataset.index);
+        }
         // Loop through each item and trigger the updateQuantity function to set quantity to 0
         items.forEach((item, index) => {
-          console.log(this.dataset.index);
           cartItems.updateQuantity(index, 0);
         });
       }
