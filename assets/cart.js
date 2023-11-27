@@ -15,7 +15,7 @@ class CartRemoveButton extends HTMLElement {
 customElements.define("cart-remove-button", CartRemoveButton);
 
 // CartItems class
-class CartItems extends HTMLElement {
+class CartItem extends HTMLElement {
   constructor() {
     super();
 
@@ -46,7 +46,7 @@ class CartItems extends HTMLElement {
   // ... (existing code)
 }
 
-customElements.define("cart-items", CartItems);
+customElements.define("cart-items", CartItem);
 
 class CartItems extends HTMLElement {
   constructor() {
