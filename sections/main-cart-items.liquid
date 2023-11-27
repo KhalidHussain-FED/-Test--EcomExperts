@@ -34,14 +34,49 @@
 
       if (productBLineItem) {
         // Remove Product B from the cart using Shopify's AJAX API
-        jQuery.post('/cart/change.js', {
-          id: {{ 44158968135834 }},
-          quantity: 0,
-        }, function(data) {
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: {{ 44158968135834 }},
+            quantity: 0,
+          }),
+        })
+        .then(response => response.json())
+        .then(data => {
           // Handle success or error
           console.log('Product B removed from the cart:', data);
+          alert('Product B has been removed from the cart.');
+        })
+        .catch(error => {
+          console.error('Error removing Product B:', error);
+          alert('Error removing Product B from the cart.');
         });
       }
+
+      // Remove Product A from the cart using Shopify's AJAX API
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: {{ 44127900663962 }},
+          quantity: 0,
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Handle success or error
+        console.log('Product A removed from the cart:', data);
+        alert('Product A has been removed from the cart.');
+      })
+      .catch(error => {
+        console.error('Error removing Product A:', error);
+        alert('Error removing Product A from the cart.');
+      });
     }
   });
 </script>
