@@ -51,7 +51,18 @@
       class="variant-swatch {% if option.selected_value == value %}selected{% endif %}"
       data-variant-id="{{ variant.id }}"
     >
-      <img src="{{ variant.featured_image.src | product_img_url: '50x50' }}" alt="{{ value }}">
+      {% assign image_url = '' %}
+      {%- case value -%}
+        {%- when 'Black' -%}
+          {% assign image_url = 'black_image_url.jpg' %}
+        {%- when 'Red' -%}
+          {% assign image_url = 'red_image_url.jpg' %}
+        {%- when 'Tan' -%}
+          {% assign image_url = 'tan_image_url.jpg' %}
+        {%- else -%}
+          {% assign image_url = 'default_image_url.jpg' %}
+      {%- endcase -%}
+      <img src="{{ image_url | product_img_url: '50x50' }}" alt="{{ value }}">
     </div>
   {%- elsif option.name == 'Size' -%}
     <option
@@ -63,7 +74,18 @@
         disabled="disabled"
       {% endif %}
     >
-      {{ value }}
+      {%- case value -%}
+        {%- when 'Unselected' -%}
+          {{ 'Select Size' }}
+        {%- when 'Small' -%}
+          {{ 'Small' }}
+        {%- when 'Medium' -%}
+          {{ 'Medium' }}
+        {%- when 'Large' -%}
+          {{ 'Large' }}
+        {%- else -%}
+          {{ value }}
+      {%- endcase -%}
     </option>
   {%- endif -%}
 {%- endfor -%}
