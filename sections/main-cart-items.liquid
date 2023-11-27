@@ -22,60 +22,25 @@
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Get elements with the specified class name
-    var elementsWithClass = document.getElementsByClassName('Remove-' + ({{ item.index | plus: 1 }}));
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get elements with the specified class name
+      var elementsWithClass = document.getElementsByClassName('Remove-' + ({{ item.index | plus: 1 }}));
 
-    // If you want to select the first element with the class, you can use elementsWithClass[0]
+      // If you want to select the first element with the class, you can use elementsWithClass[0]
 
-    if (elementsWithClass.length > 0) {
-      var anchorElement = elementsWithClass[0];
+      if (elementsWithClass.length > 0) {
+        var anchorElement = elementsWithClass[0];
 
-      // Add a click event listener
-      anchorElement.addEventListener('click', function(event) {
-        event.preventDefault();
+        // Add a click event listener
+        anchorElement.addEventListener('click', function(event) {
+          event.preventDefault();
 
-        var dataIndex = this.getAttribute('data-index');
-        var dataId = this.getAttribute('data-id');
-        var urlToRemove = this.getAttribute('href');
-
-        if (dataId === '44127900663962') {
-          // Perform some action for this specific data-id
-          console.log('Removing product with data-id 44127900663962');
-
-          // Use the Shopify Storefront API to remove the product
-          var removeProductUrl = 'https://your-shop-name.myshopify.com/api/storefront/carts/YOUR_CART_ID/remove.js';
-          fetch(removeProductUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Shopify-Storefront-Access-Token': 'YOUR_ACCESS_TOKEN'
-            },
-            body: JSON.stringify({
-              line: dataId, // Replace with the actual line item ID you want to remove
-              quantity: 0 // Set the quantity to 0 to remove the item
-            })
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(data => {
-            console.log('Product removal successful', data);
-            // You can handle the response data here if needed
-          })
-          .catch(error => {
-            console.error('Error during product removal:', error);
-          });
-        }
-
-        // Regardless of the condition, navigate to the original URL
-        window.location.href = urlToRemove;
-      });
-    }
-  });
+          var dataIndex = this.getAttribute('data-index');
+          var dataId = this.getAttribute('data-id');
+          var urlToRemove = this.getAttribute('href');
+          console.log(urlToRemove);
+  }
+    });
 </script>
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
