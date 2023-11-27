@@ -63,7 +63,18 @@
         disabled="disabled"
       {% endif %}
     >
-      {{ value }}
+      {%- case value -%}
+        {%- when 'Unselected' -%}
+          {{ 'Select Size' }}
+        {%- when 'Small' -%}
+          {{ 'Small' }}
+        {%- when 'Medium' -%}
+          {{ 'Medium' }}
+        {%- when 'Large' -%}
+          {{ 'Large' }}
+        {%- else -%}
+          {{ value }}
+      {%- endcase -%}
     </option>
   {%- endif -%}
 {%- endfor -%}
