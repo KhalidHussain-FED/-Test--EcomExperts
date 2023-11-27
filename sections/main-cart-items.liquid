@@ -6,7 +6,7 @@
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 
 <script>
-     document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
       // Attach a click event to the remove buttons
       var removeButtons = document.querySelectorAll('[id^="Remove"]');
       removeButtons.forEach(function(button) {
@@ -22,13 +22,10 @@
                   cartItem.parentNode.removeChild(cartItem);
               }
 
-              // If there is only one item left, remove the whole cart form
+              // If there are no items left in the cart, reload the page
               var cartItems = document.querySelectorAll('.cart-item');
-              if (cartItems.length === 1) {
-                  var cartForm = document.getElementById('cart');
-                  if (cartForm) {
-                      cartForm.parentNode.removeChild(cartForm);
-                  }
+              if (cartItems.length === 0) {
+                  location.reload();
               }
           });
       });
