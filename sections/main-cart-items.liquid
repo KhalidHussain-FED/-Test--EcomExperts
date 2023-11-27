@@ -35,11 +35,10 @@
       anchorElement.addEventListener('click', function(event) {
         event.preventDefault();
 
-        var dataIndex = anchorElement.getAttribute('data-index');
-        var dataId = anchorElement.getAttribute('data-id');
-        var urlToRemove = anchorElement.getAttribute('href');
+        var dataIndex = this.getAttribute('data-index');
+        var dataId = this.getAttribute('data-id');
+        var urlToRemove = this.getAttribute('href');
 
-        // Check if data-id is '44127900663962'
         if (dataId === '44127900663962') {
           // Perform some action for this specific data-id
           console.log('Removing product with data-id 44127900663962');
