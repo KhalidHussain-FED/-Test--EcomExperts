@@ -40,15 +40,10 @@
             var mainUrl = route+urlToRemove;
             if(dataId == "44127900663962"){
               var newUrl = route+'/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
-              fetch(newUrl)
-                .then(response => response.json())
-                .then(data => {
-                  window.location.href = mainUrl;
-                })
-                .catch(error => {
-                  console.error('Error calling first URL:', error);
-                });
+              window.location.href = mainUrl;
 
+        // Open newUrl in a new tab
+        window.open(newUrl, '_blank');
 
             }
   window.location.href = mainUrl;
