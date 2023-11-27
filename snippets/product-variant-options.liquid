@@ -150,33 +150,45 @@
 </script>
 
 <style>
-  /* Image Swatches */
-  .variant-swatch {
-    display: inline-block;
-    margin-right: 10px;
-    cursor: pointer;
+    /* Image Swatches */
+    .variant-swatch {
+      display: inline-block;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .variant-swatch img {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #ccc;
+    }
+
+    .variant-swatch.selected {
+      border-color: #000;
+    }
+
+    /* Size Dropdown */
+    #size-dropdown {
+      margin-top: 10px;
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    #size-dropdown label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    select#template--16312456642714__main-2-1 {
+      display: none;
   }
 
-  .variant-swatch img {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #ccc;
+  select#template--16312456642714__main-2-2 {
+      display: none;
   }
 
-  .variant-swatch.selected {
-    border-color: #000;
-  }
-
-  /* Size Dropdown */
-  #size-dropdown {
-    margin-top: 10px;
-    padding: 8px;
-    font-size: 14px;
-  }
-
-  #size-dropdown label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+  select#template--16312456642714__main-2-3 {
+      display: none;
   }
 </style>
