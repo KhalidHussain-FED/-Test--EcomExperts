@@ -6,7 +6,6 @@
   - option: {Object} current product_option object.
   - block: {Object} block object.
 
-
   Usage:
   {% render 'product-variant-options',
     product: product,
@@ -14,6 +13,7 @@
     block: block
   %}
 {% endcomment %}
+
 {%- liquid
   assign variants_available_arr = product.variants | map: 'available'
   assign variants_option1_arr = product.variants | map: 'option1'
@@ -60,7 +60,11 @@
       {% endif %}
     >
     <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-      {{ value -}}
+      {% if option.name == 'Color' %}
+        <span class="color-swatch" style="background-color: {{ value | handleize }}"></span>
+      {% else %}
+        {{ value }}
+      {% endif %}
       <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
   {%- elsif block.settings.picker_type == 'dropdown' -%}
@@ -70,7 +74,7 @@
         selected="selected"
       {% endif %}
     >
-      {% if option_disabled -%}
+      {% if option.name == 'Size' and option_disabled -%}
         {{- 'products.product.value_unavailable' | t: option_value: value -}}
       {%- else -%}
         {{- value -}}
