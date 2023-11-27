@@ -21,6 +21,29 @@
 
 <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the anchor element by its ID
+    var anchorElement = document.getElementById('Remove-{{ item.index | plus: 1 }}');
+
+    // Add a click event listener
+    anchorElement.addEventListener('click', function(event) {
+      // Prevent the default behavior of the anchor tag
+      event.preventDefault();
+
+      // Your code to be executed when the anchor is clicked
+      var dataIndex = anchorElement.getAttribute('data-index');
+      var urlToRemove = anchorElement.getAttribute('href');
+
+      // Example: Log data-index and URL to remove
+      console.log('Data Index:', dataIndex);
+      console.log('URL to Remove:', urlToRemove);
+
+      // Add your additional logic here, such as making an AJAX request to remove the item from the cart.
+    });
+  });
+</script>
+
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
   <div class="page-width">
     <div class="title-wrapper-with-link">
