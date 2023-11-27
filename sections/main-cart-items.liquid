@@ -5,64 +5,6 @@
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 
-<script>
-      // document.addEventListener('DOMContentLoaded', function() {
-      //   // Attach a click event to the remove buttons
-      //   var removeButtons = document.querySelectorAll('[id^="Remove"]');
-      //   removeButtons.forEach(function(button) {
-      //     button.addEventListener('click', function(e) {
-      //       e.preventDefault();
-
-      //       // Get the index of the clicked remove button
-      //       var index = button.getAttribute('data-index');
-
-      //       // Remove the corresponding cart item
-      //       var cartItem = document.getElementById('CartItem-' + index);
-      //       if (cartItem) {
-      //         cartItem.remove();
-      //       }
-
-      //       // If there is only one item left, remove the whole cart form
-      //       var cartItems = document.querySelectorAll('.cart-item');
-      //       if (cartItems.length === 1) {
-      //         var cartForm = document.getElementById('cart');
-      //         if (cartForm) {
-      //           cartForm.parentNode.removeChild(cartForm);
-      //         }
-      //       }
-      //     });
-      //   });
-      // });
-
-     // Listen for cart changes
-  document.addEventListener('cart.updated', function(event) {
-    var removedItemId = event.detail.line_item.id;
-
-    // Variant IDs for Product A and Product B
-    var productAVariantId = '44127900663962';
-    var productBVariantId = '44158968135834';
-
-    // Check if the removed item is Product A
-    if (removedItemId === productAVariantId) {
-      // Use Shopify Ajax API to find and remove Product B from the cart
-      var cartItems = Shopify.cart.items;
-      var productBInCart = cartItems.find(item => item.variant_id === productBVariantId);
-
-      if (productBInCart) {
-        Shopify.post('/cart/change.js', {
-          updates: { [productBVariantId]: 0 }
-        });
-      }
-    }
-  });
-
-  var btn = document.querySelector("cart-remove-button");
-  btn.addEventListener('click', function() {
-    // Your code to be executed when the anchor is clicked
-    console.log('Anchor clicked!');
-  });
-</script>
-
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
