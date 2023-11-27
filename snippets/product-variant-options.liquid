@@ -111,7 +111,6 @@
 {%- elsif block.settings.picker_type == 'dropdown' -%}
   <!-- Existing dropdown code remains unchanged -->
 {%- endif -%}
-
 {% assign product_json = product | json %}
 <script>
   var product = {{ product_json | json }};
@@ -121,6 +120,11 @@
   document.addEventListener('DOMContentLoaded', function() {
     var swatches = document.querySelectorAll('.variant-swatch');
     var productImage = document.getElementById('product-image');
+
+    if (!product || !product.variants) {
+      console.error('Product or variants not available.');
+      return;
+    }
 
     swatches.forEach(function(swatch) {
       swatch.addEventListener('click', function() {
