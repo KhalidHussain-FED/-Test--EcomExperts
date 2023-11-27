@@ -4,21 +4,10 @@ class CartRemoveButton extends HTMLElement {
 
     this.addEventListener("click", (event) => {
       event.preventDefault();
-
-      // Find the closest cart element
       const cartItems =
         this.closest("cart-items") || this.closest("cart-drawer-items");
-
-      // Check if cartItems is found
-      if (cartItems) {
-        // Get all items in the cart
-        const items = cartItems.querySelectorAll(".cart-item");
-
-        // Loop through each item and trigger the updateQuantity function to set quantity to 0
-        items.forEach((item, index) => {
-          cartItems.updateQuantity(index + 1, 0);
-        });
-      }
+      console.log(cartItems);
+      cartItems.updateQuantity(this.dataset.index, 0);
     });
   }
 }
