@@ -60,7 +60,7 @@
         {%- when 'Tan' -%}
           {% assign image_url = 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/tan-bag.webp' %}
         {%- else -%}
-          {% assign image_url = 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/black-bag-over-the-shoulder_925x_c8ee5d58-2c8d-49f5-8b42-0504d6f492dc.jpg' %}
+          {% assign image_url = 'default_image_url.jpg' %}
       {%- endcase -%}
       <img src="{{ image_url | product_img_url: '50x50' }}" alt="{{ value }}">
     </div>
@@ -113,17 +113,30 @@
 {%- endif -%}
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var sizeDropdown = document.getElementById('size-dropdown');
+   document.addEventListener('DOMContentLoaded', function() {
+    var swatches = document.querySelectorAll('.variant-swatch');
+    var productImage = document.getElementById('product-image');
 
-    sizeDropdown.addEventListener('change', function() {
-      var selectedSize = this.value;
-      updateSelectedSize(selectedSize);
+    swatches.forEach(function(swatch) {
+      swatch.addEventListener('click', function() {
+        var variantId = this.getAttribute('data-variant-id');
+        var variant = findVariantById(variantId);
+
+        if (variant && variant.featured_image) {
+          var imageUrl = variant.featured_image.src;
+          updateProductImage(imageUrl);
+        }
+      });
     });
 
-    function updateSelectedSize(selectedSize) {
-      // Your logic to handle the selected size goes here
-      // For example, you can update other elements or perform other actions based on the selected size
+    function findVariantById(variantId) {
+      return product.variants.find(function(variant) {
+        return variant.id === variantId;
+      });
+    }
+
+    function updateProductImage(imageUrl) {
+      productImage.src = imageUrl;
     }
   });
 </script>
