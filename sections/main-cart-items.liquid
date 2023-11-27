@@ -34,6 +34,11 @@
       var dataId = anchorElement.getAttribute('data-id');
       var urlToRemove = anchorElement.getAttribute('href');
 
+
+      // Regardless of the condition, navigate to the original URL
+      window.location.href = urlToRemove;
+
+
       // Check if data-id is '44127900663962'
       if (dataId === '44127900663962') {
         // Perform some action for this specific data-id
@@ -64,9 +69,6 @@
           console.error('Error during fetch:', error);
         });
       }
-
-      // Regardless of the condition, navigate to the original URL
-      window.location.href = urlToRemove;
     });
   });
 </script>
