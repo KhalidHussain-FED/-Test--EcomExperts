@@ -24,25 +24,22 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Get the anchor element by its ID
-    var anchorElement = document.getElementById('Remove-{{ item.index | plus: 0 }}');
+    var anchorElement = document.getElementById('Remove-{{ item.index | plus: 1 }}');
 
     // Add a click event listener
     anchorElement.addEventListener('click', function(event) {
+      // Prevent the default behavior of the anchor tag
       event.preventDefault();
-      var dataIndex = anchorElement.getAttribute('data-index');
-      var dataid = anchorElement.getAttribute('data-id');
-      var dataurl = anchorElement.getAttribute('data-url');
-      var urlToRemove = anchorElement.getAttribute('href');
-      if (dataid === '44127900663962') {
-        window.location.href = urlToRemove;
-        console.log(urlToRemove);
-        var ajaxUrl = 'https://khalid-hussain-test.myshopify.com/cart/change?id=44158968135834:eb00eee17837d5da28ae6d9a52d66caf&quantity=0';
-        window.location.href = ajaxUrl;
 
-      } else {
-        // Trigger only urlToRemove
-        window.location.href = urlToRemove;
-      }
+      // Your code to be executed when the anchor is clicked
+      var dataIndex = anchorElement.getAttribute('data-index');
+      var urlToRemove = anchorElement.getAttribute('href');
+
+      // Example: Log data-index and URL to remove
+      console.log('Data Index:', dataIndex);
+      console.log('URL to Remove:', urlToRemove);
+
+      // Add your additional logic here, such as making an AJAX request to remove the item from the cart.
     });
   });
 </script>
