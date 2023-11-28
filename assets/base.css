@@ -3539,7 +3539,7 @@ fieldset.js.product-form__input {
 span#selectedSizeValue {
     position: absolute;
     top: 100%;
-    transform: translate(30px, 7px);
+    transform: translate(2px, 7px);
 }
 
 legend.form__label {
