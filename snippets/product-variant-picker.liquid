@@ -1,72 +1,46 @@
-{%- unless product.has_only_default_variant -%}
-  <variant-radios class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
-    {%- for option in product.options_with_values -%}
-      <fieldset class="js product-form__input {% unless forloop.first %}hidden{% endunless %}">
-        <legend class="form__label">{{ option.name }}</legend>
-        {%- for value in option.values -%}
-          <input type="radio" id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-            name="{{ option.name }}"
-            value="{{ value | escape }}"
-            form="{{ product_form_id }}"
-            {% if option.selected_value == value %}checked{% endif %}
-          >
-          <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-            {{ value }}
-          </label>
-        {%- endfor -%}
-      </fieldset>
-    {%- endfor -%}
-    <script type="application/json">
-      {{ product.variants | json }}
-    </script>
-  </variant-radios>
+{% comment %}
+  Renders product variant picker
 
-  <variant-selects class="no-js-hidden" data-section="{{ section.id }}" data-url="{{ product.url }}" {{ block.shopify_attributes }}>
-    {%- for option in product.options_with_values -%}
-      <div class="product-form__input product-form__input--dropdown {% if forloop.first %}hidden{% endif %}">
-        <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
-          {{ option.name }}
-        </label>
-        <div class="select">
-          <select id="Option-{{ section.id }}-{{ forloop.index0 }}"
-            class="select__select"
-            name="options[{{ option.name | escape }}]"
-            form="{{ product_form_id }}"
-          >
-            {%- for value in option.values -%}
-              <option value="{{ value | escape }}" {% if option.selected_value == value %}selected="selected"{% endif %}>
-                {{ value }}
-              </option>
-            {%- endfor -%}
-          </select>
-          {% render 'icon-caret' %}
-        </div>
-      </div>
-    {%- endfor -%}
-    <script type="application/json">
-      {{ product.variants | json }}
-    </script>
-  </variant-selects>
-{%- endunless -%}
+  Accepts:
+  - product: {Object} product object.
+  - form: {Object} product form object.
 
-<noscript class="product-form__noscript-wrapper-{{ section.id }}">
-  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
-    <label class="form__label" for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
-    <div class="select">
-      <select name="id" id="Variants-{{ section.id }}" class="select__select" form="{{ product_form_id }}">
-        {%- for variant in product.variants -%}
-          <option
-            {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
-            {% if variant.available == false %}disabled{% endif %}
-            value="{{ variant.id }}"
-          >
-            {{ variant.title }}
-            {%- if variant.available == false %} - {{ 'products.product.sold_out' | t }}{% endif %}
-            - {{ variant.price | money | strip_html }}
-          </option>
-        {%- endfor -%}
-      </select>
-      {% render 'icon-caret' %}
+  Usage:
+  {% render 'product-variant-picker',
+    product: product,
+    form: form
+  %}
+{% endcomment %}
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+  assign current_variant = product.selected_variant
+  assign product_variants = product.variants
+-%}
+
+<div class="product-variant-picker">
+  <form method="post" action="{{ form | form_url }}">
+    <input type="hidden" name="id" value="{{ product.id }}" />
+
+    {%- for option in product.options -%}
+      {% render 'product-variant-options',
+        product: product,
+        option: option,
+        block: block
+      %}
+    {%- endfor -%}
+
+    <div class="form__controls">
+      <button
+        type="submit"
+        name="add"
+        id="AddToCart-{{ section.id }}"
+        class="btn btn--full add-to-cart"
+        {% unless current_variant.available %}disabled="disabled"{% endunless %}
+      >
+        <span id="AddToCartText-{{ section.id }}">
+          {{ 'products.product.add_to_cart' | t }}
+        </span>
+      </button>
     </div>
-  </div>
-</noscript>
+  </form>
+</div>
