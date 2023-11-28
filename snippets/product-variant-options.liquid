@@ -101,10 +101,15 @@
     var swatches = document.querySelectorAll('.variant-swatch');
     var productImage = document.getElementById('product-image');
 
+    if (!{{ product | json }} || !{{ product | json }}.variants) {
+      console.error('Product or variants not available.');
+      return;
+    }
+
     swatches.forEach(function(swatch) {
       swatch.addEventListener('click', function() {
         var variantId = this.getAttribute('data-variant-id');
-        var variant = findVariantById(variantId);
+        var variant = findVariantById(variantId, {{ product | json }});
 
         if (variant && variant.featured_image) {
           var imageUrl = variant.featured_image.src;
@@ -113,7 +118,7 @@
       });
     });
 
-    function findVariantById(variantId) {
+    function findVariantById(variantId, product) {
       return product.variants.find(function(variant) {
         return variant.id === variantId;
       });
