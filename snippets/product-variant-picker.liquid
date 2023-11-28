@@ -43,7 +43,6 @@
       {{ block.shopify_attributes }}
     >
       {%- for option in product.options_with_values -%}
-        {%- if option.name != "Color" -%}
         <div class="product-form__input product-form__input--dropdown">
           <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
             {{ option.name }}
@@ -60,12 +59,6 @@
             {% render 'icon-caret' %}
           </div>
         </div>
-      {%- else -%}
-          <fieldset class="js product-form__input">
-          <legend class="form__label">{{ option.name }}</legend>
-          {% render 'product-variant-options', product: product, option: option, block: block %}
-        </fieldset>
-        {%- endif -%}
       {%- endfor -%}
 
       <script type="application/json">
