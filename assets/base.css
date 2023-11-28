@@ -3523,3 +3523,13 @@ fieldset.js.product-form__input:nth-of-type(1) select[name="size"] {
   fieldset.js.product-form__input:nth-of-type(2) label {
     display: none;
   }
+
+span#selectedColorValue {
+    position: absolute;
+    left: 37px;
+    bottom: 55px;
+}
+
+fieldset.js.product-form__input {
+    position:relative;
+}
