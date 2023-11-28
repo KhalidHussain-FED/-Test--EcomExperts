@@ -62,10 +62,12 @@
 {% assign blackVariant = product.variants | where: 'option1', value | first %}
 
     {% if blackVariant %}
-     <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-      {{ value -}}
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ blackVariant.image.src }}</span>
-    </label>
+
+      <label
+        for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        style="background-image: url({{ blackVariant.image.src | img_url: 'cover' }});height:40px;width:40px;background-size: cover;"
+      ></label>
+      
     {% else %}
        <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
       {{ value -}}
