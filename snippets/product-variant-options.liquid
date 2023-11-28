@@ -63,9 +63,7 @@
 
 
 {% for variant in product.variants %}
-  {% if variant.id == selected_variant_id %}
     <img src="{{ variant.image.src }}" alt="{{ variant.image.alt }}" class="variant-image">
-  {% endif %}
 {% endfor %}
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
