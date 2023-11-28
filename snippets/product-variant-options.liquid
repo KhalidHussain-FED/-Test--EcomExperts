@@ -62,7 +62,7 @@
  
 <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
       {{ value -}}
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ option.image.src }}</span>
+      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ product.selected_or_first_available_variant.image.src }}</span>
     </label>
 
 
