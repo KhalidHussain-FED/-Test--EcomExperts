@@ -59,7 +59,7 @@
         class="disabled"
       {% endif %}
     >
-{% assign blackVariant = product.variants | where: 'title', 'Black' | first %}
+{% assign blackVariant = product.variants %}
 
      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
       {{ value -}}
