@@ -1,24 +1,32 @@
+<!-- Add this span element where you want to display the selected color value -->
+<span id="selectedColorValue"></span>
+<span id="selectedSizeValue"></span>
 {%- for value in option.values -%}
-  {%- liquid
-    assign option_disabled = true
+  {%- assign option_disabled = true %}
 
-    for option1_name in variants_option1_arr
-      case option.position
-        when 1
-          if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-            assign option_disabled = false
-          endif
-        when 2
-          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-            assign option_disabled = false
-          endif
-        when 3
-          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
-            assign option_disabled = false
-          endif
-      endcase
-    endfor
-  -%}
+  {%- for option1_name in variants_option1_arr -%}
+    {%- case option.position -%}
+      {%- when 1 -%}
+        {%- if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0] -%}
+          {%- assign option_disabled = false -%}
+        {%- endif -%}
+      {%- when 2 -%}
+        {%- if option1_name == product.selected_or_first_available_variant.option1
+          and variants_option2_arr[forloop.index0] == value
+          and variants_available_arr[forloop.index0]
+        -%}
+          {%- assign option_disabled = false -%}
+        {%- endif -%}
+      {%- when 3 -%}
+        {%- if option1_name == product.selected_or_first_available_variant.option1
+          and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2
+          and variants_option3_arr[forloop.index0] == value
+          and variants_available_arr[forloop.index0]
+        -%}
+          {%- assign option_disabled = false -%}
+        {%- endif -%}
+    {%- endcase -%}
+  {%- endfor -%}
 
   {%- if block.settings.picker_type == 'button' -%}
     <input
@@ -27,25 +35,26 @@
       name="{{ option.name }}"
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
-      {% if option.selected_value == value %}
+      onclick="updateSelectedColor('{{ value | escape }}')"
+      {% if option.selected_value == value -%}
         checked
-      {% endif %}
-      {% if option_disabled %}
+      {%- endif %}
+      {% if option_disabled -%}
         class="disabled"
-      {% endif %}
+      {%- endif %}
     >
 
-    {% if product.variants[forloop.index0].image != blank and option.name == 'Color' %}
+    {%- if product.variants[forloop.index0].image != blank and option.name == 'Color' -%}
       <label
         for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
         style="background-image: url({{ product.variants[forloop.index0].image | img_url: '' }});height:40px;width:40px;background-size: cover;"
       ></label>
-    {% else %}
+    {%- else -%}
       <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
         {{ value -}}
         <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
       </label>
-    {% endif %}
+    {%- endif %}
   {%- endif -%}
 {%- endfor -%}
 
@@ -56,9 +65,9 @@
       {%- for value in option.values -%}
         <option
           value="{{ value | escape }}"
-          {% if option.selected_value == value %}
+          {% if option.selected_value == value -%}
             selected="selected"
-          {% endif %}
+          {%- endif %}
         >
           {{ value }}
         </option>
@@ -66,3 +75,14 @@
     </select>
   {%- endif -%}
 {%- endfor -%}
+
+<script>
+  function updateSelectedColor(color) {
+    var selectedColorValue = document.getElementById('selectedColorValue');
+    selectedColorValue.textContent = color;
+  }
+   function updateSelectedSize(size) {
+    var selectedColorValue = document.getElementById('selectedSizeValue');
+    selectedColorValue.textContent = size;
+  }
+</script>
