@@ -62,11 +62,9 @@
  
 
 <div class="product-image">
-  {% for variant in product.variants %}
     {% if product.selected_or_first_available_variant %}
       <img src="{{ variant.image.src }}" alt="{{ variant.title }}" />
     {% endif %}
-  {% endfor %}
 </div>
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
