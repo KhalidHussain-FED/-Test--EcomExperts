@@ -3512,6 +3512,14 @@ details-disclosure > details {
   }
 }
 
-/* #product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
+#product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
   display: none !important;
-} */
+}
+
+fieldset.js.product-form__input:nth-of-type(1) select[name="size"] {
+    display: none;
+}
+
+  fieldset.js.product-form__input:nth-of-type(2) label {
+    display: none;
+  }
