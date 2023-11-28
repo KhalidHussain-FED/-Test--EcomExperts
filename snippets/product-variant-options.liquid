@@ -59,16 +59,18 @@
         {%- endif -%}
       </option>
     {%- endif -%}
-  {%- else -%}
-    {%- if block.settings.picker_type == 'dropdown' -%}
-      <option
-        value="{{ value | escape }}"
-        {% if option.selected_value == value %}
-          selected="selected"
-        {% endif %}
-      >
-        {{- value -}}
-      </option>
-    {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
+
+{%- if option.name == 'Size' -%}
+  {%- for size_value in option.values -%}
+    <option
+      value="{{ size_value | escape }}"
+      {% if option.selected_value == size_value %}
+        selected="selected"
+      {% endif %}
+    >
+      {{- size_value -}}
+    </option>
+  {%- endfor -%}
+{%- endif -%}
