@@ -1,6 +1,26 @@
 {%- if option.name == 'Size' -%}
   {%- if block.settings.picker_type == 'button' -%}
-    {# Existing code for button type #}
+    {# Existing code for button type - Replace this comment with your original code #}
+    {%- for size_value in option.values -%}
+      <input
+        type="radio"
+        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        name="{{ option.name }}"
+        value="{{ size_value | escape }}"
+        form="{{ product_form_id }}"
+        {% if option.selected_value == size_value %}
+          checked
+        {% endif %}
+        {% if option_disabled %}
+          class="disabled"
+        {% endif %}
+      >
+      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+        {{ size_value -}}
+        <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+        <span>{{ product.selected_or_first_available_variant.image.src }}</span>
+      </label>
+    {%- endfor -%}
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     <div class="size-dropdown">
       <select
