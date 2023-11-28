@@ -320,94 +320,53 @@ if (!customElements.get("cart-note")) {
   );
 }
 
-if (!this.cart) {
-  const currentURL = window.location.href;
 
-  if (
-    currentURL ===
-    "https://khalid-hussain-test.myshopify.com/products/product-1?variant=44173477675162"
-  ) {
-    const FreeProductTitle = "Soft Winter Jacket";
-    const MainProductId = 44173477675162;
-    const FreeProductId = 44158968135834;
+updateQuantity(line, quantity, name, variantId) {
+    this.enableLoading(line);
 
-    let freeProductFormData = {
-      items: [
-        {
-          id: FreeProductId,
-          quantity: 1,
-        },
-      ],
-    };
-
-    // Function to add free product to the cart
-    const addFreeProductToCart = () => {
-      fetch(window.Shopify.routes.root + "cart/add.js", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(freeProductFormData),
-      })
-        .then((freeProductResponse) => {
-          console.log(
-            "Add Free Product to Cart Response:",
-            freeProductResponse
-          );
-          window.location = window.routes.cart_url;
-          return freeProductResponse.json();
-        })
-        .catch((error) => console.error("Error adding free product:", error));
-    };
-
-    // Function to remove free product from the cart
-    const removeFreeProductFromCart = () => {
-      let removeFreeProductFormData = {
-        updates: {
-          [FreeProductId]: 0,
-        },
-      };
-
-      fetch(window.Shopify.routes.cart_change_url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(removeFreeProductFormData),
-      })
-        .then((removeFreeProductResponse) => {
-          console.log(
-            "Remove Free Product from Cart Response:",
-            removeFreeProductResponse
-          );
-          window.location.reload();
-          return removeFreeProductResponse.json();
-        })
-        .catch((error) => console.error("Error removing free product:", error));
-    };
-
-    // Event listener for cart updates
-    document.addEventListener("cart:updated", () => {
-      const cart = JSON.parse(localStorage.getItem("cart"));
-
-      console.log("Updated Cart:", cart);
-
-      // Check if the main product is removed from the cart
-      const mainProductRemoved = !cart.items.some(
-        (item) => item.variant_id === MainProductId
-      );
-
-      if (mainProductRemoved) {
-        // Remove the free product from the cart
-        removeFreeProductFromCart();
-      }
+    const body = JSON.stringify({
+        line,
+        quantity,
+        sections: this.getSectionsToRender().map((section) => section.section),
+        sections_url: window.location.pathname,
     });
 
-    // Add the free product to the cart initially
-    addFreeProductToCart();
-  } else {
-    window.location = window.routes.cart_url;
-  }
+    fetch(`${routes.cart_change_url}`, { ...fetchConfig(), ...{ body } })
+        .then((response) => {
+            return response.text();
+        })
+        .then((state) => {
+            const parsedState = JSON.parse(state);
+            const quantityElement =
+                document.getElementById(`Quantity-${line}`) ||
+                document.getElementById(`Drawer-quantity-${line}`);
+            
+            // Check if the quantity is 0 (product is removed)
+            if (quantity === 0) {
+                // Assuming there is a function removeRelatedElement() to remove other elements
+                this.removeRelatedElement(line);
+            }
+
+            // Rest of the code remains unchanged
+            // ...
+
+        })
+        .catch(() => {
+            // Error handling
+            this.disableLoading(line);
+        })
+        .finally(() => {
+            // Cleanup
+            this.disableLoading(line);
+        });
 }
 
-return;
+removeRelatedElement(line) {
+    // Implement logic to remove or update related elements
+    // For example, you might want to remove the entire cart item associated with the line
+    const cartItemElement = document.getElementById(`CartItem-${line}`);
+    if (cartItemElement) {
+        cartItemElement.remove();
+    }
+    // Add more logic based on your specific requirements
+}
