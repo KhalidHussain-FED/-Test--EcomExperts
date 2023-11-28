@@ -62,9 +62,7 @@
  
 
 
-{% for variant in product.variants %}
     <img src="{{ variant.image.src }}" alt="{{ variant.image.alt }}" class="variant-image">
-{% endfor %}
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     `
