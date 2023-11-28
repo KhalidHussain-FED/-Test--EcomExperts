@@ -68,8 +68,6 @@
       ></label>
 
     {%- else -%}
-      <select>
-        
            <option
           value="
             {{
@@ -85,7 +83,7 @@
             {{- value -}}
           {%- endif %}
         </option>
-      </select>
+        
     {%- endif -%}
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
