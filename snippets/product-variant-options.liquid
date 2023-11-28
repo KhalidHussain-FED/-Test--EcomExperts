@@ -62,7 +62,7 @@
 {%- for option in product.options_with_values -%}
   {%- if option.name == 'Size' -%}
     <select name="size" onchange="updateSelectedSize(this.value)">
-      <option value="" selected disabled>Unselected</option>
+      <option value="" selected>Unselected</option>
       {%- for value in option.values -%}
         <option
           value="{{ value | escape }}"
