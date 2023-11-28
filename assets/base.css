@@ -3552,10 +3552,11 @@ legend.form__label {
 legend.form__label:before {
     position: absolute;
     content: ":";
-    left: 32px;
+    left: 35px;
     width: 100%;
     top: -7px;
     height: 100%;
     color: #000;
     font-size: 21px;
+    z-index: 99999999;
 }
