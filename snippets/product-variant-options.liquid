@@ -1,5 +1,6 @@
-<!-- Add this span element where you want to display the selected color value -->
-<span id="selectedColorValue">:</span>
+<!-- Add this span element where you want to display the selected color and size values -->
+<span id="selectedColorValue"></span>
+<span id="selectedSizeValue"></span>
 
 {%- for value in option.values -%}
   {%- assign option_disabled = true %}
@@ -60,7 +61,7 @@
 
 {%- for option in product.options_with_values -%}
   {%- if option.name == 'Size' -%}
-    <select name="size">
+    <select name="size" onchange="updateSelectedSize(this.value)">
       <option value="" selected disabled>Unselected</option>
       {%- for value in option.values -%}
         <option
@@ -80,5 +81,10 @@
   function updateSelectedColor(color) {
     var selectedColorValue = document.getElementById('selectedColorValue');
     selectedColorValue.textContent = color;
+  }
+
+  function updateSelectedSize(size) {
+    var selectedSizeValue = document.getElementById('selectedSizeValue');
+    selectedSizeValue.textContent = size;
   }
 </script>
