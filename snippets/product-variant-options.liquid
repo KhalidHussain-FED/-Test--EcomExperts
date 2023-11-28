@@ -60,16 +60,16 @@
       {% endif %}
     >
  
+{% for variant in product.variants %}
+  {% if option.name == 'Color' -%}
+    {% assign variantImage = variant.image %}
+    <label
+      for="{{ section.id }}-{{ option.position }}-{{ variant.id }}"
+      style="background-image: url({{ variantImage.src | img_url: 'compact' }}); height: 40px; width: 40px; background-size: cover;"
+    ></label>
+  {%- endif %}
+{% endfor %}
 
-    {% if option.name == 'Color' -%}
-      {% for variant in product.variants %}
-         {% assign variantImage = variant.image %}
-        <label
-          for="{{ section.id }}-{{ option.position }}-{{ variant.id }}"
-          style="background-image: url({{ variant-image.src | img_url: 'compact' }}); height: 40px; width: 40px; background-size: cover;"
-        ></label>
-        {% endfor %}
-    {%- endif %}
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     `
