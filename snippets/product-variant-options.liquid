@@ -23,10 +23,10 @@
 
   {%- if option.name == 'Color' -%}
     <div
-      class="variant-swatch {% if option.selected_value == value %}selected{% endif %}"
+      class="variant-swatch {% if option.selected_value == value and variant.available %}selected{% endif %}"
       data-variant-id="{{ variant.id }}"
     >
-      {% assign image_url = variant.featured_image | default: product.featured_image %}
+      {% assign image_url = variant.featured_image.src | default: product.featured_image.src %}
       <img src="{{ image_url | img_url: '50x50' }}" alt="{{ value }}">
     </div>
   {%- elsif option.name == 'Size' -%}
@@ -101,15 +101,10 @@
     var swatches = document.querySelectorAll('.variant-swatch');
     var productImage = document.getElementById('product-image');
 
-    if (!{{ product | json }} || !{{ product | json }}.variants) {
-      console.error('Product or variants not available.');
-      return;
-    }
-
     swatches.forEach(function(swatch) {
       swatch.addEventListener('click', function() {
         var variantId = this.getAttribute('data-variant-id');
-        var variant = findVariantById(variantId, {{ product | json }});
+        var variant = findVariantById(variantId);
 
         if (variant && variant.featured_image) {
           var imageUrl = variant.featured_image.src;
@@ -118,8 +113,8 @@
       });
     });
 
-    function findVariantById(variantId, product) {
-      return product.variants.find(function(variant) {
+    function findVariantById(variantId) {
+      return {{ product | json }}.variants.find(function(variant) {
         return variant.id === variantId;
       });
     }
