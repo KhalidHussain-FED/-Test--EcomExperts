@@ -1,19 +1,4 @@
-{% comment %}
-  Renders product variant options
 
-  Accepts:
-  - product: {Object} product object.
-  - option: {Object} current product_option object.
-  - block: {Object} block object.
-
-
-  Usage:
-  {% render 'product-variant-options',
-    product: product,
-    option: option,
-    block: block
-  %}
-{% endcomment %}
 <span id="selectedColorValue"></span>
 {%- liquid
   assign variants_available_arr = product.variants | map: 'available'
@@ -59,21 +44,14 @@
         class="disabled"
       {% endif %}
     >
-    {% assign blackVariant = product.variants | where: 'option1', value | first %}
+ 
+<label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+      {{ value -}}
+      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ product.selected_or_first_available_variant.image.src }}</span>
+    </label>
 
-    {%- if blackVariant -%}
-      <label
-        for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-        style="background-image: url({{ blackVariant.image.src | img_url: 'thumbnail' }});height:40px;width:40px;background-size: cover;"
-      ></label>
 
-    {%- else -%}
-          <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-            {{ value -}}
-            <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-          </label>
-        
-    {%- endif -%}
+
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     `
