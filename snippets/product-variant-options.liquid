@@ -64,17 +64,17 @@
       {% if condition1 %}
         <label
           for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-          style="background-image: url({{ product.variants[forloop.index0].image1 | image_url: '' }}); height: 40px; width: 40px; background-size: cover;"
+          style="background-image: url({{ product.variants[forloop.index0].image1 | image_url: 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/download.jpg' }}); height: 40px; width: 40px; background-size: cover;"
         ></label>
       {% elsif condition2 %}
         <label
           for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-          style="background-image: url({{ product.variants[forloop.index0].image2 | image_url: '' }}); height: 40px; width: 40px; background-size: cover;"
+          style="background-image: url({{ product.variants[forloop.index0].image2 | image_url: 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/red-bag.png' }}); height: 40px; width: 40px; background-size: cover;"
         ></label>
       {% else %}
         <label
           for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-          style="background-image: url({{ product.variants[forloop.index0].image3 | image_url: '' }}); height: 40px; width: 40px; background-size: cover;"
+          style="background-image: url({{ product.variants[forloop.index0].image3 | image_url: 'https://khalid-hussain-test.myshopify.com/cdn/shop/products/tan-bag.webp' }}); height: 40px; width: 40px; background-size: cover;"
         ></label>
       {% endif %}
     {% else %}
