@@ -70,10 +70,10 @@ if (!customElements.get("product-form")) {
 
               if (
                 currentURL ===
-                "https://khalid-hussain-test.myshopify.com/products/product-1?variant=44127900663962"
+                "https://khalid-hussain-test.myshopify.com/products/product-1?variant=44173477675162"
               ) {
                 const FreeProductTitle = "Soft Winter Jacket";
-                const MainProductId = 44127900663962; // Set the correct ID for the main product
+                const MainProductId = 44173477675162; // Set the correct ID for the main product
                 const FreeProductId = 44158968135834; // Set the correct Free Product ID
 
                 let freeProductFormData = {
