@@ -67,28 +67,9 @@
         style="background-image: url({{ blackVariant.image.src | img_url: 'thumbnail' }});height:40px;width:40px;background-size: cover;"
       ></label>
 
-    {%- else -%}
-      <option
-        value="
-          {{
-          value | escape }}
-        "
-        {% if option.selected_value == value %}
-          selected="selected"
-        {% endif %}
-      >
-        {% if option_disabled -%}
-          {{- 'products.product.value_unavailable' | t: option_value: value -}}
-        {%- else -%}
-          {{- value -}}
-        {%- endif %}
-      </option>
-    {% endif %}
+    {% else %}
 
-    <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-      {{ value -}}
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-    </label>
+    {% endif %}
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     `
