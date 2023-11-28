@@ -42,76 +42,84 @@
   -%}
 
   {%- if block.settings.picker_type == 'button' -%}
-    <input
-      type="radio"
-      id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-      name="{{ option.name }}"
-      value="{{ value | escape }}"
-      form="{{ product_form_id }}"
-      {% if option.selected_value == value %}
-        checked
-      {% endif %}
-      {% if option_disabled %}
-        class="disabled"
-      {% endif %}
-    >
-    {% assign blackVariant = product.variants | where: option.name, value | first %}
+    {%- if option.name == 'Size' -%}
+      <div class="product-form__input product-form__input--dropdown">
+        <label class="form__label" for="{{ section.id }}-{{ option.position }}">
+          {{ option.name }}
+        </label>
+        <div class="select">
+          <select
+            id="{{ section.id }}-{{ option.position }}"
+            class="select__select"
+            name="{{ option.name }}"
+            form="{{ product_form_id }}"
+          >
+            {%- for value in option.values -%}
+              {%- liquid
+                assign option_disabled = true
 
-    {%- if blackVariant -%}
-      <label
-        for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-        style="background-image: url({{ blackVariant.image.src | img_url: 'thumbnail' }});height:40px;width:40px;background-size: cover;"
-      ></label>
+                for variant in product.variants
+                  case option.position
+                    when 1
+                      if variant.option1 == value and variant.available
+                        assign option_disabled = false
+                      endif
+                    when 2
+                      if product.selected_or_first_available_variant and variant.option1 == product.selected_or_first_available_variant.option1 and variant.option2 == value and variant.available
+                        assign option_disabled = false
+                      endif
+                    when 3
+                      if product.selected_or_first_available_variant and variant.option1 == product.selected_or_first_available_variant.option1 and variant.option2 == product.selected_or_first_available_variant.option2 and variant.option3 == value and variant.available
+                        assign option_disabled = false
+                      endif
+                  endcase
+                endfor
+              -%}
+
+              <option
+                value="{{ value | escape }}"
+                {% if option.selected_value == value %}
+                  selected="selected"
+                {% endif %}
+                {% if option_disabled %}
+                  disabled="disabled"
+                {% endif %}
+              >
+                {{- value -}}
+              </option>
+            {%- endfor -%}
+          </select>
+          {% render 'icon-caret' %}
+        </div>
+      </div>
     {%- else -%}
-      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-        {{ value -}}
-        <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-      </label>
+      <input
+        type="radio"
+        id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        name="{{ option.name }}"
+        value="{{ value | escape }}"
+        form="{{ product_form_id }}"
+        {% if option.selected_value == value %}
+          checked
+        {% endif %}
+        {% if option_disabled %}
+          class="disabled"
+        {% endif %}
+      >
+      {% assign blackVariant = product.variants | where: option.name, value | first %}
+
+      {%- if blackVariant -%}
+        <label
+          for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+          style="background-image: url({{ blackVariant.image.src | img_url: 'thumbnail' }});height:40px;width:40px;background-size: cover;"
+        ></label>
+      {%- else -%}
+        <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+          {{ value -}}
+          <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+        </label>
+      {%- endif -%}
     {%- endif -%}
-
-  {%- elsif block.settings.picker_type == 'dropdown' and option.name == 'Size' -%}
-    <select
-      id="{{ section.id }}-{{ option.position }}"
-      name="{{ option.name }}"
-      class="single-option-selector"
-      data-option="{{ option.name | escape }}"
-      form="{{ product_form_id }}"
-    >
-      {%- for value in option.values -%}
-        {%- liquid
-          assign option_disabled = true
-
-          for variant in product.variants
-            case option.position
-              when 1
-                if variant.option1 == value and variant.available
-                  assign option_disabled = false
-                endif
-              when 2
-                if product.selected_or_first_available_variant and variant.option1 == product.selected_or_first_available_variant.option1 and variant.option2 == value and variant.available
-                  assign option_disabled = false
-                endif
-              when 3
-                if product.selected_or_first_available_variant and variant.option1 == product.selected_or_first_available_variant.option1 and variant.option2 == product.selected_or_first_available_variant.option2 and variant.option3 == value and variant.available
-                  assign option_disabled = false
-                endif
-            endcase
-          endfor
-        -%}
-
-        <option
-          value="{{ value | escape }}"
-          {% if option.selected_value == value %}
-            selected="selected"
-          {% endif %}
-          {% if option_disabled %}
-            disabled="disabled"
-          {% endif %}
-        >
-          {{- value -}}
-        </option>
-      {%- endfor -%}
-    </select>
   {%- endif -%}
 
 {%- endfor -%}
