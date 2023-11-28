@@ -61,7 +61,7 @@
     >
     {% assign blackVariant = product.variants | where: 'option1', value | first %}
 
-    {%- if blackVariant || block.settings.picker_type == 'dropdown' -%}
+    {%- if blackVariant -%}
       <label
         for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
         style="background-image: url({{ blackVariant.image.src | img_url: 'thumbnail' }});height:40px;width:40px;background-size: cover;"
