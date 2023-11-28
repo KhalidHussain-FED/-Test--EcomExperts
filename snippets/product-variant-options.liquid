@@ -67,10 +67,16 @@
           value="{{ value | escape }}"
           {% if option.selected_value == value -%}
             selected="selected"
+            {% assign isSelected = true %}
+          {%- else -%}
+            {% assign isSelected = false %}
           {%- endif %}
         >
           {{ value }}
         </option>
+        {% if isSelected %}
+          {{ option.selected_value }} is selected for {{ option.name }} and {{ value }} is the current option.
+        {% endif %}
       {%- endfor -%}
     </select>
   {%- endif -%}
