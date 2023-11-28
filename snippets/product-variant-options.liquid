@@ -63,7 +63,7 @@
 
 <div class="product-image">
   {% for variant in product.variants %}
-    {% if variant.selected %}
+    {% if option.value %}
       <img src="{{ variant.image.src }}" alt="{{ variant.title }}" />
     {% endif %}
   {% endfor %}
