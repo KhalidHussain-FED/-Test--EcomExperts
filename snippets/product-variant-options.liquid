@@ -67,22 +67,22 @@
         style="background-image: url({{ blackVariant.image.src | img_url: 'thumbnail' }});height:40px;width:40px;background-size: cover;"
       ></label>
 
-    {% else block.settings.picker_type == 'dropdown' %}
-       <option
-      value="
-        {{
-        value | escape }}
-      "
-      {% if option.selected_value == value %}
-        selected="selected"
-      {% endif %}
-    >
-      {% if option_disabled -%}
-        {{- 'products.product.variant_sold_out_or_unavailable' | t: option_value: value -}}
-      {%- else -%}
-        {{- value -}}
-      {%- endif %}
-    </option>
+    {%- else block.settings.picker_type == 'dropdown' -%}
+           <option
+          value="
+            {{
+            value | escape }}
+          "
+          {% if option.selected_value == value %}
+            selected="selected"
+          {% endif %}
+        >
+          {% if option_disabled -%}
+            {{- 'products.product.variant_sold_out_or_unavailable' | t: option_value: value -}}
+          {%- else -%}
+            {{- value -}}
+          {%- endif %}
+        </option>
     {% endif %}
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
