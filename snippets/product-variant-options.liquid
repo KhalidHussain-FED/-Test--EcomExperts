@@ -67,7 +67,9 @@
         style="background-image: url({{ blackVariant.image.src | img_url: 'thumbnail' }});height:40px;width:40px;background-size: cover;"
       ></label>
 
-    {%- else block.settings.picker_type == 'dropdown' -%}
+    {%- else -%}
+      <dropdown>
+        
            <option
           value="
             {{
@@ -83,6 +85,7 @@
             {{- value -}}
           {%- endif %}
         </option>
+      </dropdown>
     {%- endif -%}
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
