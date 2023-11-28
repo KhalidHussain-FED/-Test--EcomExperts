@@ -59,7 +59,6 @@
         class="disabled"
       {% endif %}
     >
-    
     {% for variant in product.variants %}
       {% assign variantImage = variant.image %}
       {% if variantImage != blank and option.name == 'Color' %}
