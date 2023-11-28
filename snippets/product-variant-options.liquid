@@ -69,10 +69,15 @@
       ></label>
       
     {% else %}
-       <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-      {{ value -}}
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-    </label>
+       <option
+      value="{{ value | escape }}"
+      {% if option.selected_value == value %}
+        selected="selected"
+      {% endif %}
+      {% if option_disabled %}
+        disabled="disabled"
+      {% endif %}
+    >
       {% endif %}
     
     
