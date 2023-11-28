@@ -1,5 +1,5 @@
-<legend class="form__label">Color:</legend>
-<span id="selectedColorLabel"></span>
+<!-- Add this span element where you want to display the selected color value -->
+<span id="selectedColorValue">:</span>
 
 {%- for value in option.values -%}
   {%- assign option_disabled = true %}
@@ -35,7 +35,7 @@
       name="{{ option.name }}"
       value="{{ value | escape }}"
       form="{{ product_form_id }}"
-      onclick="updateSelectedColorLabel('{{ value | escape }}')"
+      onclick="updateSelectedColor('{{ value | escape }}')"
       {% if option.selected_value == value -%}
         checked
       {%- endif %}
@@ -77,8 +77,8 @@
 {%- endfor -%}
 
 <script>
-  function updateSelectedColorLabel(color) {
-    var selectedColorLabel = document.getElementById('selectedColorLabel');
-    selectedColorLabel.textContent = color;
+  function updateSelectedColor(color) {
+    var selectedColorValue = document.getElementById('selectedColorValue');
+    selectedColorValue.textContent = color;
   }
 </script>
