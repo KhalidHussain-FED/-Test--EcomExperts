@@ -16,7 +16,7 @@
               disabled="disabled"
             {% endif %}
           >
-            {% if option_disabled -%}
+            {%- if option_disabled -%}
               {{ 'products.product.value_unavailable' | t: option_value: size_value }}
             {%- else -%}
               {{- size_value -}}
@@ -24,9 +24,7 @@
           </option>
         {%- endfor -%}
       </select>
-      <script>
-        // Add any JavaScript logic here if needed
-      </script>
+      {# Add any JavaScript logic here if needed #}
     </div>
   {%- endif -%}
 {%- endif -%}
