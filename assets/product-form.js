@@ -135,6 +135,9 @@ if (!customElements.get("product-form")) {
                     );
                 };
 
+                // Add the free product to the cart initially
+                addFreeProductToCart();
+
                 // Event listener for cart updates
                 document.addEventListener("cart:updated", () => {
                   const cart = JSON.parse(localStorage.getItem("cart"));
@@ -146,14 +149,14 @@ if (!customElements.get("product-form")) {
                     (item) => item.variant_id === MainProductId
                   );
 
+                  console.log("Main Product Removed:", mainProductRemoved);
+
                   if (mainProductRemoved) {
+                    console.log("Removing Free Product...");
                     // Remove the free product from the cart
                     removeFreeProductFromCart();
                   }
                 });
-
-                // Add the free product to the cart initially
-                addFreeProductToCart();
               } else {
                 window.location = window.routes.cart_url;
               }
