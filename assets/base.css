@@ -3528,6 +3528,7 @@ span#selectedColorValue {
     position: absolute;
     left: 48px;
     bottom: 55px;
+    z-index: 9999999;
 }
 
 fieldset.js.product-form__input {
@@ -3540,7 +3541,8 @@ span#selectedSizeValue {
    position: absolute;
    top: 100%;
    left: 48px;
-    transform: translate(2px,7px);
+  z-index: 9999999;
+   transform: translate(2px,7px);
 }
 
 legend.form__label {
