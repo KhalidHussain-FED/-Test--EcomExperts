@@ -1,7 +1,6 @@
-<!-- Add this span element where you want to display the selected color and size values -->
+<!-- Add this span element where you want to display the selected color value -->
 <span id="selectedColorValue"></span>
 <span id="selectedSizeValue"></span>
-
 {%- for value in option.values -%}
   {%- assign option_disabled = true %}
 
@@ -61,22 +60,17 @@
 
 {%- for option in product.options_with_values -%}
   {%- if option.name == 'Size' -%}
-    <select name="size" onchange="updateSelectedSize(this.value)">
+    <select name="size">
+      <option value="" selected disabled>Unselected</option>
       {%- for value in option.values -%}
         <option
           value="{{ value | escape }}"
           {% if option.selected_value == value -%}
             selected="selected"
-            {% assign isSelected = true %}
-          {%- else -%}
-            {% assign isSelected = false %}
           {%- endif %}
         >
           {{ value }}
         </option>
-        {% if isSelected %}
-          {{ option.selected_value }} is selected for {{ option.name }} and {{ value }} is the current option.
-        {% endif %}
       {%- endfor -%}
     </select>
   {%- endif -%}
@@ -87,9 +81,8 @@
     var selectedColorValue = document.getElementById('selectedColorValue');
     selectedColorValue.textContent = color;
   }
-
-  function updateSelectedSize(size) {
-    var selectedSizeValue = document.getElementById('selectedSizeValue');
-    selectedSizeValue.textContent = size;
+   function updateSelectedSize(size) {
+    var selectedColorValue = document.getElementById('selectedSizeValue');
+    selectedColorValue.textContent = size;
   }
 </script>
