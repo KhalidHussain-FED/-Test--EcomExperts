@@ -3541,3 +3541,18 @@ span#selectedSizeValue {
     top: 100%;
     transform: translate(30px, 7px);
 }
+
+legend.form__label {
+    position: relative;
+}
+
+legend.form__label:before {
+    position: absolute;
+    content: ":";
+    left: 32px;
+    width: 100%;
+    top: -7px;
+    height: 100%;
+    color: #000;
+    font-size: 21px;
+}
