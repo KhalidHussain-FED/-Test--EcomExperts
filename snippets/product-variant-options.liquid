@@ -61,15 +61,13 @@
     >
  
 
-{% for variant in product.variants Limit 1 %}
   {% if option.name == 'Color' %}
-    {% assign variantImage = variant.image %}
+    {% assign variantImage = product.variants.image %}
     <label
       for="{{ section.id }}-{{ option.position }}-{{ variant.id }}"
       style="background-image: url({{ variant.image.src | img_url: 'compact' }}); height: 40px; width: 40px; background-size: cover;"
     ></label>
   {% endif %}
-{% endfor %}
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     `
