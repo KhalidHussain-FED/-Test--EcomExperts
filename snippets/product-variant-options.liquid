@@ -59,15 +59,11 @@
         class="disabled"
       {% endif %}
     >
- 
 
-  {% if option.name == 'Color' %}
-    {% assign variantImage = product.variants.image %}
-    <label
-      for="{{ section.id }}-{{ option.position }}-{{ variant.id }}"
-      style="background-image: url({{ variant.image.src | img_url: 'compact' }}); height: 40px; width: 40px; background-size: cover;"
-    ></label><span>{{ images }}</span>
-  {% endif %}
+     <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+      {{ value -}}
+      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+    </label>
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     `
