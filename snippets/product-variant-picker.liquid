@@ -60,9 +60,9 @@
             {% render 'icon-caret' %}
           </div>
         </div>
-      {%- else -%}
+      {%- elsif option.name == "Color" -%}
           <fieldset class="js product-form__input">
-          <legend class="form__label">hhh</legend>
+          <legend class="form__label">{{ option.name }}</legend>
           {% render 'product-variant-options', product: product, option: option, block: block %}
         </fieldset>
         {%- endif -%}
