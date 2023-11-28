@@ -61,7 +61,7 @@
     >
  
 
-{% for variant in product.variants %}
+{% for variant in product.variants Limit 1 %}
   {% if option.name == 'Color' %}
     {% assign variantImage = variant.image %}
     <label
