@@ -73,8 +73,8 @@ if (!customElements.get("product-form")) {
                 "https://khalid-hussain-test.myshopify.com/products/product-1?variant=44173477675162"
               ) {
                 const FreeProductTitle = "Soft Winter Jacket";
-                const MainProductId = 44173477675162; // Set the correct ID for the main product
-                const FreeProductId = 44158968135834; // Set the correct Free Product ID
+                const MainProductId = 44173477675162;
+                const FreeProductId = 44158968135834;
 
                 let freeProductFormData = {
                   items: [
@@ -85,26 +85,57 @@ if (!customElements.get("product-form")) {
                   ],
                 };
 
-                fetch(window.Shopify.routes.root + "cart/add.js", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(freeProductFormData),
-                })
-                  .then((freeProductResponse) => {
-                    console.log(
-                      "Add Free Product to Cart Response:",
-                      freeProductResponse
-                    );
-                    window.location = window.routes.cart_url;
-                    return freeProductResponse.json();
+                // Function to add free product to the cart
+                const addFreeProductToCart = () => {
+                  fetch(window.Shopify.routes.root + "cart/add.js", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(freeProductFormData),
                   })
-                  .catch((error) =>
-                    console.error("Error adding free product:", error)
-                  );
+                    .then((freeProductResponse) => {
+                      console.log(
+                        "Add Free Product to Cart Response:",
+                        freeProductResponse
+                      );
+                      window.location = window.routes.cart_url;
+                      return freeProductResponse.json();
+                    })
+                    .catch((error) =>
+                      console.error("Error adding free product:", error)
+                    );
+                };
 
-                // Use the Shopify AJAX API to handle cart updates
+                // Function to remove free product from the cart
+                const removeFreeProductFromCart = () => {
+                  let removeFreeProductFormData = {
+                    updates: {
+                      [FreeProductId]: 0,
+                    },
+                  };
+
+                  fetch(window.Shopify.routes.cart_change_url, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(removeFreeProductFormData),
+                  })
+                    .then((removeFreeProductResponse) => {
+                      console.log(
+                        "Remove Free Product from Cart Response:",
+                        removeFreeProductResponse
+                      );
+                      window.location.reload();
+                      return removeFreeProductResponse.json();
+                    })
+                    .catch((error) =>
+                      console.error("Error removing free product:", error)
+                    );
+                };
+
+                // Event listener for cart updates
                 document.addEventListener("cart:updated", () => {
                   const cart = JSON.parse(localStorage.getItem("cart"));
 
@@ -116,40 +147,20 @@ if (!customElements.get("product-form")) {
                   );
 
                   if (mainProductRemoved) {
-                    const freeProductRemoved = !cart.items.some(
+                    // Check if the free product is in the cart
+                    const freeProductInCart = cart.items.some(
                       (item) => item.title === FreeProductTitle
                     );
 
-                    if (freeProductRemoved) {
-                      // Construct data to remove the free product from the cart
-                      let removeFreeProductFormData = {
-                        updates: {
-                          [FreeProductId]: 0, // Set quantity to 0 to remove the free product
-                        },
-                      };
-
-                      // Send request to update the cart and remove the free product
-                      fetch(window.Shopify.routes.cart_change_url, {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(removeFreeProductFormData),
-                      })
-                        .then((removeFreeProductResponse) => {
-                          console.log(
-                            "Remove Free Product from Cart Response:",
-                            removeFreeProductResponse
-                          );
-                          window.location.reload(); // Reload the page to show an empty cart
-                          return removeFreeProductResponse.json();
-                        })
-                        .catch((error) =>
-                          console.error("Error removing free product:", error)
-                        );
+                    if (freeProductInCart) {
+                      // Remove the free product from the cart
+                      removeFreeProductFromCart();
                     }
                   }
                 });
+
+                // Add the free product to the cart initially
+                addFreeProductToCart();
               } else {
                 window.location = window.routes.cart_url;
               }
