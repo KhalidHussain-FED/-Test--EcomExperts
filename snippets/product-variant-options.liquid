@@ -69,15 +69,21 @@
       ></label>
       
     {% else %}
-       <option
-      value="{{ value | escape }}"
+    <option
+      value="
+        {{
+        value | escape }}
+      "
       {% if option.selected_value == value %}
         selected="selected"
       {% endif %}
-      {% if option_disabled %}
-        disabled="disabled"
-      {% endif %}
     >
+      {% if option_disabled -%}
+        {{- 'products.product.variant_sold_out_or_unavailable' | t: option_value: value -}}
+      {%- else -%}
+        {{- value -}}
+      {%- endif %}
+    </option>
       {% endif %}
     
     
