@@ -1,5 +1,5 @@
 <!-- Add this span element where you want to display the selected color value -->
-<span id="selectedColorValue">:</span>
+<span id="selectedColorValue"></span>
 
 {%- for value in option.values -%}
   {%- assign option_disabled = true %}
@@ -78,6 +78,10 @@
 
 <script>
   function updateSelectedColor(color) {
+    var selectedColorValue = document.getElementById('selectedColorValue');
+    selectedColorValue.textContent = color;
+  }
+   function updateSelectedSize(size) {
     var selectedColorValue = document.getElementById('selectedColorValue');
     selectedColorValue.textContent = color;
   }
