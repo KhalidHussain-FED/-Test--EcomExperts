@@ -62,7 +62,7 @@
     
     {% for variant in product.variants %}
       {% assign variantImage = variant.image %}
-      {% if variantImage != blank and option.name == 'Color' %}
+      {% if variantImage != blank and variant.name == 'Color' %}
         <label
           for="{{ section.id }}-{{ option.position }}-{{ variant.id }}"
           style="background-image: url({{ variantImage.src | img_url: 'compact' }}); height: 40px; width: 40px; background-size: cover;"
