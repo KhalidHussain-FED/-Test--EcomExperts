@@ -63,7 +63,7 @@
 
 <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
       {{ value -}}
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ forloop.index0 }}</span>
+      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ product.selected_or_first_available_variant[forloop.index0].image.src }}</span>
     </label>
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
