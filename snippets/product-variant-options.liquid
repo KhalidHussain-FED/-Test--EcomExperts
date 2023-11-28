@@ -60,37 +60,29 @@
       {% endif %}
     >
 
-    {% for option in product.options %}
-      {% if option.name == 'Color' %}
-        {% for value in option.values %}
-          {% assign image_url = '' %}
-
-          {%- case value -%}
-            {%- when 'Black' -%}
-              {% assign image_url = 'your_black_image_url_here' %}
-            {%- when 'Red' -%}
-              {% assign image_url = 'your_red_image_url_here' %}
-            {%- when 'Tan' -%}
-              {% assign image_url = 'your_tan_image_url_here' %}
-            {%- else -%}
-              {% comment %} Add more cases for other color options if needed {% endcomment %}
-          {%- endcase -%}
-
-          {% if image_url != blank %}
-            <label
-              for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-              style="background-image: url({{ image_url }}); height: 40px; width: 40px; background-size: cover;"
-            ></label>
-          {% else %}
-            <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-              {{ value -}}
-              <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-            </label>
-          {% endif %}
-        {% endfor %}
+    {% if product.variants[forloop.index0].image != blank and option.name == 'Color' %}
+      {% if condition1 %}
+        <label
+          for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+          style="background-image: url({{ product.variants[forloop.index0].image1 | image_url: '' }}); height: 40px; width: 40px; background-size: cover;"
+        ></label>
+      {% elsif condition2 %}
+        <label
+          for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+          style="background-image: url({{ product.variants[forloop.index0].image2 | image_url: '' }}); height: 40px; width: 40px; background-size: cover;"
+        ></label>
+      {% else %}
+        <label
+          for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+          style="background-image: url({{ product.variants[forloop.index0].image3 | image_url: '' }}); height: 40px; width: 40px; background-size: cover;"
+        ></label>
       {% endif %}
-    {% endfor %}
-
+    {% else %}
+      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+        {{ value -}}
+        <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+      </label>
+    {% endif %}
   {%- elsif block.settings.picker_type == 'dropdown' -%}
     <option
       value="{{ value | escape }}"
