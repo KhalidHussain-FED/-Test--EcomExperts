@@ -1,6 +1,14 @@
 {%- if option.name == 'Size' -%}
   {%- if block.settings.picker_type == 'dropdown' -%}
     <div class="size-dropdown">
+      {# Debugging output for option values #}
+      <p>Debug Output:</p>
+      <ul>
+        {%- for size_value in option.values -%}
+          <li>{{ size_value }}</li>
+        {%- endfor -%}
+      </ul>
+
       <select
         id="{{ section.id }}-{{ option.position }}"
         name="{{ option.name }}"
@@ -24,6 +32,12 @@
           </option>
         {%- endfor -%}
       </select>
+
+      {# Debugging output for selected value and disabled status #}
+      <p>Debug Output:</p>
+      <p>Selected Value: {{ option.selected_value }}</p>
+      <p>Is Disabled: {{ option_disabled }}</p>
+
       {# Add any JavaScript logic here if needed #}
     </div>
   {%- endif -%}
