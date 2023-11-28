@@ -59,11 +59,11 @@
         class="disabled"
       {% endif %}
     >
-{% assign blackVariant = product.variants | where: 'Color', 'Black' %}
+{% assign blackVariant = product.variants | where: 'Color', 'Black' | first %}
 
      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
       {{ value -}}
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ blackVariant.first }}</span>
+      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ blackVariant }}</span>
     </label>
     
     
