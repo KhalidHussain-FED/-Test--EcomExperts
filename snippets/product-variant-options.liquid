@@ -64,7 +64,7 @@
     {%- if variant_image != '' -%}
         <label
           for="{{ section.id }}-{{ option.position }}-{{ variant.id }}"
-          style="background-image: url({{ variant_image.src | img_url: 'compact' }}); height: 40px; width: 40px; background-size: cover;"
+          style="background-image: url({{ variant_image | img_url: 'compact' }}); height: 40px; width: 40px; background-size: cover;"
         ></label>
       {%- endif %}
 
