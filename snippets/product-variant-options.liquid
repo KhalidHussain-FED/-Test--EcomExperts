@@ -63,7 +63,7 @@
 
 <div class="product-image">
     {% if product.selected_or_first_available_variant %}
-      <img src="{{ variant.image.src }}" alt="{{ variant.title }}" />
+      <img src="{{ product.selected_or_first_available_variant.image.src }}" alt="{{ variant.title }}" />
     {% endif %}
 </div>
 
