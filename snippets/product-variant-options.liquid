@@ -60,10 +60,12 @@
       {% endif %}
     >
     {% if product.variants[forloop.index0].image != blank and option.name == 'Color' %}
-      <label
-        for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-        style="background-image: url({{ product.variants[forloop.index0].image.src | img_url: 'compact' }});height:40px;width:40px;background-size: cover;"
-      ></label>
+      {% for variant in product.variants %}
+        <label
+          for="{{ section.id }}-{{ option.position }}-{{ forloop.index }}"
+          style="background-image: url({{ product.variants[forloop.index].image.src | img_url: 'compact' }});height:40px;width:40px;background-size: cover;"
+        ></label>
+      {% endfor %}
     {% else %}
       <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
         {{ value -}}
