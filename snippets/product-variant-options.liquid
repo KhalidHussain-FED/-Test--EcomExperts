@@ -60,20 +60,10 @@
       {% endif %}
     >
  
-{% for variant in product.variants %}
-  {% if option.name == 'Color' %}
-    {% assign variantImage = variant.image %}
-    {% for optionValue in variant.options %}
-      {% if optionValue == variant.title %}
-        {% assign variantImage = variantImage | default: variant.image %}
-      {% endif %}
-    {% endfor %}
-    <label
-      for="{{ section.id }}-{{ option.position }}-{{ variant.id }}"
-      style="background-image: url({{ variantImage.src | img_url: 'compact' }}); height: 40px; width: 40px; background-size: cover;"
-    ></label>
-  {% endif %}
-{% endfor %}
+<label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+      {{ value -}}
+      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ option.image }}</span>
+    </label>
 
 
 
