@@ -319,3 +319,95 @@ if (!customElements.get("cart-note")) {
     }
   );
 }
+
+if (!this.cart) {
+  const currentURL = window.location.href;
+
+  if (
+    currentURL ===
+    "https://khalid-hussain-test.myshopify.com/products/product-1?variant=44173477675162"
+  ) {
+    const FreeProductTitle = "Soft Winter Jacket";
+    const MainProductId = 44173477675162;
+    const FreeProductId = 44158968135834;
+
+    let freeProductFormData = {
+      items: [
+        {
+          id: FreeProductId,
+          quantity: 1,
+        },
+      ],
+    };
+
+    // Function to add free product to the cart
+    const addFreeProductToCart = () => {
+      fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(freeProductFormData),
+      })
+        .then((freeProductResponse) => {
+          console.log(
+            "Add Free Product to Cart Response:",
+            freeProductResponse
+          );
+          window.location = window.routes.cart_url;
+          return freeProductResponse.json();
+        })
+        .catch((error) => console.error("Error adding free product:", error));
+    };
+
+    // Function to remove free product from the cart
+    const removeFreeProductFromCart = () => {
+      let removeFreeProductFormData = {
+        updates: {
+          [FreeProductId]: 0,
+        },
+      };
+
+      fetch(window.Shopify.routes.cart_change_url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(removeFreeProductFormData),
+      })
+        .then((removeFreeProductResponse) => {
+          console.log(
+            "Remove Free Product from Cart Response:",
+            removeFreeProductResponse
+          );
+          window.location.reload();
+          return removeFreeProductResponse.json();
+        })
+        .catch((error) => console.error("Error removing free product:", error));
+    };
+
+    // Event listener for cart updates
+    document.addEventListener("cart:updated", () => {
+      const cart = JSON.parse(localStorage.getItem("cart"));
+
+      console.log("Updated Cart:", cart);
+
+      // Check if the main product is removed from the cart
+      const mainProductRemoved = !cart.items.some(
+        (item) => item.variant_id === MainProductId
+      );
+
+      if (mainProductRemoved) {
+        // Remove the free product from the cart
+        removeFreeProductFromCart();
+      }
+    });
+
+    // Add the free product to the cart initially
+    addFreeProductToCart();
+  } else {
+    window.location = window.routes.cart_url;
+  }
+}
+
+return;
