@@ -1,16 +1,7 @@
-
-<span id="selectedColorValue"></span>
-{%- liquid
-  assign variants_available_arr = product.variants | map: 'available'
-  assign variants_option1_arr = product.variants | map: 'option1'
-  assign variants_option2_arr = product.variants | map: 'option2'
-  assign variants_option3_arr = product.variants | map: 'option3'
-  assign product_form_id = 'product-form-' | append: section.id
--%}
-
 {%- for value in option.values -%}
   {%- liquid
     assign option_disabled = true
+    assign is_color_option = false
 
     for option1_name in variants_option1_arr
       case option.position
@@ -27,58 +18,18 @@
             assign option_disabled = false
           endif
       endcase
+
+      if option.position == 1 and variants_option1_arr[forloop.index0] == 'Color'
+        assign is_color_option = true
+      endif
     endfor
   -%}
 
-  {%- if block.settings.picker_type == 'button' -%}
-    <input
-      type="radio"
-      id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-      name="{{ option.name }}"
-      value="{{ value | escape }}"
-      form="{{ product_form_id }}"
-      {% if option.selected_value == value %}
-        checked
-      {% endif %}
-      {% if option_disabled %}
-        class="disabled"
-      {% endif %}
-    >
- 
-<label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-      {{ value -}}
-      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ product.selected_or_first_available_variant.image.src }}</span>
-    </label>
-
-
-
-
-  {%- elsif block.settings.picker_type == 'dropdown' -%}
-    `
-    <option
-      value="
-        {{
-        value | escape }}
-      "
-      {% if option.selected_value == value %}
-        selected="selected"
-      {% endif %}
-    >
-      {% if option_disabled -%}
-        {{- 'products.product.value_unavailable' | t: option_value: value -}}
-      {%- else -%}
-        {{- value -}}
-      {%- endif %}
-    </option>
+  {%- if is_color_option -%}
+    {%- if block.settings.picker_type == 'button' -%}
+      <!-- Your button code for color options here -->
+    {%- elsif block.settings.picker_type == 'dropdown' -%}
+      <!-- Your dropdown code for color options here -->
+    {%- endif -%}
   {%- endif -%}
 {%- endfor -%}
-<script>
-  function updateSelectedColor(color) {
-    var selectedColorValue = document.getElementById('selectedColorValue');
-    selectedColorValue.textContent = color;
-  }
-   function updateSelectedSize(size) {
-    var selectedColorValue = document.getElementById('selectedColorValue');
-    selectedColorValue.textContent = color;
-  }
-</script>
