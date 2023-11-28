@@ -3538,8 +3538,8 @@ fieldset.js.product-form__input {
 
 span#selectedSizeValue {
    position: absolute;
-    top: 100%;
-    left: 43px;
+   top: 100%;
+   left: 48px;
     transform: translate(2px,7px);
 }
 
