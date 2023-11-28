@@ -62,8 +62,8 @@
 
     {% if product.variants[forloop.index0].image != blank and option.name == 'Color' %}
       <label
-        for="{{ section.id }}-{{ variant.position }}-{{ forloop.index0 }}"
-        style="background-image: url({{ variant.image | img_url: 'medium' }}); height: 40px; width: 40px; background-size: cover; display: inline-block;"
+        for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        style="background-image: url({{ product.variants[forloop.index0].image | img_url: '' }});height:40px;width:40px;background-size: cover;"
       ></label>
     {% else %}
       <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
