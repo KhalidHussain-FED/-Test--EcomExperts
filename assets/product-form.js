@@ -147,15 +147,8 @@ if (!customElements.get("product-form")) {
                   );
 
                   if (mainProductRemoved) {
-                    // Check if the free product is in the cart
-                    const freeProductInCart = cart.items.some(
-                      (item) => item.title === FreeProductTitle
-                    );
-
-                    if (freeProductInCart) {
-                      // Remove the free product from the cart
-                      removeFreeProductFromCart();
-                    }
+                    // Remove the free product from the cart
+                    removeFreeProductFromCart();
                   }
                 });
 
