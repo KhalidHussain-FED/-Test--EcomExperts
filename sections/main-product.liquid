@@ -98,21 +98,6 @@
           class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
         >
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
-          <p>
-          <label for="custom-input--size">Size</label><br>
-          <select id="custom-input--size" name="properties[Size]" form="product-form-{{ section.id }}" style="padding: 5px 10px;" required="true"> 
-            <option value="Unselected">Unselected</option>
-            <option value="Small">Small</option>
-            <option value="Medium">Medium</option>
-            <option value="Large">Large</option> 
-          </select> 
-          <script>
-            document.addEventListener('DOMContentLoaded', () => {
-              const formElement = document.querySelector("#product-form-{{ section.id }}");
-              formElement.removeAttribute('novalidate')
-            });
-          </script>
-        </p>
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
@@ -688,7 +673,21 @@
     </div>
 
     {% render 'product-media-modal', variant_images: variant_images %}
-
+     <p>
+          <label for="custom-input--size">Size</label><br>
+          <select id="custom-input--size" name="properties[Size]" form="product-form-{{ section.id }}" style="padding: 5px 10px;" required="true"> 
+            <option value="Unselected">Unselected</option>
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option> 
+          </select> 
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              const formElement = document.querySelector("#product-form-{{ section.id }}");
+              formElement.removeAttribute('novalidate')
+            });
+          </script>
+        </p>
     {% assign popups = section.blocks | where: 'type', 'popup' %}
     {%- for block in popups -%}
       <modal-dialog id="PopupModal-{{ block.id }}" class="product-popup-modal" {{ block.shopify_attributes }}>
