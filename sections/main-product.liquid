@@ -128,7 +128,14 @@
                     price_class: 'price--large'
                   -%}
                 </div>
-                  <p>
+                 
+                {%- if product.quantity_price_breaks_configured? -%}
+                  <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
+                    <span>{{ 'products.product.volume_pricing.note' | t }}</span>
+                  </div>
+                {%- endif -%}
+
+                 <p>
                     <label for="custom-input--size">Size</label><br>
                     <select id="custom-input--size" name="properties[Size]" form="product-form-{{ section.id }}" style="padding: 5px 10px;" required="true"> 
                       <option value="Unselected">Unselected</option>
@@ -143,11 +150,7 @@
                       });
                     </script>
                   </p>
-                {%- if product.quantity_price_breaks_configured? -%}
-                  <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
-                    <span>{{ 'products.product.volume_pricing.note' | t }}</span>
-                  </div>
-                {%- endif -%}
+
                 <div class="product__tax caption rte">
                   {%- if cart.taxes_included -%}
                     {{ 'products.product.include_taxes' | t }}
