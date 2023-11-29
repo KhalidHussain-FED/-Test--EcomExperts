@@ -3569,3 +3569,7 @@ legend.form__label:before {
 fieldset.js.product-form__input nth-child(2{
   display:none !important;
 }
+
+.variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
+  display: none !important;
+}
