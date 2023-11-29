@@ -6,12 +6,19 @@ class CartRemoveButton extends HTMLElement {
       event.preventDefault();
       const cartItems =
         this.closest("cart-items") || this.closest("cart-drawer-items");
-       cartItems.updateQuantity(this.dataset.index, 0);
+
+      // Check if the cartItems element and the updateQuantity method exist
+      if (cartItems && cartItems.updateQuantity) {
+        cartItems.updateQuantity(this.dataset.index, 0);
+      } else {
+        console.error("CartItems element or updateQuantity method not found.");
+      }
     });
   }
 }
 
 customElements.define("cart-remove-button", CartRemoveButton);
+
 
 class CartItems extends HTMLElement {
   constructor() {
