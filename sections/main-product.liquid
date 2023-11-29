@@ -46,14 +46,6 @@
             addToCartButton.disabled = variantSelect.selectedIndex === 0;
         }
     });
-
-
-         function generateRandomId() {
-                return Math.random().toString(36).substring(2);
-            }
-
-            // Set a random ID to the body tag
-            document.body.id = generateRandomId();
   </script>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
@@ -154,6 +146,28 @@
                     {{ form | payment_terms }}
                   {%- endform -%}
                 </div>
+
+                <p>
+                  <label for="custom-input--size">Size</label><br>
+                  <select
+                    id="custom-input--size"
+                    name="properties[Size]"
+                    form="product-form-{{ section.id }}"
+                    style="padding: 5px 10px;"
+                    required="true"
+                  >
+                    <option value="Unselected">Unselected</option>
+                    <option value="Small">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Large">Large</option>
+                  </select>
+                  <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                      const formElement = document.querySelector("#product-form-{{ section.id }}");
+                      formElement.removeAttribute('novalidate')
+                    });
+                  </script>
+                </p>
 
               {%- when 'inventory' -%}
                 <p
@@ -269,27 +283,6 @@
                       >
                     </span>
                   </label>
-                  <p>
-                    <label for="custom-input--size">Size</label><br>
-                    <select
-                      id="custom-input--size"
-                      name="properties[Size]"
-                      form="product-form-{{ section.id }}"
-                      style="padding: 5px 10px;"
-                      required="true"
-                    >
-                      <option value="Unselected">Unselected</option>
-                      <option value="Small">Small</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Large">Large</option>
-                    </select>
-                    <script>
-                      document.addEventListener('DOMContentLoaded', () => {
-                        const formElement = document.querySelector("#product-form-{{ section.id }}");
-                        formElement.removeAttribute('novalidate')
-                      });
-                    </script>
-                  </p>
                   <div class="price-per-item__container">
                     <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
                       <button class="quantity__button no-js-hidden" name="minus" type="button">
