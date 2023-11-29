@@ -1,3 +1,23 @@
+document.addEventListener("DOMContentLoaded", function () {
+  var removeButtons = document.querySelectorAll('[data-index^="Remove-"]');
+  removeButtons.forEach(function (button) {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      var index = button.getAttribute("data-index").replace("Remove-", "");
+      var correspondingItem = document.getElementById("CartItem-" + index);
+      if (correspondingItem) {
+        correspondingItem.remove();
+        console.log("Item removed:", index);
+      }
+      var cartItems = document.querySelectorAll(".cart-item");
+      if (cartItems.length === 0) {
+        document.getElementById("cart").reset();
+        console.log("Cart is empty. Form reset.");
+      }
+    });
+  });
+});
+
 class CartRemoveButton extends HTMLElement {
   constructor() {
     super();
@@ -18,7 +38,6 @@ class CartRemoveButton extends HTMLElement {
 }
 
 customElements.define("cart-remove-button", CartRemoveButton);
-
 
 class CartItems extends HTMLElement {
   constructor() {
@@ -326,7 +345,6 @@ if (!customElements.get("cart-note")) {
     }
   );
 }
-
 
 document.addEventListener("DOMContentLoaded", function () {
   // Get all remove buttons
