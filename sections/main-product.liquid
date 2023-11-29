@@ -117,6 +117,16 @@
         xhr1.send(data);
       }
     });
+
+     document.addEventListener('DOMContentLoaded', () => {
+      const sizeDropdown = document.getElementById('custom-input--size');
+      const selectedSizeElement = document.getElementById('selected-size');
+
+      sizeDropdown.addEventListener('change', () => {
+        const selectedSize = sizeDropdown.value;
+        selectedSizeElement.textContent = `Selected Size: ${selectedSize}`;
+      });
+    });
   </script>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
