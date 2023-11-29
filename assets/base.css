@@ -3581,3 +3581,11 @@ fieldset.js.product-form__input nth-child(2){
 #variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
   display:none !important;
 }
+
+p#custom_dropdown {
+    display: none;
+}
+
+body#wgbopph3in p#custom_dropdown {
+    display: block;
+}
