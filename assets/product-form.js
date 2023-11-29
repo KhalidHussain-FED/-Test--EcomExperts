@@ -1,3 +1,25 @@
+document.addEventListener("DOMContentLoaded", function () {
+  var removeButtons = document.querySelectorAll('[data-index^="Remove-"]');
+  removeButtons.forEach(function (button) {
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
+      var index = button.getAttribute("data-index").replace("Remove-", "");
+      var correspondingItem = document.getElementById("CartItem-" + index);
+      if (correspondingItem) {
+        correspondingItem.remove();
+        console.log("Item removed:", index);
+      }
+      var cartItems = document.querySelectorAll('.cart-item');
+      if (cartItems.length === 0) {
+        document.getElementById("cart").reset();
+        console.log("Cart is empty. Form reset.");
+      }
+    });
+  });
+});
+
+
+
 if (!customElements.get("product-form")) {
   customElements.define(
     "product-form",
@@ -222,32 +244,3 @@ if (!customElements.get("product-form")) {
   );
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Get all remove buttons
-  var removeButtons = document.querySelectorAll('[data-index^="Remove-"]');
-
-  // Add click event listener to each remove button
-  removeButtons.forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
-
-      // Get the index of the removed item
-      var index = button.getAttribute("data-index").replace("Remove-", "");
-
-      // Remove the corresponding item with the same index
-      var correspondingItem = document.getElementById("CartItem-" + index);
-      if (correspondingItem) {
-        correspondingItem.remove();
-        console.log("Item removed:", index);
-      }
-
-      // Check if the cart is empty
-      var cartItems = document.querySelectorAll(".cart-item");
-      if (cartItems.length === 0) {
-        // If cart is empty, reset the form
-        document.getElementById("cart").reset();
-        console.log("Cart is empty. Form reset.");
-      }
-    });
-  });
-});
