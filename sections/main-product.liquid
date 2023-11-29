@@ -28,45 +28,88 @@
   {%- endstyle -%}
 
   <script>
-        document.addEventListener('DOMContentLoaded', function() {
-              // Check if the current body has the specific ID
-              if (document.body.id === 'classic-leather-jacket-product-1') {
-                  var variantSelect = document.getElementById('custom-input--size');
-                  var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
+            document.addEventListener('DOMContentLoaded', function() {
+                  // Check if the current body has the specific ID
+                  if (document.body.id === 'classic-leather-jacket-product-1') {
+                      var variantSelect = document.getElementById('custom-input--size');
+                      var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
 
-                  // Add a change event listener to the variant select
-                  if (variantSelect) {
-                      variantSelect.addEventListener('change', function() {
-                          // Check the selected index
-                          var selectedIndex = variantSelect.selectedIndex;
+                      // Add a change event listener to the variant select
+                      if (variantSelect) {
+                          variantSelect.addEventListener('change', function() {
+                              // Check the selected index
+                              var selectedIndex = variantSelect.selectedIndex;
 
-                          // Disable button if selected index is 0
-                          addToCartButton.disabled = selectedIndex === 0;
-                      });
+                              // Disable button if selected index is 0
+                              addToCartButton.disabled = selectedIndex === 0;
+                          });
 
-                      // Disable button on load if the initial selected index is 0
-                      addToCartButton.disabled = variantSelect.selectedIndex === 0;
+                          // Disable button on load if the initial selected index is 0
+                          addToCartButton.disabled = variantSelect.selectedIndex === 0;
+                      }
                   }
+              });
+
+
+        function getPageName() {
+                   var pathArray = window.location.pathname.split('/');
+                   var pageName = pathArray[pathArray.length - 1].split('.')[0];
+                   return pageName || 'home'; // Default to 'home' if no page name is found
+               }
+
+               // Function to generate a unique fixed ID based on the current page name
+               function generateUniqueFixedId(pageName) {
+                   // Use the specified page name to generate a unique ID
+                   var uniqueId = "classic-leather-jacket-" + pageName;
+
+                   return uniqueId;
+               }
+
+               // Set the generated unique ID to the body tag
+               document.body.id = generateUniqueFixedId(getPageName());
+
+
+    document.body.addEventListener('click', function(event) {
+      if (event.target.classList.contains('drawer-add')) {
+        event.preventDefault();
+
+        const currentPageHTML = document.documentElement;
+        console.log('we added ');
+
+        const xhr1 = new XMLHttpRequest();
+        xhr1.open('POST', '/cart/add', true);
+        xhr1.setRequestHeader('Content-Type', 'application/json');
+
+        xhr1.onreadystatechange = function() {
+          if (xhr1.readyState === 4 && xhr1.status === 200) {
+            const xhr2 = new XMLHttpRequest();
+            xhr2.open('GET', window.location.href, true);
+
+            xhr2.onreadystatechange = function() {
+              if (xhr2.readyState === 4 && xhr2.status === 200) {
+                const responseHTML = document.createElement('html');
+                responseHTML.innerHTML = xhr2.responseText;
+
+                const cartCountBubble = responseHTML.querySelector('.cart-count-bubble');
+                const cartItems = responseHTML.querySelector('.cart-items');
+                const drawerFooter = responseHTML.querySelector('.drawer_footer');
+
+                document.querySelector('.cart-count-bubble').innerHTML = cartCountBubble.innerHTML;
+                document.querySelector('.cart-items').innerHTML = cartItems.innerHTML;
+                document.querySelector('.drawer_footer').innerHTML = drawerFooter.innerHTML;
               }
-          });
+            };
 
+            xhr2.send();
+          }
+        };
 
-    function getPageName() {
-               var pathArray = window.location.pathname.split('/');
-               var pageName = pathArray[pathArray.length - 1].split('.')[0];
-               return pageName || 'home'; // Default to 'home' if no page name is found
-           }
+        const dpId = event.target.getAttribute('data-dp_id');
+        const data = JSON.stringify({ id: dpId, quantity: 1 });
 
-           // Function to generate a unique fixed ID based on the current page name
-           function generateUniqueFixedId(pageName) {
-               // Use the specified page name to generate a unique ID
-               var uniqueId = "classic-leather-jacket-" + pageName;
-
-               return uniqueId;
-           }
-
-           // Set the generated unique ID to the body tag
-           document.body.id = generateUniqueFixedId(getPageName());
+        xhr1.send(data);
+      }
+    });
   </script>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
