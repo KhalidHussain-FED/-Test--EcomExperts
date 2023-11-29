@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         correspondingItem.remove();
         console.log("Item removed:", index);
       }
-      var cartItems = document.querySelectorAll('.cart-item');
+      var cartItems = document.querySelectorAll(".cart-item");
       if (cartItems.length === 0) {
         document.getElementById("cart").reset();
         console.log("Cart is empty. Form reset.");
@@ -17,8 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-
 
 if (!customElements.get("product-form")) {
   customElements.define(
@@ -95,7 +93,7 @@ if (!customElements.get("product-form")) {
                 "https://khalid-hussain-test.myshopify.com/products/product-1?variant=44173477675162"
               ) {
                 const FreeProductTitle = "Soft Winter Jacket";
-                const MainProductId = 44173477675162;
+                const MainProductId = 44173477609626;
                 const FreeProductId = 44158968135834;
 
                 let freeProductFormData = {
@@ -243,4 +241,3 @@ if (!customElements.get("product-form")) {
     }
   );
 }
-
