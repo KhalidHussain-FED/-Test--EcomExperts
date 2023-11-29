@@ -3570,7 +3570,7 @@ tr#CartItem-1 .product-option:nth-child(2){
   display: none !important;
 }
 
-td.cart-item__details dl:nth-child(2){
+td.cart-item__details dl > .product-option:nth-child(2){
   display:none !important;
 }
 
