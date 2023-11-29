@@ -27,30 +27,6 @@
     }
   {%- endstyle -%}
 
-
-  <script>
- document.addEventListener('DOMContentLoaded', function() {
-    var variantSelect = document.getElementById('custom-input--size');
-    var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
-
-    // Add a change event listener to the variant select
-    if (variantSelect) {
-        variantSelect.addEventListener('change', function() {
-            // Check the selected index
-            var selectedIndex = variantSelect.selectedIndex;
-
-            // Disable button if selected index is 0
-            addToCartButton.disabled = selectedIndex === 0;
-        });
-
-        // Disable button on load if the initial selected index is 0
-        addToCartButton.disabled = variantSelect.selectedIndex === 0;
-    }
-});
-
-
-           
-  </script>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
@@ -128,7 +104,7 @@
                     price_class: 'price--large'
                   -%}
                 </div>
-                 
+
                 {%- if product.quantity_price_breaks_configured? -%}
                   <div class="volume-pricing-note" id="Volume-Note-{{ section.id }}">
                     <span>{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -254,21 +230,6 @@
                     | item_count_for_variant: product.selected_or_first_available_variant.id
                   -%}
                   {% # theme-check-enable %}
-                   <p>
-                    <label for="custom-input--size">Size</label><br>
-                    <select id="custom-input--size" name="properties[Size]" form="product-form-{{ section.id }}" style="padding: 5px 10px;" required="true"> 
-                      <option value="Unselected">Unselected</option>
-                      <option value="Small">Small</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Large">Large</option> 
-                    </select> 
-                    <script>
-                      document.addEventListener('DOMContentLoaded', () => {
-                        const formElement = document.querySelector("#product-form-{{ section.id }}");
-                        formElement.removeAttribute('novalidate')
-                      });
-                    </script>
-                  </p>
                   <label class="quantity__label form__label" for="Quantity-{{ section.id }}">
                     {{ 'products.product.quantity.label' | t }}
                     <span class="quantity__rules-cart no-js-hidden{% if cart_qty == 0 %} hidden{% endif %}">
@@ -280,7 +241,7 @@
                       >
                     </span>
                   </label>
-                  
+
                   <div class="price-per-item__container">
                     <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
                       <button class="quantity__button no-js-hidden" name="minus" type="button">
@@ -678,7 +639,7 @@
                 {% render 'icon-with-text', block: block %}
             {%- endcase -%}
           {%- endfor -%}
-         
+
           <a href="{{ product.url }}" class="link product__view-details animate-arrow">
             {{ 'products.product.view_full_details' | t }}
             {% render 'icon-arrow' %}
