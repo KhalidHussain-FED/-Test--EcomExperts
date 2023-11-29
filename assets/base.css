@@ -3563,11 +3563,15 @@ legend.form__label:before {
 
 
 tr#CartItem-1 .product-option:nth-child(2){
-  display: block;
+  display: block !important;
 }
 
 .product-option:nth-child(2) {
-  display: none;
+  display: none !important;
+}
+
+td.cart-item__details dl:nth-child(2){
+  display:none !important;
 }
 
 fieldset.js.product-form__input nth-child(2){
