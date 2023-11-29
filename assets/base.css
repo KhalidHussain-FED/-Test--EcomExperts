@@ -3565,3 +3565,7 @@ legend.form__label:before {
 .product-option:nth-child(2) {
   display: none !important;
 }
+
+fieldset.js.product-form__input nth-child(2{
+  display:none !important;
+}
