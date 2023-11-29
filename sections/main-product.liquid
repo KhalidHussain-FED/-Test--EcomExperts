@@ -47,16 +47,15 @@
         }
     });
 
-    var storedId = localStorage.getItem('fixedRandomId');
+    function generateUniqueFixedId(pageName) {
+            // Use the specified page name to generate a unique ID
+            var uniqueId = "classic-leather-jacket-" + pageName;
 
-     // If not stored, generate a new ID, store it, and set it to the body tag
-     if (!storedId) {
-         storedId = Math.random().toString(36).substring(2);
-         localStorage.setItem('fixedRandomId', storedId);
-     }
+            return uniqueId;
+        }
 
-     // Set the stored ID to the body tag
-     document.body.id = storedId;
+        // Set the generated unique ID to the body tag
+        document.body.id = generateUniqueFixedId("your-page-name");
   </script>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
