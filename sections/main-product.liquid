@@ -29,21 +29,28 @@
 
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const formElement = document.querySelector("#product-form-{{ section.id }}");
-      formElement.removeAttribute('novalidate');
-    });
+      document.addEventListener('DOMContentLoaded', function() {
+      
+          var variantSelect = document.getElementById('#custom-input--size');
 
-    function updateCartButtonState() {
-      const sizeDropdown = document.getElementById("custom-input--size");
-      const addButton = document.getElementById("ProductSubmitButton-template--16312456642714__main");
+     
+          var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
 
-      if (sizeDropdown.value === "Unselected") {
-        addButton.disabled = true;
-      } else {
-        addButton.disabled = false;
-      }
-    }
+          // Add a change event listener to the variant select
+          // if (variantSelect) 
+            variantSelect.addEventListener('change', function() {
+              // Check the selected variant value (adjust this based on your product variants)
+              var selectedDrop = variantSelect.value;
+  
+              if (selectedDrop === 'Unselected') {
+                addToCartButton.disabled = true;
+              } else {
+                addToCartButton.disabled = false;
+              }
+            });
+          // }
+        });
+
   </script>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
