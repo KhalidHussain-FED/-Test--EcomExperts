@@ -29,23 +29,26 @@
 
   <script>
         document.addEventListener('DOMContentLoaded', function() {
-           var variantSelect = document.getElementById('custom-input--size');
-           var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
+              // Check if the current body has the specific ID
+              if (document.body.id === 'classic-leather-jacket-product-1') {
+                  var variantSelect = document.getElementById('custom-input--size');
+                  var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
 
-           // Add a change event listener to the variant select
-           if (variantSelect) {
-               variantSelect.addEventListener('change', function() {
-                   // Check the selected index
-                   var selectedIndex = variantSelect.selectedIndex;
+                  // Add a change event listener to the variant select
+                  if (variantSelect) {
+                      variantSelect.addEventListener('change', function() {
+                          // Check the selected index
+                          var selectedIndex = variantSelect.selectedIndex;
 
-                   // Disable button if selected index is 0
-                   addToCartButton.disabled = selectedIndex === 0;
-               });
+                          // Disable button if selected index is 0
+                          addToCartButton.disabled = selectedIndex === 0;
+                      });
 
-               // Disable button on load if the initial selected index is 0
-               addToCartButton.disabled = variantSelect.selectedIndex === 0;
-           }
-       });
+                      // Disable button on load if the initial selected index is 0
+                      addToCartButton.disabled = variantSelect.selectedIndex === 0;
+                  }
+              }
+          });
 
 
     function getPageName() {
