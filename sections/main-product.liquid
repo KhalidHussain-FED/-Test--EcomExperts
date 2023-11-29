@@ -29,24 +29,25 @@
 
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
     var variantSelect = document.getElementById('custom-input--size');
     var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
 
     // Add a change event listener to the variant select
     if (variantSelect) {
         variantSelect.addEventListener('change', function() {
-            // Check the selected variant value (adjust this based on your product variants)
-            var selectedDrop = variantSelect.value;
+            // Check the selected index
+            var selectedIndex = variantSelect.selectedIndex;
 
-            if (selectedDrop === 'Unselected') {
-                addToCartButton.disabled = true;
-            } else {
-                addToCartButton.disabled = false;
-            }
+            // Disable button if selected index is 0
+            addToCartButton.disabled = selectedIndex === 0;
         });
+
+        // Disable button on load if the initial selected index is 0
+        addToCartButton.disabled = variantSelect.selectedIndex === 0;
     }
 });
+
 
            
   </script>
