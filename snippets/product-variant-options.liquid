@@ -13,7 +13,9 @@
     block: block
   %}
 {% endcomment %}
+
 <span id="selectedColorValue"></span>
+
 {%- liquid
   assign variants_available_arr = product.variants | map: 'available'
   assign variants_option1_arr = product.variants | map: 'option1'
@@ -66,7 +68,6 @@
         for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
         style="background-image: url({{ colorVariant.image.src | img_url: 'thumbnail' }}); height: 40px; width: 40px; background-size: cover;"
       ></label>
-
     {%- else -%}
       <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
         {{ value -}}
