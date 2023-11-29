@@ -1,12 +1,43 @@
 {% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
+{
+  "name": "Dropdown Picker",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Label",
+      "id": "label",
+      "default": "Size"
+    },
+    {
+      "type": "text",
+      "label": "Option 1",
+      "id": "option1",
+      "default": "Small"
+    },
+    {
+      "type": "text",
+      "label": "Option 2",
+      "id": "option2",
+      "default": "Medium"
+    },
+    {
+      "type": "text",
+      "label": "Option 3",
+      "id": "option3",
+      "default": "Large"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Custom",
+      "settings": {
+        "label": "Size",
+        "option1": "Small",
+        "option2": "Medium",
+        "option3": "Large"
+      }
+    }
+  ]
+}
 {% endschema %}
-
-{% stylesheet %}
-{% endstylesheet %}
-
-{% javascript %}
-{% endjavascript %}
