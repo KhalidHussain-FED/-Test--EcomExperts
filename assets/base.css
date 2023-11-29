@@ -3566,9 +3566,9 @@ tr#CartItem-1 .product-option:nth-child(2){
   display: block !important;
 }
 
-.product-option:nth-child(2) {
+/* .product-option:nth-child(2) {
   display: none !important;
-}
+} */
 
 td.cart-item__details dl > .product-option:nth-child(2){
   display:none !important;
