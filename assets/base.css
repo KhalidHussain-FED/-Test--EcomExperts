@@ -3562,6 +3562,10 @@ legend.form__label:before {
 }
 
 
+tr#CartItem-1 .product-option:nth-child(2){
+  display:black !important;
+}
+
 .product-option:nth-child(2) {
   display: none !important;
 }
