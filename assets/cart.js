@@ -6,7 +6,7 @@ class CartRemoveButton extends HTMLElement {
       event.preventDefault();
       const cartItems =
         this.closest("cart-items") || this.closest("cart-drawer-items");
-      cartItems.updateQuantity(this.dataset.index, 0);
+       cartItems.updateQuantity(this.dataset.index, 0);
     });
   }
 }
@@ -320,6 +320,7 @@ if (!customElements.get("cart-note")) {
   );
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
   // Get all remove buttons
   var removeButtons = document.querySelectorAll('[data-index^="Remove-"]');
@@ -336,6 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var correspondingItem = document.getElementById("CartItem-" + index);
       if (correspondingItem) {
         correspondingItem.remove();
+        console.log("Item removed:", index);
       }
 
       // Check if the cart is empty
@@ -343,6 +345,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (cartItems.length === 0) {
         // If cart is empty, reset the form
         document.getElementById("cart").reset();
+        console.log("Cart is empty. Form reset.");
       }
     });
   });
