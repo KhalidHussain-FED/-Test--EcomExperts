@@ -3560,3 +3560,8 @@ legend.form__label:before {
     font-size: 21px;
     z-index: 99999999;
 }
+
+
+.product-option:nth-child(2) {
+  display: none !important;
+}
