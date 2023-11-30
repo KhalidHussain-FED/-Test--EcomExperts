@@ -6,32 +6,6 @@ function getFocusableElements(container) {
   );
 }
 
-// Function to remove a line item
-function removeLineItem(cartId, lineItemId) {
-  var data = {
-    updates: {},
-  };
-  data.updates[lineItemId] = 0; // Set quantity to 0 to remove the line item
-
-  return fetch("/cart/update.js", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Requested-With": "XMLHttpRequest",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((cart) => {
-      return cart;
-    });
-}
-
-// Function to check if the cart is empty
-function isCartEmpty(cart) {
-  return cart.item_count === 0;
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   // Attach event listener to all buttons with class 'button--tertiary'
   var removeItemButtons = document.querySelectorAll(".button--tertiary");
@@ -67,7 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isCartEmptyFlag) {
           alert("Cart is now empty!");
-          // You can redirect to a different page or handle it as needed
+          // Introduce a delay before refreshing the page
+          setTimeout(function () {
+            location.reload(true); // Reload the page
+          }, 1000); // Adjust the delay time (in milliseconds) as needed
         } else {
           // Do something else, maybe update the UI
           console.log("All line items removed successfully");
@@ -86,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
