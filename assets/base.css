@@ -3593,13 +3593,13 @@ body#classic-leather-jacket-product-1 p#custom_dropdown {
 
 /* Default styling */
 .product-form__input input[type=radio]+label {
-    background-color: transparent;
+    background-color: transparent !important;
     color: initial; /* or your default text color */
 }
 
 /* Styling for checked radio button with active class for the first item */
 .product-form__input input[type=radio]:checked:nth-of-type(1)+label.active {
-    background-color: #121212 !important;
+    background-color: #000 !important;
 }
 
 /* Styling for checked radio button with active class for the second item */
