@@ -6,64 +6,56 @@ function getFocusableElements(container) {
   );
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Attach event listener to all buttons with class 'button--tertiary'
-  var removeItemButtons = document.querySelectorAll(".button--tertiary");
+document.addEventListener('DOMContentLoaded', function () {
+    // Function to remove a line item
+    function removeLineItem(cartId, lineItemId) {
+      var data = {
+        updates: {}
+      };
+      data.updates[lineItemId] = 0; // Set quantity to 0 to remove the line item
 
-  // Function to extract line item ID from the href attribute
-  function extractLineItemIdFromHref(href) {
-    // Extract the line item ID from the href attribute. Modify this based on your href structure.
-    var regex = /id=(\d+:[a-f0-9]+)/;
-    var match = href.match(regex);
-    return match ? match[1] : null;
-  }
-
-  // Function to handle the removal of a line item
-  function removeLineItemAndUpdateCart(cartId, lineItemId) {
-    return removeLineItem(cartId, lineItemId);
-  }
-
-  // Function to handle the removal of items from the cart
-  function removeAllItemsFromCart() {
-    var cartId = "{{ cart.id }}"; // Use Liquid to get the cart ID
-
-    // Use Promise.all to wait for all removal promises to complete
-    Promise.all(
-      Array.from(removeItemButtons).map(function (button) {
-        var lineItemIdToRemove = extractLineItemIdFromHref(
-          button.getAttribute("href")
-        );
-        return removeLineItemAndUpdateCart(cartId, lineItemIdToRemove);
+      return fetch('/cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify(data)
       })
-    )
-      .then((updatedCarts) => {
-        var isCartEmptyFlag = updatedCarts.every((cart) => isCartEmpty(cart));
-
-        if (isCartEmptyFlag) {
-          alert("Cart is now empty!");
-          // Introduce a delay before refreshing the page
-          setTimeout(function () {
-            location.reload(true); // Reload the page
-          }, 1000); // Adjust the delay time (in milliseconds) as needed
-        } else {
-          // Do something else, maybe update the UI
-          console.log("All line items removed successfully");
-        }
-      })
-      .catch((error) => {
-        console.error("Error removing line items", error);
+      .then(response => response.json())
+      .then(cart => {
+        return cart;
       });
-  }
+    }
 
-  // Attach event listener to handle removal of all items
-  removeItemButtons.forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      event.preventDefault(); // Prevent the default behavior of the anchor tag
-      removeAllItemsFromCart();
-    });
+    // Function to check if the cart is empty
+    function isCartEmpty(cart) {
+      return cart.item_count === 0;
+    }
+
+    // Attach event listener to the remove item button
+    var removeItemButton = document.getElementById('removeItemButton');
+    if (removeItemButton) {
+      removeItemButton.addEventListener('click', function () {
+        var cartId = '{{ cart.id }}'; // Use Liquid to get the cart ID
+        var lineItemIdToRemove = 'CartItem-2'; // Replace with the actual line item ID
+
+        removeLineItem(cartId, lineItemIdToRemove)
+          .then(updatedCart => {
+            if (isCartEmpty(updatedCart)) {
+              alert('Cart is now empty!');
+              // You can redirect to a different page or handle it as needed
+            } else {
+              // Do something else, maybe update the UI
+              console.log('Line item removed successfully');
+            }
+          })
+          .catch(error => {
+            console.error('Error removing line item', error);
+          });
+      });
+    }
   });
-});
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
