@@ -6,7 +6,7 @@ function getFocusableElements(container) {
   );
 }
 
-/ Function to remove a line item
+// Function to remove a line item
 function removeLineItem(cartId, lineItemId) {
   var data = {
     updates: {},
