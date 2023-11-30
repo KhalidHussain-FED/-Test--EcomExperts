@@ -1,63 +1,65 @@
 window.onload = function () {
-    const qualifyingProductVariantId = 44173477609626;
-    const freeProductVariantId = 44158968135834;
+        const qualifyingProductVariantId = 44173477609626;
+        const freeProductVariantId = 44158968135834;
 
-    // Attach the checkAndRemove function to a button click event
-    const removeButton = document.querySelector('.button--tertiary');
+        // Attach the checkAndRemove function to a button click event
+        const removeButton = document.querySelector('.button--tertiary');
 
-    if (removeButton) {
-        removeButton.addEventListener('click', checkAndRemove);
-    } else {
-        console.error("Button with class 'button--tertiary' not found.");
-    }
+        if (removeButton) {
+            removeButton.addEventListener('click', checkAndRemove);
+        } else {
+            console.error("Button with class 'button--tertiary' not found.");
+        }
 
-    function checkAndRemove() {
-        isProductInCart(qualifyingProductVariantId)
-            .then(cartContainsQualifyingProduct => {
+        async function checkAndRemove() {
+            try {
+                const cartContainsQualifyingProduct = await isProductInCart(qualifyingProductVariantId);
+
                 // If the qualifying product is not in the cart, remove the associated free product
                 if (!cartContainsQualifyingProduct) {
-                    removeFreeProduct();
+                    await removeFreeProduct();
+                    // Reload the page or handle the UI update as needed
                 }
-            })
-            .catch(error => {
-                console.error('Error checking cart items:', error);
-            });
-    }
-
-    function isProductInCart(productId) {
-        // Assuming you have a function to check if the product is in the cart
-        return new Promise((resolve) => {
-            // Replace the following line with your actual logic
-            const productInCart = checkProductInCart(productId);
-            resolve(productInCart);
-        });
-    }
-
-    function removeFreeProduct() {
-        // Create a new XMLHttpRequest
-        const xhr = new XMLHttpRequest();
-
-        // Set up a DELETE request to the server endpoint for removing the free product
-        xhr.open('DELETE', '/cart/remove.json', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        // Define the data to be sent in the request body
-        const data = JSON.stringify({ id: freeProductVariantId });
-
-        // Set up a callback function to handle the response
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                // Reload the page upon successful request
-                window.location.reload();
-            } else {
-                console.error('Failed to remove free product from the cart.');
+            } catch (error) {
+                console.error('Error checking or removing product from cart:', error);
             }
-        };
+        }
 
-        // Send the request with the data
-        xhr.send(data);
-    }
-};
+        async function isProductInCart(productId) {
+            try {
+                const response = await fetch(`/cart.js`);
+                const cartData = await response.json();
+
+                // Check if the product is in the cart
+                return cartData.items.some(item => item.variant_id === productId);
+            } catch (error) {
+                console.error('Error fetching cart data:', error);
+                throw error;
+            }
+        }
+
+        async function removeFreeProduct() {
+            try {
+                const response = await fetch(`/cart/change.js`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: freeProductVariantId,
+                        quantity: 0, // Set quantity to 0 to remove the item
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to remove free product from the cart.');
+                }
+            } catch (error) {
+                console.error('Error removing free product from the cart:', error);
+                throw error;
+            }
+        }
+    };
 
 
 function getFocusableElements(container) {
