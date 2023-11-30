@@ -1,25 +1,43 @@
- window.onload = function(){
+window.onload = function () {
     let cartContainsFreeProduct = false;
     let cartContainsQualifyingProduct = false;
 
     const qualifyingProductVariantId = 44173477609626;
     const freeProductVariantId = 44158968135834;
-   
-      if(qualifyingProductVariantId === freeProductVariantId){
+
+    if (qualifyingProductVariantId === freeProductVariantId) {
         cartContainsFreeProduct = true;
-      }
-      if(qualifyingProductVariantId === qualifyingProductVariantId){
-         cartContainsQualifyingProduct = true;
-      }
+    }
+    if (qualifyingProductVariantId === qualifyingProductVariantId) {
+        cartContainsQualifyingProduct = true;
+    }
 
-//  If cart contains qualifying product and doesn't already contain free product, add qty 1 of free product
-    if(cartContainsQualifyingProduct && cartContainsFreeProduct === false) {
+    // Check if cart contains qualifying product and doesn't already contain free product
+    if (cartContainsQualifyingProduct && !cartContainsFreeProduct) {
+        // Create a new XMLHttpRequest
+        const xhr = new XMLHttpRequest();
 
-      jQuery.post('/cart/add.json', { quantity: 1, id: freeProductVariantId })
-      .done(function() {window.location.reload()})
+        // Set up a POST request to the server endpoint
+        xhr.open('POST', '/cart/add.json', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
-     }
-  }
+        // Define the data to be sent in the request body
+        const data = JSON.stringify({ quantity: 1, id: freeProductVariantId });
+
+        // Set up a callback function to handle the response
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Reload the page upon successful request
+                window.location.reload();
+            } else {
+                console.error('Failed to add free product to the cart.');
+            }
+        };
+
+        // Send the request with the data
+        xhr.send(data);
+    }
+};
 
 
 function getFocusableElements(container) {
