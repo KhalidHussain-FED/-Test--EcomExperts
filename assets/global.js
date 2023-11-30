@@ -7,9 +7,9 @@ window.onload = function () {
     const qualifyingProductVariantId = 44173477609626;
     const freeProductVariantId = 44158968135834;
 
-    // Assuming you have access to cart items in a JavaScript array named 'cartItems'
-    // Replace 'cartItems' with your actual array containing cart items
-    cartItems.forEach(function (item) {
+    // Assuming you have access to the cart items in a JavaScript array named 'cart.items'
+    // Replace 'cart.items' with your actual array containing cart items
+    cart.items.forEach(function (item) {
         if (item.id === freeProductVariantId) {
             cartContainsFreeProduct = true;
         }
@@ -25,6 +25,7 @@ window.onload = function () {
             .done(function () { window.location.reload(); });
     }
 };
+
 
 
 
