@@ -1,3 +1,32 @@
+window.onload = function () {
+    // Initialize variables to check if the cart contains a free product and a qualifying product
+    let cartContainsFreeProduct = false;
+    let cartContainsQualifyingProduct = false;
+
+    // Define the variant IDs for the qualifying and free products
+    const qualifyingProductVariantId = 44173477609626;
+    const freeProductVariantId = 44158968135834;
+
+    // Assuming you have access to cart items in a JavaScript array named 'cartItems'
+    // Replace 'cartItems' with your actual array containing cart items
+    cartItems.forEach(function (item) {
+        if (item.id === freeProductVariantId) {
+            cartContainsFreeProduct = true;
+        }
+        if (item.id === qualifyingProductVariantId) {
+            cartContainsQualifyingProduct = true;
+        }
+    });
+
+    // If the cart contains the qualifying product and doesn't already contain the free product, add 1 quantity of the free product
+    if (cartContainsQualifyingProduct && !cartContainsFreeProduct) {
+        // Assuming jQuery is available
+        jQuery.post('/cart/add.json', { quantity: 1, id: freeProductVariantId })
+            .done(function () { window.location.reload(); });
+    }
+};
+
+
 
 function getFocusableElements(container) {
   return Array.from(
