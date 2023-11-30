@@ -68,65 +68,8 @@
                    // Set the generated unique ID to the body tag
                    document.body.id = generateUniqueFixedId(getPageName());
 
-
-        document.body.addEventListener('click', function(event) {
-      if (event.target.classList.contains('drawer-add')) {
-        event.preventDefault();
-
-        const currentPageHTML = document.documentElement;
-        console.log('we added ');
-
-        const xhr1 = new XMLHttpRequest();
-        xhr1.open('POST', '/cart/add', true);
-        xhr1.setRequestHeader('Content-Type', 'application/json');
-
-        xhr1.onreadystatechange = function() {
-          if (xhr1.readyState === 4 && xhr1.status === 200) {
-            const xhr2 = new XMLHttpRequest();
-            xhr2.open('GET', window.location.href, true);
-
-            xhr2.onreadystatechange = function() {
-              if (xhr2.readyState === 4 && xhr2.status === 200) {
-                const responseHTML = document.createElement('html');
-                responseHTML.innerHTML = xhr2.responseText;
-
-                const cartCountBubble = responseHTML.querySelector('.cart-count-bubble');
-                const cartItems = responseHTML.querySelector('.cart-items');
-                const drawerFooter = responseHTML.querySelector('.drawer_footer');
-
-                document.querySelector('.cart-count-bubble').innerHTML = cartCountBubble.innerHTML;
-                document.querySelector('.cart-items').innerHTML = cartItems.innerHTML;
-                document.querySelector('.drawer_footer').innerHTML = drawerFooter.innerHTML;
-
-                // Check if the cart is empty
-                const isCartEmpty = responseHTML.querySelector('.cart-empty-message');
-                if (isCartEmpty) {
-                  // Redirect to the cart empty page
-                  window.location.href = '/cart/empty';
-                }
-              }
-            };
-
-            xhr2.send();
-          }
-        };
-
-        const dpId = event.target.getAttribute('data-dp_id');
-        const data = JSON.stringify({ id: dpId, quantity: 1 });
-
-        xhr1.send(data);
       }
     });
-
-    document.addEventListener('DOMContentLoaded', () => {
-    const sizeDropdown = document.getElementById('custom-input--size');
-    const selectedSizeElement = document.getElementById('selected-size');
-
-    sizeDropdown.addEventListener('change', () => {
-      const selectedSize = sizeDropdown.value;
-      selectedSizeElement.textContent = `Selected Size: ${selectedSize}`;
-    });
-  });
   </script>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
