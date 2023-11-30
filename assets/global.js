@@ -1,27 +1,29 @@
- window.onload = function(){
+window.onload = function(){
+    // Initialize variables to check if the cart contains a free product and a qualifying product
     let cartContainsFreeProduct = false;
     let cartContainsQualifyingProduct = false;
 
+    // Define the variant IDs for the qualifying and free products
     const qualifyingProductVariantId = 44173477609626;
     const freeProductVariantId = 44158968135834;
 
+    // Loop through items in the cart to check for the presence of the qualifying and free products
     {% for item in cart.items %}
-      if({{ item.id }} === freeProductVariantId){
-        cartContainsFreeProduct = true;
-      }
-      if({{ item.id }} === qualifyingProductVariantId){
-         cartContainsQualifyingProduct = true;
-      }
+        if({{ item.id }} === freeProductVariantId){
+            cartContainsFreeProduct = true;
+        }
+        if({{ item.id }} === qualifyingProductVariantId){
+            cartContainsQualifyingProduct = true;
+        }
     {% endfor %}
 
-//  If cart contains qualifying product and doesn't already contain free product, add qty 1 of free product
-    if(cartContainsQualifyingProduct && cartContainsFreeProduct === false) {
+    // If the cart contains the qualifying product and doesn't already contain the free product, add 1 quantity of the free product
+    if(cartContainsQualifyingProduct && !cartContainsFreeProduct) {
+        jQuery.post('/cart/add.json', { quantity: 1, id: freeProductVariantId })
+            .done(function() { window.location.reload(); });
+    }
+}
 
-      jQuery.post('/cart/add.json', { quantity: 1, id: freeProductVariantId })
-      .done(function() {window.location.reload()})
-
-     }
-  }
 
 
 function getFocusableElements(container) {
