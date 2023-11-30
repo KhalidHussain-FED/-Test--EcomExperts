@@ -69,6 +69,50 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+var removeItemButtons = document.querySelectorAll(".button--tertiary");
+
+// Function to handle the removal of a line item
+function removeLineItemAndUpdateCart(cartId, lineItemId) {
+  return removeLineItem(cartId, lineItemId);
+}
+
+// Function to handle the removal of items from the cart
+function removeAllItemsFromCart() {
+  var cartId = "{{ cart.id }}"; // Use Liquid to get the cart ID
+
+  // Use Promise.all to wait for all removal promises to complete
+  Promise.all(
+    Array.from(removeItemButtons).map(function (button) {
+      var lineItemIdToRemove = extractLineItemIdFromHref(
+        button.getAttribute("href")
+      );
+      return removeLineItemAndUpdateCart(cartId, lineItemIdToRemove);
+    })
+  )
+    .then((updatedCarts) => {
+      var isCartEmptyFlag = updatedCarts.every((cart) => isCartEmpty(cart));
+
+      if (isCartEmptyFlag) {
+        alert("Cart is now empty!");
+        // You can redirect to a different page or handle it as needed
+      } else {
+        // Do something else, maybe update the UI
+        console.log("All line items removed successfully");
+      }
+    })
+    .catch((error) => {
+      console.error("Error removing line items", error);
+    });
+}
+
+// Attach event listener to handle removal of all items
+removeItemButtons.forEach(function (button) {
+  button.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default behavior of the anchor tag
+    removeAllItemsFromCart();
+  });
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   // Check if the current body has the specific ID
   if (document.body.id === "classic-leather-jacket-product-1") {
