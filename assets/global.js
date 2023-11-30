@@ -17,9 +17,9 @@
 
     // Check if cart contains qualifying or free product
     cartitems.forEach(function (item) {
-        if (item.id === freeProductVariantId) {
-            cartContainsFreeProduct = true;
-        }
+        // if (item.id === freeProductVariantId) {
+        //     cartContainsFreeProduct = true;
+        // }
         if (item.id === qualifyingProductVariantId) {
             cartContainsQualifyingProduct = true;
         }
