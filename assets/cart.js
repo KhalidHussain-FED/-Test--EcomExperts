@@ -1,22 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
-  var removeButtons = document.querySelectorAll('[data-index^="Remove-"]');
-  removeButtons.forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      event.preventDefault();
-      var index = button.getAttribute("data-index").replace("Remove-", "");
-      var correspondingItem = document.getElementById("CartItem-" + index);
-      if (correspondingItem) {
-        correspondingItem.remove();
-        console.log("Item removed:", index);
-      }
-      var cartItems = document.querySelectorAll(".cart-item");
-      if (cartItems.length === 0) {
-        document.getElementById("cart").reset();
-        console.log("Cart is empty. Form reset.");
-      }
-    });
-  });
-});
+
 
 class CartRemoveButton extends HTMLElement {
   constructor() {
@@ -29,7 +11,8 @@ class CartRemoveButton extends HTMLElement {
 
       // Check if the cartItems element and the updateQuantity method exist
       if (cartItems && cartItems.updateQuantity) {
-        cartItems.updateQuantity(this.dataset.index, 0);
+        console.log(this.dataset.index);
+        //cartItems.updateQuantity(this.dataset.index, 0);
       } else {
         console.error("CartItems element or updateQuantity method not found.");
       }
