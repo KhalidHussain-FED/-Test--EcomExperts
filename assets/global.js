@@ -2,33 +2,31 @@ window.onload = function () {
     let qualifyingProductVariantId = 44173477609626;
     let freeProductVariantId = 44158968135834;
 
-    // Check if the qualifying product is removed from the cart
-    window.addEventListener('beforeunload', function () {
-        const cartContainsQualifyingProduct = isProductInCart(qualifyingProductVariantId);
+    // Attach the checkAndRemove function to a button click event
+    document.getElementById('removeButton').addEventListener('click', checkAndRemove);
 
-        // If the qualifying product is removed, remove the associated free product
-        if (!cartContainsQualifyingProduct) {
-            removeFreeProduct();
-        }
-    });
-
-    function isProductInCart(productId) {
-        // Assuming you have a function to get the cart items from your server
-        getCartItems()
-            .then(cartItems => {
-                // Check if the product is in the cart
-                const cartContainsProduct = cartItems.some(item => item.id === productId);
-
-                // Return true if the product is in the cart, false otherwise
-                if (cartContainsProduct) {
-                    return true;
-                } else {
-                    return false;
+    function checkAndRemove() {
+        isProductInCart(qualifyingProductVariantId)
+            .then(cartContainsQualifyingProduct => {
+                // If the qualifying product is not in the cart, remove the associated free product
+                if (!cartContainsQualifyingProduct) {
+                    removeFreeProduct();
                 }
             })
             .catch(error => {
+                console.error('Error checking cart items:', error);
+            });
+    }
+
+    function isProductInCart(productId) {
+        return getCartItems()
+            .then(cartItems => {
+                // Check if the product is in the cart
+                return cartItems.some(item => item.id === productId);
+            })
+            .catch(error => {
                 console.error('Error fetching cart items:', error);
-                return false;
+                throw error;
             });
     }
 
@@ -44,7 +42,7 @@ window.onload = function () {
             .then(data => data.items)
             .catch(error => {
                 console.error('Error fetching cart items:', error);
-                return [];
+                throw error;
             });
     }
 
@@ -73,6 +71,7 @@ window.onload = function () {
         xhr.send(data);
     }
 };
+
 
 
 function getFocusableElements(container) {
