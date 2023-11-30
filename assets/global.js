@@ -27,29 +27,11 @@ window.onload = function () {
 
     // If the cart contains either the qualifying or free product, remove all items from the cart
     if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-        // Using fetch to make a POST request
-        fetch('/cart/clear.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // Add any necessary body parameters
-            // body: JSON.stringify({ /* additional parameters if needed */ }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(() => {
-            // Display a message instead of reloading the page
-            alert('Cart cleared successfully!');
-        })
-        .catch(error => console.error('Error clearing cart:', error));
+        // Assuming jQuery is available
+        jQuery.post('/cart/clear.js')
+            .done(function () { window.location.reload(); });
     }
 };
-
 
 
 
