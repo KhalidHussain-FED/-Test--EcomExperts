@@ -1,65 +1,27 @@
-window.onload = function () {
-        const qualifyingProductVariantId = 44173477609626;
-        const freeProductVariantId = 44158968135834;
+ window.onload = function(){
+    let cartContainsFreeProduct = false;
+    let cartContainsQualifyingProduct = false;
 
-        // Attach the checkAndRemove function to a button click event
-        const removeButton = document.querySelector('.button--tertiary');
+    const qualifyingProductVariantId = 44173477609626;
+    const freeProductVariantId = 44158968135834;
 
-        if (removeButton) {
-            removeButton.addEventListener('click', checkAndRemove);
-        } else {
-            console.error("Button with class 'button--tertiary' not found.");
-        }
+    {% for item in cart.items %}
+      if({{ item.id }} === freeProductVariantId){
+        cartContainsFreeProduct = true;
+      }
+      if({{ item.id }} === qualifyingProductVariantId){
+         cartContainsQualifyingProduct = true;
+      }
+    {% endfor %}
 
-        async function checkAndRemove() {
-            try {
-                const cartContainsQualifyingProduct = await isProductInCart(qualifyingProductVariantId);
+//  If cart contains qualifying product and doesn't already contain free product, add qty 1 of free product
+    if(cartContainsQualifyingProduct && cartContainsFreeProduct === false) {
 
-                // If the qualifying product is not in the cart, remove the associated free product
-                if (!cartContainsQualifyingProduct) {
-                    await removeFreeProduct();
-                    // Reload the page or handle the UI update as needed
-                }
-            } catch (error) {
-                console.error('Error checking or removing product from cart:', error);
-            }
-        }
+      jQuery.post('/cart/add.json', { quantity: 1, id: freeProductVariantId })
+      .done(function() {window.location.reload()})
 
-        async function isProductInCart(productId) {
-            try {
-                const response = await fetch(`/cart.js`);
-                const cartData = await response.json();
-
-                // Check if the product is in the cart
-                return cartData.items.some(item => item.variant_id === productId);
-            } catch (error) {
-                console.error('Error fetching cart data:', error);
-                throw error;
-            }
-        }
-
-        async function removeFreeProduct() {
-            try {
-                const response = await fetch(`/cart/change.js`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        id: freeProductVariantId,
-                        quantity: 0, // Set quantity to 0 to remove the item
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to remove free product from the cart.');
-                }
-            } catch (error) {
-                console.error('Error removing free product from the cart:', error);
-                throw error;
-            }
-        }
-    };
+     }
+  }
 
 
 function getFocusableElements(container) {
