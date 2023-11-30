@@ -6,62 +6,9 @@ function getFocusableElements(container) {
   );
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Function to remove a line item
-  function removeLineItem(cartId, lineItemId) {
-    var data = {
-      updates: {},
-    };
-    data.updates[lineItemId] = 0; // Set quantity to 0 to remove the line item
-
-    return fetch("/cart/update.js", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((cart) => {
-        return cart;
-      });
-  }
-
-  // Function to check if the cart is empty
-  function isCartEmpty(cart) {
-    return cart.item_count === 0;
-  }
-
-  // Attach event listener to all buttons with class 'button--tertiary'
-  var removeItemButtons = document.querySelectorAll(".button--tertiary");
-  removeItemButtons.forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      event.preventDefault(); // Prevent the default behavior of the anchor tag
-
-      var cartId = "{{ cart.id }}"; // Use Liquid to get the cart ID
-      var lineItemIdToRemove = extractLineItemIdFromHref(
-        button.getAttribute("href")
-      );
-
-      removeLineItem(cartId, lineItemIdToRemove)
-        .then((updatedCart) => {
-          if (isCartEmpty(updatedCart)) {
-            alert("Cart is now empty!");
-            // You can redirect to a different page or handle it as needed
-          } else {
-            // Do something else, maybe update the UI
-            console.log("Line item removed successfully");
-          }
-        })
-        .catch((error) => {
-          console.error("Error removing line item", error);
-        });
-    });
-  });
 
   // Function to extract line item ID from the href attribute
-  function extractLineItemIdFromHref(href) {
+function extractLineItemIdFromHref(href) {
     // Extract the line item ID from the href attribute. Modify this based on your href structure.
     var regex = /id=(\d+:[a-f0-9]+)/;
     var match = href.match(regex);
