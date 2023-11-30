@@ -8,10 +8,10 @@ function getFocusableElements(container) {
 
 
   document.addEventListener('DOMContentLoaded', function () {
-    var button = document.querySelector('.button--tertiary');
+    var buttons = document.getElementsByClassName('button--tertiary');
 
-    if (button) {
-      button.addEventListener('click', function (e) {
+    if (buttons.length > 0) {
+      buttons[0].addEventListener('click', function (e) {
         e.preventDefault();
 
         fetch('/cart/clear.js', {
@@ -37,6 +37,7 @@ function getFocusableElements(container) {
       console.error('Element with class "button--tertiary" not found.');
     }
   });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
