@@ -45,9 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function to handle the removal of a line item
-  //function removeLineItemAndUpdateCart(cartId, lineItemId) {
-    // return removeLineItem(cartId, lineItemId);
-  // }
+  function removeLineItemAndUpdateCart(cartId, lineItemId) {
+     return removeLineItem(cartId, lineItemId);
+   }
 
   // Function to handle the removal of items from the cart
   function removeAllItemsFromCart() {
