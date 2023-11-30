@@ -10,28 +10,32 @@ function getFocusableElements(container) {
   document.addEventListener('DOMContentLoaded', function () {
     var button = document.querySelector('.button.button--tertiary');
 
-    button.addEventListener('click', function (e) {
-      e.preventDefault();
+    if (button) {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
 
-      fetch('/cart/clear.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(function (response) {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
+        fetch('/cart/clear.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         })
-        .then(function (data) {
-          alert('You cleared the cart!');
-        })
-        .catch(function (error) {
-          console.error('There was a problem with the fetch operation:', error.message);
-        });
-    });
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(function (data) {
+            alert('You cleared the cart!');
+          })
+          .catch(function (error) {
+            console.error('There was a problem with the fetch operation:', error.message);
+          });
+      });
+    } else {
+      console.error('Element with class "button--tertiary" not found.');
+    }
   });
 
 
