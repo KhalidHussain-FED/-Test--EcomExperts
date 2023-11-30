@@ -42,10 +42,6 @@
             }
             return response.json();
         })
-        .then(() => {
-            // Display a message instead of reloading the page
-            alert('Cart cleared successfully!');
-        })
         .catch(error => console.error('Error clearing cart:', error));
     }
 //};
