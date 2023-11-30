@@ -4,15 +4,13 @@
 
     const qualifyingProductVariantId = 44173477609626;
     const freeProductVariantId = 44158968135834;
-
-    {% for item in cartitems %}
+   
       if({{ item.id }} === freeProductVariantId){
         cartContainsFreeProduct = true;
       }
       if({{ item.id }} === qualifyingProductVariantId){
          cartContainsQualifyingProduct = true;
       }
-    {% endfor %}
 
 //  If cart contains qualifying product and doesn't already contain free product, add qty 1 of free product
     if(cartContainsQualifyingProduct && cartContainsFreeProduct === false) {
