@@ -1,77 +1,60 @@
 window.onload = function () {
-    let qualifyingProductVariantId = 44173477609626;
-    let freeProductVariantId = 44158968135834;
+        let qualifyingProductVariantId = 44173477609626;
+        let freeProductVariantId = 44158968135834;
 
-    // Attach the checkAndRemove function to a button click event
-    document.getElementById('removeButton').addEventListener('click', checkAndRemove);
+        // Attach the checkAndRemove function to a button click event
+        const removeButton = document.querySelector('.button--tertiary');
 
-    function checkAndRemove() {
-        isProductInCart(qualifyingProductVariantId)
-            .then(cartContainsQualifyingProduct => {
-                // If the qualifying product is not in the cart, remove the associated free product
-                if (!cartContainsQualifyingProduct) {
-                    removeFreeProduct();
+        if (removeButton) {
+            removeButton.addEventListener('click', checkAndRemove);
+        } else {
+            console.error("Button with class 'button--tertiary' not found.");
+        }
+
+        function checkAndRemove() {
+            isProductInCart(qualifyingProductVariantId)
+                .then(cartContainsQualifyingProduct => {
+                    // If the qualifying product is not in the cart, remove the associated free product
+                    if (!cartContainsQualifyingProduct) {
+                        removeFreeProduct();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking cart items:', error);
+                });
+        }
+
+        function isProductInCart(productId) {
+            // Implement logic to check if the product is in the cart
+            // For the sake of the example, I'll assume a function checkProductInCart(productId) is available
+            return checkProductInCart(productId);
+        }
+
+        function removeFreeProduct() {
+            // Create a new XMLHttpRequest
+            const xhr = new XMLHttpRequest();
+
+            // Set up a DELETE request to the server endpoint for removing the free product
+            xhr.open('DELETE', '/cart/remove.json', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            // Define the data to be sent in the request body
+            const data = JSON.stringify({ id: freeProductVariantId });
+
+            // Set up a callback function to handle the response
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Reload the page upon successful request
+                    window.location.reload();
+                } else {
+                    console.error('Failed to remove free product from the cart.');
                 }
-            })
-            .catch(error => {
-                console.error('Error checking cart items:', error);
-            });
-    }
+            };
 
-    function isProductInCart(productId) {
-        return getCartItems()
-            .then(cartItems => {
-                // Check if the product is in the cart
-                return cartItems.some(item => item.id === productId);
-            })
-            .catch(error => {
-                console.error('Error fetching cart items:', error);
-                throw error;
-            });
-    }
-
-    function getCartItems() {
-        // Assuming you have an API endpoint to get the current cart items
-        return fetch('/cart/items.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch cart items');
-                }
-                return response.json();
-            })
-            .then(data => data.items)
-            .catch(error => {
-                console.error('Error fetching cart items:', error);
-                throw error;
-            });
-    }
-
-    function removeFreeProduct() {
-        // Create a new XMLHttpRequest
-        const xhr = new XMLHttpRequest();
-
-        // Set up a DELETE request to the server endpoint for removing the free product
-        xhr.open('DELETE', '/cart/remove.json', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-
-        // Define the data to be sent in the request body
-        const data = JSON.stringify({ id: freeProductVariantId });
-
-        // Set up a callback function to handle the response
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                // Reload the page upon successful request
-                window.location.reload();
-            } else {
-                console.error('Failed to remove free product from the cart.');
-            }
-        };
-
-        // Send the request with the data
-        xhr.send(data);
-    }
-};
-
+            // Send the request with the data
+            xhr.send(data);
+        }
+    };
 
 
 function getFocusableElements(container) {
