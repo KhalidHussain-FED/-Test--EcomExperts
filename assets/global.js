@@ -7,8 +7,8 @@ window.onload = function () {
     const qualifyingProductVariantId = 44173477609626;
     const freeProductVariantId = 44158968135834;
 
-    // Assuming you have access to the cart items in a JavaScript array named 'cart.items'
-    // Replace 'cart.items' with your actual array containing cart items
+    // Assuming you have access to the cart items in a JavaScript array named 'cartitems'
+    // Replace 'cartitems' with your actual array containing cart items
     cartitems.forEach(function (item) {
         if (item.id === freeProductVariantId) {
             cartContainsFreeProduct = true;
@@ -18,13 +18,14 @@ window.onload = function () {
         }
     });
 
-    // If the cart contains the qualifying product and doesn't already contain the free product, add 1 quantity of the free product
-    if (cartContainsQualifyingProduct && !cartContainsFreeProduct) {
+    // If the cart contains either the qualifying or free product, remove all items from the cart
+    if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
         // Assuming jQuery is available
-        jQuery.post('/cart/add.json', { quantity: 1, id: freeProductVariantId })
+        jQuery.post('/cart/clear.js')
             .done(function () { window.location.reload(); });
     }
 };
+
 
 
 
