@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var isCartEmptyFlag = updatedCarts.every((cart) => isCartEmpty(cart));
 
         if (isCartEmptyFlag) {
-          alert("Cart is now empty!");
+        //  alert("Cart is now empty!");
           window.location.href = "/cart"; // Redirect to empty cart page
         } else {
           // Do something else, maybe update the UI
