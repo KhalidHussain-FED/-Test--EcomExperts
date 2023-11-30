@@ -8,7 +8,7 @@ function getFocusableElements(container) {
 
 
   document.addEventListener('DOMContentLoaded', function () {
-    var button = document.querySelector('.button.button--tertiary');
+    var button = document.querySelector('.button--tertiary');
 
     if (button) {
       button.addEventListener('click', function (e) {
