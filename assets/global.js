@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isCartEmptyFlag) {
           alert("Cart is now empty!");
-          // You can redirect to a different page or handle it as needed
+          window.location.href = "/cart"; // Redirect to empty cart page
         } else {
           // Do something else, maybe update the UI
           console.log("All line items removed successfully");
