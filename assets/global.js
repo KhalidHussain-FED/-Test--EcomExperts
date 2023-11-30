@@ -40,7 +40,6 @@
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-                alert("Ok Empty");
             return response.json();
     
         })
