@@ -1,4 +1,4 @@
-window.onload = function () {
+//window.onload = function () {
     // Initialize variables to check if the cart contains a free product and a qualifying product
     let cartContainsFreeProduct = false;
     let cartContainsQualifyingProduct = false;
@@ -48,7 +48,7 @@ window.onload = function () {
         })
         .catch(error => console.error('Error clearing cart:', error));
     }
-};
+//};
 
 
 
