@@ -6,40 +6,6 @@ function getFocusableElements(container) {
   );
 }
 
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var buttons = document.getElementsByClassName('button--tertiary');
-
-    if (buttons.length > 0) {
-      buttons[0].addEventListener('click', function (e) {
-        e.preventDefault();
-
-        fetch('/cart/clear.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then(function (response) {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(function (data) {
-            alert('You cleared the cart!');
-          })
-          .catch(function (error) {
-            console.error('There was a problem with the fetch operation:', error.message);
-          });
-      });
-    } else {
-      console.error('Element with class "button--tertiary" not found.');
-    }
-  });
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
   // Check if the current body has the specific ID
   if (document.body.id === "classic-leather-jacket-product-1") {
