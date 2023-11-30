@@ -1,28 +1,63 @@
 window.onload = function () {
-    let cartContainsFreeProduct = false;
-    let cartContainsQualifyingProduct = false;
+    let qualifyingProductVariantId = 44173477609626;
+    let freeProductVariantId = 44158968135834;
 
-    const qualifyingProductVariantId = 44173477609626;
-    const freeProductVariantId = 44158968135834;
+    // Check if the qualifying product is removed from the cart
+    window.addEventListener('beforeunload', function () {
+        const cartContainsQualifyingProduct = isProductInCart(qualifyingProductVariantId);
 
-    if (qualifyingProductVariantId === freeProductVariantId) {
-        cartContainsFreeProduct = true;
+        // If the qualifying product is removed, remove the associated free product
+        if (!cartContainsQualifyingProduct) {
+            removeFreeProduct();
+        }
+    });
+
+    function isProductInCart(productId) {
+        // Assuming you have a function to get the cart items from your server
+        getCartItems()
+            .then(cartItems => {
+                // Check if the product is in the cart
+                const cartContainsProduct = cartItems.some(item => item.id === productId);
+
+                // Return true if the product is in the cart, false otherwise
+                if (cartContainsProduct) {
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching cart items:', error);
+                return false;
+            });
     }
-    if (qualifyingProductVariantId === qualifyingProductVariantId) {
-        cartContainsQualifyingProduct = true;
+
+    function getCartItems() {
+        // Assuming you have an API endpoint to get the current cart items
+        return fetch('/cart/items.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cart items');
+                }
+                return response.json();
+            })
+            .then(data => data.items)
+            .catch(error => {
+                console.error('Error fetching cart items:', error);
+                return [];
+            });
     }
 
-    // Check if cart contains qualifying product and doesn't already contain free product
-    if (cartContainsQualifyingProduct && !cartContainsFreeProduct) {
+    function removeFreeProduct() {
         // Create a new XMLHttpRequest
         const xhr = new XMLHttpRequest();
 
-        // Set up a POST request to the server endpoint
-        xhr.open('POST', '/cart/add.json', true);
+        // Set up a DELETE request to the server endpoint for removing the free product
+        xhr.open('DELETE', '/cart/remove.json', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         // Define the data to be sent in the request body
-        const data = JSON.stringify({ quantity: 1, id: freeProductVariantId });
+        const data = JSON.stringify({ id: freeProductVariantId });
 
         // Set up a callback function to handle the response
         xhr.onload = function () {
@@ -30,7 +65,7 @@ window.onload = function () {
                 // Reload the page upon successful request
                 window.location.reload();
             } else {
-                console.error('Failed to add free product to the cart.');
+                console.error('Failed to remove free product from the cart.');
             }
         };
 
