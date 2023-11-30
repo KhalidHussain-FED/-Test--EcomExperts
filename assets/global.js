@@ -6,31 +6,6 @@ function getFocusableElements(container) {
   );
 }
 
-  Shopify.Cart = Shopify.Cart || {};
-
-  // Function to remove a specific product from the cart
-  Shopify.Cart.removeProduct = function(productId) {
-    var cart = JSON.parse(localStorage.getItem('cart'));
-
-    // Find and remove the product from the cart
-    var updatedCart = cart.items.filter(function(item) {
-      return item.id !== productId;
-    });
-
-    // Update the cart in local storage and refresh the page
-    localStorage.setItem('cart', JSON.stringify({ items: updatedCart }));
-    location.reload();
-  };
-
-  // Example usage: Remove product with ID '123456789' from the cart
-  // Replace '123456789' with the actual product ID you want to remove
-  Shopify.Cart.removeProduct('44158968135834');
-
-  // Console log for debugging
-  console.log('Script executed. Check the console for any messages.');
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     // Check if the current body has the specific ID
     if (document.body.id === 'classic-leather-jacket-product-1') {
