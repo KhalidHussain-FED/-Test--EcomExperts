@@ -1,28 +1,3 @@
- window.onload = function(){
-    let cartContainsFreeProduct = false;
-    let cartContainsQualifyingProduct = false;
-
-    const qualifyingProductVariantId = **ENTER VARIANT ID OF PRODUCT THAT QUALIFIES FOR FREE PRODUCT**;
-    const freeProductVariantId = **ENTER VARIANT ID OF THE FREE PRODUCT**;
-
-    {% for item in cart.items %}
-      if({{ item.id }} === freeProductVariantId){
-        cartContainsFreeProduct = true;
-      }
-      if({{ item.id }} === qualifyingProductVariantId){
-         cartContainsQualifyingProduct = true;
-      }
-    {% endfor %}
-
-//  If cart contains qualifying product and doesn't already contain free product, add qty 1 of free product
-    if(cartContainsQualifyingProduct && cartContainsFreeProduct === false) {
-
-      jQuery.post('/cart/add.json', { quantity: 1, id: freeProductVariantId })
-      .done(function() {window.location.reload()})
-
-     }
-  }
-
 
 function getFocusableElements(container) {
   return Array.from(
