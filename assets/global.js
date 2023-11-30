@@ -5,10 +5,10 @@
     const qualifyingProductVariantId = 44173477609626;
     const freeProductVariantId = 44158968135834;
    
-      if({{ item.id }} === freeProductVariantId){
+      if(qualifyingProductVariantId === freeProductVariantId){
         cartContainsFreeProduct = true;
       }
-      if({{ item.id }} === qualifyingProductVariantId){
+      if(qualifyingProductVariantId === qualifyingProductVariantId){
          cartContainsQualifyingProduct = true;
       }
 
