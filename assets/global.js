@@ -7,6 +7,20 @@ function getFocusableElements(container) {
 }
 
 
+$(function() {
+  $('.button.button--tertiary"').on('click',function(e){
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: '/cart/clear.js',
+      success: function(){
+        alert('You cleared the cart!');
+      },
+      dataType: 'json'
+    });
+  })
+});
+
 
 document.addEventListener("DOMContentLoaded", function () {
   // Check if the current body has the specific ID
