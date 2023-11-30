@@ -1,8 +1,31 @@
+<!-- discount_product_section.liquid -->
+{% comment %}
+  This section is responsible for displaying the discount product when the main product is added to the cart.
+{% endcomment %}
+
 {% schema %}
   {
-    "name": "Section name",
-    "settings": []
-  }
+  "name": "Discount Product Section",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Discount Percentage",
+      "id": "discount_percentage",
+      "default": "10"
+    },
+    {
+      "type": "product",
+      "label": "Select Discount Product",
+      "id": "discount_product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Product Page"
+    }
+  ]
+}
 {% endschema %}
 
 {% stylesheet %}
@@ -10,3 +33,44 @@
 
 {% javascript %}
 {% endjavascript %}
+
+<div class="discount-product">
+  {% assign discount_product = section.settings.discount_product | product %}
+
+  {% if discount_product %}
+    <p>
+      Buy {{ product.title }} and get {{ discount_product.title }} at {{ section.settings.discount_percentage }}% off!
+    </p>
+  {% endif %}
+</div>
+
+<script>
+  $(document).ready(function() {
+    // Add your JavaScript logic here if needed
+
+    {% if template == 'product' %}
+      $('form[action="/cart/add"]').submit(function(event) {
+        var mainProductId = $('[name="id"]', this).val();
+        var discountProductId = '{{ section.settings.discount_product }}'; // Replace with your actual discount product ID
+        var discountPercentage = '{{ section.settings.discount_percentage }}';
+
+        // Add logic to check if the main product is added to the cart
+        // If true, add the discount product to the cart with the specified discount percentage
+        // Use Shopify AJAX API for adding to the cart
+
+        $.ajax({
+          type: 'POST',
+          url: '/cart/add.js',
+          data: {
+            quantity: 1,
+            id: discountProductId
+          },
+          dataType: 'json',
+          success: function() {
+            // Optionally, you can display a success message or perform other actions
+          }
+        });
+      });
+    {% endif %}
+  });
+</script>
