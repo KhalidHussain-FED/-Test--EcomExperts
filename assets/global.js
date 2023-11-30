@@ -6,47 +6,27 @@ function getFocusableElements(container) {
   );
 }
 
-document.body.addEventListener('click', function (event) {
-  if (event.target.classList.contains('drawer-add')) {
-    event.preventDefault();
-    const currentPageHTML = document.documentElement;
-    console.log('we added');
 
-    const xhr1 = new XMLHttpRequest();
-    xhr1.open('POST', '/cart/add', true);
-    xhr1.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    
-    const data1 = JSON.stringify({
-      id: event.target.getAttribute('data-dp_id'),
-      quantity: 1
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if the current body has the specific ID
+    if (document.body.id === 'classic-leather-jacket-product-1') {
+        var variantSelect = document.getElementById('custom-input--size');
+        var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
 
-    xhr1.onreadystatechange = function () {
-      if (xhr1.readyState === 4 && xhr1.status === 200) {
-        const xhr2 = new XMLHttpRequest();
-        xhr2.open('GET', window.location.href, true);
+        // Function to update button state based on selected index
+        function updateButtonState() {
+            var selectedIndex = variantSelect.selectedIndex;
+            addToCartButton.disabled = selectedIndex === 0;
+        }
 
-        xhr2.onreadystatechange = function () {
-          if (xhr2.readyState === 4) {
-            if (xhr2.status === 200) {
-              const responseHTML = document.createElement('div');
-              responseHTML.innerHTML = xhr2.responseText;
+        // Add a change event listener to the variant select
+        if (variantSelect) {
+            variantSelect.addEventListener('change', updateButtonState);
 
-              document.querySelector('.cart-count-bubble').innerHTML = responseHTML.querySelector('.cart-count-bubble').innerHTML;
-              document.querySelector('.cart-items').innerHTML = responseHTML.querySelector('.cart-items').innerHTML;
-              document.querySelector('.drawer_footer').innerHTML = responseHTML.querySelector('.drawer_footer').innerHTML;
-            } else {
-              console.error('Error:', xhr2.statusText);
-            }
-          }
-        };
-
-        xhr2.send();
-      }
-    };
-
-    xhr1.send(data1);
-  }
+            // Disable button on load if the initial selected index is 0
+            updateButtonState();
+        }
+    }
 });
 
 function getPageName() {
