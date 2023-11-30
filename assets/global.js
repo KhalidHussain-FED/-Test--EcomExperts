@@ -7,9 +7,16 @@ window.onload = function () {
     const qualifyingProductVariantId = 44173477609626;
     const freeProductVariantId = 44158968135834;
 
-    // Assuming you have access to the cart items in a JavaScript array named 'cartitems'
-    // Replace 'cartitems' with your actual array containing cart items
-    cartItems.forEach(function (item) {
+    // Sample cart items for demonstration
+    const cartitems = [
+        { id: 123, /* other properties */ },
+        { id: qualifyingProductVariantId, /* other properties */ },
+        { id: freeProductVariantId, /* other properties */ },
+        // Add more items as needed
+    ];
+
+    // Check if cart contains qualifying or free product
+    cartitems.forEach(function (item) {
         if (item.id === freeProductVariantId) {
             cartContainsFreeProduct = true;
         }
@@ -25,6 +32,7 @@ window.onload = function () {
             .done(function () { window.location.reload(); });
     }
 };
+
 
 
 
