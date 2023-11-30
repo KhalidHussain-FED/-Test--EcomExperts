@@ -7,6 +7,57 @@ function getFocusableElements(container) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Function to remove a line item
+  function removeLineItem(cartId, lineItemId) {
+    var data = {
+      updates: {},
+    };
+    data.updates[lineItemId] = 0; // Set quantity to 0 to remove the line item
+
+    return fetch("/cart/update.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((cart) => {
+        return cart;
+      });
+  }
+
+  // Function to check if the cart is empty
+  function isCartEmpty(cart) {
+    return cart.item_count === 0;
+  }
+
+  // Attach event listener to all buttons with class 'removeItemButton'
+  var removeItemButtons = document.querySelectorAll(".button--tertiary");
+  removeItemButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var cartId = "{{ cart.id }}"; // Use Liquid to get the cart ID
+      var lineItemIdToRemove = button.getAttribute("data-line-item-id");
+
+      removeLineItem(cartId, lineItemIdToRemove)
+        .then((updatedCart) => {
+          if (isCartEmpty(updatedCart)) {
+            alert("Cart is now empty!");
+            // You can redirect to a different page or handle it as needed
+          } else {
+            // Do something else, maybe update the UI
+            console.log("Line item removed successfully");
+          }
+        })
+        .catch((error) => {
+          console.error("Error removing line item", error);
+        });
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
   // Check if the current body has the specific ID
   if (document.body.id === "classic-leather-jacket-product-1") {
     var variantSelect = document.getElementById("custom-input--size");
