@@ -1,4 +1,4 @@
-//window.onload = function () {
+window.onload = function () {
     // Initialize variables to check if the cart contains a free product and a qualifying product
     let cartContainsFreeProduct = false;
     let cartContainsQualifyingProduct = false;
@@ -43,11 +43,12 @@
             return response.json();
         })
         .then(() => {
-            window.location.reload();
+            // Display a message instead of reloading the page
+            alert('Cart cleared successfully!');
         })
         .catch(error => console.error('Error clearing cart:', error));
     }
-//};
+};
 
 
 
