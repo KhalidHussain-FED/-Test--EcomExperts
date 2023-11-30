@@ -9,7 +9,7 @@ window.onload = function () {
 
     // Assuming you have access to the cart items in a JavaScript array named 'cart.items'
     // Replace 'cart.items' with your actual array containing cart items
-    cart.items.forEach(function (item) {
+    cartitems.forEach(function (item) {
         if (item.id === freeProductVariantId) {
             cartContainsFreeProduct = true;
         }
