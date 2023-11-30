@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
 document.addEventListener("DOMContentLoaded", function () {
   // Check if the current body has the specific ID
   if (document.body.id === "classic-leather-jacket-product-1") {
