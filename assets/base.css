@@ -3512,9 +3512,23 @@ details-disclosure > details {
   }
 }
 
-
 #product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
   display: none !important;
+}
+
+/* fieldset.js.product-form__input:nth-of-type(1) select[name="size"] {
+    display: none;
+}
+
+  fieldset.js.product-form__input:nth-of-type(2) label {
+    display: none;
+  }
+ */
+span#selectedColorValue {
+    position: absolute;
+    left: 48px;
+    bottom: 55px;
+    z-index: 9999999;
 }
 
 fieldset.js.product-form__input {
@@ -3522,11 +3536,12 @@ fieldset.js.product-form__input {
 }
 
 
+
 span#selectedSizeValue {
    position: absolute;
    top: 100%;
    left: 48px;
-   z-index: 9999999;
+  z-index: 9999999;
    transform: translate(2px,7px);
 }
 
@@ -3534,33 +3549,62 @@ legend.form__label {
     position: relative;
 }
 
+legend.form__label:before {
+    position: absolute;
+    content: ":";
+    left: 35px;
+    width: 100%;
+    top: -7px;
+    height: 100%;
+    color: #000;
+    font-size: 23px;
+    z-index: 99999999;
+}
+
+
+tr#CartItem-1 .product-option:nth-child(2){
+  display: block !important;
+}
+
+
+td.cart-item__details dl > .product-option:nth-child(2){
+  display:none !important;
+}
+
+fieldset.js.product-form__input nth-child(2){
+ display: none !important;
+}
 
 #variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
   display:none !important;
 }
 
-button#ProductSubmitButton-template--16312456642714__main {
-    border: 2px solid black !important;
-    color: black !important;
+p#custom_dropdown {
+    display: none;
 }
 
-button.shopify-payment-button__button.shopify-payment-button__button--unbranded {
-    background: black !important;
-    color: #fff !important;
+body#classic-leather-jacket-product-1 p#custom_dropdown {
+    display:block
 }
 
+
+/* Default styling */
+.product-form__input input[type=radio]+label {
+    background-color: transparent !important;
+    color: initial; /* or your default text color */
+}
+
+/* Styling for checked radio button with active class for the first item */
 .product-form__input input[type=radio]:checked:nth-of-type(1)+label.active {
     background-color: #000 !important;
 }
 
-
+/* Styling for checked radio button with active class for the second item */
 .product-form__input input[type=radio]:checked:nth-of-type(2)+label.active {
     background-color: #c73f55 !important;
 }
 
-
+/* Styling for checked radio button with active class for the third item */
 .product-form__input input[type=radio]:checked:nth-of-type(3)+label.active {
     background-color: #84491e !important;
 }
-
-
