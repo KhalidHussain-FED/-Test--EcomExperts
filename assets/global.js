@@ -76,10 +76,15 @@ radioButtons.forEach(function(radio) {
  document.addEventListener('DOMContentLoaded', () => {
     const dropdown = document.querySelector("#custom-input--size");
     const submitButton = document.querySelector("#ProductSubmitButton-template--16312456642714__main");
+   const radiobtn = document.querySelector("#template--16312456642714__main-1-2");
 
     dropdown.addEventListener('change', () => {
+      
+      radiobtn.addEventListener('click', () => {
       const selectedIndex = dropdown.selectedIndex;
       submitButton.disabled = selectedIndex === 0;
+        
+    });
     });
 
     const formElement = document.querySelector("#product-form-template--16312456642714__main");
