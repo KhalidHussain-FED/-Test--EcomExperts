@@ -103,6 +103,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const SizeVariant = document.getElementById('size_variant');
+    const displayElement = document.getElementById('selectedColorValue');
+
+    dropdown.addEventListener('change', () => {
+      const selectedSize = SizeVariant.value;
+      displayElement.textContent = `${selectedColor}`;
+    });
+  });
+
+
+
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(
@@ -132,6 +144,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+
+
+
 
 function getPageName() {
   var pathArray = window.location.pathname.split("/");
