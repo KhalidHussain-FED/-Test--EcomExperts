@@ -2,19 +2,15 @@
 let cartContainsFreeProduct = false;
 let cartContainsQualifyingProduct = false;
 
-// Define the variant IDs for the qualifying and free products
 const qualifyingProductVariantId = 44173477675162;
 const freeProductVariantId = 44158968135834;
 
-// Sample cart items for demonstration
 const cartitems = [
   { id: 123 /* other properties */ },
-  { id: qualifyingProductVariantId /* other properties */ },
-  { id: freeProductVariantId /* other properties */ },
-  // Add more items as needed
+  { id: qualifyingProductVariantId },
+  { id: freeProductVariantId },
 ];
 
-// Check if cart contains qualifying or free product
 cartitems.forEach(function (item) {
   if (item.id === freeProductVariantId) {
     cartContainsFreeProduct = true;
@@ -24,15 +20,12 @@ cartitems.forEach(function (item) {
   }
 });
 
-// If the cart contains either the qualifying or free product, remove all items from the cart
 if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-  // Using fetch to make a POST request
   fetch("/cart/clear.js", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    // Add any necessary body parameters
     // body: JSON.stringify({ /* additional parameters if needed */ }),
   })
     .then((response) => {
@@ -44,50 +37,6 @@ if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
     .catch((error) => console.error("Error clearing cart:", error));
 }
 //};
-
-// // Assuming you have a function like this
-// function handleRadioClick(radio) {
-//     // Remove active class from all labels
-//     var labels = document.querySelectorAll('.product-form__input label');
-//     labels.forEach(function(label) {
-//         label.classList.remove('active');
-//     });
-
-//     // Add active class to the checked radio button's label
-//     if (radio.checked) {
-//         var label = radio.nextElementSibling; // Assuming label is the next sibling
-//         label.classList.add('active');
-//     }
-// }
-
-// // Attach the function to each radio button
-// var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
-// radioButtons.forEach(function(radio) {
-//     radio.addEventListener('click', function() {
-//         handleRadioClick(radio);
-//     });
-// });
-
-document.addEventListener("DOMContentLoaded", function () {
-  var variantSelect = document.getElementById("custom-input--size");
-  var addToCartButton = document.querySelector(
-    "#ProductSubmitButton-template--16312456642714__main"
-  );
-
-  // Add a change event listener to the variant select
-  if (variantSelect) {
-    variantSelect.addEventListener("change", function () {
-      // Check the selected index
-      var selectedIndex = variantSelect.selectedIndex;
-
-      // Disable button if selected index is 0
-      addToCartButton.disabled = selectedIndex === 0;
-    });
-
-    // Disable button on load if the initial selected index is 0
-    addToCartButton.disabled = variantSelect.selectedIndex === 0;
-  }
-});
 
 document.addEventListener("DOMContentLoaded", () => {
   const dropdown1 = document.getElementById("custom-input--size");
@@ -131,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Get references to the select and radio elements
+// radio_btn
 var selectElement = document.getElementById("custom-input--size");
 var radioElements = document.querySelectorAll('input[name="Size"]');
 selectElement.addEventListener("change", function () {
@@ -144,15 +93,14 @@ selectElement.addEventListener("change", function () {
   }
 });
 
+//body tag id
 function getPageName() {
   var pathArray = window.location.pathname.split("/");
   var pageName = pathArray[pathArray.length - 1].split(".")[0];
-  return pageName || "home"; // Default to 'home' if no page name is found
+  return pageName || "home";
 }
 
-// Function to generate a unique fixed ID based on the current page name
 function generateUniqueFixedId(pageName) {
-  // Use the specified page name to generate a unique ID
   var uniqueId = "classic-leather-jacket-" + pageName;
 
   return uniqueId;
