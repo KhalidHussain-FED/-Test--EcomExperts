@@ -1,51 +1,49 @@
 //window.onload = function () {
-    let cartContainsFreeProduct = false;
-    let cartContainsQualifyingProduct = false;
+let cartContainsFreeProduct = false;
+let cartContainsQualifyingProduct = false;
 
-    // Define the variant IDs for the qualifying and free products
-    const qualifyingProductVariantId = 44180654653594;
-    const freeProductVariantId = 44158968135834;
+// Define the variant IDs for the qualifying and free products
+const qualifyingProductVariantId = 44180654653594;
+const freeProductVariantId = 44158968135834;
 
-    // Sample cart items for demonstration
-    const cartitems = [
-        { id: 123, /* other properties */ },
-        { id: qualifyingProductVariantId, /* other properties */ },
-        { id: freeProductVariantId, /* other properties */ },
-        // Add more items as needed
-    ];
+// Sample cart items for demonstration
+const cartitems = [
+  { id: 123 /* other properties */ },
+  { id: qualifyingProductVariantId /* other properties */ },
+  { id: freeProductVariantId /* other properties */ },
+  // Add more items as needed
+];
 
-    // Check if cart contains qualifying or free product
-    cartitems.forEach(function (item) {
-        if (item.id === freeProductVariantId) {
-            cartContainsFreeProduct = true;
-        }
-        if (item.id === qualifyingProductVariantId) {
-            cartContainsQualifyingProduct = true;
-        }
-    });
+// Check if cart contains qualifying or free product
+cartitems.forEach(function (item) {
+  if (item.id === freeProductVariantId) {
+    cartContainsFreeProduct = true;
+  }
+  if (item.id === qualifyingProductVariantId) {
+    cartContainsQualifyingProduct = true;
+  }
+});
 
-    // If the cart contains either the qualifying or free product, remove all items from the cart
-    if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-        // Using fetch to make a POST request
-        fetch('/cart/clear.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // Add any necessary body parameters
-            // body: JSON.stringify({ /* additional parameters if needed */ }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-    
-        })
-        .catch(error => console.error('Error clearing cart:', error));
-    }
+// If the cart contains either the qualifying or free product, remove all items from the cart
+if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
+  // Using fetch to make a POST request
+  fetch("/cart/clear.js", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    // Add any necessary body parameters
+    // body: JSON.stringify({ /* additional parameters if needed */ }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .catch((error) => console.error("Error clearing cart:", error));
+}
 //};
-
 
 // // Assuming you have a function like this
 // function handleRadioClick(radio) {
@@ -62,7 +60,6 @@
 //     }
 // }
 
-
 // // Attach the function to each radio button
 // var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
 // radioButtons.forEach(function(radio) {
@@ -71,33 +68,36 @@
 //     });
 // });
 
+document.addEventListener("DOMContentLoaded", function () {
+  var variantSelect = document.getElementById("custom-input--size");
+  var addToCartButton = document.querySelector(
+    "#ProductSubmitButton-template--16312456642714__main"
+  );
 
- document.addEventListener('DOMContentLoaded', function() {
-        var variantSelect = document.getElementById('custom-input--size');
-        var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
-   
-        if (variantSelect) {
-            variantSelect.addEventListener('change', function() {
-                var selectedIndex = variantSelect.selectedIndex;
-                addToCartButton.disabled = selectedIndex === 0;
-            });
-            addToCartButton.disabled = variantSelect.selectedIndex === 0;
-        }
+  // Add a change event listener to the variant select
+  if (variantSelect) {
+    variantSelect.addEventListener("change", function () {
+      // Check the selected index
+      var selectedIndex = variantSelect.selectedIndex;
+
+      // Disable button if selected index is 0
+      addToCartButton.disabled = selectedIndex === 0;
     });
 
+    // Disable button on load if the initial selected index is 0
+    addToCartButton.disabled = variantSelect.selectedIndex === 0;
+  }
+});
 
-document.addEventListener('DOMContentLoaded', () => {
-    const dropdown1 = document.getElementById('custom-input--size');
-    const displayElement = document.getElementById('selectedSizeDisplay');
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown1 = document.getElementById("custom-input--size");
+  const displayElement = document.getElementById("selectedSizeDisplay");
 
-    dropdown1.addEventListener('change', () => {
-      const selectedSize = dropdown1.value;
-      displayElement.textContent = `${selectedSize}`;
-    });
+  dropdown1.addEventListener("change", () => {
+    const selectedSize = dropdown1.value;
+    displayElement.textContent = `${selectedSize}`;
   });
-
-
-
+});
 
 function getFocusableElements(container) {
   return Array.from(
@@ -107,48 +107,42 @@ function getFocusableElements(container) {
   );
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if the current body has the specific ID
-    if (document.body.id === 'classic-leather-jacket-product-1') {
-        var variantSelect = document.getElementById('custom-input--size');
-        var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
+document.addEventListener("DOMContentLoaded", function () {
+  // Check if the current body has the specific ID
+  if (document.body.id === "classic-leather-jacket-product-1") {
+    var variantSelect = document.getElementById("custom-input--size");
+    var addToCartButton = document.querySelector(
+      "#ProductSubmitButton-template--16312456642714__main"
+    );
 
-        // Function to update button state based on selected index
-        function updateButtonState() {
-            var selectedIndex = variantSelect.selectedIndex;
-            addToCartButton.disabled = selectedIndex === 0;
-        }
-
-        // Add a change event listener to the variant select
-        if (variantSelect) {
-            variantSelect.addEventListener('change', updateButtonState);
-
-            // Disable button on load if the initial selected index is 0
-            updateButtonState();
-        }
+    // Function to update button state based on selected index
+    function updateButtonState() {
+      var selectedIndex = variantSelect.selectedIndex;
+      addToCartButton.disabled = selectedIndex === 0;
     }
-});
 
+    // Add a change event listener to the variant select
+    if (variantSelect) {
+      variantSelect.addEventListener("change", updateButtonState);
+
+      // Disable button on load if the initial selected index is 0
+      updateButtonState();
+    }
+  }
+});
 
 // Get references to the select and radio elements
-var selectElement = document.getElementById('custom-input--size');
+var selectElement = document.getElementById("custom-input--size");
 var radioElements = document.querySelectorAll('input[name="Size"]');
-selectElement.addEventListener('change', function () {
-    var selectedValue = selectElement.value;
-    var matchingRadio = Array.from(radioElements).find(function (radio) {
-        return radio.value === selectedValue;
-    });
-    if (matchingRadio) {
-        matchingRadio.checked = true;
-    }
+selectElement.addEventListener("change", function () {
+  var selectedValue = selectElement.value;
+  var matchingRadio = Array.from(radioElements).find(function (radio) {
+    return radio.value === selectedValue;
+  });
+  if (matchingRadio) {
+    matchingRadio.checked = true;
+  }
 });
-
-
-
-
-
-
-
 
 function getPageName() {
   var pathArray = window.location.pathname.split("/");
