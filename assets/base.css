@@ -3567,6 +3567,11 @@ fieldset.js.product-form__input nth-child(2){
 
 
 button#ProductSubmitButton-template--16312456642714__main {
-    border: 2px solid #121212 !important;
-    color: #121212;
+    border: 2px solid black !important;
+    color: black !important;
+}
+
+button.shopify-payment-button__button.shopify-payment-button__button--unbranded {
+    background: black !important;
+    color: #fff !important;
 }
