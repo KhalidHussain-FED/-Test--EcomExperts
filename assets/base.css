@@ -3526,3 +3526,8 @@ span#selectedColorValue {
     bottom: 55px;
     z-index: 9999999;
 }
+
+
+fieldset.js.product-form__input {
+    position:relative;
+}
