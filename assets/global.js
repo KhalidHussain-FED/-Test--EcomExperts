@@ -89,7 +89,7 @@ radioButtons.forEach(function(radio) {
             });
 
             // Disable button on load if the initial selected index is 0
-            addToCartButton.disabled = variantSelect.selectedIndex === 0;
+            // addToCartButton.disabled = variantSelect.selectedIndex === 0;
        // }
     });
 
