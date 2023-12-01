@@ -93,13 +93,6 @@ radioButtons.forEach(function(radio) {
     });
 
 
-// color values
-  function updateSelectedColor(color) {
-    var selectedColorValue = document.getElementById('selectedColorValue');
-    if (selectedColorValue) {
-      selectedColorValue.textContent = color;
-    }
-  }
 
 
 function getFocusableElements(container) {
