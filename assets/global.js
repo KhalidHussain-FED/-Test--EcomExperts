@@ -47,8 +47,6 @@
 //};
 
 
-
-
 // // Assuming you have a function like this
 // function handleRadioClick(radio) {
 //     // Remove active class from all labels
@@ -77,18 +75,12 @@
  document.addEventListener('DOMContentLoaded', function() {
         var variantSelect = document.getElementById('custom-input--size');
         var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
-
-        // Add a change event listener to the variant select
+   
         if (variantSelect) {
             variantSelect.addEventListener('change', function() {
-                // Check the selected index
                 var selectedIndex = variantSelect.selectedIndex;
-
-                // Disable button if selected index is 0
                 addToCartButton.disabled = selectedIndex === 0;
             });
-
-            // Disable button on load if the initial selected index is 0
             addToCartButton.disabled = variantSelect.selectedIndex === 0;
         }
     });
@@ -103,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
       displayElement.textContent = `${selectedSize}`;
     });
   });
+
+
 
 
 function getFocusableElements(container) {
@@ -148,6 +142,11 @@ selectElement.addEventListener('change', function () {
         matchingRadio.checked = true;
     }
 });
+
+
+
+
+
 
 
 
