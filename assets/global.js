@@ -21,12 +21,17 @@ cartitems.forEach(function (item) {
 });
 
 if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-  fetch("/cart/clear.js", {
+  fetch("/cart/update.js", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    // body: JSON.stringify({ /* additional parameters if needed */ }),
+    body: JSON.stringify({
+      updates: updatedCartItems.reduce((updates, item) => {
+        updates[item.id] = 0; // Set the quantity of the specific product to 0 for removal
+        return updates;
+      }, {}),
+    }),
   })
     .then((response) => {
       if (!response.ok) {
