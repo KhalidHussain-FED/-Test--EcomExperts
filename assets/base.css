@@ -3513,13 +3513,9 @@ details-disclosure > details {
 }
 
 
-//khalid_fed
-
 #product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
   display: none !important;
 }
-
-
 
 fieldset.js.product-form__input {
     position:relative;
