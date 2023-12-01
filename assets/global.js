@@ -86,10 +86,10 @@ radioButtons.forEach(function(radio) {
 
                 // Disable button if selected index is 0
                 addToCartButton.disabled = selectedIndex === 0;
+              
+               const formElement = document.querySelector("#product-form-template--16312456642714__main");
+      formElement.removeAttribute('novalidate');
             });
-
-            // Disable button on load if the initial selected index is 0
-            // addToCartButton.disabled = variantSelect.selectedIndex === 0;
        // }
     });
 
