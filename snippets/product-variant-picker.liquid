@@ -92,12 +92,9 @@
 <script>
   function updateSelected(color, sizeVariantId) {
     var sizeVariant = document.getElementById(selectedColorValue1);
-    const dropdown = document.querySelector("#custom-input--size");
-    const submitButton = document.querySelector("#ProductSubmitButton-template--16312456642714__main");
     if (sizeVariant) {
       sizeVariant.querySelector('span#selectedColorValue').textContent = color;
-       const selectedIndex = dropdown.selectedIndex;
-      submitButton.disabled = selectedIndex === 0;
+    
     }
   }
 </script>
