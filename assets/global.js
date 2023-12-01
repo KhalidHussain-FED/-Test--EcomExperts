@@ -102,8 +102,7 @@ radioButtons.forEach(function(radio) {
 
     dropdown.addEventListener('change', () => {
       const selectedSize = dropdown.value;
-      const sizeLabel = document.querySelector('label[for="custom-input--size"]').textContent;
-      displayElement.textContent = `${sizeLabel}: ${selectedSize}`;
+      displayElement.textContent = `${selectedSize}`;
     });
   });
 
