@@ -101,9 +101,6 @@ function generateUniqueFixedId(pageName) {
 }
 
 
-
-
-
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(
@@ -111,7 +108,6 @@ function getFocusableElements(container) {
     )
   );
 }
-
 
 // Set the generated unique ID to the body tag
 document.body.id = generateUniqueFixedId(getPageName());
