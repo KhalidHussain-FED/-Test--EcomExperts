@@ -3512,18 +3512,15 @@ details-disclosure > details {
   }
 }
 
+
+
+//khalid_fed
+
 #product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
   display: none !important;
 }
 
-/* fieldset.js.product-form__input:nth-of-type(1) select[name="size"] {
-    display: none;
-}
 
-  fieldset.js.product-form__input:nth-of-type(2) label {
-    display: none;
-  }
- */
 span#selectedColorValue {
     position: absolute;
     left: 48px;
@@ -3534,7 +3531,6 @@ span#selectedColorValue {
 fieldset.js.product-form__input {
     position:relative;
 }
-
 
 
 span#selectedSizeValue {
@@ -3579,23 +3575,22 @@ fieldset.js.product-form__input nth-child(2){
   display:none !important;
 }
 
-/* Default styling */
 .product-form__input input[type=radio]+label {
     background-color: transparent !important;
-    color: initial; /* or your default text color */
+    color: initial;
 }
 
-/* Styling for checked radio button with active class for the first item */
+
 .product-form__input input[type=radio]:checked:nth-of-type(1)+label.active {
     background-color: #000 !important;
 }
 
-/* Styling for checked radio button with active class for the second item */
+
 .product-form__input input[type=radio]:checked:nth-of-type(2)+label.active {
     background-color: #c73f55 !important;
 }
 
-/* Styling for checked radio button with active class for the third item */
+
 .product-form__input input[type=radio]:checked:nth-of-type(3)+label.active {
     background-color: #84491e !important;
 }
