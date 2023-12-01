@@ -93,7 +93,18 @@ radioButtons.forEach(function(radio) {
     });
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    const formElement = document.querySelector("#product-form-template--16312456642714__main");
+    formElement.removeAttribute('novalidate');
 
+    const dropdown = document.getElementById('custom-input--size');
+
+    dropdown.addEventListener('change', () => {
+      const selectedSize = dropdown.value;
+      console.log("Selected Size: " + selectedSize);
+      // You can use the selectedSize variable as needed.
+    });
+  });
 
 function getFocusableElements(container) {
   return Array.from(
