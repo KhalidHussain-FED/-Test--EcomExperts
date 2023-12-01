@@ -73,20 +73,26 @@ radioButtons.forEach(function(radio) {
     });
 });
 
- document.addEventListener('DOMContentLoaded', () => {
-    const dropdown = document.querySelector("#custom-input--size");
-    const submitButton = document.querySelector("#ProductSubmitButton-template--16312456642714__main");
-   const radiobtn = document.querySelector("#template--16312456642714__main-1-2");
 
-    dropdown.addEventListener('change', () => {
-      
-     
-      const selectedIndex = dropdown.selectedIndex;
-      submitButton.disabled = selectedIndex === 0;
-        
+ document.addEventListener('DOMContentLoaded', function() {
+        var variantSelect = document.getElementById('custom-input--size');
+        var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
+
+        // Add a change event listener to the variant select
+        if (variantSelect) {
+            variantSelect.addEventListener('change', function() {
+                // Check the selected index
+                var selectedIndex = variantSelect.selectedIndex;
+
+                // Disable button if selected index is 0
+                addToCartButton.disabled = selectedIndex === 0;
+            });
+
+            // Disable button on load if the initial selected index is 0
+            addToCartButton.disabled = variantSelect.selectedIndex === 0;
+        }
     });
 
-  });
 
 document.addEventListener('DOMContentLoaded', () => {
     const dropdown1 = document.getElementById('custom-input--size');
