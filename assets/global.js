@@ -153,6 +153,9 @@ selectElement.addEventListener('change', function () {
 function updateSelectedColor(value) {
     // You can add your logic here if needed
     // console.log('Selected color:', value);
+document.getElementById(selectedColorValue1).textContent = value;
+    console.log('Selected color:', value);
+  
 }
 
 
