@@ -1,49 +1,92 @@
-//window.onload = function () {
-let cartContainsFreeProduct = false;
-let cartContainsQualifyingProduct = false;
+// //window.onload = function () {
+// let cartContainsFreeProduct = false;
+// let cartContainsQualifyingProduct = false;
+
+// // Define the variant IDs for the qualifying and free products
+// const qualifyingProductVariantId = 44173477675162;
+// const freeProductVariantId = 44158968135834;
+
+// // Sample cart items for demonstration
+// const cartitems = [
+//   { id: 123 /* other properties */ },
+//   { id: qualifyingProductVariantId /* other properties */ },
+//   { id: freeProductVariantId /* other properties */ },
+//   // Add more items as needed
+// ];
+
+// // Check if cart contains qualifying or free product
+// cartitems.forEach(function (item) {
+//   if (item.id === freeProductVariantId) {
+//     cartContainsFreeProduct = true;
+//   }
+//   if (item.id === qualifyingProductVariantId) {
+//     cartContainsQualifyingProduct = true;
+//   }
+// });
+
+// // If the cart contains either the qualifying or free product, remove all items from the cart
+// if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
+//   // Using fetch to make a POST request
+//   fetch("/cart/clear.js", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     // Add any necessary body parameters
+//     // body: JSON.stringify({ /* additional parameters if needed */ }),
+//   })
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error("Network response was not ok");
+//       }
+//       return response.json();
+//     })
+//     .catch((error) => console.error("Error clearing cart:", error));
+// }
+// //};
 
 // Define the variant IDs for the qualifying and free products
 const qualifyingProductVariantId = 44173477675162;
 const freeProductVariantId = 44158968135834;
 
 // Sample cart items for demonstration
-const cartitems = [
+const cartItems = [
   { id: 123 /* other properties */ },
   { id: qualifyingProductVariantId /* other properties */ },
   { id: freeProductVariantId /* other properties */ },
   // Add more items as needed
 ];
 
-// Check if cart contains qualifying or free product
-cartitems.forEach(function (item) {
-  if (item.id === freeProductVariantId) {
-    cartContainsFreeProduct = true;
-  }
-  if (item.id === qualifyingProductVariantId) {
-    cartContainsQualifyingProduct = true;
-  }
+// Filter out the items with the specified variant IDs
+const updatedCartItems = cartItems.filter((item) => {
+  return (
+    item.id !== qualifyingProductVariantId && item.id !== freeProductVariantId
+  );
 });
 
-// If the cart contains either the qualifying or free product, remove all items from the cart
-if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-  // Using fetch to make a POST request
-  fetch("/cart/clear.js", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    // Add any necessary body parameters
-    // body: JSON.stringify({ /* additional parameters if needed */ }),
+// Using fetch to make a POST request to update the cart with the filtered items
+fetch("/cart/update.js", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    updates: updatedCartItems.reduce((updates, item) => {
+      updates[item.id] = 0; // Set the quantity of the specific product to 0 for removal
+      return updates;
+    }, {}),
+  }),
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .catch((error) => console.error("Error clearing cart:", error));
-}
-//};
+  .then((data) => {
+    console.log("Products removed successfully", data);
+  })
+  .catch((error) => console.error("Error removing products from cart:", error));
 
 // // Assuming you have a function like this
 // function handleRadioClick(radio) {
