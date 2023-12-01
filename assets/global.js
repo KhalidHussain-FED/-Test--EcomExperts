@@ -85,8 +85,10 @@ radioButtons.forEach(function(radio) {
                 var selectedIndex = variantSelect.selectedIndex;
 
                 // Disable button if selected index is 0
-                addToCartButton.disabled = selectedIndex === 0;
-              
+              if ( selectedIndex === 0)
+              {
+                addToCartButton.disabled;
+              }
                const formElement = document.querySelector("#product-form-template--16312456642714__main");
       formElement.removeAttribute('novalidate');
             });
