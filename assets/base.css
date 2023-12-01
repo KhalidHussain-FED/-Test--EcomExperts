@@ -3557,9 +3557,6 @@ legend.form__label:before {
 }
 
 
-tr#CartItem-1 .product-option:nth-child(2){
-  display: block !important;
-}
 
 
 td.cart-item__details dl > .product-option:nth-child(2){
