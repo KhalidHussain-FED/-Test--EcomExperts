@@ -26,12 +26,7 @@ if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      updates: updatedCartItems.reduce((updates, item) => {
-        updates[item.id] = 0; // Set the quantity of the specific product to 0 for removal
-        return updates;
-      }, {}),
-    }),
+    // body: JSON.stringify({ /* additional parameters if needed */ }),
   })
     .then((response) => {
       if (!response.ok) {
@@ -52,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     displayElement.textContent = `${selectedSize}`;
   });
 });
+
 
 //button disable
 
@@ -78,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
 
 // radio_btn
 
@@ -106,6 +103,10 @@ function generateUniqueFixedId(pageName) {
   return uniqueId;
 }
 
+
+
+
+
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(
@@ -113,6 +114,7 @@ function getFocusableElements(container) {
     )
   );
 }
+
 
 // Set the generated unique ID to the body tag
 document.body.id = generateUniqueFixedId(getPageName());
