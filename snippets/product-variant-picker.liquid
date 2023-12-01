@@ -90,10 +90,11 @@
 </noscript> -->
 
 <script>
-  function updateSelectedColor(color) {
-    var selectedColorValue = document.getElementById('selectedColorValue');
-    if (selectedColorValue) {
-      selectedColorValue.textContent = color;
-    }
+function updateSelectedColor(color) {
+  var sizeVariant = document.getElementById('size_variant');
+  if (sizeVariant) {
+    sizeVariant.querySelector('span#selectedColorValue').textContent = color;
   }
+}
+
 </script>
