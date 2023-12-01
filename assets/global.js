@@ -86,7 +86,7 @@ radioButtons.forEach(function(radio) {
         
     });
     radiobtn.addEventListener('click', () => {
-      submitButton.disabled 
+      submitButton.disabled = true;
     });
 
     const formElement = document.querySelector("#product-form-template--16312456642714__main");
