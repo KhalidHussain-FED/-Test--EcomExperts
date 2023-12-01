@@ -1,5 +1,4 @@
 //window.onload = function () {
-    // Initialize variables to check if the cart contains a free product and a qualifying product
     let cartContainsFreeProduct = false;
     let cartContainsQualifyingProduct = false;
 
@@ -92,6 +91,15 @@ radioButtons.forEach(function(radio) {
             addToCartButton.disabled = variantSelect.selectedIndex === 0;
         }
     });
+
+
+// color values
+  function updateSelectedColor(color) {
+    var selectedColorValue = document.getElementById('selectedColorValue');
+    if (selectedColorValue) {
+      selectedColorValue.textContent = color;
+    }
+  }
 
 
 function getFocusableElements(container) {
