@@ -26,12 +26,7 @@ if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      updates: updatedCartItems.reduce((updates, item) => {
-        updates[item.id] = 0; // Set the quantity of the specific product to 0 for removal
-        return updates;
-      }, {}),
-    }),
+    // body: JSON.stringify({ /* additional parameters if needed */ }),
   })
     .then((response) => {
       if (!response.ok) {
