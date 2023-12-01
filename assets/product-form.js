@@ -126,61 +126,7 @@ if (!customElements.get("product-form")) {
           console.error("Error adding free product:", error)
         );
     };
-
-    // Function to remove free product from the cart
-    const removeFreeProductFromCart = () => {
-      let removeFreeProductFormData = {
-        updates: {
-          [FreeProductId]: 0,
-        },
-      };
-
-      fetch(window.Shopify.routes.cart_change_url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(removeFreeProductFormData),
-      })
-        .then((removeFreeProductResponse) => {
-          console.log(
-            "Remove Free Product from Cart Response:",
-            removeFreeProductResponse
-          );
-          window.location.reload();
-          return removeFreeProductResponse.json();
-        })
-        .catch((error) =>
-          console.error("Error removing free product:", error)
-        );
-    };
-
-    // Add the free product to the cart initially
-    addFreeProductToCart();
-
-    // Event listener for cart updates
-    document.addEventListener("cart:updated", () => {
-      const cart = JSON.parse(localStorage.getItem("cart"));
-
-      console.log("Updated Cart:", cart);
-
-      // Check if the main product is removed from the cart
-      const mainProductRemoved = !cart.items.some(
-        (item) => item.variant_id === MainProductId
-      );
-
-      console.log("Main Product Removed:", mainProductRemoved);
-
-      if (mainProductRemoved) {
-        console.log("Removing Free Product...");
-        // Remove the free product from the cart
-        removeFreeProductFromCart();
-      }
-    });
-  } else {
-    window.location = window.routes.cart_url;
   }
-}
 
 return;
 
