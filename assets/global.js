@@ -142,7 +142,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Get references to the select and radio elements
+var selectElement = document.getElementById('custom-input--size');
+var radioElements = document.querySelectorAll('input[name="Size"]');
+selectElement.addEventListener('change', function () {
+    var selectedValue = selectElement.value;
+    var matchingRadio = Array.from(radioElements).find(function (radio) {
+        return radio.value === selectedValue;
+    });
+    if (matchingRadio) {
+        matchingRadio.checked = true;
+    }
+});
 
+function updateSelectedColor(value) {
+    // You can add your logic here if needed
+    console.log('Selected color:', value);
+}
 
 
 function getPageName() {
