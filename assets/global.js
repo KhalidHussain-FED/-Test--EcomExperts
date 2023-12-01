@@ -94,11 +94,11 @@ radioButtons.forEach(function(radio) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const dropdown = document.getElementById('custom-input--size');
+    const dropdown1 = document.getElementById('custom-input--size');
     const displayElement = document.getElementById('selectedSizeDisplay');
 
-    dropdown.addEventListener('change', () => {
-      const selectedSize = dropdown.value;
+    dropdown1.addEventListener('change', () => {
+      const selectedSize = dropdown1.value;
       displayElement.textContent = `${selectedSize}`;
     });
   });
