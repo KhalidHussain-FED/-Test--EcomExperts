@@ -3535,10 +3535,6 @@ legend.form__label {
 }
 
 
-/* fieldset.js.product-form__input nth-child(2){
- display: none !important;
-} */
-
 #variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
   display:none !important;
 }
@@ -3568,6 +3564,3 @@ button.shopify-payment-button__button.shopify-payment-button__button--unbranded 
 }
 
 
-/* td.cart-item__details .product-option:nth-child(2){
-  display:none !important
-} */
