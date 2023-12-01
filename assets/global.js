@@ -64,6 +64,7 @@ function handleRadioClick(radio) {
     }
 }
 
+
 // Attach the function to each radio button
 var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
 radioButtons.forEach(function(radio) {
@@ -102,14 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
       displayElement.textContent = `${selectedSize}`;
     });
   });
-
-  function updateSelectedColor(color) {
-    var selectedColorValue = document.getElementById('selectedColorValue');
-    if (selectedColorValue) {
-      selectedColorValue.textContent = color;
-    }
-  }
-
 
 function getFocusableElements(container) {
   return Array.from(
