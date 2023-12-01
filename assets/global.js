@@ -86,6 +86,7 @@ radioButtons.forEach(function(radio) {
         
     });
     radiobtn.addEventListener('click', () => {
+      console.log("radio");
       submitButton.disabled = true;
     });
 
