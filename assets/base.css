@@ -3575,10 +3575,10 @@ fieldset.js.product-form__input nth-child(2){
   display:none !important;
 }
 
-.product-form__input input[type=radio]+label {
+/* .product-form__input input[type=radio]+label {
     background-color: transparent !important;
     color: initial;
-}
+} */
 
 
 .product-form__input input[type=radio]:checked:nth-of-type(1)+label.active {
