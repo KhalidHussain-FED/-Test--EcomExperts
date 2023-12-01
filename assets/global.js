@@ -48,13 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function getFocusableElements(container) {
-  return Array.from(
-    container.querySelectorAll(
-      "summary, a[href], button:enabled, [tabindex]:not([tabindex^='-']), [draggable], area, input:not([type=hidden]):enabled, select:enabled, textarea:enabled, object, iframe"
-    )
-  );
-}
+//button disable
 
 document.addEventListener("DOMContentLoaded", function () {
   // Check if the current body has the specific ID
@@ -81,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // radio_btn
+
 var selectElement = document.getElementById("custom-input--size");
 var radioElements = document.querySelectorAll('input[name="Size"]');
 selectElement.addEventListener("change", function () {
@@ -104,6 +99,14 @@ function generateUniqueFixedId(pageName) {
   var uniqueId = "classic-leather-jacket-" + pageName;
 
   return uniqueId;
+}
+
+function getFocusableElements(container) {
+  return Array.from(
+    container.querySelectorAll(
+      "summary, a[href], button:enabled, [tabindex]:not([tabindex^='-']), [draggable], area, input:not([type=hidden]):enabled, select:enabled, textarea:enabled, object, iframe"
+    )
+  );
 }
 
 // Set the generated unique ID to the body tag
