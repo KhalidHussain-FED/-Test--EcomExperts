@@ -93,11 +93,10 @@ radioButtons.forEach(function(radio) {
     });
 
 
- document.addEventListener('DOMContentLoaded', () => {
-    const formElement = document.querySelector("#product-form-template--16312456642714__main");
-    formElement.removeAttribute('novalidate');
-
+document.addEventListener('DOMContentLoaded', () => {
     const dropdown = document.getElementById('custom-input--size');
+    const displayElement = document.getElementById('selectedSizeDisplay');
+
     dropdown.addEventListener('change', () => {
       const selectedSize = dropdown.value;
       displayElement.textContent = `${selectedSize}`;
