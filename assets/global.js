@@ -98,8 +98,6 @@ radioButtons.forEach(function(radio) {
     formElement.removeAttribute('novalidate');
 
     const dropdown = document.getElementById('custom-input--size');
-    const displayElement = document.getElementById('selectedSizeDisplay');
-
     dropdown.addEventListener('change', () => {
       const selectedSize = dropdown.value;
       displayElement.textContent = `${selectedSize}`;
