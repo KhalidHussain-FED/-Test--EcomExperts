@@ -27,7 +27,7 @@
     // If the cart contains either the qualifying or free product, remove all items from the cart
     if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
         // Using fetch to make a POST request
-        fetch('/cart/clear.js', {
+        fetch('/cart/change.js', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
