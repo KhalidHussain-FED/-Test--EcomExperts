@@ -3520,13 +3520,6 @@ details-disclosure > details {
 }
 
 
-span#selectedColorValue {
-    position: absolute;
-    left: 48px;
-    bottom: 55px;
-    z-index: 9999999;
-}
-
 
 fieldset.js.product-form__input {
     position:relative;
@@ -3545,17 +3538,6 @@ legend.form__label {
     position: relative;
 }
 
-legend.form__label:before {
-    position: absolute;
-    content: ":";
-    left: 35px;
-    width: 100%;
-    top: -9px;
-    height: 100%;
-    color: #000;
-    font-size: 23px;
-    z-index: 99999999;
-}
 
 /* fieldset.js.product-form__input nth-child(2){
  display: none !important;
