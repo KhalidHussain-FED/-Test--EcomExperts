@@ -27,17 +27,13 @@ cartitems.forEach(function (item) {
 // If the cart contains either the qualifying or free product, remove all items from the cart
 if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
   // Using fetch to make a POST request
-  fetch("/cart/update.js", {
+  fetch("/cart/clear.js", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      updates: updatedCartItems.reduce((updates, item) => {
-        updates[item.id] = 0; // Set the quantity of the specific product to 0 for removal
-        return updates;
-      }, {}),
-    }),
+    // Add any necessary body parameters
+    // body: JSON.stringify({ /* additional parameters if needed */ }),
   })
     .then((response) => {
       if (!response.ok) {
