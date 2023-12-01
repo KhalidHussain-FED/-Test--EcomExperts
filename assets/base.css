@@ -3516,14 +3516,9 @@ details-disclosure > details {
   display: none !important;
 }
 
-/* fieldset.js.product-form__input:nth-of-type(1) select[name="size"] {
-    display: none;
-}
 
-  fieldset.js.product-form__input:nth-of-type(2) label {
-    display: none;
-  }
- */
+
+
 span#selectedColorValue {
     position: absolute;
     left: 48px;
@@ -3535,31 +3530,6 @@ fieldset.js.product-form__input {
     position:relative;
 }
 
-
-
-span#selectedSizeValue {
-   position: absolute;
-   top: 100%;
-   left: 48px;
-  z-index: 9999999;
-   transform: translate(2px,7px);
-}
-
-legend.form__label {
-    position: relative;
-}
-
-legend.form__label:before {
-    position: absolute;
-    content: ":";
-    left: 35px;
-    width: 100%;
-    top: -7px;
-    height: 100%;
-    color: #000;
-    font-size: 23px;
-    z-index: 99999999;
-}
 
 
 tr#CartItem-1 .product-option:nth-child(2){
