@@ -85,10 +85,21 @@ radioButtons.forEach(function(radio) {
       submitButton.disabled = selectedIndex === 0;
         
     });
-    radiobtn.addEventListener('click', () => {
-      console.log("radio");
-      submitButton.disabled = true;
-    });
+
+
+   const clickHandler = () => {
+  console.log("radio");
+  submitButton.disabled = true;
+  radiobtn.removeEventListener('click', clickHandler);
+};
+   radiobtn.removeEventListener('click', clickHandler);
+
+   
+    // radiobtn.addEventListener('click', () => {
+    //   console.log("radio");
+    //   submitButton.disabled = true;
+    //   radiobtn.removeEventListener('click', clickHandler);
+    // });
 
     const formElement = document.querySelector("#product-form-template--16312456642714__main");
     formElement.removeAttribute('novalidate');
