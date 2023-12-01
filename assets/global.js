@@ -3,7 +3,7 @@
     let cartContainsQualifyingProduct = false;
 
     // Define the variant IDs for the qualifying and free products
-    const qualifyingProductVariantId = 44173477675162;
+    const qualifyingProductVariantId = 44180654653594;
     const freeProductVariantId = 44158968135834;
 
     // Sample cart items for demonstration
@@ -49,29 +49,29 @@
 
 
 
-// Assuming you have a function like this
-function handleRadioClick(radio) {
-    // Remove active class from all labels
-    var labels = document.querySelectorAll('.product-form__input label');
-    labels.forEach(function(label) {
-        label.classList.remove('active');
-    });
+// // Assuming you have a function like this
+// function handleRadioClick(radio) {
+//     // Remove active class from all labels
+//     var labels = document.querySelectorAll('.product-form__input label');
+//     labels.forEach(function(label) {
+//         label.classList.remove('active');
+//     });
 
-    // Add active class to the checked radio button's label
-    if (radio.checked) {
-        var label = radio.nextElementSibling; // Assuming label is the next sibling
-        label.classList.add('active');
-    }
-}
+//     // Add active class to the checked radio button's label
+//     if (radio.checked) {
+//         var label = radio.nextElementSibling; // Assuming label is the next sibling
+//         label.classList.add('active');
+//     }
+// }
 
 
-// Attach the function to each radio button
-var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
-radioButtons.forEach(function(radio) {
-    radio.addEventListener('click', function() {
-        handleRadioClick(radio);
-    });
-});
+// // Attach the function to each radio button
+// var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
+// radioButtons.forEach(function(radio) {
+//     radio.addEventListener('click', function() {
+//         handleRadioClick(radio);
+//     });
+// });
 
 
  document.addEventListener('DOMContentLoaded', function() {
