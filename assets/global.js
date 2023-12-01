@@ -77,15 +77,23 @@ radioButtons.forEach(function(radio) {
  document.addEventListener('DOMContentLoaded', function() {
         var variantSelect = document.getElementById('custom-input--size');
         var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
+        var test =  document.querySelector('#template--16312456642714__main-1-0');
 
         // Add a change event listener to the variant select
         if (variantSelect) {
+          
             variantSelect.addEventListener('change', function() {
+              
+                test.addEventListener('click', function(){
                 // Check the selected index
+                
                 var selectedIndex = variantSelect.selectedIndex;
-
+                  if (selectedIndex === 0 )
+                  {
                 // Disable button if selected index is 0
-                addToCartButton.disabled = selectedIndex === 0;
+                addToCartButton.disabled =true; //= selectedIndex === 0;
+                  }
+            });
             });
 
             // Disable button on load if the initial selected index is 0
