@@ -3561,9 +3561,9 @@ fieldset.js.product-form__input nth-child(2){
  display: none !important;
 }
 
-/* #variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
+#variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
   display:none !important;
-} */
+}
 
 button#ProductSubmitButton-template--16312456642714__main {
     border: 2px solid black !important;
