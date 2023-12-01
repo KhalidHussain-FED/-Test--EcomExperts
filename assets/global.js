@@ -39,11 +39,11 @@ if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
 //};
 
 document.addEventListener("DOMContentLoaded", () => {
-  const dropdown1 = document.getElementById("custom-input--size");
+  const dropdown = document.getElementById("custom-input--size");
   const displayElement = document.getElementById("selectedSizeDisplay");
 
-  dropdown1.addEventListener("change", () => {
-    const selectedSize = dropdown1.value;
+  dropdown.addEventListener("change", () => {
+    const selectedSize = dropdown.value;
     displayElement.textContent = `${selectedSize}`;
   });
 });
