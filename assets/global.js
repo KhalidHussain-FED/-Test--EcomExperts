@@ -104,6 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+
+
 function getFocusableElements(container) {
   return Array.from(
     container.querySelectorAll(
@@ -150,7 +152,7 @@ selectElement.addEventListener('change', function () {
 
 function updateSelectedColor(value) {
     // You can add your logic here if needed
-    console.log('Selected color:', value);
+    // console.log('Selected color:', value);
 }
 
 
