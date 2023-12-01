@@ -3575,6 +3575,6 @@ button.shopify-payment-button__button.shopify-payment-button__button--unbranded 
     color: #fff !important;
 }
 
-td.cart-item__details .product-option:nth-child(2){
+/* td.cart-item__details .product-option:nth-child(2){
   display:none !important
-}
+} */
