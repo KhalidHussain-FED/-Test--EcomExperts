@@ -3574,3 +3574,7 @@ button.shopify-payment-button__button.shopify-payment-button__button--unbranded 
     background: black !important;
     color: #fff !important;
 }
+
+td.cart-item__details .product-option:nth-child(2){
+  display:none !important
+}
