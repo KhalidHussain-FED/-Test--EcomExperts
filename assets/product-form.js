@@ -126,7 +126,7 @@ if (!customElements.get("product-form")) {
           console.error("Error adding free product:", error)
         );
     };
-  }
+    
 
     // Function to remove free product from the cart
     const removeFreeProductFromCart = () => {
