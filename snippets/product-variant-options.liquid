@@ -91,3 +91,11 @@
   {%- endif -%}
 {%- endfor -%}
 
+<script>
+  function updateSelectedColor(color) {
+    var selectedColorValue = document.getElementById('selectedColorValue');
+    if (selectedColorValue) {
+      selectedColorValue.textContent = color;
+    }
+  }
+</script>
