@@ -27,26 +27,6 @@
     }
   {%- endstyle -%}
 
-  <script>
-     document.addEventListener('DOMContentLoaded', function() {
-        var variantSelect = document.getElementById('custom-input--size');
-        var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
-
-        // Add a change event listener to the variant select
-        if (variantSelect) {
-            variantSelect.addEventListener('change', function() {
-                // Check the selected index
-                var selectedIndex = variantSelect.selectedIndex;
-
-                // Disable button if selected index is 0
-                addToCartButton.disabled = selectedIndex === 0;
-            });
-
-            // Disable button on load if the initial selected index is 0
-            addToCartButton.disabled = variantSelect.selectedIndex === 0;
-        }
-    });
-  </script>
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
   {%- if product.quantity_price_breaks_configured? -%}
