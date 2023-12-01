@@ -73,27 +73,19 @@ radioButtons.forEach(function(radio) {
     });
 });
 
+ document.addEventListener('DOMContentLoaded', () => {
+    const dropdown = document.querySelector("#custom-input--size");
+    const submitButton = document.querySelector("#ProductSubmitButton-template--16312456642714__main");
 
- document.addEventListener('DOMContentLoaded', function() {
-        var variantSelect = document.getElementById('custom-input--size');
-        var addToCartButton = document.getElementById('#ProductSubmitButton-template--16312456642714__main');
-
-        // Add a change event listener to the variant select
-       // if (variantSelect) {
-            variantSelect.addEventListener('change', function() {
-                // Check the selected index
-                var selectedIndex = variantSelect.selectedIndex;
-
-                // Disable button if selected index is 0
-              if ( selectedIndex === 0)
-              {
-                addToCartButton.disabled;
-              }
-               const formElement = document.querySelector("#product-form-template--16312456642714__main");
-      formElement.removeAttribute('novalidate');
-            });
-       // }
+    dropdown.addEventListener('change', () => {
+      const selectedIndex = dropdown.selectedIndex;
+      submitButton.disabled = selectedIndex === 0;
     });
+
+    const formElement = document.querySelector("#product-form-template--16312456642714__main");
+    formElement.removeAttribute('novalidate');
+  });
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
