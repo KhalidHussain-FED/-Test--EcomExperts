@@ -3519,3 +3519,10 @@ details-disclosure > details {
   display: none !important;
 }
 
+
+span#selectedColorValue {
+    position: absolute;
+    left: 48px;
+    bottom: 55px;
+    z-index: 9999999;
+}
