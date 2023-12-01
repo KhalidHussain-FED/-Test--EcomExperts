@@ -23,7 +23,7 @@
     >
       {%- for option in product.options_with_values -%}
         <fieldset class="js product-form__input">
-          <legend id="size_variant" class="form__label">{{ option.name }}<span> : </span> <span id="selectedColorValue"></span></legend>
+          <legend id="size_variant" class="form__label">{{ option.name }}<span> : </span> <span id="selectedColorValue1"></span></legend>
           {% render 'product-variant-options', product: product, option: option, block: block %}
         </fieldset>
       {%- endfor -%}
@@ -91,7 +91,7 @@
 
 <script>
   function updateSelected(color, sizeVariantId) {
-    var sizeVariant = document.getElementById(sizeVariantId);
+    var sizeVariant = document.getElementById(selectedColorValue1);
     if (sizeVariant) {
       sizeVariant.querySelector('span#selectedColorValue').textContent = color;
     }
