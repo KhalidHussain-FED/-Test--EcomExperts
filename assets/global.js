@@ -1,104 +1,79 @@
 //window.onload = function () {
-let cartContainsFreeProduct = false;
-let cartContainsQualifyingProduct = false;
+    // Initialize variables to check if the cart contains a free product and a qualifying product
+    let cartContainsFreeProduct = false;
+    let cartContainsQualifyingProduct = false;
 
-const qualifyingProductVariantId = 44173477675162;
-const freeProductVariantId = 44158968135834;
+    // Define the variant IDs for the qualifying and free products
+    const qualifyingProductVariantId = 44173477609626;
+    const freeProductVariantId = 44158968135834;
 
-const cartitems = [
-  { id: 123 /* other properties */ },
-  { id: qualifyingProductVariantId },
-  { id: freeProductVariantId },
-];
+    // Sample cart items for demonstration
+    const cartitems = [
+        { id: 123, /* other properties */ },
+        { id: qualifyingProductVariantId, /* other properties */ },
+        { id: freeProductVariantId, /* other properties */ },
+        // Add more items as needed
+    ];
 
-cartitems.forEach(function (item) {
-  if (item.id === freeProductVariantId) {
-    cartContainsFreeProduct = true;
-  }
-  if (item.id === qualifyingProductVariantId) {
-    cartContainsQualifyingProduct = true;
-  }
-});
+    // Check if cart contains qualifying or free product
+    cartitems.forEach(function (item) {
+        if (item.id === freeProductVariantId) {
+            cartContainsFreeProduct = true;
+        }
+        if (item.id === qualifyingProductVariantId) {
+            cartContainsQualifyingProduct = true;
+        }
+    });
 
-if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-  fetch("/cart/clear.js", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    // body: JSON.stringify({ /* additional parameters if needed */ }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .catch((error) => console.error("Error clearing cart:", error));
-}
+    // If the cart contains either the qualifying or free product, remove all items from the cart
+    if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
+        // Using fetch to make a POST request
+        fetch('/cart/clear.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // Add any necessary body parameters
+            // body: JSON.stringify({ /* additional parameters if needed */ }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+    
+        })
+        .catch(error => console.error('Error clearing cart:', error));
+    }
 //};
 
-document.addEventListener("DOMContentLoaded", () => {
-  const dropdown = document.getElementById("custom-input--size");
-  const displayElement = document.getElementById("selectedSizeDisplay");
-
-  dropdown.addEventListener("change", () => {
-    const selectedSize = dropdown.value;
-    displayElement.textContent = `${selectedSize}`;
-  });
-});
 
 
-//button disable
 
-document.addEventListener("DOMContentLoaded", function () {
-  var variantSelect = document.getElementById("custom-input--size");
-  var addToCartButton = document.querySelector(
-    "#ProductSubmitButton-template--16312456642714__main"
-  );
+// Assuming you have a function like this
+function handleRadioClick(radio) {
+    // Remove active class from all labels
+    var labels = document.querySelectorAll('.product-form__input label');
+    labels.forEach(function(label) {
+        label.classList.remove('active');
+    });
 
-  // Function to update button state based on selected index
-  function updateButtonState() {
-    var selectedIndex = variantSelect.selectedIndex;
-    addToCartButton.disabled = selectedIndex === 0;
-  }
-
-  // Add a change event listener to the variant select
-  if (variantSelect) {
-    variantSelect.addEventListener("change", updateButtonState);
-
-    // Disable button on load if the initial selected index is 0
-    updateButtonState();
-  }
-});
-
-
-// radio_btn
-
-var selectElement = document.getElementById("custom-input--size");
-var radioElements = document.querySelectorAll('input[name="Size"]');
-selectElement.addEventListener("change", function () {
-  var selectedValue = selectElement.value;
-  var matchingRadio = Array.from(radioElements).find(function (radio) {
-    return radio.value === selectedValue;
-  });
-  if (matchingRadio) {
-    matchingRadio.checked = true;
-  }
-});
-
-//body tag id
-function getPageName() {
-  var pathArray = window.location.pathname.split("/");
-  var pageName = pathArray[pathArray.length - 1].split(".")[0];
-  return pageName || "home";
+    // Add active class to the checked radio button's label
+    if (radio.checked) {
+        var label = radio.nextElementSibling; // Assuming label is the next sibling
+        label.classList.add('active');
+    }
 }
 
-function generateUniqueFixedId(pageName) {
-  var uniqueId = "classic-leather-jacket-" + pageName;
+// Attach the function to each radio button
+var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
+radioButtons.forEach(function(radio) {
+    radio.addEventListener('click', function() {
+        handleRadioClick(radio);
+    });
+});
 
-  return uniqueId;
-}
+
 
 
 function getFocusableElements(container) {
@@ -107,6 +82,42 @@ function getFocusableElements(container) {
       "summary, a[href], button:enabled, [tabindex]:not([tabindex^='-']), [draggable], area, input:not([type=hidden]):enabled, select:enabled, textarea:enabled, object, iframe"
     )
   );
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if the current body has the specific ID
+    if (document.body.id === 'classic-leather-jacket-product-1') {
+        var variantSelect = document.getElementById('custom-input--size');
+        var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
+
+        // Function to update button state based on selected index
+        function updateButtonState() {
+            var selectedIndex = variantSelect.selectedIndex;
+            addToCartButton.disabled = selectedIndex === 0;
+        }
+
+        // Add a change event listener to the variant select
+        if (variantSelect) {
+            variantSelect.addEventListener('change', updateButtonState);
+
+            // Disable button on load if the initial selected index is 0
+            updateButtonState();
+        }
+    }
+});
+
+function getPageName() {
+  var pathArray = window.location.pathname.split("/");
+  var pageName = pathArray[pathArray.length - 1].split(".")[0];
+  return pageName || "home"; // Default to 'home' if no page name is found
+}
+
+// Function to generate a unique fixed ID based on the current page name
+function generateUniqueFixedId(pageName) {
+  // Use the specified page name to generate a unique ID
+  var uniqueId = "classic-leather-jacket-" + pageName;
+
+  return uniqueId;
 }
 
 // Set the generated unique ID to the body tag
