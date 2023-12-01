@@ -3,7 +3,7 @@ let cartContainsFreeProduct = false;
 let cartContainsQualifyingProduct = false;
 
 // Define the variant IDs for the qualifying and free products
-const qualifyingProductVariantId = 44180654653594;
+const qualifyingProductVariantId = 44173477675162;
 const freeProductVariantId = 44158968135834;
 
 // Sample cart items for demonstration
