@@ -52,26 +52,23 @@ document.addEventListener("DOMContentLoaded", () => {
 //button disable
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Check if the current body has the specific ID
-  if (document.body.id === "classic-leather-jacket-product-1") {
-    var variantSelect = document.getElementById("custom-input--size");
-    var addToCartButton = document.querySelector(
-      "#ProductSubmitButton-template--16312456642714__main"
-    );
+  var variantSelect = document.getElementById("custom-input--size");
+  var addToCartButton = document.querySelector(
+    "#ProductSubmitButton-template--16312456642714__main"
+  );
 
-    // Function to update button state based on selected index
-    function updateButtonState() {
-      var selectedIndex = variantSelect.selectedIndex;
-      addToCartButton.disabled = selectedIndex === 0;
-    }
+  // Function to update button state based on selected index
+  function updateButtonState() {
+    var selectedIndex = variantSelect.selectedIndex;
+    addToCartButton.disabled = selectedIndex === 0;
+  }
 
-    // Add a change event listener to the variant select
-    if (variantSelect) {
-      variantSelect.addEventListener("change", updateButtonState);
+  // Add a change event listener to the variant select
+  if (variantSelect) {
+    variantSelect.addEventListener("change", updateButtonState);
 
-      // Disable button on load if the initial selected index is 0
-      updateButtonState();
-    }
+    // Disable button on load if the initial selected index is 0
+    updateButtonState();
   }
 });
 
