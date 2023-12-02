@@ -3511,27 +3511,6 @@ details-disclosure > details {
     --border-offset: 0px; /* Prevent the border from growing on buttons when this effect is on. */
   }
 }
-
-#product-grid .scroll-trigger.animate--slide-in:nth-child(15) {
-  display: none !important;
-}
-
-
-
-
-span#selectedColorValue {
-    position: absolute;
-    left: 48px;
-    bottom: 55px;
-    z-index: 9999999;
-}
-
-fieldset.js.product-form__input {
-    position:relative;
-}
-
-
-
 tr#CartItem-1 .product-option:nth-child(2){
   display: block !important;
 }
@@ -3541,7 +3520,7 @@ td.cart-item__details dl > .product-option:nth-child(2){
   display:none !important;
 }
 
-fieldset.js.product-form__input nth-child(2){
+fieldset.js.product-form__input:nth-child(2){
  display: none !important;
 }
 
@@ -3549,13 +3528,6 @@ fieldset.js.product-form__input nth-child(2){
   display:none !important;
 }
 
-/* p#custom_dropdown {
-    display: none;
-} */
-
-body#classic-leather-jacket-product-1 p#custom_dropdown {
-    display:block
-}
 
 
 /* Default styling */
@@ -3578,3 +3550,4 @@ body#classic-leather-jacket-product-1 p#custom_dropdown {
 .product-form__input input[type=radio]:checked:nth-of-type(3)+label.active {
     background-color: #84491e !important;
 }
+
