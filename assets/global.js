@@ -1,62 +1,39 @@
-// $(document).ready(function() {
-//   // Wait for the document to be ready before executing the code
+$(document).ready(function() {
+  // Wait for the document to be ready before executing the code
 
-//   const itemToRemoveId = 'CartItem-2'; // Replace with the actual ID of the item to remove
+  const itemToRemoveId = 'CartItem-2'; // Replace with the actual ID of the item to remove
 
-//   // If the cart contains the item to be removed, trigger the removal of both items
-//   if ($('.cart-item[id="' + itemToRemoveId + '"]').length > 0) {
-//     // Remove both items using AJAX
-//     removeItem('CartItem-1');
-//     removeItem(itemToRemoveId);
-//   }
+  // If the cart contains the item to be removed, trigger the removal of both items
+  if ($('.cart-item[id="' + itemToRemoveId + '"]').length > 0) {
+    // Remove both items using AJAX
+    removeItem('CartItem-1');
+    removeItem(itemToRemoveId);
+  }
 
-//   // Function to remove the specified item using AJAX
-//   function removeItem(itemId) {
-//     $.ajax({
-//       type: 'POST',
-//       url: '/cart/change.js',
-//       data: {
-//         id: itemId,
-//         quantity: 0
-//       },
-//       dataType: 'json',
-//       success: function(response) {
-//         // Handle success, if needed
-//         console.log('Item removed successfully:', itemId);
-//         window.location.reload();
-//       },
-//       error: function(error) {
-//         // Handle errors, if needed
-//         console.error('Error updating cart:', error);
-//       }
-//     });
-//   }
-// });
-
-document.addEventListener('DOMContentLoaded', function() {
-       const mytoken = '34f7fcbc629ebdf77d84aba06148b226';
-
-              if (mytoken)
-              {
-  
-        fetch('/cart/clear.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-          
-            // body: JSON.stringify({ /* additional parameters if needed */ }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-    
-        })
-        .catch(error => console.error('Error clearing cart:', error));
+  // Function to remove the specified item using AJAX
+  function removeItem(itemId) {
+    $.ajax({
+      type: 'POST',
+      url: '/cart/change.js',
+      data: {
+        id: itemId,
+        quantity: 0
+      },
+      dataType: 'json',
+      success: function(response) {
+        // Handle success, if needed
+        console.log('Item removed successfully:', itemId);
+        window.location.reload();
+      },
+      error: function(error) {
+        // Handle errors, if needed
+        console.error('Error updating cart:', error);
       }
     });
+  }
+});
+
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
