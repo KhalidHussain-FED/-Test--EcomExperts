@@ -1,6 +1,6 @@
 {% schema %}
   {
-    "name": "Section name",
+    "name": "upsell-section",
     "settings": []
   }
 {% endschema %}
@@ -10,3 +10,22 @@
 
 {% javascript %}
 {% endjavascript %}
+
+<!-- sections/upsell-section.liquid -->
+
+{% if product.related_products.size > 0 %}
+  <div class="upsell-section">
+    <h2>Complete Your Purchase</h2>
+    <ul>
+      {% for related_product in product.related_products %}
+        <li>
+          <a href="{{ related_product.url }}">
+            <img src="{{ related_product.featured_image.src }}" alt="{{ related_product.title }}">
+            <p>{{ related_product.title }}</p>
+            <p>{{ related_product.price | money }}</p>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
