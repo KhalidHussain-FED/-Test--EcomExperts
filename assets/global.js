@@ -1,22 +1,4 @@
 
-  window.onload = function(){
-    let cartContainsQualifyingProduct = false;
-
-    const qualifyingProductVariantId1 = 44182115647642;
-    const qualifyingProductVariantId2 = 44158968135834;
-
-    {% for item in cart.items %}
-      if({{ item.id }} === qualifyingProductVariantId1 || {{ item.id }} === qualifyingProductVariantId2){
-         cartContainsQualifyingProduct = true;
-      }
-    {% endfor %}
-
-    // If cart contains qualifying products, remove them
-    if(cartContainsQualifyingProduct) {
-      jQuery.post('/cart/update.js', { updates: { {{ qualifyingProductVariantId1 }}: 0, {{ qualifyingProductVariantId2 }}: 0 } })
-      .done(function() { window.location.reload() });
-    }
-  }
 
 
 document.addEventListener('DOMContentLoaded', function() {
