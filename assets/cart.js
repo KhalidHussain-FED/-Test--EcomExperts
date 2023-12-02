@@ -10,46 +10,6 @@ class CartRemoveButton extends HTMLElement {
   }
 }
 
-function removeProductFromCart(variantId) {
-  return new Promise(function(resolve, reject) {
-    fetch('/cart/clear.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        quantity: 0, // Set quantity to 0 to remove the item
-        id: variantId,
-      }),
-    })
-      .then(response => response.json())
-      .then(cart => {
-        console.log('Product removed from cart:', cart);
-
-        alert("Ok");
-        resolve(cart);
-      })
-      .catch(error => {
-        console.error('Error removing product from cart:', error);
-        reject(error);
-      });
-  });
-}
-
-// Example usage on a button click
-document.querySelectorAll('.button--tertiary').forEach(function(button) {
-  button.addEventListener('click', function () {
-    // Assuming you have the variant IDs of the main product and the gift product
-    var mainProductVariantId = '44182115647642';
-    var giftProductVariantId = '44158968135834';
-
-debugger;
-    // Remove main product and then gift product
-    removeProductFromCart(mainProductVariantId)
-      .then(() => removeProductFromCart(giftProductVariantId))
-      .catch(error => console.error('Error:', error));
-  });
-});
 
 
 function upsellProduct() {
