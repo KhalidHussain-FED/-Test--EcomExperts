@@ -33,7 +33,7 @@ document.querySelectorAll('.button--tertiary').forEach(function(button) {
     var mainProductVariantId = '44182115647642';
     var giftProductVariantId = '44158968135834';
 
-//debugger;
+debugger;
     // Remove main product and then gift product
     removeProductFromCart(mainProductVariantId)
       .then(() => removeProductFromCart(giftProductVariantId))
