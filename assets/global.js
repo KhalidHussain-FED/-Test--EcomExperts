@@ -9,7 +9,7 @@ function removeProduct(productId) {
 
 // Simulate the cart items
 cartItems = [
-    { id: 44158968135834, /* other properties */ },
+    { id: 44182115647642, /* other properties */ },
     { id: qualifyingProductVariantId },
     { id: freeProductVariantId },
 ];
@@ -25,25 +25,25 @@ if (qualifyingProductIndex !== -1) {
     cartItems = removeProduct(qualifyingProductVariantId);
     cartItems = removeProduct(freeProductVariantId);
 
-    // Prepare the payload for change.js
+    // Prepare the payload for update.js
     const payload = cartItems.map(item => ({
-        id: item.id,
+        id: item.id, // Use the variant_id or key as needed
         quantity: 1, // You may adjust the quantity as needed
     }));
 
-    // Use the change.js endpoint to update the cart
-    fetch('/cart/change.js', {
+    // Use the Shopify Storefront API to update the cart
+    fetch('/cart/update.js', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            items: payload,
+            updates: payload,
         }),
     })
     .then(response => {
-        console.log('Change.js Request Payload:', JSON.stringify({ items: payload }));
-        console.log('Change.js Response:', response.status, response.statusText);
+        console.log('Update.js Request Payload:', JSON.stringify({ updates: payload }));
+        console.log('Update.js Response:', response.status, response.statusText);
 
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
@@ -61,7 +61,6 @@ if (qualifyingProductIndex !== -1) {
 if (!cartContainsQualifyingProduct) {
     console.log('Updated Cart Items:', cartItems);
 }
-
 
 
 
