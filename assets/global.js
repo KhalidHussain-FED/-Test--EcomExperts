@@ -1,47 +1,45 @@
-//window.onload = function () {
-  
-    let cartContainsFreeProduct = false;
-    let cartContainsQualifyingProduct = false;
+let cartContainsFreeProduct = false;
+let cartContainsQualifyingProduct = false;
 
-    const qualifyingProductVariantId = 44182115647642;
-    const freeProductVariantId = 44158968135834;
+const qualifyingProductVariantId = 44182115647642;
+const freeProductVariantId = 44158968135834;
 
-    const cartitems = [
-        { id: 123, /* other properties */ },
-        { id: qualifyingProductVariantId, },
-        { id: freeProductVariantId,  },
-    ];
+// Check if cart information exists in sessionStorage
+const cartItemsString = sessionStorage.getItem('cartItems');
+const cartitems = cartItemsString ? JSON.parse(cartItemsString) : [];
 
-    cartitems.forEach(function (item) {
-        if (item.id === freeProductVariantId) {
-            cartContainsFreeProduct = true;
-        }
-        if (item.id === qualifyingProductVariantId) {
-            cartContainsQualifyingProduct = true;
-        }
-    });
-
-
-    if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-      
-        fetch('/cart/clear.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-          
-            // body: JSON.stringify({ /* additional parameters if needed */ }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-    
-        })
-        .catch(error => console.error('Error clearing cart:', error));
+cartitems.forEach(function (item) {
+    if (item.id === freeProductVariantId) {
+        cartContainsFreeProduct = true;
     }
-//};
+    if (item.id === qualifyingProductVariantId) {
+        cartContainsQualifyingProduct = true;
+    }
+});
+
+if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
+    fetch('/cart/clear.js', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        // body: JSON.stringify({ /* additional parameters if needed */ }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .catch(error => console.error('Error clearing cart:', error));
+
+    // Clear cart information from sessionStorage after clearing the cart
+    sessionStorage.removeItem('cartItems');
+}
+
+// Save the updated cart information to sessionStorage
+sessionStorage.setItem('cartItems', JSON.stringify(cartitems));
+
 
 function updateSelectedColor(color) {
   // Add your logic here to handle the selected color
