@@ -27,27 +27,29 @@
     }
   {%- endstyle -%}
 
-  <script>
+<script>
 
-      window.onload = function(){
-      let cartContainsQualifyingProduct = false;
-  
-      const qualifyingProductVariantId1 = 12345; // Replace with the actual variant ID of the first product to remove
-      const qualifyingProductVariantId2 = 67890; // Replace with the actual variant ID of the second product to remove
-  
-      {% for item in cart.items %}
-        if({{ item.id }} === qualifyingProductVariantId1 || {{ item.id }} === qualifyingProductVariantId2){
-           cartContainsQualifyingProduct = true;
-        }
-      {% endfor %}
-  
-      // If cart contains qualifying products, remove them
-      if(cartContainsQualifyingProduct) {
-        jQuery.post('/cart/update.js', { updates: { {{ qualifyingProductVariantId1 }}: 0, {{ qualifyingProductVariantId2 }}: 0 } })
-        .done(function() { window.location.reload() });
+  window.onload = function(){
+    let cartContainsQualifyingProduct = false;
+
+    const qualifyingProductVariantId1 = 44182115647642
+    const qualifyingProductVariantId2 = 44158968135834;
+
+    {% for item in cart.items %}
+      if({{ item.id }} === qualifyingProductVariantId1 || {{ item.id }} === qualifyingProductVariantId2){
+         cartContainsQualifyingProduct = true;
       }
+    {% endfor %}
+
+    // If cart contains qualifying products, remove them
+    if(cartContainsQualifyingProduct) {
+      jQuery.post('/cart/update.js', { updates: { {{ qualifyingProductVariantId1 }}: 0, {{ qualifyingProductVariantId2 }}: 0 } })
+      .done(function() { window.location.reload() });
     }
-  </script>
+  }
+
+</script>
+
 
   
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
