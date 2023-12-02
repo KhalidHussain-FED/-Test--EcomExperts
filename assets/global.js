@@ -26,7 +26,7 @@ if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            products: [qualifyingProductVariantId, freeProductVariantId], // Pass the product IDs to delete
+            products: [44182115647642, 44158968135834], // Pass the product IDs to delete
         }),
     })
     .then(response => {
