@@ -1,32 +1,37 @@
 function removeCartItem(index, url) {
-  $.ajax({
-    type: 'DELETE',
-    url: url,
-    data: {
-      index: index,
-      quantity: 0
-    },
-    dataType: 'json',
-    success: function(response) {
-      console.log('Item removed successfully at index:', index);
-      window.location.reload();
-    },
-    error: function(error) {
-      console.error('Error updating cart:', error);
+  var xhr = new XMLHttpRequest();
+  xhr.open('DELETE', url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        console.log('Item removed successfully at index:', index);
+        window.location.reload();
+      } else {
+        console.error('Error updating cart:', xhr.statusText);
+      }
     }
-  });
+  };
+  xhr.send(JSON.stringify({
+    index: index,
+    quantity: 0
+  }));
 }
 
-$(document).ready(function() {
-  const itemToRemoveIndex = 2; // Replace with the actual index of the item to remove
-  const itemToRemoveUrl = '/cart/change?id=44182115647642:34f7fcbc629ebdf77d84aba06148b226&amp;quantity=0';
+document.addEventListener('DOMContentLoaded', function () {
+  var itemToRemoveIndex = 2; // Replace with the actual index of the item to remove
+  var itemToRemoveUrl = '/cart/change?id=44182115647642:34f7fcbc629ebdf77d84aba06148b226&amp;quantity=0';
 
-  if ($('.RemoveItem-' + itemToRemoveIndex).length > 0) {
-    removeCartItem(itemToRemoveIndex, itemToRemoveUrl);
-    // If you also want to remove the item with index 1, uncomment the line below
-    // removeCartItem(itemToRemoveIndex - 1, '/cart/change?id=...'); // Replace with the actual URL
+  var removeButton = document.querySelector('.RemoveItem-' + itemToRemoveIndex);
+  if (removeButton) {
+    removeButton.addEventListener('click', function () {
+      removeCartItem(itemToRemoveIndex, itemToRemoveUrl);
+      // If you also want to remove the item with index 1, uncomment the line below
+      // removeCartItem(itemToRemoveIndex - 1, '/cart/change?id=...'); // Replace with the actual URL
+    });
   }
 });
+
 
 
 
