@@ -23,7 +23,7 @@
 
 
     if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-        // Using fetch to make a POST request
+      
         fetch('/cart/clear.js', {
             method: 'POST',
             headers: {
