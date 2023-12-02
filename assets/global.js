@@ -30,7 +30,9 @@
                 'Content-Type': 'application/json',
             },
           
-            // body: JSON.stringify({ /* additional parameters if needed */ }),
+             body: JSON.stringify({
+              products: [qualifyingProductVariantId, freeProductVariantId], // Pass the product IDs to delete
+          }),
         })
         .then(response => {
             if (!response.ok) {
