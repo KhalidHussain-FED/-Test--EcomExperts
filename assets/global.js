@@ -1,3 +1,37 @@
+ let cartContainsQualifyingProduct = false;
+
+  const qualifyingProductVariantId1 = 44182115647642;
+  const qualifyingProductVariantId2 = 44158968135834;
+
+  // Check if the cart contains the qualifying products
+  {% for item in cart.items %}
+    if ({{ item.id }} === qualifyingProductVariantId1 || {{ item.id }} === qualifyingProductVariantId2) {
+      cartContainsQualifyingProduct = true;
+    }
+  {% endfor %}
+
+  // If the cart contains qualifying products, remove them using AJAX
+  if (cartContainsQualifyingProduct) {
+    $.ajax({
+      type: 'POST',
+      url: '/cart/update.js',
+      data: {
+        updates: {
+          [qualifyingProductVariantId1]: 0,
+          [qualifyingProductVariantId2]: 0
+        }
+      },
+      dataType: 'json',
+      success: function(response) {
+        // Handle success, if needed
+        window.location.reload();
+      },
+      error: function(error) {
+        // Handle errors, if needed
+        console.error('Error updating cart:', error);
+      }
+    });
+  }
 
 
 
