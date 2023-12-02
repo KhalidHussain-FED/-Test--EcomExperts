@@ -36,6 +36,8 @@ if (qualifyingProductIndex !== -1) {
         }),
     })
     .then(response => {
+        console.log('Change.js Response:', response.status, response.statusText);
+
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
         }
