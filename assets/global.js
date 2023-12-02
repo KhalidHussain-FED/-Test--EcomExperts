@@ -115,7 +115,8 @@ const MainProductId = 44182115647642;
   }
 
 
-var sampleCart = {
+// Sample cart object structure
+  var sampleCart = {
     token: 'c1-10f318923c697d0af2a10db6df71bc7d',
     note: '',
     attributes: { /* ... */ },
@@ -129,34 +130,33 @@ var sampleCart = {
     ]
   };
 
-  // Define the product IDs to target
-
   function removeProductFromCart(cart, productId) {
-    // Find the line item index of the product to be removed
-    var lineItemIndex = cart.items.findIndex(item => item.product_id === productId);
+    // Check if the cart object and items array exist
+    if (cart && cart.items && Array.isArray(cart.items)) {
+      // Find the line item index of the product to be removed
+      var lineItemIndex = cart.items.findIndex(item => item.product_id === productId);
 
-    if (lineItemIndex !== -1) {
-      // Remove the product from the cart
-      cart.items.splice(lineItemIndex, 1);
+      if (lineItemIndex !== -1) {
+        // Remove the product from the cart
+        cart.items.splice(lineItemIndex, 1);
 
-      // Log the updated cart
-      console.log('Updated Cart:', cart);
+        // Log the updated cart
+        console.log('Updated Cart:', cart);
 
-      // If you want to automatically remove the second product as well
-      var secondProductId = FreeProductId; // Change this to the ID of the second product
-      removeProductFromCart(cart, secondProductId);
+        // If you want to automatically remove the second product as well
+        var secondProductId = FreeProductId; // Change this to the ID of the second product
+        removeProductFromCart(cart, secondProductId);
+      } else {
+        console.warn('Product not found in the cart.');
+      }
     } else {
-      console.warn('Product not found in the cart.');
+      console.error('Invalid cart structure or missing items array.');
     }
   }
 
   // Example usage:
   var productIdToRemove = MainProductId; // Change this to the ID of the product you want to remove
   removeProductFromCart(sampleCart, productIdToRemove);
-
-  // Example usage:
-  var productIdToRemove = MainProductId; // Change this to the ID of the product you want to remove
-  removeProductFromCart(productIdToRemove);
 
 
 
