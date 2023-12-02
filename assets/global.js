@@ -1,14 +1,10 @@
-// Replace these with your actual values
 const shopifyDomain = 'https://khalid-hussain-test.myshopify.com/';
 const storefrontAccessToken = 'c1-10f318923c697d0af2a10db6df71bc7d';
 const variantIdToRemove = 44182115647642; // Replace with the actual variant ID
 
-// Get the current cart ID from the localStorage
 let cartId = localStorage.getItem('cartId');
 
-// If cart ID is not available, initialize the cart
 if (!cartId) {
-  // Make a request to create a new cart
   fetch(`https://${shopifyDomain}/api/storefront/`, {
     method: 'POST',
     headers: {
@@ -16,28 +12,27 @@ if (!cartId) {
       'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
     },
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to create cart. Status code: ${response.status}`);
+      }
+      return response.json();
+    })
     .then(data => {
-      // Store the new cart ID in localStorage
       cartId = data.data.checkoutCreate.checkout.id;
-      localStorage.setItem('cartId', cartId); // Store the cart ID here
-
-      // Now you can proceed with removing the product
+      localStorage.setItem('cartId', cartId);
       removeProduct(cartId, variantIdToRemove);
     })
     .catch(error => {
       console.error('Error initializing cart:', error);
     });
 } else {
-  // Cart ID is available, proceed with removing the product
   removeProduct(cartId, variantIdToRemove);
 }
 
-// Function to remove the product from the cart
 function removeProduct(cartId, variantId) {
   const removeProductUrl = `https://${shopifyDomain}/api/storefront/${cartId}/line_items/${variantId}`;
 
-  // Make the request to remove the product
   fetch(removeProductUrl, {
     method: 'DELETE',
     headers: {
@@ -48,7 +43,7 @@ function removeProduct(cartId, variantId) {
     .then(response => {
       if (response.ok) {
         console.log('Product removed successfully');
-        // You may want to update the cart UI or perform other actions here
+        // Update cart UI or perform other actions here
       } else {
         console.error(`Failed to remove product. Status code: ${response.status}`);
       }
@@ -57,7 +52,6 @@ function removeProduct(cartId, variantId) {
       console.error('Error removing product:', error);
     });
 }
-
 
 
 
