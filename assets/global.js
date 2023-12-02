@@ -23,7 +23,7 @@ if (cartId) {
         console.log('Product removed successfully');
         // You may want to update the cart UI or perform other actions here
       } else {
-        console.error(Failed to remove product. Status code: ${response.status});
+        // console.error(Failed to remove product. Status code: ${response.status});
       }
     })
     .catch(error => {
