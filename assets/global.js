@@ -1,31 +1,32 @@
-// Server-side code (Node.js with Express)
-const express = require('express');
-const bodyParser = require('body-parser');
 
-const app = express();
-app.use(bodyParser.json());
+const qualifyingProductVariantId = 44182115647642;
+const freeProductVariantId = 44158968135834;
 
-app.delete('/cart/clear.js', (req, res) => {
-  const productsToDelete = req.body.products || [];
-
-  // Your logic to delete the specified products from the cart
-  // For demonstration purposes, let's assume a cart variable
-  const cart = [
-    { id: 123, /* other properties */ },
-    { id: 44182115647642 },
-    { id: 44158968135834 },
-  ];
-
-  const updatedCart = cart.filter(item => !productsToDelete.includes(item.id));
-
-  // Respond with a success message or updated cart data
-  res.json({ message: 'Cart cleared successfully', updatedCart });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Making a POST request to clear.js
+fetch('/cart/clear.js', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    products: [qualifyingProductVariantId, freeProductVariantId],
+  }),
+})
+  .then(response => {
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error('Failed to clear cart');
+    }
+    return response.json(); // Assuming clear.js returns JSON
+  })
+  .then(data => {
+    // Handle the response data if needed
+    console.log('Cart cleared successfully', data);
+  })
+  .catch(error => {
+    // Handle errors
+    console.error('Error clearing cart:', error.message);
+  });
 
 
 
