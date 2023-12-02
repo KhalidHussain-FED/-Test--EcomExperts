@@ -1,47 +1,47 @@
-//window.onload = function () {
+// //window.onload = function () {
   
-    let cartContainsFreeProduct = false;
-    let cartContainsQualifyingProduct = false;
+//     let cartContainsFreeProduct = false;
+//     let cartContainsQualifyingProduct = false;
 
-    const qualifyingProductVariantId = 44182115647642;
-    const freeProductVariantId = 44158968135834;
+//     const qualifyingProductVariantId = 44182115647642;
+//     const freeProductVariantId = 44158968135834;
 
-    const cartitems = [
-        { id: 123, /* other properties */ },
-        { id: qualifyingProductVariantId, },
-        { id: freeProductVariantId,  },
-    ];
+//     const cartitems = [
+//         { id: 123, /* other properties */ },
+//         { id: qualifyingProductVariantId, },
+//         { id: freeProductVariantId,  },
+//     ];
 
-    cartitems.forEach(function (item) {
-        if (item.id === freeProductVariantId) {
-            cartContainsFreeProduct = true;
-        }
-        if (item.id === qualifyingProductVariantId) {
-            cartContainsQualifyingProduct = true;
-        }
-    });
+//     cartitems.forEach(function (item) {
+//         if (item.id === freeProductVariantId) {
+//             cartContainsFreeProduct = true;
+//         }
+//         if (item.id === qualifyingProductVariantId) {
+//             cartContainsQualifyingProduct = true;
+//         }
+//     });
 
 
-    if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
+//     if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
       
-        fetch('/cart/clear.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+//         fetch('/cart/clear.js', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
           
-            // body: JSON.stringify({ /* additional parameters if needed */ }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
+//             // body: JSON.stringify({ /* additional parameters if needed */ }),
+//         })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
     
-        })
-        .catch(error => console.error('Error clearing cart:', error));
-    }
-//};
+//         })
+//         .catch(error => console.error('Error clearing cart:', error));
+//     }
+// //};
 
 
 
