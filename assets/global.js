@@ -8,12 +8,18 @@ const freeProductVariantId = 44158968135834;
 const cartItemsString = sessionStorage.getItem('cartItems');
 const cartitems = cartItemsString ? JSON.parse(cartItemsString) : [];
 
-cartitems.forEach(function (item) {
+cartitems.forEach(function (item, index) {
     if (item.id === freeProductVariantId) {
         cartContainsFreeProduct = true;
     }
     if (item.id === qualifyingProductVariantId) {
         cartContainsQualifyingProduct = true;
+    }
+
+    // Check if a specific product is removed, and remove the free product as well
+    if (/* Check for specific condition to identify the product to be removed */) {
+        cartitems.splice(index, 1); // Remove the specific product
+        cartContainsFreeProduct = false; // Set to false as the specific product is removed
     }
 });
 
@@ -33,12 +39,13 @@ if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
     })
     .catch(error => console.error('Error clearing cart:', error));
 
-    // Clear cart information from sessionStorage after clearing the cart
+    // Clear cart information from sessionStorage only if qualifying or free products are present
     sessionStorage.removeItem('cartItems');
+} else {
+    // Save the updated cart information to sessionStorage if no clearing is needed
+    sessionStorage.setItem('cartItems', JSON.stringify(cartitems));
 }
 
-// Save the updated cart information to sessionStorage
-sessionStorage.setItem('cartItems', JSON.stringify(cartitems));
 
 
 function updateSelectedColor(color) {
