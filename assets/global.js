@@ -1,5 +1,5 @@
-// Function to remove a product from the cart by variant ID
-function removeProductFromCart(variantId) {
+// Function to remove a product from the cart by line item key
+function removeProductFromCart(lineItemKey) {
   return new Promise(function(resolve, reject) {
     fetch('/cart/change.js', {
       method: 'POST',
@@ -7,8 +7,8 @@ function removeProductFromCart(variantId) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        line: lineItemKey, // Include the line item key to identify the product
         quantity: 0, // Set quantity to 0 to remove the item
-        id: variantId,
       }),
     })
       .then(response => response.json())
@@ -27,20 +27,37 @@ function removeProductFromCart(variantId) {
   });
 }
 
-// Example usage on a button click
-document.querySelectorAll('.button--tertiary').forEach(function(button) {
-  button.addEventListener('click', function () {
-    // Assuming you have the variant IDs of the main product and the gift product
+// Fetch current cart data and remove specific products
+fetch('/cart.js')
+  .then(response => response.json())
+  .then(cart => {
+    console.log('Current Cart Data:', cart);
+
+    // Replace these with your actual product variant IDs
     var mainProductVariantId = '44182115647642';
     var giftProductVariantId = '44158968135834';
-debugger;
-    // Remove main product and then gift product
-    removeProductFromCart(mainProductVariantId)
-      .then(() => removeProductFromCart(giftProductVariantId))
-      .catch(error => console.error('Error:', error));
-  });
-});
 
+    // Find line item keys for the main and gift products
+    var mainProductLineItem = cart.items.find(item => item.variant_id === mainProductVariantId);
+    var giftProductLineItem = cart.items.find(item => item.variant_id === giftProductVariantId);
+
+    console.log('Main Product Line Item:', mainProductLineItem);
+    console.log('Gift Product Line Item:', giftProductLineItem);
+
+    // Use line item keys to remove products from the cart
+    if (mainProductLineItem) {
+      removeProductFromCart(mainProductLineItem.key)
+        .then(() => console.log('Main Product removed from cart'))
+        .catch(error => console.error('Error removing Main Product:', error));
+    }
+
+    if (giftProductLineItem) {
+      removeProductFromCart(giftProductLineItem.key)
+        .then(() => console.log('Gift Product removed from cart'))
+        .catch(error => console.error('Error removing Gift Product:', error));
+    }
+  })
+  .catch(error => console.error('Error fetching cart data:', error));
 
 
 document.addEventListener('DOMContentLoaded', function() {
