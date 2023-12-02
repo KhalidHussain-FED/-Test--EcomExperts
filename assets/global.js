@@ -1,6 +1,4 @@
 // Function to remove a product from the cart by variant ID
-
-
 function removeProductFromCart(variantId) {
   return new Promise(function(resolve, reject) {
     fetch('/cart/change.js', {
@@ -14,11 +12,13 @@ function removeProductFromCart(variantId) {
       }),
     })
       .then(response => response.json())
-      .then(cart => {
-        console.log('Product removed from cart:', cart);
-
-        alert("Ok");
-        resolve(cart);
+      .then(result => {
+        if (result.item_count === 0) {
+          console.log('Product removed from cart:', result);
+          resolve(result);
+        } else {
+          reject('Error: Unable to remove product from cart.');
+        }
       })
       .catch(error => {
         console.error('Error removing product from cart:', error);
@@ -33,7 +33,6 @@ document.querySelectorAll('.button--tertiary').forEach(function(button) {
     // Assuming you have the variant IDs of the main product and the gift product
     var mainProductVariantId = '44182115647642';
     var giftProductVariantId = '44158968135834';
-
 debugger;
     // Remove main product and then gift product
     removeProductFromCart(mainProductVariantId)
@@ -41,6 +40,7 @@ debugger;
       .catch(error => console.error('Error:', error));
   });
 });
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
