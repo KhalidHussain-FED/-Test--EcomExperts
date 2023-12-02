@@ -32,24 +32,24 @@ fetch('/cart/clear.js', {
     }
     return response.json();
 })
-.then(() => {
-    // Update the cart with the modified items
-    fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ updates: updatedCartItems }),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .catch(error => console.error('Error updating cart:', error));
-})
-.catch(error => console.error('Error clearing cart:', error));
+// .then(() => {
+//     // Update the cart with the modified items
+//     fetch('/cart/update.js', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ updates: updatedCartItems }),
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Network response was not ok');
+//         }
+//         return response.json();
+//     })
+//     .catch(error => console.error('Error updating cart:', error));
+// })
+// .catch(error => console.error('Error clearing cart:', error));
 
 // //};
 
