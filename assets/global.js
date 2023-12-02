@@ -15,6 +15,8 @@ function removeProductFromCart(variantId) {
       .then(response => response.json())
       .then(cart => {
         console.log('Product removed from cart:', cart);
+
+        alert("Ok");
         resolve(cart);
       })
       .catch(error => {
