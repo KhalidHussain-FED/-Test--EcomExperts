@@ -1,38 +1,4 @@
-const qualifyingProductVariantId = 44182115647642;
-const freeProductVariantId = 44158968135834;
 
-document.querySelector('.button--tertiary').addEventListener('click', function() {
-    // When a button with class 'button--tertiary' is clicked, it triggers an AJAX request to remove both products
-
-    // You might get the product IDs dynamically based on your HTML structure
-    var qualifyingProductIdToRemove = qualifyingProductVariantId;
-    var freeProductIdToRemove = freeProductVariantId;
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/cart/update.js', true);
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-    xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 300) {
-            var responseData = JSON.parse(xhr.responseText);
-            console.log('Products removed successfully:', responseData);
-            // Perform any additional actions upon successful removal
-        } else {
-            console.error('Error removing products:', xhr.statusText);
-        }
-    };
-
-    xhr.onerror = function() {
-        console.error('Network error occurred while removing the products.');
-    };
-
-    xhr.send(JSON.stringify({
-        updates: {
-            [qualifyingProductIdToRemove]: 0, // Set the quantity to 0 to remove the qualifying product
-            [freeProductIdToRemove]: 0 // Set the quantity to 0 to remove the free product
-        }
-    }));
-});
 
 
 
