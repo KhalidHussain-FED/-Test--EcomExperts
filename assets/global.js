@@ -2,7 +2,7 @@
 
 function removeProductFromCart(variantId) {
   return new Promise(function(resolve, reject) {
-    fetch('/cart/change.js', {
+    fetch('/cart/clear.js', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
