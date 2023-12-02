@@ -1,23 +1,23 @@
 // //window.onload = function () {
 
-let cartContainsFreeProduct = false;
-let cartContainsQualifyingProduct = false;
+// let cartContainsFreeProduct = false;
+// let cartContainsQualifyingProduct = false;
 
-const qualifyingProductVariantId = 44182115647642;
-const freeProductVariantId = 44158968135834;
+// const qualifyingProductVariantId = 44182115647642;
+// const freeProductVariantId = 44158968135834;
 
-const cartitems = [
-    { id: 12, /* other properties */ },
-    { id: qualifyingProductVariantId, },
-    { id: freeProductVariantId,  },
-];
+// const cartitems = [
+//     { id: 12, /* other properties */ },
+//     { id: qualifyingProductVariantId, },
+//     { id: freeProductVariantId,  },
+// ];
 
-// Filter out the specific product you want to remove
-const updatedCartItems = cartitems.filter(item => item.id !== qualifyingProductVariantId);
+// // Filter out the specific product you want to remove
+// const updatedCartItems = cartitems.filter(item => item.id !== qualifyingProductVariantId);
 
-// Check if the cart contains the specific product
-cartContainsFreeProduct = cartitems.some(item => item.id === freeProductVariantId);
-cartContainsQualifyingProduct = cartitems.some(item => item.id === qualifyingProductVariantId);
+// // Check if the cart contains the specific product
+// cartContainsFreeProduct = cartitems.some(item => item.id === freeProductVariantId);
+// cartContainsQualifyingProduct = cartitems.some(item => item.id === qualifyingProductVariantId);
 
 // Clear the cart
 fetch('/cart/clear.js', {
