@@ -6,6 +6,7 @@
   - option: {Object} current product_option object.
   - block: {Object} block object.
 
+
   Usage:
   {% render 'product-variant-options',
     product: product,
@@ -13,9 +14,7 @@
     block: block
   %}
 {% endcomment %}
-
-<!-- <span id="selectedColorValue"></span> -->
-
+<span id="selectedColorValue"></span>
 {%- liquid
   assign variants_available_arr = product.variants | map: 'available'
   assign variants_option1_arr = product.variants | map: 'option1'
@@ -59,32 +58,21 @@
       {% if option_disabled %}
         class="disabled"
       {% endif %}
-      onchange="updateSelectedColor('{{ value }}')"
     >
-    {% assign colorVariant = product.variants | where: 'option1', value | first %}
+ 
 
-    {%- if colorVariant -%}
-      {% if product.variants[forloop.index0].image != blank and option.name == 'Color' %}
-        <label
-        for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-        style="background-image: url({{ colorVariant.image.src | img_url: 'thumbnail' }}); height: 40px; width: 40px; background-size: cover;"
-      ></label>
-    {% else %}
-      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-        {{ value -}}
-        <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-      </label>
-    {% endif %}
-    {%- else -%}
-      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-        {{ value -}}
-        <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
-      </label>
-    {%- endif -%}
+<label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
+      {{ value -}}
+      <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span><span>{{ product.selected_or_first_available_variant }}</span>
+    </label>
 
   {%- elsif block.settings.picker_type == 'dropdown' -%}
+    `
     <option
-      value="{{ value | escape }}"
+      value="
+        {{
+        value | escape }}
+      "
       {% if option.selected_value == value %}
         selected="selected"
       {% endif %}
@@ -93,8 +81,17 @@
         {{- 'products.product.value_unavailable' | t: option_value: value -}}
       {%- else -%}
         {{- value -}}
-      {%- endif -%}
+      {%- endif %}
     </option>
   {%- endif -%}
 {%- endfor -%}
-
+<script>
+  function updateSelectedColor(color) {
+    var selectedColorValue = document.getElementById('selectedColorValue');
+    selectedColorValue.textContent = color;
+  }
+   function updateSelectedSize(size) {
+    var selectedColorValue = document.getElementById('selectedColorValue');
+    selectedColorValue.textContent = color;
+  }
+</script>
