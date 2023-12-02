@@ -3536,12 +3536,13 @@ tr#CartItem-1 .product-option:nth-child(2){
 
 /* Default styling */
 
-/* .product-form__input input[type=radio]+label {
-    background-color: transparent !important;
+.product-form__input input[type=radio]+label {
+    background-color: #000 !important;
     color: initial; /* or your default text color */
 }
- */
-/* Styling for checked radio button with active class for the first item */
+
+
+
 .product-form__input input[type=radio]:checked:nth-of-type(1)+label.active {
     background-color: #000 !important;
 }
