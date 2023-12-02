@@ -1,59 +1,22 @@
-const shopifyDomain = 'https://khalid-hussain-test.myshopify.com/';
-const storefrontAccessToken = 'c1-10f318923c697d0af2a10db6df71bc7d';
-const variantIdToRemove = 44182115647642; // Replace with the actual variant ID
 
-let cartId = localStorage.getItem('cartId');
+  window.onload = function(){
+    let cartContainsQualifyingProduct = false;
 
-if (!cartId) {
-  fetch(`https://${shopifyDomain}/api/storefront/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-    },
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to create cart. Status code: ${response.status}`);
+    const qualifyingProductVariantId1 = 44182115647642;
+    const qualifyingProductVariantId2 = 44158968135834;
+
+    {% for item in cart.items %}
+      if({{ item.id }} === qualifyingProductVariantId1 || {{ item.id }} === qualifyingProductVariantId2){
+         cartContainsQualifyingProduct = true;
       }
-      return response.json();
-    })
-    .then(data => {
-      cartId = data.data.checkoutCreate.checkout.id;
-      localStorage.setItem('cartId', cartId);
-      removeProduct(cartId, variantIdToRemove);
-    })
-    .catch(error => {
-      console.error('Error initializing cart:', error);
-    });
-} else {
-  removeProduct(cartId, variantIdToRemove);
-}
+    {% endfor %}
 
-function removeProduct(cartId, variantId) {
-  const removeProductUrl = `https://${shopifyDomain}/api/storefront/${cartId}/line_items/${variantId}`;
-
-  fetch(removeProductUrl, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-    },
-  })
-    .then(response => {
-      if (response.ok) {
-        console.log('Product removed successfully');
-        // Update cart UI or perform other actions here
-      } else {
-        console.error(`Failed to remove product. Status code: ${response.status}`);
-      }
-    })
-    .catch(error => {
-      console.error('Error removing product:', error);
-    });
-}
-
-
+    // If cart contains qualifying products, remove them
+    if(cartContainsQualifyingProduct) {
+      jQuery.post('/cart/update.js', { updates: { {{ qualifyingProductVariantId1 }}: 0, {{ qualifyingProductVariantId2 }}: 0 } })
+      .done(function() { window.location.reload() });
+    }
+  }
 
 
 document.addEventListener('DOMContentLoaded', function() {
