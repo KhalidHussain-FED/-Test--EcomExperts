@@ -5,7 +5,9 @@ $(document).ready(function() {
 
   // If the cart contains the item to be removed, trigger the removal
   if ($('.cart-item[id="' + itemToRemoveId + '"]').length > 0) {
+    // Remove only the specified item using AJAX
     removeItem(itemToRemoveId);
+    console.log(itemToRemoveId);
   }
 
   // Function to remove the specified item using AJAX
@@ -21,6 +23,7 @@ $(document).ready(function() {
       dataType: 'json',
       success: function(response) {
         // Handle success, if needed
+        console.log('Item removed successfully');
         window.location.reload();
       },
       error: function(error) {
@@ -30,6 +33,7 @@ $(document).ready(function() {
     });
   }
 });
+
 
 
 
