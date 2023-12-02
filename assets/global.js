@@ -3,7 +3,7 @@
     let cartContainsFreeProduct = false;
     let cartContainsQualifyingProduct = false;
 
-    const qualifyingProductVariantId = 44173477609626;
+    const qualifyingProductVariantId = 44182115647642;
     const freeProductVariantId = 44158968135834;
 
     const cartitems = [
