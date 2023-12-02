@@ -3,18 +3,21 @@ $(document).ready(function() {
 
   const itemToRemoveId = 'CartItem-2'; // Replace with the actual ID of the item to remove
 
-  // If the cart contains the item to be removed, trigger the removal
+  console.log('Starting removal process for:', itemToRemoveId);
+
+  // If the cart contains the item to be removed, trigger the removal of both items
   if ($('.cart-item[id="' + itemToRemoveId + '"]').length > 0) {
-    // Find all cart items and remove them using AJAX
-    $('.cart-item').each(function() {
-      const itemId = this.id;
-      console.log('Removing item with ID:', itemId);
-      removeItem(itemId);
-    });
+    // Remove both items using AJAX
+    console.log('Removing CartItem-1');
+    removeItem('CartItem-1');
+
+    console.log('Removing', itemToRemoveId);
+    removeItem(itemToRemoveId);
   }
 
   // Function to remove the specified item using AJAX
   function removeItem(itemId) {
+    console.log('Initiating removal for:', itemId);
     $.ajax({
       type: 'POST',
       url: '/cart/update.js',
