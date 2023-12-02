@@ -84,21 +84,6 @@ selectElement.addEventListener('change', function () {
 });
 
 
-function updateBackgroundColor(index) {
-  var labels = document.querySelectorAll('.product-form__input label');
-  labels.forEach(function(label) {
-    label.classList.remove('active');
-  });
-
-  var clickedLabel = document.querySelector('.product-form__input label:nth-of-type(' + index + ')');
-  if (clickedLabel) {
-    clickedLabel.classList.add('active');
-  }
-
-  // Add your logic here to handle the selected color
-  console.log("Selected color updated:", index);
-}
-
 
 
 function getFocusableElements(container) {
