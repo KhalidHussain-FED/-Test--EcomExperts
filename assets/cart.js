@@ -246,29 +246,3 @@ if (!customElements.get('cart-note')) {
     }
   );
 }
-
-
-document.addEventListener('DOMContentLoaded', function() {
-       const mytoken = '34f7fcbc629ebdf77d84aba06148b226';
-
-              if (mytoken)
-              {
-  
-        fetch('/cart/clear.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-          
-            // body: JSON.stringify({ /* additional parameters if needed */ }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-    
-        })
-        .catch(error => console.error('Error clearing cart:', error));
-      }
-    });
