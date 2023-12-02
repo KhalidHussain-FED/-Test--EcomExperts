@@ -21,22 +21,18 @@ function removeProductFromCart(variantId) {
 }
 
 // Example usage on a button click
-document.querySelectorAll('button--tertiary').addEventListener('click', function () {
-  // Assuming you have the variant IDs of the main product and the gift product
-  var mainProductVariantId = '44182115647642';
-  var giftProductVariantId = '44158968135834';
+document.querySelectorAll('.button--tertiary').forEach(function(button) {
+  button.addEventListener('click', function () {
+    // Assuming you have the variant IDs of the main product and the gift product
+    var mainProductVariantId = '44182115647642';
+    var giftProductVariantId = '44158968135834';
 
-  // Remove both main product and gift product
-  removeProductFromCart(mainProductVariantId);
-  removeProductFromCart(giftProductVariantId);
+    // Remove both main product and gift product
+    removeProductFromCart(mainProductVariantId);
+    removeProductFromCart(giftProductVariantId);
+  });
 });
 
-
-// Remove both main product and gift product when triggered (e.g., on a button click)
-document.getElementById('removeProductsButton').addEventListener('click', function () {
-  removeProductFromCart(mainProductVariantId);
-  removeProductFromCart(giftProductVariantId);
-});
 
 
 
