@@ -9,7 +9,7 @@ function removeProduct(productId) {
 
 // Simulate the cart items
 cartItems = [
-    { id: 44182115647642, /* other properties */ },
+    { id: 123, /* other properties */ },
     { id: qualifyingProductVariantId },
     { id: freeProductVariantId },
 ];
@@ -27,7 +27,7 @@ if (qualifyingProductIndex !== -1) {
 
     // Prepare the payload for update.js
     const payload = cartItems.map(item => ({
-        id: item.id, // Use the variant_id or key as needed
+        id: item.id,
         quantity: 1, // You may adjust the quantity as needed
     }));
 
@@ -62,13 +62,6 @@ if (!cartContainsQualifyingProduct) {
     console.log('Updated Cart Items:', cartItems);
 }
 
-
-
-function updateSelectedColor(color) {
-  // Add your logic here to handle the selected color
-  console.log("Selected color updated:", color);
-  // You can add more code here, such as updating UI or making Ajax requests
-}
 
 
  document.addEventListener('DOMContentLoaded', function() {
