@@ -9,7 +9,7 @@ function removeProduct(productId) {
 
 // Simulate the cart items
 cartItems = [
-    { id: 123, /* other properties */ },
+    { id: 44158968135834, /* other properties */ },
     { id: qualifyingProductVariantId },
     { id: freeProductVariantId },
 ];
@@ -25,6 +25,12 @@ if (qualifyingProductIndex !== -1) {
     cartItems = removeProduct(qualifyingProductVariantId);
     cartItems = removeProduct(freeProductVariantId);
 
+    // Prepare the payload for change.js
+    const payload = cartItems.map(item => ({
+        id: item.id,
+        quantity: 1, // You may adjust the quantity as needed
+    }));
+
     // Use the change.js endpoint to update the cart
     fetch('/cart/change.js', {
         method: 'POST',
@@ -32,10 +38,11 @@ if (qualifyingProductIndex !== -1) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            items: cartItems,
+            items: payload,
         }),
     })
     .then(response => {
+        console.log('Change.js Request Payload:', JSON.stringify({ items: payload }));
         console.log('Change.js Response:', response.status, response.statusText);
 
         if (!response.ok) {
