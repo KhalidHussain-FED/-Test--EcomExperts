@@ -5,9 +5,11 @@ $(document).ready(function() {
 
   // If the cart contains the item to be removed, trigger the removal
   if ($('.cart-item[id="' + itemToRemoveId + '"]').length > 0) {
-    // Remove only the specified item using AJAX
-    removeItem(itemToRemoveId);
-    console.log(itemToRemoveId);
+    // Find all cart items and remove them using AJAX
+    $('.cart-item').each(function() {
+      const itemId = this.id;
+      removeItem(itemId);
+    });
   }
 
   // Function to remove the specified item using AJAX
