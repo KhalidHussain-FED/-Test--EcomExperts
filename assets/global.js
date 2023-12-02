@@ -1,15 +1,11 @@
 // Function to remove a product from the cart by line item key
 function removeProductFromCart(lineItemKey) {
   return new Promise(function(resolve, reject) {
-    fetch('/cart/change.js', {
+    fetch(`/cart/change.js?line=${lineItemKey}&quantity=0`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        line: lineItemKey, // Include the line item key to identify the product
-        quantity: 0, // Set quantity to 0 to remove the item
-      }),
     })
       .then(response => response.json())
       .then(result => {
@@ -32,11 +28,6 @@ fetch('/cart.js')
   .then(response => response.json())
   .then(cart => {
     console.log('Current Cart Data:', cart);
-
-    // Log variant IDs of each item in the cart
-    cart.items.forEach(item => {
-      console.log(`Variant ID for product "${item.title}": ${item.variant_id}`);
-    });
 
     // Replace these with your actual product variant IDs
     var mainProductVariantId = '44182115647642';
@@ -63,6 +54,7 @@ fetch('/cart.js')
     }
   })
   .catch(error => console.error('Error fetching cart data:', error));
+
 
 
 
