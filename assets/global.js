@@ -1,8 +1,52 @@
+//window.onload = function () {
+  
+    let cartContainsFreeProduct = false;
+    let cartContainsQualifyingProduct = false;
+
+    const qualifyingProductVariantId = 44182115647642;
+    const freeProductVariantId = 44158968135834;
+
+    const cartitems = [
+        { id: 123, /* other properties */ },
+        { id: qualifyingProductVariantId, },
+        { id: freeProductVariantId,  },
+    ];
+
+    cartitems.forEach(function (item) {
+        if (item.id === freeProductVariantId) {
+            cartContainsFreeProduct = true;
+        }
+        if (item.id === qualifyingProductVariantId) {
+            cartContainsQualifyingProduct = true;
+        }
+    });
+
+
+    if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
+      
+        fetch('/cart/clear.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+          
+            // body: JSON.stringify({ /* additional parameters if needed */ }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+    
+        })
+        .catch(error => console.error('Error clearing cart:', error));
+    }
+//};
 
 
 
 
- document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
         var variantSelect = document.getElementById('custom-input--size');
         var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
 
