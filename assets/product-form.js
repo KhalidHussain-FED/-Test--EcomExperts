@@ -66,103 +66,106 @@ if (!customElements.get("product-form")) {
               return;
             } // Check if the cart is empty
             else if (!this.cart) {
-              const currentURL = window.location.href;
+  const currentURL = window.location.href;
 
-              if (
-                currentURL ===
-                "https://khalid-hussain-test.myshopify.com/products/product-1?variant=44182115647642"
-              ) {
-                const FreeProductTitle = "Soft Winter Jacket";
-                const MainProductId = 44182115647642;
-                const FreeProductId = 44158968135834;
+  if (
+    currentURL ===
+    "https://khalid-hussain-test.myshopify.com/products/product-1?variant=44182115647642"
+  ) {
+    const FreeProductTitle = "Soft Winter Jacket";
+    const MainProductId = 44182115647642;
+    const FreeProductId = 44158968135834;
+    const AdditionalProductId = 44182115647642; // Replace with the actual variant ID
 
-                let freeProductFormData = {
-                  items: [
-                    {
-                      id: FreeProductId,
-                      quantity: 1,
-                    },
-                  ],
-                };
+    let freeProductFormData = {
+      items: [
+        {
+          id: FreeProductId,
+          quantity: 1,
+        },
+      ],
+    };
 
-                // Function to add free product to the cart
-                const addFreeProductToCart = () => {
-                  fetch(window.Shopify.routes.root + "cart/add.js", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(freeProductFormData),
-                  })
-                    .then((freeProductResponse) => {
-                      console.log(
-                        "Add Free Product to Cart Response:",
-                        freeProductResponse
-                      );
-                      window.location = window.routes.cart_url;
-                      return freeProductResponse.json();
-                    })
-                    .catch((error) =>
-                      console.error("Error adding free product:", error)
-                    );
-                };
+    // Function to add free product to the cart
+    const addFreeProductToCart = () => {
+      fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(freeProductFormData),
+      })
+        .then((freeProductResponse) => {
+          console.log(
+            "Add Free Product to Cart Response:",
+            freeProductResponse
+          );
+          window.location = window.routes.cart_url;
+          return freeProductResponse.json();
+        })
+        .catch((error) =>
+          console.error("Error adding free product:", error)
+        );
+    };
 
-                // Function to remove free product from the cart
-                const removeFreeProductFromCart = () => {
-                  let removeFreeProductFormData = {
-                    updates: {
-                      [FreeProductId]: 0,
-                    },
-                  };
+    // Function to remove free product and additional product from the cart
+    const removeProductsFromCart = () => {
+      let removeProductsFormData = {
+        updates: {
+          [FreeProductId]: 0, // Remove the free product
+          [AdditionalProductId]: 0, // Remove the additional product
+        },
+      };
 
-                  fetch(window.Shopify.routes.cart_change_url, {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(removeFreeProductFormData),
-                  })
-                    .then((removeFreeProductResponse) => {
-                      console.log(
-                        "Remove Free Product from Cart Response:",
-                        removeFreeProductResponse
-                      );
-                      window.location.reload();
-                      return removeFreeProductResponse.json();
-                    })
-                    .catch((error) =>
-                      console.error("Error removing free product:", error)
-                    );
-                };
+      fetch(window.Shopify.routes.cart_change_url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(removeProductsFormData),
+      })
+        .then((removeProductsResponse) => {
+          console.log(
+            "Remove Products from Cart Response:",
+            removeProductsResponse
+          );
+          window.location.reload();
+          return removeProductsResponse.json();
+        })
+        .catch((error) =>
+          console.error("Error removing products:", error)
+        );
+    };
 
-                // Add the free product to the cart initially
-                addFreeProductToCart();
+    // Add the free product to the cart initially
+    addFreeProductToCart();
 
-                // Event listener for cart updates
-                document.addEventListener("cart:updated", () => {
-                  const cart = JSON.parse(localStorage.getItem("cart"));
+    // Event listener for cart updates
+    document.addEventListener("cart:updated", () => {
+      const cart = JSON.parse(localStorage.getItem("cart"));
 
-                  console.log("Updated Cart:", cart);
+      console.log("Updated Cart:", cart);
 
-                  // Check if the main product is removed from the cart
-                  const mainProductRemoved = !cart.items.some(
-                    (item) => item.variant_id === MainProductId
-                  );
+      // Check if the main product is removed from the cart
+      const mainProductRemoved = !cart.items.some(
+        (item) => item.variant_id === MainProductId
+      );
 
-                  console.log("Main Product Removed:", mainProductRemoved);
+      console.log("Main Product Removed:", mainProductRemoved);
 
-                  if (mainProductRemoved) {
-                    console.log("Removing Free Product...");
-                    // Remove the free product from the cart
-                    removeFreeProductFromCart();
-                  }
-                });
-              } else {
-                window.location = window.routes.cart_url;
-              }
-            }
+      if (mainProductRemoved) {
+        console.log("Removing Free and Additional Products...");
+        // Remove the free and additional products from the cart
+        removeProductsFromCart();
+      }
+    });
+  } else {
+    window.location = window.routes.cart_url;
+  }
+}
 
-            return;
+return;
+
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
