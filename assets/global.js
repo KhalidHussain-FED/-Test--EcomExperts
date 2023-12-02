@@ -8,7 +8,7 @@ const cartId = localStorage.getItem('cartId');
 
 // Ensure the cart ID is available
 if (cartId) {
-  const removeProductUrl = https://${shopifyDomain}/api/storefront/checkouts/${cartId}/line_items/${variantIdToRemove};
+  const removeProductUrl = "https://${shopifyDomain}/api/storefront/checkouts/${cartId}/line_items/${variantIdToRemove}";
 
   // Make the request to remove the product
   fetch(removeProductUrl, {
