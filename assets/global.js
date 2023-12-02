@@ -4,38 +4,20 @@ const storefrontAccessToken = 'c1-10f318923c697d0af2a10db6df71bc7d';
 const variantIdToRemove = 44182115647642; // Replace with the actual variant ID
 
 // Get the current cart ID from the localStorage
-let cartId = localStorage.getItem('cartId');
+let cartId = localStorage.getItem('template--16312456347802__cart-items');
 
-// If cart ID is not available, initialize the cart
+// If cart ID is not available, set a static one
 if (!cartId) {
-  // Make a request to create a new cart
-  fetch(`https://${shopifyDomain}/api/storefront/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
-    },
-  })
-    .then(response => response.json())
-    .then(data => {
-      // Store the new cart ID in localStorage
-      cartId = data.data.checkoutCreate.checkout.id;
-      localStorage.setItem('cartId', cartId);
-
-      // Now you can proceed with removing the product
-      removeProduct(cartId, variantIdToRemove);
-    })
-    .catch(error => {
-      console.error('Error initializing cart:', error);
-    });
-} else {
-  // Cart ID is available, proceed with removing the product
-  removeProduct(cartId, variantIdToRemove);
+  cartId = 'staticCartId123'; // Replace with your desired static cart ID
+  localStorage.setItem('template--16312456347802__cart-items', cartId);
 }
+
+// Proceed with removing the product
+removeProduct(cartId, variantIdToRemove);
 
 // Function to remove the product from the cart
 function removeProduct(cartId, variantId) {
-  const removeProductUrl = `https://${shopifyDomain}/api/storefront/${cartId}/line_items/${variantId}`;
+  const removeProductUrl = `https://${shopifyDomain}/api/storefront/checkouts/${cartId}/line_items/${variantId}`;
 
   // Make the request to remove the product
   fetch(removeProductUrl, {
@@ -57,6 +39,7 @@ function removeProduct(cartId, variantId) {
       console.error('Error removing product:', error);
     });
 }
+
 
 
 
