@@ -1,5 +1,5 @@
 //window.onload = function () {
-    // Initialize variables to check if the cart contains a free product and a qualifying product
+  
     let cartContainsFreeProduct = false;
     let cartContainsQualifyingProduct = false;
 
@@ -63,6 +63,11 @@
             addToCartButton.disabled = variantSelect.selectedIndex === 0;
         }
     });
+
+
+
+
+
 
 
 function getFocusableElements(container) {
