@@ -58,7 +58,6 @@ fetch('/cart.js')
 
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
         var variantSelect = document.getElementById('custom-input--size');
         var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
             addToCartButton.disabled = variantSelect.selectedIndex === 0;
         }
     });
-
 
 
 
