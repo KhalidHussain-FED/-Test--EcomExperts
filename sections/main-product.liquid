@@ -231,7 +231,7 @@
                     | item_count_for_variant: product.selected_or_first_available_variant.id
                   -%}
                   {% # theme-check-enable %}
-                  {% if product.id == 7987569885338 %}
+                 {% if product.id == 7987569885338 %}
                   <p id="custom_dropdown">
                     <label for="custom-input--size">Size</label><br>
                     <select
@@ -248,10 +248,27 @@
                       <option value="Large">Large</option>
                     </select>
                     <script>
+                      const variantMapping = {
+                        "Black - Small": 44173477642394,
+                        "Black - Medium": 44173477675162,
+                        "Black - Large": 44173490323610,
+                        "Red - Small": 44173563363482,
+                        "Red - Medium": 44173563396250,
+                        "Red - Large": 44173563429018,
+                        "Tan - Small": 44173563494554,
+                        "Tan - Medium": 44173563527322,
+                        "Tan - Large": 44173563560090,
+                      };
+                  
                       function updateURL(selectedSize) {
                         const productId = {{ product.id }};
-                        const newUrl = `/products/${productId}?size=${selectedSize}`;
-                        window.history.replaceState({}, document.title, newUrl);
+                        const selectedColor = "Black"; // Assuming you have a way to determine the selected color
+                        const selectedVariantId = variantMapping[`${selectedColor} - ${selectedSize}`];
+                        
+                        if (selectedVariantId) {
+                          const newUrl = `/products/${productId}?variant=${selectedVariantId}`;
+                          window.history.replaceState({}, document.title, newUrl);
+                        }
                       }
                   
                       document.addEventListener('DOMContentLoaded', () => {
