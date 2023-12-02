@@ -16,64 +16,43 @@ cartItems = [
 
 let cartContainsQualifyingProduct = false;
 
-// Iterate through the cart items and check for the removed product
-cartItems.forEach(function (item, index) {
-    if (item.id === qualifyingProductVariantId) {
-        cartContainsQualifyingProduct = true;
+// Check if the qualifying product is in the cart
+const qualifyingProductIndex = cartItems.findIndex(item => item.id === qualifyingProductVariantId);
+if (qualifyingProductIndex !== -1) {
+    cartContainsQualifyingProduct = true;
 
-        // Remove the qualifying product and the associated free product
-        cartItems = removeProduct(qualifyingProductVariantId);
-        cartItems = removeProduct(freeProductVariantId);
+    // Remove the qualifying product and the associated free product
+    cartItems = removeProduct(qualifyingProductVariantId);
+    cartItems = removeProduct(freeProductVariantId);
 
-        // Use the change.js endpoint to update the cart
-        fetch('/cart/change.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                items: cartItems,
-            }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Handle the response data if needed
-            console.log('Cart updated successfully:', data);
-
-            // If the qualifying product was removed, clear the entire cart
-            if (cartContainsQualifyingProduct) {
-                fetch('/cart/clear.js', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Handle the response data if needed
-                    console.log('Cart cleared successfully:', data);
-                })
-                .catch(error => console.error('Error clearing cart:', error));
-            }
-        })
-        .catch(error => console.error('Error updating cart:', error));
-    }
-});
+    // Use the change.js endpoint to update the cart
+    fetch('/cart/change.js', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            items: cartItems,
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Handle the response data if needed
+        console.log('Cart updated successfully:', data);
+    })
+    .catch(error => console.error('Error updating cart:', error));
+}
 
 // Log the updated cart items if no clearing is needed
 if (!cartContainsQualifyingProduct) {
     console.log('Updated Cart Items:', cartItems);
 }
+
 
 
 
