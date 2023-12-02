@@ -3511,14 +3511,16 @@ details-disclosure > details {
     --border-offset: 0px; /* Prevent the border from growing on buttons when this effect is on. */
   }
 }
+
+
+
+
+
+
 tr#CartItem-1 .product-option:nth-child(2){
   display: block !important;
 }
 
-
-td.cart-item__details dl > .product-option:nth-child(2){
-  display:none !important;
-}
 
 fieldset.js.product-form__input:nth-child(2){
  display: none !important;
