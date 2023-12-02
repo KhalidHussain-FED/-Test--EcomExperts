@@ -24,6 +24,24 @@ cartItems.forEach(function (item, index) {
         // Remove the qualifying product and the associated free product
         cartItems = removeProduct(qualifyingProductVariantId);
         cartItems = removeProduct(freeProductVariantId);
+
+        // Use the change.js endpoint to update the cart
+        fetch('/cart/change.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                items: cartItems,
+            }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .catch(error => console.error('Error updating cart:', error));
     }
 });
 
@@ -44,7 +62,6 @@ if (cartContainsQualifyingProduct) {
     })
     .catch(error => console.error('Error clearing cart:', error));
 } else {
-    // Save the updated cart information to sessionStorage if no clearing is needed
     console.log('Updated Cart Items:', cartItems);
 }
 
