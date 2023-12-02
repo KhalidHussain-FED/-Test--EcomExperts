@@ -11,6 +11,27 @@ class CartRemoveButton extends HTMLElement {
 }
 
 
+function upsellProduct() {
+	// Create an empty Array in which we'll be pushing our product ID 
+	const upsellProductArr = [];
+	//get the Product ID from Attribute
+	const productID = document.querySelector('.js-product').getAttribute('data-product-id');
+	// Now push this product ID to Array
+	upsellProductArr.push(productID);
+	// Console.log to check you're pushing correct ID into array
+	console.log(upsellProductArr);
+}
+// Let's Find our ATC button
+const button = document.querySelector('.js-atc');
+	// Now Add click event use our Array to add to cart the Product 
+button.addEventListener('click', event => {
+	upsellProduct();
+	// This is CartJS API - Attaching link for reference 
+	CartJS.addItem(upsellProductArr[0], quantity = 1);
+});
+// Done
+
+
 customElements.define('cart-remove-button', CartRemoveButton);
 
 class CartItems extends HTMLElement {
