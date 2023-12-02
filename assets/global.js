@@ -71,17 +71,17 @@ function updateSelectedColor(color) {
 
 
 
-var selectElement = document.getElementById('custom-input--size');
-var radioElements = document.querySelectorAll('input[name="Size"]');
-selectElement.addEventListener('change', function () {
-    var selectedValue = selectElement.value;
-    var matchingRadio = Array.from(radioElements).find(function (radio) {
-        return radio.value === selectedValue;
-    });
-    if (matchingRadio) {
-        matchingRadio.checked = true;
-    }
-});
+// var selectElement = document.getElementById('custom-input--size');
+// var radioElements = document.querySelectorAll('input[name="Size"]');
+// selectElement.addEventListener('change', function () {
+//     var selectedValue = selectElement.value;
+//     var matchingRadio = Array.from(radioElements).find(function (radio) {
+//         return radio.value === selectedValue;
+//     });
+//     if (matchingRadio) {
+//         matchingRadio.checked = true;
+//     }
+// });
 
 
 
