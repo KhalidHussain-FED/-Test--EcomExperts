@@ -1,4 +1,7 @@
- let cartContainsQualifyingProduct = false;
+$(document).ready(function() {
+  // Wait for the document to be ready before executing the code
+
+  let cartContainsQualifyingProduct = false;
 
   const qualifyingProductVariantId1 = 44182115647642;
   const qualifyingProductVariantId2 = 44158968135834;
@@ -32,6 +35,7 @@
       }
     });
   }
+});
 
 
 
