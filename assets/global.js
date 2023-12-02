@@ -43,6 +43,11 @@
     }
 //};
 
+function updateSelectedColor(color) {
+  // Add your logic here to handle the selected color
+  console.log("Selected color updated:", color);
+  // You can add more code here, such as updating UI or making Ajax requests
+}
 
 
  document.addEventListener('DOMContentLoaded', function() {
