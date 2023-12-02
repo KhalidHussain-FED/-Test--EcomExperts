@@ -3545,13 +3545,13 @@ fieldset.js.product-form__input nth-child(2){
  display: none !important;
 }
 
-#variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
+/* #variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
   display:none !important;
-}
+} */
 
-p#custom_dropdown {
+/* p#custom_dropdown {
     display: none;
-}
+} */
 
 body#classic-leather-jacket-product-1 p#custom_dropdown {
     display:block
