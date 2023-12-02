@@ -50,42 +50,42 @@
 
 
 
-// Assuming you have a function like this
-function handleRadioClick(radio) {
-    // Remove active class from all labels
-    var labels = document.querySelectorAll('.product-form__input label');
-    labels.forEach(function(label) {
-        label.classList.remove('active');
-    });
+// // Assuming you have a function like this
+// function handleRadioClick(radio) {
+//     // Remove active class from all labels
+//     var labels = document.querySelectorAll('.product-form__input label');
+//     labels.forEach(function(label) {
+//         label.classList.remove('active');
+//     });
 
-    // Add active class to the checked radio button's label
-    if (radio.checked) {
-        var label = radio.nextElementSibling; // Assuming label is the next sibling
-        label.classList.add('active');
-    }
-}
+//     // Add active class to the checked radio button's label
+//     if (radio.checked) {
+//         var label = radio.nextElementSibling; // Assuming label is the next sibling
+//         label.classList.add('active');
+//     }
+// }
 
-// Attach the function to each radio button
-var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
-radioButtons.forEach(function(radio) {
-    radio.addEventListener('click', function() {
-        handleRadioClick(radio);
-    });
-});
+// // Attach the function to each radio button
+// var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
+// radioButtons.forEach(function(radio) {
+//     radio.addEventListener('click', function() {
+//         handleRadioClick(radio);
+//     });
+// });
 
 
-// Get references to the select and radio elements
-var selectElement = document.getElementById('custom-input--size');
-var radioElements = document.querySelectorAll('input[name="Size"]');
-selectElement.addEventListener('change', function () {
-    var selectedValue = selectElement.value;
-    var matchingRadio = Array.from(radioElements).find(function (radio) {
-        return radio.value === selectedValue;
-    });
-    if (matchingRadio) {
-        matchingRadio.checked = true;
-    }
-});
+// // Get references to the select and radio elements
+// var selectElement = document.getElementById('custom-input--size');
+// var radioElements = document.querySelectorAll('input[name="Size"]');
+// selectElement.addEventListener('change', function () {
+//     var selectedValue = selectElement.value;
+//     var matchingRadio = Array.from(radioElements).find(function (radio) {
+//         return radio.value === selectedValue;
+//     });
+//     if (matchingRadio) {
+//         matchingRadio.checked = true;
+//     }
+// });
 
 
 function getFocusableElements(container) {
