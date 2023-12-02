@@ -1,14 +1,14 @@
-function removeCartItem(itemId) {
+function removeCartItem(index, url) {
   $.ajax({
     type: 'DELETE',
-    url: '/cart/change.js',
+    url: url,
     data: {
-      id: itemId,
+      index: index,
       quantity: 0
     },
     dataType: 'json',
     success: function(response) {
-      console.log('Item removed successfully:', itemId);
+      console.log('Item removed successfully at index:', index);
       window.location.reload();
     },
     error: function(error) {
@@ -18,13 +18,16 @@ function removeCartItem(itemId) {
 }
 
 $(document).ready(function() {
-  const itemToRemoveId = 'CartItem-2';
+  const itemToRemoveIndex = 2; // Replace with the actual index of the item to remove
+  const itemToRemoveUrl = '/cart/change?id=44182115647642:34f7fcbc629ebdf77d84aba06148b226&amp;quantity=0';
 
-  if ($('.cart-item[id="' + itemToRemoveId + '"]').length > 0) {
-    removeCartItem('CartItem-1');
-    removeCartItem(itemToRemoveId);
+  if ($('.RemoveItem-' + itemToRemoveIndex).length > 0) {
+    removeCartItem(itemToRemoveIndex, itemToRemoveUrl);
+    // If you also want to remove the item with index 1, uncomment the line below
+    // removeCartItem(itemToRemoveIndex - 1, '/cart/change?id=...'); // Replace with the actual URL
   }
 });
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
