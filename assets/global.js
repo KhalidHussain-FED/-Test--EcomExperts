@@ -5,34 +5,26 @@ const freeProductVariantId = 44158968135834;
 const cartItemsString = sessionStorage.getItem('cartItems');
 let cartitems = cartItemsString ? JSON.parse(cartItemsString) : [];
 
-let cartContainsFreeProduct = false;
 let cartContainsQualifyingProduct = false;
 
 // Iterate through the cart items and check for the removed product
 cartitems.forEach(function (item, index) {
-    if (item.id === freeProductVariantId) {
-        cartContainsFreeProduct = true;
-    }
     if (item.id === qualifyingProductVariantId) {
         cartContainsQualifyingProduct = true;
-    }
-
-    // Check if the qualifying product is found and remove it
-    if (item.id === qualifyingProductVariantId) {
+        
         // Remove the qualifying product
         cartitems.splice(index, 1);
-        
+
         // Check if the free product is also in the cart and remove it
         const freeProductIndex = cartitems.findIndex(item => item.id === freeProductVariantId);
         if (freeProductIndex !== -1) {
             cartitems.splice(freeProductIndex, 1);
-            cartContainsFreeProduct = false;
         }
     }
 });
 
 // Rest of the code remains the same
-if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
+if (cartContainsQualifyingProduct) {
     // Use the clear.js endpoint to clear the entire cart
     fetch('/cart/clear.js', {
         method: 'POST',
@@ -51,6 +43,7 @@ if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
     // Save the updated cart information to sessionStorage if no clearing is needed
     sessionStorage.setItem('cartItems', JSON.stringify(cartitems));
 }
+
 
 
 
