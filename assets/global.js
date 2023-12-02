@@ -4,11 +4,38 @@ const storefrontAccessToken = 'c1-10f318923c697d0af2a10db6df71bc7d';
 const variantIdToRemove = 44182115647642; // Replace with the actual variant ID
 
 // Get the current cart ID from the localStorage
-const cartId = localStorage.getItem('cartId');
+let cartId = localStorage.getItem('cartId');
 
-// Ensure the cart ID is available
-if (cartId) {
-  const removeProductUrl = "https://${shopifyDomain}/api/storefront/checkouts/${cartId}/line_items/${variantIdToRemove}";
+// If cart ID is not available, initialize the cart
+if (!cartId) {
+  // Make a request to create a new cart
+  fetch(`https://${shopifyDomain}/api/storefront/checkouts`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Store the new cart ID in localStorage
+      cartId = data.data.checkoutCreate.checkout.id;
+      localStorage.setItem('cartId', cartId);
+
+      // Now you can proceed with removing the product
+      removeProduct(cartId, variantIdToRemove);
+    })
+    .catch(error => {
+      console.error('Error initializing cart:', error);
+    });
+} else {
+  // Cart ID is available, proceed with removing the product
+  removeProduct(cartId, variantIdToRemove);
+}
+
+// Function to remove the product from the cart
+function removeProduct(cartId, variantId) {
+  const removeProductUrl = `https://${shopifyDomain}/api/storefront/checkouts/${cartId}/line_items/${variantId}`;
 
   // Make the request to remove the product
   fetch(removeProductUrl, {
@@ -23,15 +50,14 @@ if (cartId) {
         console.log('Product removed successfully');
         // You may want to update the cart UI or perform other actions here
       } else {
-        // console.error(Failed to remove product. Status code: ${response.status});
+        console.error(`Failed to remove product. Status code: ${response.status}`);
       }
     })
     .catch(error => {
       console.error('Error removing product:', error);
     });
-} else {
-  console.error('Cart ID not found. Make sure the cart is initialized.');
 }
+
 
 
 
