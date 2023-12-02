@@ -114,6 +114,47 @@ const MainProductId = 44182115647642;
     });
   }
 
+
+var sampleCart = {
+    token: 'c1-10f318923c697d0af2a10db6df71bc7d',
+    note: '',
+    attributes: { /* ... */ },
+    original_total_price: 2001,
+    total_price: 2001,
+    // ... other properties
+    items: [
+      { id: 1, product_id: 44182115647642, quantity: 2, /* ... other item properties */ },
+      { id: 2, product_id: 44158968135834, quantity: 1, /* ... other item properties */ },
+      // ... other items
+    ]
+  };
+
+  // Define the product IDs to target
+  const FreeProductId = 44158968135834;
+
+  function removeProductFromCart(cart, productId) {
+    // Find the line item index of the product to be removed
+    var lineItemIndex = cart.items.findIndex(item => item.product_id === productId);
+
+    if (lineItemIndex !== -1) {
+      // Remove the product from the cart
+      cart.items.splice(lineItemIndex, 1);
+
+      // Log the updated cart
+      console.log('Updated Cart:', cart);
+
+      // If you want to automatically remove the second product as well
+      var secondProductId = FreeProductId; // Change this to the ID of the second product
+      removeProductFromCart(cart, secondProductId);
+    } else {
+      console.warn('Product not found in the cart.');
+    }
+  }
+
+  // Example usage:
+  var productIdToRemove = MainProductId; // Change this to the ID of the product you want to remove
+  removeProductFromCart(sampleCart, productIdToRemove);
+
   // Example usage:
   var productIdToRemove = MainProductId; // Change this to the ID of the product you want to remove
   removeProductFromCart(productIdToRemove);
