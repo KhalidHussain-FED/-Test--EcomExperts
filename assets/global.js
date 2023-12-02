@@ -1,23 +1,26 @@
 // Function to remove a product from the cart by variant ID
 function removeProductFromCart(variantId) {
-  fetch('/cart/change.js', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      quantity: 0, // Set quantity to 0 to remove the item
-      id: variantId,
-    }),
-  })
-    .then(response => response.json())
-    .then(cart => {
-      console.log('Product removed from cart:', cart);
-      // You can perform additional actions after successfully removing the product
+  return new Promise(function(resolve, reject) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        quantity: 0, // Set quantity to 0 to remove the item
+        id: variantId,
+      }),
     })
-    .catch(error => {
-      console.error('Error removing product from cart:', error);
-    });
+      .then(response => response.json())
+      .then(cart => {
+        console.log('Product removed from cart:', cart);
+        resolve(cart);
+      })
+      .catch(error => {
+        console.error('Error removing product from cart:', error);
+        reject(error);
+      });
+  });
 }
 
 // Example usage on a button click
@@ -27,13 +30,12 @@ document.querySelectorAll('.button--tertiary').forEach(function(button) {
     var mainProductVariantId = '44182115647642';
     var giftProductVariantId = '44158968135834';
 
-    // Remove both main product and gift product
-    removeProductFromCart(mainProductVariantId);
-    removeProductFromCart(giftProductVariantId);
+    // Remove main product and then gift product
+    removeProductFromCart(mainProductVariantId)
+      .then(() => removeProductFromCart(giftProductVariantId))
+      .catch(error => console.error('Error:', error));
   });
 });
-
-
 
 
 document.addEventListener('DOMContentLoaded', function() {
