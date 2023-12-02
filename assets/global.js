@@ -1,66 +1,38 @@
 const qualifyingProductVariantId = 44182115647642;
 const freeProductVariantId = 44158968135834;
 
-let cartItems = [];
+document.querySelector('.button--tertiary').addEventListener('click', function() {
+    // When a button with class 'button--tertiary' is clicked, it triggers an AJAX request to remove both products
 
-function removeProduct(productId) {
-    return cartItems.filter(item => item.id !== productId);
-}
+    // You might get the product IDs dynamically based on your HTML structure
+    var qualifyingProductIdToRemove = qualifyingProductVariantId;
+    var freeProductIdToRemove = freeProductVariantId;
 
-// Simulate the cart items
-cartItems = [
-    { id: 123, /* other properties */ },
-    { id: qualifyingProductVariantId },
-    { id: freeProductVariantId },
-];
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/cart/update.js', true);
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
-let cartContainsQualifyingProduct = false;
-
-// Check if the qualifying product is in the cart
-const qualifyingProductIndex = cartItems.findIndex(item => item.id === qualifyingProductVariantId);
-if (qualifyingProductIndex !== -1) {
-    cartContainsQualifyingProduct = true;
-
-    // Remove the qualifying product and the associated free product
-    cartItems = removeProduct(qualifyingProductVariantId);
-    cartItems = removeProduct(freeProductVariantId);
-
-    // Prepare the payload for update.js
-    const payload = cartItems.map(item => ({
-        id: item.id,
-        quantity: 1, // You may adjust the quantity as needed
-    }));
-
-    // Use the Shopify Storefront API to update the cart
-    fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            updates: payload,
-        }),
-    })
-    .then(response => {
-        console.log('Update.js Request Payload:', JSON.stringify({ updates: payload }));
-        console.log('Update.js Response:', response.status, response.statusText);
-
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
+    xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            var responseData = JSON.parse(xhr.responseText);
+            console.log('Products removed successfully:', responseData);
+            // Perform any additional actions upon successful removal
+        } else {
+            console.error('Error removing products:', xhr.statusText);
         }
-        return response.json();
-    })
-    .then(data => {
-        // Handle the response data if needed
-        console.log('Cart updated successfully:', data);
-    })
-    .catch(error => console.error('Error updating cart:', error));
-}
+    };
 
-// Log the updated cart items if no clearing is needed
-if (!cartContainsQualifyingProduct) {
-    console.log('Updated Cart Items:', cartItems);
-}
+    xhr.onerror = function() {
+        console.error('Network error occurred while removing the products.');
+    };
+
+    xhr.send(JSON.stringify({
+        updates: {
+            [qualifyingProductIdToRemove]: 0, // Set the quantity to 0 to remove the qualifying product
+            [freeProductIdToRemove]: 0 // Set the quantity to 0 to remove the free product
+        }
+    }));
+});
 
 
 
