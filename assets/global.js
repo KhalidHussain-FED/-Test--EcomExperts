@@ -130,7 +130,6 @@ var sampleCart = {
   };
 
   // Define the product IDs to target
-  const FreeProductId = 44158968135834;
 
   function removeProductFromCart(cart, productId) {
     // Find the line item index of the product to be removed
