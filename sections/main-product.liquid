@@ -260,14 +260,21 @@
                         "Tan - Large": 44173563560090,
                       };
                   
-                      function updateURL(selectedSize) {
+                     function updateURL(selectedSize) {
                         const productId = {{ product.id }};
                         const selectedColor = "Black"; // Assuming you have a way to determine the selected color
                         const selectedVariantId = variantMapping[`${selectedColor} - ${selectedSize}`];
                         
+                        const addToCartBtn = document.getElementById('add-to-cart-btn');
+                  
                         if (selectedVariantId) {
                           const newUrl = `/products/${productId}?variant=${selectedVariantId}`;
                           window.history.replaceState({}, document.title, newUrl);
+                          addToCartBtn.removeAttribute('disabled');
+                        } else {
+                          const newUrl = `/products/${productId}`;
+                          window.history.replaceState({}, document.title, newUrl);
+                          addToCartBtn.setAttribute('disabled', 'true');
                         }
                       }
                   
