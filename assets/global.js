@@ -8,7 +8,7 @@ let cartId = localStorage.getItem('template--16312456347802__cart-items');
 
 // If cart ID is not available, set a static one
 if (!cartId) {
-  cartId = 'staticCartId123'; // Replace with your desired static cart ID
+  cartId = 44182115647642; // Replace with your desired static cart ID
   localStorage.setItem('template--16312456347802__cart-items', cartId);
 }
 
