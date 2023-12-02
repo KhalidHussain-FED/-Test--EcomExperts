@@ -3538,7 +3538,6 @@ tr#CartItem-1 .product-option:nth-child(2){
 
 .product-form__input input[type=radio]+label {
     background-color: #000 !important;
-    color: initial; /* or your default text color */
 }
 
 
