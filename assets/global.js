@@ -8,6 +8,7 @@ $(document).ready(function() {
     // Find all cart items and remove them using AJAX
     $('.cart-item').each(function() {
       const itemId = this.id;
+      console.log('Removing item with ID:', itemId);
       removeItem(itemId);
     });
   }
@@ -25,7 +26,7 @@ $(document).ready(function() {
       dataType: 'json',
       success: function(response) {
         // Handle success, if needed
-        console.log('Item removed successfully');
+        console.log('Item removed successfully:', itemId);
         window.location.reload();
       },
       error: function(error) {
@@ -35,6 +36,7 @@ $(document).ready(function() {
     });
   }
 });
+
 
 
 
