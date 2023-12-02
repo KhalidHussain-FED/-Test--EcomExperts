@@ -1,13 +1,14 @@
-let cartContainsFreeProduct = false;
-let cartContainsQualifyingProduct = false;
-
 const qualifyingProductVariantId = 44182115647642;
 const freeProductVariantId = 44158968135834;
 
 // Check if cart information exists in sessionStorage
 const cartItemsString = sessionStorage.getItem('cartItems');
-const cartitems = cartItemsString ? JSON.parse(cartItemsString) : [];
+let cartitems = cartItemsString ? JSON.parse(cartItemsString) : [];
 
+let cartContainsFreeProduct = false;
+let cartContainsQualifyingProduct = false;
+
+// Iterate through the cart items and check for the removed product
 cartitems.forEach(function (item, index) {
     if (item.id === freeProductVariantId) {
         cartContainsFreeProduct = true;
@@ -16,35 +17,28 @@ cartitems.forEach(function (item, index) {
         cartContainsQualifyingProduct = true;
     }
 
-    // Check if a specific product is removed, and remove the free product as well
-    if (/* Check for specific condition to identify the product to be removed */) {
-        cartitems.splice(index, 1); // Remove the specific product
-        cartContainsFreeProduct = false; // Set to false as the specific product is removed
+    // Check if the qualifying product is found and remove it
+    if (item.id === qualifyingProductVariantId) {
+        // Remove the qualifying product
+        cartitems.splice(index, 1);
+        
+        // Check if the free product is also in the cart and remove it
+        const freeProductIndex = cartitems.findIndex(item => item.id === freeProductVariantId);
+        if (freeProductIndex !== -1) {
+            cartitems.splice(freeProductIndex, 1);
+            cartContainsFreeProduct = false;
+        }
     }
 });
 
+// Rest of the code remains the same
 if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-    fetch('/cart/clear.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        // body: JSON.stringify({ /* additional parameters if needed */ }),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .catch(error => console.error('Error clearing cart:', error));
-
-    // Clear cart information from sessionStorage only if qualifying or free products are present
-    sessionStorage.removeItem('cartItems');
+    // ... (clearing logic)
 } else {
     // Save the updated cart information to sessionStorage if no clearing is needed
     sessionStorage.setItem('cartItems', JSON.stringify(cartitems));
 }
+
 
 
 
