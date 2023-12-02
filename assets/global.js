@@ -1,3 +1,44 @@
+// Function to remove a product from the cart by variant ID
+function removeProductFromCart(variantId) {
+  fetch('/cart/change.js', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      quantity: 0, // Set quantity to 0 to remove the item
+      id: variantId,
+    }),
+  })
+    .then(response => response.json())
+    .then(cart => {
+      console.log('Product removed from cart:', cart);
+      // You can perform additional actions after successfully removing the product
+    })
+    .catch(error => {
+      console.error('Error removing product from cart:', error);
+    });
+}
+
+// Example usage on a button click
+document.getElementById('removeProductsButton').addEventListener('click', function () {
+  // Assuming you have the variant IDs of the main product and the gift product
+  var mainProductVariantId = '44182115647642';
+  var giftProductVariantId = '44158968135834';
+
+  // Remove both main product and gift product
+  removeProductFromCart(mainProductVariantId);
+  removeProductFromCart(giftProductVariantId);
+});
+
+
+// Remove both main product and gift product when triggered (e.g., on a button click)
+document.getElementById('removeProductsButton').addEventListener('click', function () {
+  removeProductFromCart(mainProductVariantId);
+  removeProductFromCart(giftProductVariantId);
+});
+
+
 
 document.addEventListener('DOMContentLoaded', function() {
         var variantSelect = document.getElementById('custom-input--size');
@@ -17,6 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
             addToCartButton.disabled = variantSelect.selectedIndex === 0;
         }
     });
+
+
+
 
 
 
