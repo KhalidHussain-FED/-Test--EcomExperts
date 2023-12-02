@@ -1,7 +1,7 @@
 // Function to remove a product from the cart by variant ID
 function removeProductFromCart(variantId) {
   return new Promise(function(resolve, reject) {
-    fetch('/cart/clear.js', {
+    fetch('/cart/change.js', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
