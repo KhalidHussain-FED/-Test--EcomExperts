@@ -45,26 +45,6 @@ cartItems.forEach(function (item, index) {
     }
 });
 
-// Rest of the code remains the same
-if (cartContainsQualifyingProduct) {
-    // Use the clear.js endpoint to clear the entire cart
-    fetch('/cart/clear.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .catch(error => console.error('Error clearing cart:', error));
-} else {
-    console.log('Updated Cart Items:', cartItems);
-}
-
 
 
 
