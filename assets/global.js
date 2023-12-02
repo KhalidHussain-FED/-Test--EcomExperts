@@ -1,3 +1,45 @@
+$(document).ready(function() {
+  // Wait for the document to be ready before executing the code
+
+  let cartContainsQualifyingProduct = false;
+
+  const qualifyingProductVariantIdToRemove = 'CartItem-2'; // Replace with the actual ID of the item to remove
+
+  // Check if the cart contains the item to be removed
+  $('.cart-item').each(function() {
+    const itemId = this.id;
+
+    if (itemId === qualifyingProductVariantIdToRemove) {
+      cartContainsQualifyingProduct = true;
+      // You can perform additional actions on the specific cart item if needed
+      $(this).addClass('qualifying-product'); // For example, add a class to the qualifying product
+    }
+  });
+
+  // If the cart contains the item to be removed, remove it using AJAX
+  if (cartContainsQualifyingProduct) {
+    $.ajax({
+      type: 'POST',
+      url: '/cart/update.js',
+      data: {
+        updates: {
+          [qualifyingProductVariantIdToRemove]: 0
+        }
+      },
+      dataType: 'json',
+      success: function(response) {
+        // Handle success, if needed
+        window.location.reload();
+      },
+      error: function(error) {
+        // Handle errors, if needed
+        console.error('Error updating cart:', error);
+      }
+    });
+  }
+});
+
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
