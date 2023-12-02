@@ -3528,9 +3528,9 @@ tr#CartItem-1 .product-option:nth-child(2){
  */
 
 
-/* #variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
+#variant-radios-template--16312456642714__main .product-form__input:nth-child(2) {
   display:none !important;
-} */
+}
 
 
 
@@ -3547,7 +3547,6 @@ tr#CartItem-1 .product-option:nth-child(2){
     background-color: #000 !important;
 }
 
-/* Styling for checked radio button with active class for the second item */
 .product-form__input input[type=radio]:checked:nth-of-type(2)+label.active {
     background-color: #c73f55 !important;
 }
