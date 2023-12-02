@@ -1,3 +1,32 @@
+// Function to remove a product from the cart by line item key
+function removeProductFromCart(lineItemKey) {
+  return new Promise(function(resolve, reject) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        line: lineItemKey, // Include the line item key to identify the product
+        quantity: 0, // Set quantity to 0 to remove the item
+      }),
+    })
+      .then(response => response.json())
+      .then(result => {
+        if (result.item_count === 0) {
+          console.log('Product removed from cart:', result);
+          resolve(result);
+        } else {
+          reject('Error: Unable to remove product from cart.');
+        }
+      })
+      .catch(error => {
+        console.error('Error removing product from cart:', error);
+        reject(error);
+      });
+  });
+}
+
 // Fetch current cart data and log variant IDs of each item
 fetch('/cart.js')
   .then(response => response.json())
@@ -34,6 +63,7 @@ fetch('/cart.js')
     }
   })
   .catch(error => console.error('Error fetching cart data:', error));
+
 
 
 
