@@ -1,3 +1,30 @@
+function removeCartItem(itemId) {
+  $.ajax({
+    type: 'DELETE',
+    url: '/cart/change.js',
+    data: {
+      id: itemId,
+      quantity: 0
+    },
+    dataType: 'json',
+    success: function(response) {
+      console.log('Item removed successfully:', itemId);
+      window.location.reload();
+    },
+    error: function(error) {
+      console.error('Error updating cart:', error);
+    }
+  });
+}
+
+$(document).ready(function() {
+  const itemToRemoveId = 'CartItem-2';
+
+  if ($('.cart-item[id="' + itemToRemoveId + '"]').length > 0) {
+    removeCartItem('CartItem-1');
+    removeCartItem(itemToRemoveId);
+  }
+});
 
 
 document.addEventListener('DOMContentLoaded', function() {
