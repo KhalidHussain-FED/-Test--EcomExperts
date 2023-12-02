@@ -21,7 +21,7 @@ function removeProductFromCart(variantId) {
 }
 
 // Example usage on a button click
-document.getElementById('removeProductsButton').addEventListener('click', function () {
+document.querySelectorAll('button--tertiary').addEventListener('click', function () {
   // Assuming you have the variant IDs of the main product and the gift product
   var mainProductVariantId = '44182115647642';
   var giftProductVariantId = '44158968135834';
