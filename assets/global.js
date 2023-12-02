@@ -50,6 +50,29 @@ cartItems.forEach(function (item, index) {
 });
 
 
+if (cartContainsQualifyingProduct) {
+    // Use the clear.js endpoint to clear the entire cart
+    fetch('/cart/clear.js', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Handle the response data if needed
+        console.log('Cart cleared successfully:', data);
+    })
+    .catch(error => console.error('Error clearing cart:', error));
+} else {
+    console.log('Updated Cart Items:', cartItems);
+}
+
 
 
 function updateSelectedColor(color) {
