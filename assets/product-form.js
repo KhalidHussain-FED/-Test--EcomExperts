@@ -64,8 +64,7 @@ if (!customElements.get("product-form")) {
               soldOutMessage.classList.remove("hidden");
               this.error = true;
               return;
-            } // Check if the cart is empty
-            else if (!this.cart) {
+            } else if (!this.cart) {
               const currentURL = window.location.href;
 
               if (
@@ -155,14 +154,17 @@ if (!customElements.get("product-form")) {
                     console.log("Removing Free Product...");
                     // Remove the free product from the cart
                     removeFreeProductFromCart();
+                    // Return here to avoid executing the following code when the main product is removed
+                    return;
                   }
                 });
+
+                // Return here to avoid executing the following code when the main product is removed
+                return;
               } else {
                 window.location = window.routes.cart_url;
               }
             }
-
-            return;
 
             if (!this.error)
               publish(PUB_SUB_EVENTS.cartUpdate, {
