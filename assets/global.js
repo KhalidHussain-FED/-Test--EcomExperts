@@ -34,7 +34,7 @@
 // });
 
 document.addEventListener('DOMContentLoaded', function() {
-       const mytoken = 34f7fcbc629ebdf77d84aba06148b226;
+       const mytoken = '34f7fcbc629ebdf77d84aba06148b226';
 
               if (mytoken)
               {
