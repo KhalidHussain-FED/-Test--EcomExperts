@@ -9,7 +9,7 @@ let cartId = localStorage.getItem('cartId');
 // If cart ID is not available, initialize the cart
 if (!cartId) {
   // Make a request to create a new cart
-  fetch(`https://${shopifyDomain}/api/storefront/checkouts`, {
+  fetch(`https://${shopifyDomain}/api/storefront/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ if (!cartId) {
 
 // Function to remove the product from the cart
 function removeProduct(cartId, variantId) {
-  const removeProductUrl = `https://${shopifyDomain}/api/storefront/checkouts/${cartId}/line_items/${variantId}`;
+  const removeProductUrl = `https://${shopifyDomain}/api/storefront/${cartId}/line_items/${variantId}`;
 
   // Make the request to remove the product
   fetch(removeProductUrl, {
