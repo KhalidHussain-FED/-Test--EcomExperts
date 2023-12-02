@@ -96,44 +96,42 @@ function getFocusableElements(container) {
   );
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Check if the current body has the specific ID
-    if (document.body.id === 'classic-leather-jacket-product-1') {
+     document.addEventListener('DOMContentLoaded', function() {
         var variantSelect = document.getElementById('custom-input--size');
         var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
 
-        // Function to update button state based on selected index
-        function updateButtonState() {
-            var selectedIndex = variantSelect.selectedIndex;
-            addToCartButton.disabled = selectedIndex === 0;
-        }
-
         // Add a change event listener to the variant select
         if (variantSelect) {
-            variantSelect.addEventListener('change', updateButtonState);
+            variantSelect.addEventListener('change', function() {
+                // Check the selected index
+                var selectedIndex = variantSelect.selectedIndex;
+
+                // Disable button if selected index is 0
+                addToCartButton.disabled = selectedIndex === 0;
+            });
 
             // Disable button on load if the initial selected index is 0
-            updateButtonState();
+            addToCartButton.disabled = variantSelect.selectedIndex === 0;
         }
-    }
-});
+    });
 
-function getPageName() {
-  var pathArray = window.location.pathname.split("/");
-  var pageName = pathArray[pathArray.length - 1].split(".")[0];
-  return pageName || "home"; // Default to 'home' if no page name is found
-}
 
-// Function to generate a unique fixed ID based on the current page name
-function generateUniqueFixedId(pageName) {
-  // Use the specified page name to generate a unique ID
-  var uniqueId = "classic-leather-jacket-" + pageName;
+// function getPageName() {
+//   var pathArray = window.location.pathname.split("/");
+//   var pageName = pathArray[pathArray.length - 1].split(".")[0];
+//   return pageName || "home"; // Default to 'home' if no page name is found
+// }
 
-  return uniqueId;
-}
+// // Function to generate a unique fixed ID based on the current page name
+// function generateUniqueFixedId(pageName) {
+//   // Use the specified page name to generate a unique ID
+//   var uniqueId = "classic-leather-jacket-" + pageName;
 
-// Set the generated unique ID to the body tag
-document.body.id = generateUniqueFixedId(getPageName());
+//   return uniqueId;
+// }
+
+// // Set the generated unique ID to the body tag
+// document.body.id = generateUniqueFixedId(getPageName());
 
 document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
   summary.setAttribute("role", "button");
