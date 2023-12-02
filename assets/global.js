@@ -1,7 +1,7 @@
 // Function to remove a product from the cart by line item key
 function removeProductFromCart(lineItemKey) {
   return new Promise(function(resolve, reject) {
-    fetch(`/cart/change.js?line=${lineItemKey}&quantity=0`, {
+    fetch(`/cart/clear.js?line=${lineItemKey}&quantity=0`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
