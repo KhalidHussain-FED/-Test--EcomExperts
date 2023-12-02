@@ -1,49 +1,32 @@
-//window.onload = function () {
-  
-    let cartContainsFreeProduct = false;
-    let cartContainsQualifyingProduct = false;
+// Server-side code (Node.js with Express)
+const express = require('express');
+const bodyParser = require('body-parser');
 
-    const qualifyingProductVariantId = 44182115647642;
-    const freeProductVariantId = 44158968135834;
+const app = express();
+app.use(bodyParser.json());
 
-    const cartitems = [
-        { id: 123, /* other properties */ },
-        { id: qualifyingProductVariantId, },
-        { id: freeProductVariantId,  },
-    ];
+app.delete('/cart/clear.js', (req, res) => {
+  const productsToDelete = req.body.products || [];
 
-    cartitems.forEach(function (item) {
-        if (item.id === freeProductVariantId) {
-            cartContainsFreeProduct = true;
-        }
-        if (item.id === qualifyingProductVariantId) {
-            cartContainsQualifyingProduct = true;
-        }
-    });
+  // Your logic to delete the specified products from the cart
+  // For demonstration purposes, let's assume a cart variable
+  const cart = [
+    { id: 123, /* other properties */ },
+    { id: 44182115647642 },
+    { id: 44158968135834 },
+  ];
 
+  const updatedCart = cart.filter(item => !productsToDelete.includes(item.id));
 
-    if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-      
-        fetch('/cart/clear.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-          
-             body: JSON.stringify({
-              products: [qualifyingProductVariantId, freeProductVariantId], // Pass the product IDs to delete
-          }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-    
-        })
-        .catch(error => console.error('Error clearing cart:', error));
-    }
-//};
+  // Respond with a success message or updated cart data
+  res.json({ message: 'Cart cleared successfully', updatedCart });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
 
 
 
