@@ -1,5 +1,5 @@
 // Function to remove a product from the cart by variant ID
-debug
+
 function removeProductFromCart(variantId) {
   return new Promise(function(resolve, reject) {
     fetch('/cart/change.js', {
@@ -31,6 +31,7 @@ document.querySelectorAll('.button--tertiary').forEach(function(button) {
     var mainProductVariantId = '44182115647642';
     var giftProductVariantId = '44158968135834';
 
+debug
     // Remove main product and then gift product
     removeProductFromCart(mainProductVariantId)
       .then(() => removeProductFromCart(giftProductVariantId))
