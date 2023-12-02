@@ -1,25 +1,29 @@
 const qualifyingProductVariantId = 44182115647642;
 const freeProductVariantId = 44158968135834;
 
-// Check if cart information exists in sessionStorage
-const cartItemsString = sessionStorage.getItem('cartItems');
-let cartitems = cartItemsString ? JSON.parse(cartItemsString) : [];
+let cartItems = [];
+
+function removeProduct(productId) {
+    return cartItems.filter(item => item.id !== productId);
+}
+
+// Simulate the cart items
+cartItems = [
+    { id: 123, /* other properties */ },
+    { id: qualifyingProductVariantId },
+    { id: freeProductVariantId },
+];
 
 let cartContainsQualifyingProduct = false;
 
 // Iterate through the cart items and check for the removed product
-cartitems.forEach(function (item, index) {
+cartItems.forEach(function (item, index) {
     if (item.id === qualifyingProductVariantId) {
         cartContainsQualifyingProduct = true;
-        
-        // Remove the qualifying product
-        cartitems.splice(index, 1);
 
-        // Check if the free product is also in the cart and remove it
-        const freeProductIndex = cartitems.findIndex(item => item.id === freeProductVariantId);
-        if (freeProductIndex !== -1) {
-            cartitems.splice(freeProductIndex, 1);
-        }
+        // Remove the qualifying product and the associated free product
+        cartItems = removeProduct(qualifyingProductVariantId);
+        cartItems = removeProduct(freeProductVariantId);
     }
 });
 
@@ -41,7 +45,7 @@ if (cartContainsQualifyingProduct) {
     .catch(error => console.error('Error clearing cart:', error));
 } else {
     // Save the updated cart information to sessionStorage if no clearing is needed
-    sessionStorage.setItem('cartItems', JSON.stringify(cartitems));
+    console.log('Updated Cart Items:', cartItems);
 }
 
 
