@@ -1,29 +1,21 @@
 $(document).ready(function() {
   // Wait for the document to be ready before executing the code
 
-  let cartContainsItemToRemove = false;
+  const itemToRemoveId = 'CartItem-2'; // Replace with the actual ID of the item to remove
 
-  const itemToRemoveId = 'CartItem-1'; // Replace with the actual ID of the item to remove
+  // If the cart contains the item to be removed, trigger the removal
+  if ($('.cart-item[id="' + itemToRemoveId + '"]').length > 0) {
+    removeItem(itemToRemoveId);
+  }
 
-  // Check if the cart contains the item to be removed
-  $('.cart-item').each(function() {
-    const itemId = this.id;
-
-    if (itemId === itemToRemoveId) {
-      cartContainsItemToRemove = true;
-      // You can perform additional actions on the specific cart item if needed
-      $(this).addClass('item-to-remove'); // For example, add a class to the item to remove
-    }
-  });
-
-  // If the cart contains the item to be removed, remove it using AJAX
-  if (cartContainsItemToRemove) {
+  // Function to remove the specified item using AJAX
+  function removeItem(itemId) {
     $.ajax({
       type: 'POST',
       url: '/cart/update.js',
       data: {
         updates: {
-          [itemToRemoveId]: 0
+          [itemId]: 0
         }
       },
       dataType: 'json',
