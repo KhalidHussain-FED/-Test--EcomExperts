@@ -56,7 +56,67 @@
 
 
 
+const MainProductId = 44182115647642;
+  const FreeProductId = 44158968135834;
 
+  function removeProductFromCart(productId) {
+    // Define the cart URL
+    var cartUrl = '/cart/update.js';
+
+    // Fetch current cart data
+    fetch(cartUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(response => response.json())
+    .then(cartData => {
+      console.log('Current Cart:', cartData);
+
+      // Find the line item index of the product to be removed
+      var lineItemIndex = cartData.items.findIndex(item => item.product_id === productId);
+
+      if (lineItemIndex !== -1) {
+        // Remove the product from the cart
+        cartData.items.splice(lineItemIndex, 1);
+
+        // Log the updated cart
+        console.log('Updated Cart:', cartData);
+
+        // Update the cart using Fetch API
+        fetch(cartUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify(cartData)
+        })
+        .then(response => response.json())
+        .then(updatedCart => {
+          console.log('Product removed successfully. Updated Cart:', updatedCart);
+
+          // If you want to automatically remove the second product as well
+          var secondProductId = FreeProductId; // Change this to the ID of the second product
+          removeProductFromCart(secondProductId);
+        })
+        .catch(error => {
+          console.error('Error updating cart:', error);
+        });
+      } else {
+        console.warn('Product not found in the cart.');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching cart data:', error);
+    });
+  }
+
+  // Example usage:
+  var productIdToRemove = MainProductId; // Change this to the ID of the product you want to remove
+  removeProductFromCart(productIdToRemove);
 
 
 
