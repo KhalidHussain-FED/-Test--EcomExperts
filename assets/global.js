@@ -1,48 +1,37 @@
-//window.onload = function () {
-  
-    let cartContainsFreeProduct = false;
-    let cartContainsQualifyingProduct = false;
+// Replace these with your actual values
+const shopifyDomain = 'https://khalid-hussain-test.myshopify.com/';
+const storefrontAccessToken = 'c1-10f318923c697d0af2a10db6df71bc7d';
+const variantIdToRemove = 44182115647642; // Replace with the actual variant ID
 
-    const qualifyingProductVariantId = 44182115647642;
-    const freeProductVariantId = 44158968135834;
+// Get the current cart ID from the localStorage
+const cartId = localStorage.getItem('cartId');
 
-    const cartitems = [
-        { id: 123, /* other properties */ },
-        { id: qualifyingProductVariantId, },
-        { id: freeProductVariantId,  },
-    ];
+// Ensure the cart ID is available
+if (cartId) {
+  const removeProductUrl = https://${shopifyDomain}/api/storefront/checkouts/${cartId}/line_items/${variantIdToRemove};
 
-    cartitems.forEach(function (item) {
-        if (item.id === freeProductVariantId) {
-            cartContainsFreeProduct = true;
-        }
-        if (item.id === qualifyingProductVariantId) {
-            cartContainsQualifyingProduct = true;
-        }
+  // Make the request to remove the product
+  fetch(removeProductUrl, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': storefrontAccessToken,
+    },
+  })
+    .then(response => {
+      if (response.ok) {
+        console.log('Product removed successfully');
+        // You may want to update the cart UI or perform other actions here
+      } else {
+        console.error(Failed to remove product. Status code: ${response.status});
+      }
+    })
+    .catch(error => {
+      console.error('Error removing product:', error);
     });
-
-
-    if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-      
-        fetch('/cart/clear.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-          
-            // body: JSON.stringify({ /* additional parameters if needed */ }),
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-    
-        })
-        .catch(error => console.error('Error clearing cart:', error));
-    }
-//};
-
+} else {
+  console.error('Cart ID not found. Make sure the cart is initialized.');
+}
 
 
 
