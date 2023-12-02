@@ -44,32 +44,34 @@ cartItems.forEach(function (item, index) {
         .then(data => {
             // Handle the response data if needed
             console.log('Cart updated successfully:', data);
+
+            // If the qualifying product was removed, clear the entire cart
+            if (cartContainsQualifyingProduct) {
+                fetch('/cart/clear.js', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle the response data if needed
+                    console.log('Cart cleared successfully:', data);
+                })
+                .catch(error => console.error('Error clearing cart:', error));
+            }
         })
         .catch(error => console.error('Error updating cart:', error));
     }
 });
 
-
-if (cartContainsQualifyingProduct) {
-    // Use the clear.js endpoint to clear the entire cart
-    fetch('/cart/clear.js', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Handle the response data if needed
-        console.log('Cart cleared successfully:', data);
-    })
-    .catch(error => console.error('Error clearing cart:', error));
-} else {
+// Log the updated cart items if no clearing is needed
+if (!cartContainsQualifyingProduct) {
     console.log('Updated Cart Items:', cartItems);
 }
 
