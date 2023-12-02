@@ -3,19 +3,15 @@
     let cartContainsFreeProduct = false;
     let cartContainsQualifyingProduct = false;
 
-    // Define the variant IDs for the qualifying and free products
-    const qualifyingProductVariantId = 44173477675162;
+    const qualifyingProductVariantId = 44173477609626;
     const freeProductVariantId = 44158968135834;
 
-    // Sample cart items for demonstration
     const cartitems = [
         { id: 123, /* other properties */ },
-        { id: qualifyingProductVariantId, /* other properties */ },
-        { id: freeProductVariantId, /* other properties */ },
-        // Add more items as needed
+        { id: qualifyingProductVariantId, },
+        { id: freeProductVariantId,  },
     ];
 
-    // Check if cart contains qualifying or free product
     cartitems.forEach(function (item) {
         if (item.id === freeProductVariantId) {
             cartContainsFreeProduct = true;
@@ -25,7 +21,7 @@
         }
     });
 
-    // If the cart contains either the qualifying or free product, remove all items from the cart
+
     if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
         // Using fetch to make a POST request
         fetch('/cart/clear.js', {
@@ -33,7 +29,7 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            // Add any necessary body parameters
+          
             // body: JSON.stringify({ /* additional parameters if needed */ }),
         })
         .then(response => {
@@ -49,54 +45,7 @@
 
 
 
-
-// Assuming you have a function like this
-function handleRadioClick(radio) {
-    // Remove active class from all labels
-    var labels = document.querySelectorAll('.product-form__input label');
-    labels.forEach(function(label) {
-        label.classList.remove('active');
-    });
-
-    // Add active class to the checked radio button's label
-    if (radio.checked) {
-        var label = radio.nextElementSibling; // Assuming label is the next sibling
-        label.classList.add('active');
-    }
-}
-
-// Attach the function to each radio button
-var radioButtons = document.querySelectorAll('.product-form__input input[type=radio]');
-radioButtons.forEach(function(radio) {
-    radio.addEventListener('click', function() {
-        handleRadioClick(radio);
-    });
-});
-
-
-// Get references to the select and radio elements
-var selectElement = document.getElementById('custom-input--size');
-var radioElements = document.querySelectorAll('input[name="Size"]');
-selectElement.addEventListener('change', function () {
-    var selectedValue = selectElement.value;
-    var matchingRadio = Array.from(radioElements).find(function (radio) {
-        return radio.value === selectedValue;
-    });
-    if (matchingRadio) {
-        matchingRadio.checked = true;
-    }
-});
-
-
-function getFocusableElements(container) {
-  return Array.from(
-    container.querySelectorAll(
-      "summary, a[href], button:enabled, [tabindex]:not([tabindex^='-']), [draggable], area, input:not([type=hidden]):enabled, select:enabled, textarea:enabled, object, iframe"
-    )
-  );
-}
-
-     document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
         var variantSelect = document.getElementById('custom-input--size');
         var addToCartButton = document.querySelector('#ProductSubmitButton-template--16312456642714__main');
 
@@ -116,22 +65,13 @@ function getFocusableElements(container) {
     });
 
 
-// function getPageName() {
-//   var pathArray = window.location.pathname.split("/");
-//   var pageName = pathArray[pathArray.length - 1].split(".")[0];
-//   return pageName || "home"; // Default to 'home' if no page name is found
-// }
-
-// // Function to generate a unique fixed ID based on the current page name
-// function generateUniqueFixedId(pageName) {
-//   // Use the specified page name to generate a unique ID
-//   var uniqueId = "classic-leather-jacket-" + pageName;
-
-//   return uniqueId;
-// }
-
-// // Set the generated unique ID to the body tag
-// document.body.id = generateUniqueFixedId(getPageName());
+function getFocusableElements(container) {
+  return Array.from(
+    container.querySelectorAll(
+      "summary, a[href], button:enabled, [tabindex]:not([tabindex^='-']), [draggable], area, input:not([type=hidden]):enabled, select:enabled, textarea:enabled, object, iframe"
+    )
+  );
+}
 
 document.querySelectorAll('[id^="Details-"] summary').forEach((summary) => {
   summary.setAttribute("role", "button");
