@@ -37,14 +37,17 @@ cartItems.forEach(function (item, index) {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok: ${response.status} - ${response.statusText}`);
             }
             return response.json();
+        })
+        .then(data => {
+            // Handle the response data if needed
+            console.log('Cart updated successfully:', data);
         })
         .catch(error => console.error('Error updating cart:', error));
     }
 });
-
 
 
 
