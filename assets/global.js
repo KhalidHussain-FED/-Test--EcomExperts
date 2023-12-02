@@ -7,7 +7,7 @@
 // const freeProductVariantId = 44158968135834;
 
 // const cartitems = [
-//     { id: 12, /* other properties */ },
+//     { id: 123, /* other properties */ },
 //     { id: qualifyingProductVariantId, },
 //     { id: freeProductVariantId,  },
 // ];
@@ -19,19 +19,19 @@
 // cartContainsFreeProduct = cartitems.some(item => item.id === freeProductVariantId);
 // cartContainsQualifyingProduct = cartitems.some(item => item.id === qualifyingProductVariantId);
 
-// Clear the cart
-fetch('/cart/clear.js', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json();
-})
+// // Clear the cart
+// fetch('/cart/clear.js', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+// })
+// .then(response => {
+//     if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+// })
 // .then(() => {
 //     // Update the cart with the modified items
 //     fetch('/cart/update.js', {
@@ -55,7 +55,49 @@ fetch('/cart/clear.js', {
 
 
 
+var removeButton = document.getElementById('Remove-2');
 
+// Attach a click event listener to the button
+removeButton.addEventListener('click', function (e) {
+    e.preventDefault(); // Prevent the default behavior of the link
+
+    // Access other attributes
+    var dataIndex = removeButton.getAttribute('data-index');
+    var dataId = removeButton.getAttribute('data-id');
+    var dataUrl = removeButton.getAttribute('data-url');
+
+    // Your other logic here
+
+    // Make your AJAX request or perform other actions
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', dataUrl, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Handle the success response
+                var data = JSON.parse(xhr.responseText);
+                console.log('Success:', data);
+
+                // Assuming you have a function to remove a product by index
+                removeProductFromCart(dataIndex);
+
+                // Automatically remove the first index as well
+                var firstIndex = 1;
+                removeProductFromCart(firstIndex);
+            } else {
+                // Handle the error
+                console.error('Error:', xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+});
+
+function removeProductFromCart(index) {
+    // Implement your logic to remove the product from the cart by index
+    console.log('Removing product at index:', index);
+    // Your removal logic here
+}
 
 
 
