@@ -1,37 +1,44 @@
-function removeCartItem(index, url) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('DELETE', url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        console.log('Item removed successfully at index:', index);
-        window.location.reload();
-      } else {
-        console.error('Error updating cart:', xhr.statusText);
-      }
+let cartBtn = document.querySelector("cart-remove-button");
+  const form = document.getElementById("cart");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (cartBtn.getAttribute("data-variant-id")) {
+      removeItem();
+    } else {
+      addItem();
     }
-  };
-  xhr.send(JSON.stringify({
-    index: index,
-    quantity: 0
-  }));
-}
+  });
 
-document.addEventListener('DOMContentLoaded', function () {
-  var itemToRemoveIndex = 2; // Replace with the actual index of the item to remove
-  var itemToRemoveUrl = '/cart/change?id=44182115647642:34f7fcbc629ebdf77d84aba06148b226&amp;quantity=0';
-
-  var removeButton = document.querySelector('.RemoveItem-' + itemToRemoveIndex);
-  if (removeButton) {
-    removeButton.addEventListener('click', function () {
-      removeCartItem(itemToRemoveIndex, itemToRemoveUrl);
-      // If you also want to remove the item with index 1, uncomment the line below
-      // removeCartItem(itemToRemoveIndex - 1, '/cart/change?id=...'); // Replace with the actual URL
+  function removeItem() {
+    let variantId = cartBtn.getAttribute("data-variant-id");
+    $.ajax({
+      type: 'POST',
+      url: '/cart/change.js',
+      dataType: 'json',
+      data: {
+        'id': parseFloat(variantId),
+        'quantity': 0
+      }
+    })
+    .then(data => {
+      cartBtn.textContent = "Add to cart";
+      cartBtn.removeAttribute("data-variant-id");
     });
   }
-});
 
+  function addItem() {
+    $.ajax({
+      type: 'POST',
+      url: '/cart/add.js',
+      dataType: 'json',
+      data: $('#' + "YOUR FORM ID").serialize()
+    })
+    .then(data => {
+      cartBtn.textContent = "Remove from cart";
+      cartBtn.setAttribute("data-variant-id", data.variant_id);
+    });
+  }
 
 
 
