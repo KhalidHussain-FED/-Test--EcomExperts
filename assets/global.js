@@ -34,12 +34,12 @@ fetch('/cart.js')
     console.log('Current Cart Data:', cart);
 
     // Replace these with your actual product variant IDs
-    var mainProductVariantId = '44182115647642';
-    var giftProductVariantId = '44158968135834';
+    var mainProductVariantId = 'your_main_product_variant_id';
+    var giftProductVariantId = 'your_gift_product_variant_id';
 
     // Find line item keys for the main and gift products
-    var mainProductLineItem = cart.items.find(item => item.variant_id === mainProductVariantId);
-    var giftProductLineItem = cart.items.find(item => item.variant_id === giftProductVariantId);
+    var mainProductLineItem = cart.items.find(item => item.variant_id === parseInt(mainProductVariantId));
+    var giftProductLineItem = cart.items.find(item => item.variant_id === parseInt(giftProductVariantId));
 
     console.log('Main Product Line Item:', mainProductLineItem);
     console.log('Gift Product Line Item:', giftProductLineItem);
