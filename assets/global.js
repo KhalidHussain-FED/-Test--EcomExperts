@@ -33,18 +33,12 @@ cartitems.forEach(function (item, index) {
 
 // Rest of the code remains the same
 if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
-    // Use the remove.js endpoint to remove the specific items from the cart
-    fetch('/cart/remove.js', {
+    // Use the clear.js endpoint to clear the entire cart
+    fetch('/cart/clear.js', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            items: [
-                { id: qualifyingProductVariantId },
-                { id: freeProductVariantId },
-            ],
-        }),
     })
     .then(response => {
         if (!response.ok) {
@@ -52,7 +46,7 @@ if (cartContainsQualifyingProduct || cartContainsFreeProduct) {
         }
         return response.json();
     })
-    .catch(error => console.error('Error removing items from cart:', error));
+    .catch(error => console.error('Error clearing cart:', error));
 } else {
     // Save the updated cart information to sessionStorage if no clearing is needed
     sessionStorage.setItem('cartItems', JSON.stringify(cartitems));
