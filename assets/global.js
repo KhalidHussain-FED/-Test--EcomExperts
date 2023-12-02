@@ -12,26 +12,25 @@ $(document).ready(function() {
 
   // Function to remove the specified item using AJAX
   function removeItem(itemId) {
-    $.ajax({
-      type: 'POST',
-      url: '/cart/change.js',
-      data: {
-        id: itemId,
-        quantity: 0
-      },
-      dataType: 'json',
-      success: function(response) {
-        // Handle success, if needed
-        console.log('Item removed successfully:', itemId);
-        window.location.reload();
-      },
-      error: function(error) {
-        // Handle errors, if needed
-        console.error('Error updating cart:', error);
-      }
-    });
-  }
-});
+  $.ajax({
+    type: 'DELETE',
+    url: '/cart/change.js',
+    data: {
+      id: itemId,
+      quantity: 0
+    },
+    dataType: 'json',
+    success: function(response) {
+      // Handle success, if needed
+      console.log('Item removed successfully:', itemId);
+      window.location.reload();
+    },
+    error: function(error) {
+      // Handle errors, if needed
+      console.error('Error updating cart:', error);
+    }
+  });
+}
 
 
 
