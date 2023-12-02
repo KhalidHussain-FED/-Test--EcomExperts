@@ -29,11 +29,11 @@
 
   <script>
 
-    window.onload = function(){
+      window.onload = function(){
       let cartContainsQualifyingProduct = false;
   
-      const qualifyingProductVariantId1 = 44182115647642;
-      const qualifyingProductVariantId2 = 44158968135834;
+      const qualifyingProductVariantId1 = 12345; // Replace with the actual variant ID of the first product to remove
+      const qualifyingProductVariantId2 = 67890; // Replace with the actual variant ID of the second product to remove
   
       {% for item in cart.items %}
         if({{ item.id }} === qualifyingProductVariantId1 || {{ item.id }} === qualifyingProductVariantId2){
