@@ -3,7 +3,7 @@ $(document).ready(function() {
 
   let cartContainsItemToRemove = false;
 
-  const itemToRemoveId = 'CartItem-2'; // Replace with the actual ID of the item to remove
+  const itemToRemoveId = 'CartItem-1'; // Replace with the actual ID of the item to remove
 
   // Check if the cart contains the item to be removed
   $('.cart-item').each(function() {
