@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
 var selectElement = document.getElementById('custom-input--size');
 var radioElements = document.querySelectorAll('input[name="Size"]');
 selectElement.addEventListener('change', function () {
+    console.log('Dropdown changed'); // Add this line for debugging
     var selectedValue = selectElement.value;
     if (selectedValue === "") {
         // If no value selected, uncheck all radio buttons
@@ -99,6 +100,7 @@ selectElement.addEventListener('change', function () {
         }
     }
 });
+
 
 
 
