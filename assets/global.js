@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     var selectElement = document.getElementById('custom-input--size');
     var radioElements = document.querySelectorAll('input[name="Size"]');
-    
+
     function updateUrlAndRadio(sizeValue) {
         // Update the URL based on the selected value
         var newUrl = window.location.href.replace('{size}', sizeValue);
@@ -91,6 +91,14 @@ document.addEventListener('DOMContentLoaded', function() {
         radioElements.forEach(function (radio) {
             radio.checked = radio.value === sizeValue;
         });
+
+        // Call the radio button change handler
+        radioChangeHandler(sizeValue);
+    }
+
+    function radioChangeHandler(selectedValue) {
+        // Your radio button change logic here
+        console.log('Radio button changed to:', selectedValue);
     }
 
     // Listen for change events on the dropdown
@@ -101,12 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Listen for change events on the radio buttons
     radioElements.forEach(function (radio) {
-        radio.addEventListener('click', function () {
+        radio.addEventListener('change', function () {
             var selectedRadioValue = radio.value;
             updateUrlAndRadio(selectedRadioValue);
         });
     });
 });
+
 
 
 
