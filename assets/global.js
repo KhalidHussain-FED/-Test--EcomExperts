@@ -83,22 +83,29 @@ document.addEventListener('DOMContentLoaded', function() {
     var selectElement = document.getElementById('custom-input--size');
     var radioElements = document.querySelectorAll('input[name="Size"]');
     
+    function updateUrl(sizeValue) {
+        // Assuming your URL has a placeholder like {size}
+        var newUrl = window.location.href.replace('{size}', sizeValue);
+        
+        // Change the URL without reloading the page
+        window.history.replaceState(null, null, newUrl);
+    }
+
     selectElement.addEventListener('change', function () {
         var selectedValue = selectElement.value;
         
-        // Find the corresponding radio button with the selected value
-        var matchingRadio = Array.from(radioElements).find(function (radio) {
-            return radio.value === selectedValue;
-        });
-    
-        // Set checked state for the matching radio button or uncheck all if not found
-        radioElements.forEach(function (radio) {
-            radio.checked = radio === matchingRadio && selectedValue !== "";
-        });
+        // Update the URL based on the selected dropdown option
+        updateUrl(selectedValue);
+    });
 
-        // Get the value of the selected radio button
-        var selectedRadioValue = matchingRadio ? matchingRadio.value : null;
-        console.log("Selected Radio Value:", selectedRadioValue);
+    // Listen for change events on the radio buttons
+    radioElements.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            var selectedRadioValue = radio.value;
+            
+            // Update the URL based on the selected radio button value
+            updateUrl(selectedRadioValue);
+        });
     });
 });
 
