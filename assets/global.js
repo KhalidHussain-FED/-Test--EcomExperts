@@ -90,33 +90,30 @@ document.addEventListener('DOMContentLoaded', function() {
         window.history.replaceState(null, null, newUrl);
     }
 
-    selectElement.addEventListener('change', function () {
+    function handleSelectionChange() {
         var selectedValue = selectElement.value;
-        
+
         // Update the URL based on the selected dropdown option
         updateUrl(selectedValue);
+    }
 
-        // Update the corresponding radio button
-        var matchingRadio = Array.from(radioElements).find(function (radio) {
-            return radio.value === selectedValue;
-        });
-
-        // Set checked state for the matching radio button or uncheck all if not found
-        radioElements.forEach(function (radio) {
-            radio.checked = radio === matchingRadio && selectedValue !== "";
-        });
-    });
+    // Listen for change events on the dropdown
+    selectElement.addEventListener('change', handleSelectionChange);
 
     // Listen for change events on the radio buttons
     radioElements.forEach(function (radio) {
         radio.addEventListener('change', function () {
             var selectedRadioValue = radio.value;
-            
+
             // Update the URL based on the selected radio button value
             updateUrl(selectedRadioValue);
+
+            // Update the dropdown value
+            selectElement.value = selectedRadioValue;
         });
     });
 });
+
 
 
 
