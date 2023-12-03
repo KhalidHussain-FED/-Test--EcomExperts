@@ -82,38 +82,31 @@ document.addEventListener('DOMContentLoaded', function() {
     var selectElement = document.getElementById('custom-input--size');
     var radioElements = document.querySelectorAll('input[name="Size"]');
     
-    function updateUrl(sizeValue) {
-        // Assuming your URL has a placeholder like {size}
+    function updateUrlAndRadio(sizeValue) {
+        // Update the URL based on the selected value
         var newUrl = window.location.href.replace('{size}', sizeValue);
-        
-        // Change the URL without reloading the page
         window.history.replaceState(null, null, newUrl);
-    }
 
-    function handleSelectionChange() {
-        var selectedValue = selectElement.value;
-
-        // Update the URL based on the selected dropdown option
-        updateUrl(selectedValue);
+        // Update the corresponding radio button
+        radioElements.forEach(function (radio) {
+            radio.checked = radio.value === sizeValue;
+        });
     }
 
     // Listen for change events on the dropdown
-    selectElement.addEventListener('change', handleSelectionChange);
+    selectElement.addEventListener('change', function () {
+        var selectedValue = selectElement.value;
+        updateUrlAndRadio(selectedValue);
+    });
 
     // Listen for change events on the radio buttons
     radioElements.forEach(function (radio) {
         radio.addEventListener('change', function () {
             var selectedRadioValue = radio.value;
-
-            // Update the URL based on the selected radio button value
-            updateUrl(selectedRadioValue);
-
-            // Update the dropdown value
-            selectElement.value = selectedRadioValue;
+            updateUrlAndRadio(selectedRadioValue);
         });
     });
 });
-
 
 
 
