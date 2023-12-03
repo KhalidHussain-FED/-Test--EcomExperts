@@ -82,24 +82,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 var selectElement = document.getElementById('custom-input--size');
 var radioElements = document.querySelectorAll('input[name="Size"]');
+
 selectElement.addEventListener('change', function () {
-    console.log('Dropdown changed'); // Add this line for debugging
     var selectedValue = selectElement.value;
-    if (selectedValue === "") {
-        // If no value selected, uncheck all radio buttons
-        radioElements.forEach(function (radio) {
-            radio.checked = false;
-        });
-    } else {
-        // Find and check the radio button with the selected value
-        var matchingRadio = Array.from(radioElements).find(function (radio) {
-            return radio.value === selectedValue;
-        });
-        if (matchingRadio) {
-            matchingRadio.checked = true;
-        }
-    }
+    
+    // Find the corresponding radio button with the selected value
+    var matchingRadio = Array.from(radioElements).find(function (radio) {
+        return radio.value === selectedValue;
+    });
+
+    // Set checked state for the matching radio button or uncheck all if not found
+    radioElements.forEach(function (radio) {
+        radio.checked = radio === matchingRadio && selectedValue !== "";
+    });
 });
+
 
 
 
