@@ -97,8 +97,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function radioChangeHandler(selectedValue) {
-        // Your radio button change logic here
+        // Retrieve the selected value of the dropdown
+        var dropdownSelectedValue = selectElement.value;
+
+        // Your radio button click logic here using dropdownSelectedValue
+        console.log('Dropdown selected value:', dropdownSelectedValue);
         console.log('Radio button changed to:', selectedValue);
+
+        // Optionally, you can update the URL based on the dropdown selected value
+        var newUrl = window.location.href.replace('{size}', dropdownSelectedValue);
+        window.history.replaceState(null, null, newUrl);
     }
 
     // Listen for change events on the dropdown
@@ -115,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
 
 
 
