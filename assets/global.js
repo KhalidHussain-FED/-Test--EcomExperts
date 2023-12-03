@@ -80,20 +80,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-var selectElement = document.getElementById('custom-input--size');
-var radioElements = document.querySelectorAll('input[name="Size"]');
-
-selectElement.addEventListener('change', function () {
-    var selectedValue = selectElement.value;
+document.addEventListener('DOMContentLoaded', function() {
+    var selectElement = document.getElementById('custom-input--size');
+    var radioElements = document.querySelectorAll('input[name="Size"]');
     
-    // Find the corresponding radio button with the selected value
-    var matchingRadio = Array.from(radioElements).find(function (radio) {
-        return radio.value === selectedValue;
-    });
-
-    // Set checked state for the matching radio button or uncheck all if not found
-    radioElements.forEach(function (radio) {
-        radio.checked = radio === matchingRadio && selectedValue !== "";
+    selectElement.addEventListener('change', function () {
+        var selectedValue = selectElement.value;
+        
+        // Find the corresponding radio button with the selected value
+        var matchingRadio = Array.from(radioElements).find(function (radio) {
+            return radio.value === selectedValue;
+        });
+    
+        // Set checked state for the matching radio button or uncheck all if not found
+        radioElements.forEach(function (radio) {
+            radio.checked = radio === matchingRadio && selectedValue !== "";
+        });
     });
 });
 
