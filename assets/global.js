@@ -100,12 +100,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Listen for change events on the radio buttons
-    radioElements.forEach(function (radio) {
-        radio.addEventListener('change', function () {
-            var selectedRadioValue = radio.value;
-            updateUrlAndRadio(selectedRadioValue);
-        });
-    });
+    // radioElements.forEach(function (radio) {
+    //     radio.addEventListener('change', function () {
+    //         var selectedRadioValue = radio.value;
+    //         updateUrlAndRadio(selectedRadioValue);
+    //     });
+    // });
 });
 
 
