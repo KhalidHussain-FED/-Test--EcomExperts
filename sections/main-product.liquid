@@ -231,7 +231,30 @@
                     | item_count_for_variant: product.selected_or_first_available_variant.id
                   -%}
                   {% # theme-check-enable %}
-                  
+                  {% if product.id == 7987569885338 %}
+                    <!-- Replace 1234567890 with your specific product ID -->
+                    <p id="custom_dropdown">
+                      <label for="custom-input--size">Size</label><br>
+                      <select
+                        id="custom-input--size"
+                        <!-- name="properties[Size]" -->
+                        form="product-form-{{ section.id }}"
+                        style="padding: 5px 10px;"
+                        required="true"
+                      >
+                        <option value="UnSelected">UnSelected</option>
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                      </select>
+                      <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                          const formElement = document.querySelector("#product-form-{{ section.id }}");
+                          formElement.removeAttribute('novalidate')
+                        });
+                      </script>
+                    </p>
+                  {% endif %}
                   <label class="quantity__label form__label" for="Quantity-{{ section.id }}">
                     {{ 'products.product.quantity.label' | t }}
                     <span class="quantity__rules-cart no-js-hidden{% if cart_qty == 0 %} hidden{% endif %}">
