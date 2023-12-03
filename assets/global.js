@@ -99,14 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Get the <dl> element by its tag name
-var dlElement = document.querySelector('dl');
-
-// Add the class 'hello' to the <dl> element
-dlElement.classList.add('hello');
-
-
-
 
 
 function getFocusableElements(container) {
