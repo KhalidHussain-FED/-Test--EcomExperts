@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-
 document.addEventListener('DOMContentLoaded', function() {
     var selectElement = document.getElementById('custom-input--size');
     var radioElements = document.querySelectorAll('input[name="Size"]');
@@ -96,6 +95,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update the URL based on the selected dropdown option
         updateUrl(selectedValue);
+
+        // Update the corresponding radio button
+        var matchingRadio = Array.from(radioElements).find(function (radio) {
+            return radio.value === selectedValue;
+        });
+
+        // Set checked state for the matching radio button or uncheck all if not found
+        radioElements.forEach(function (radio) {
+            radio.checked = radio === matchingRadio && selectedValue !== "";
+        });
     });
 
     // Listen for change events on the radio buttons
@@ -108,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 
 
 
