@@ -80,18 +80,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-// var selectElement = document.getElementById('custom-input--size');
-// var radioElements = document.querySelectorAll('input[name="Size"]');
-// selectElement.addEventListener('change', function () {
-//     var selectedValue = selectElement.value;
-//     var matchingRadio = Array.from(radioElements).find(function (radio) {
-//         return radio.value === selectedValue;
-//     });
-//     if (matchingRadio) {
-//         matchingRadio.checked = true;
-//     }
-// });
+var selectElement = document.getElementById('custom-input--size');
+var radioElements = document.querySelectorAll('input[name="Size"]');
+selectElement.addEventListener('change', function () {
+    var selectedValue = selectElement.value;
+    if (selectedValue === "") {
+        // If no value selected, uncheck all radio buttons
+        radioElements.forEach(function (radio) {
+            radio.checked = false;
+        });
+    } else {
+        // Find and check the radio button with the selected value
+        var matchingRadio = Array.from(radioElements).find(function (radio) {
+            return radio.value === selectedValue;
+        });
+        if (matchingRadio) {
+            matchingRadio.checked = true;
+        }
+    }
+});
 
 
 
