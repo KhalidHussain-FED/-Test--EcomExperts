@@ -125,6 +125,22 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+const radioButtons = document.querySelectorAll('input[type=radio]');
+    
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('change', function () {
+            // Remove active class from all labels
+            document.querySelectorAll('label').forEach(label => {
+                label.classList.remove('active');
+            });
+
+            // Add active class to the label of the checked radio button
+            if (this.checked) {
+                const label = this.nextElementSibling; // Get the label next to the checked radio button
+                label.classList.add('active');
+            }
+        });
+    });
 
 
 function getFocusableElements(container) {
